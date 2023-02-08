@@ -1,0 +1,51 @@
+import 'package:flutter/material.dart';
+
+class RoundedButton extends StatelessWidget {
+  final String text;
+  final VoidCallback press;
+  final Color color;
+  final Color textColor;
+  final Color borderColor;
+
+  final double borderRadius;
+  final EdgeInsetsGeometry padding;
+  final TextStyle textStyle;
+  final BorderSide borderSide;
+
+  const RoundedButton({
+    super.key,
+    required this.text,
+    required this.press,
+    required this.color,
+    required this.textColor,
+    required this.borderColor,
+    this.borderRadius = 3,
+    this.padding = const EdgeInsets.fromLTRB(20.0, 7.5, 20.0, 7.5),
+    this.textStyle = const TextStyle(fontFamily: 'Noto Sans'),
+    this.borderSide = BorderSide.none,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    return SizedBox(
+      height: 34,
+      width: (92 / 1440) * width,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(borderRadius),
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                elevation: 10, backgroundColor: color, side: borderSide),
+            onPressed: press,
+            child: Center(
+                child: Text(
+              text,
+              style: TextStyle(
+                  color: textColor,
+                  fontSize: (14 / 1440) * width,
+                  fontWeight: FontWeight.w700),
+            ))),
+      ),
+    );
+  }
+}
