@@ -383,7 +383,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
               setState(() {
                 isPressed = true;
               });
-              if (_confirmationKey.currentState!.validate()) {}
+              if (_confirmationKey.currentState!.validate()) {
+                Navigator.pushNamed(context, "/confirmationMessage");
+              }
             },
             color: Colors.black,
           ),
