@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const routeName = '/home';
   const HomeScreen({super.key});
 
   @override
