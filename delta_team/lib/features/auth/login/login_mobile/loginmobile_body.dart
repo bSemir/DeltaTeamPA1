@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:delta_team/features/auth/loadingScreens/loading_Screen.dart';
+import 'package:delta_team/features/auth/login/amplify_auth.dart';
 import 'package:delta_team/features/auth/login/login_form.dart';
-import 'package:delta_team/home.dart';
+import 'package:delta_team/home_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_extension/riverpod_extension.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,7 +19,7 @@ class MyMobileBody extends StatefulWidget {
 }
 
 class _MyMobileBodyState extends State<MyMobileBody> {
-  TextEditingController email = TextEditingController();
+  TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool passwordObscured = true;
@@ -43,7 +45,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
         final result =
             await Amplify.Auth.signIn(username: email, password: password);
         if (result.isSignedIn) {
-          Navigator.of(context).pushNamed(HomeScreen.routeName);
+          Navigator.pushNamed(context, LoadingScreenMobile.routeName);
         }
       } on AuthException catch (error) {
         setState(() {
@@ -129,23 +131,28 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                         width: (296 / 360) * width,
                         child: Column(
                           children: [
-                            LoginFormMobile(
-                              controller: email,
-                              showErrorIcon: email.text.isNotEmpty &&
-                                  !email.text.contains("@") &&
-                                  !email.text.endsWith(".com"),
-                              text: 'Email',
+                            Column(
+                              key: const Key('email_form_field'),
+                              children: [
+                                CustomEmailField(
+                                  controller: username,
+                                  showErrorIcon: username.text.isNotEmpty &&
+                                      !username.text.contains("@"),
+                                  // &&
+                                  // !username.text.endsWith(".com"),
+                                  text: 'Email',
+                                ),
+                              ],
                             ),
-                            // LoginFormMobile(
-                            //   controller: email,
-                            //   text: 'Email',
-                            // ),
                             const SizedBox(
                               height: 24,
                             ),
                             Column(
+                              key: const Key('password_form_field'),
                               children: [
                                 CustomPasswordField(
+                                  key: const Key(
+                                      'password_controllers_toggle_to_reveal_password'),
                                   controller: password,
                                   hintText: 'Password',
                                   obscureText: passwordObscured,
@@ -159,10 +166,11 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                               width: (296 / 360) * width,
                               height: 40.0,
                               child: ElevatedButton(
+                                key: const Key('email_form_field'),
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate()) {
                                     usersignIn(
-                                        context, email.text, password.text);
+                                        context, username.text, password.text);
                                     // // showDialog(
                                     // //     context: context,
                                     // //     builder: (context) {
@@ -212,8 +220,16 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                                     width: 3,
                                   ),
                                   GestureDetector(
-                                    onTap: () {
-                                      // Add your code here to navigate to the sign up page
+                                    key: const Key(
+                                        'This_supposed_to_be_a_signUp_but_for_now_I_use_it_for_signOut'),
+                                    onTap: () async {
+                                      Navigator.of(context).pop();
+                                      try {
+                                        await signOutCurrentUser(
+                                            null, null, context);
+                                      } on AmplifyException catch (e) {
+                                        safePrint(e.message);
+                                      }
                                     },
                                     child: Text(
                                       'Sign up',
@@ -263,6 +279,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: InkWell(
+                          key: const Key('Not_routed_to_privacyPage'),
                           onTap: () {
                             // Navigate to privacy page
                           },
@@ -292,6 +309,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: InkWell(
+                          key: const Key('Not_routed_to_privacyPage'),
                           onTap: () {
                             // Navigate to privacy page
                           },

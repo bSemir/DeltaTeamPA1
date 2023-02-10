@@ -57,14 +57,14 @@ class LoginFormWeb extends StatelessWidget {
   }
 }
 
-class LoginFormMobile extends StatelessWidget {
+class CustomEmailField extends StatelessWidget {
   final String text;
   late bool showErrorIcon;
 
   // final IconData suffixIcon;
   final TextEditingController controller;
 
-  LoginFormMobile({
+  CustomEmailField({
     super.key,
     required this.text,
     required this.controller,
@@ -92,9 +92,14 @@ class LoginFormMobile extends StatelessWidget {
         },
         controller: controller,
         decoration: InputDecoration(
+          labelText: "Email",
+          floatingLabelBehavior: FloatingLabelBehavior.auto,
+          floatingLabelStyle: const TextStyle(color: Color(0xFF000000)),
+
           filled: true,
           focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black, width: 1.0),
+            borderSide:
+                BorderSide(color: Color.fromARGB(255, 3, 199, 42), width: 1.0),
             gapPadding: 10.0,
           ),
           enabledBorder: const OutlineInputBorder(
@@ -120,7 +125,7 @@ class LoginFormMobile extends StatelessWidget {
               ? const Icon(
                   Icons.error,
                   color: Colors.red,
-                  size: 19,
+                  size: 20,
                 )
               : null,
         ),
@@ -176,6 +181,9 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
         fontSize: 14.0,
       ),
       decoration: InputDecoration(
+        labelText: "Password",
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        floatingLabelStyle: const TextStyle(color: Color(0xFF000000)),
         filled: true,
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(color: Colors.black, width: 1.0),

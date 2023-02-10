@@ -1,11 +1,15 @@
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
 import 'package:delta_team/common/customfooter_web.dart';
+import 'package:delta_team/features/auth/loadingScreens/loading_Screen.dart';
+import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_form.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:riverpod_extension/riverpod_extension.dart';
 
 class MyDesktopBody extends StatefulWidget {
   const MyDesktopBody({super.key});
@@ -20,14 +24,48 @@ class _MyDesktopBodyState extends State<MyDesktopBody> {
   final _formKey = GlobalKey<FormState>();
 
   bool passwordObscured = true;
-  String errorMessage = '';
+  String errorMessage = 'Incorrect email or password';
+
   void togglePasswordObscure() {
     setState(() {
       passwordObscured = !passwordObscured;
     });
   }
 
-  // Future<void> _userLogin(
+  Future<void> usersignIn(
+      BuildContext context, String email, String password) async {
+    if (email.isEmpty || password.isEmpty) {
+      setState(() {
+        errorMessage = 'Incorrect email or password';
+      });
+    } else {
+      try {
+        final result =
+            await Amplify.Auth.signIn(username: email, password: password);
+        if (result.isSignedIn) {
+          safePrint('User Logged In');
+          Navigator.pushNamed(context, LoadingScreenWeb.routeName);
+        }
+      } on AuthException catch (error) {
+        setState(() {
+          errorMessage = error.message;
+        });
+      } on HttpException catch (e) {
+        final response = e.response;
+        if (response.statusCode == 400) {
+          setState(() {
+            errorMessage = 'Please enter a valid email or password';
+          });
+        } else {
+          setState(() {
+            errorMessage = 'Sign in failed';
+          });
+        }
+      }
+    }
+  }
+
+  // Future<void> userLogin(
   //     BuildContext context, String username, String password) async {
   //   if (username.isEmpty || password.isEmpty) {
   //     (() {
@@ -54,6 +92,7 @@ class _MyDesktopBodyState extends State<MyDesktopBody> {
           title: 'Tech387',
           leading: Image.asset('assets/images/logo.png'),
           action: RoundedButton(
+              key: const Key('Not_routed_to_SignUpPage'),
               text: 'Sign Up',
               press: () {},
               color: const Color(0xFF000000),
@@ -119,14 +158,18 @@ class _MyDesktopBodyState extends State<MyDesktopBody> {
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              LoginFormMobile(
+                              CustomEmailField(
+                                key: const Key('email_field'),
                                 controller: username,
                                 showErrorIcon: username.text.isNotEmpty &&
-                                    !username.text.contains("@") &&
-                                    !username.text.endsWith(".com"),
+                                    !username.text.contains("@"),
+                                // &&
+                                // !username.text.endsWith(".com"),
                                 text: 'Email',
                               ),
                               CustomPasswordField(
+                                key: const Key(
+                                    'Password_field_Unreveal_Password'),
                                 controller: password,
                                 hintText: 'Password',
                                 obscureText: passwordObscured,
@@ -135,22 +178,23 @@ class _MyDesktopBodyState extends State<MyDesktopBody> {
                                 height: 56,
                                 width: (452 / 1440) * width,
                                 child: ElevatedButton(
+                                  key: const Key('Login_Button'),
                                   onPressed: () async {
-                                    // if (_formKey.currentState!.validate()) {
-                                    //   _userLogin(context, username.text,
-                                    //       password.text);
+                                    if (_formKey.currentState!.validate()) {
+                                      usersignIn(context, username.text,
+                                          password.text);
 
-                                    //   // final _authProvider =
-                                    //   //     provider.Provider.of<AuthenticationProvider>(
-                                    //   //         context,
-                                    //   //         listen: false);
-                                    //   // _authProvider.signIn(
-                                    //   //   username as String,
-                                    //   //   password as String,
-                                    //   //   context,
-                                    //   //   HomeRoute as String,
-                                    //   // );
-                                    // }
+                                      //   // final _authProvider =
+                                      //   //     provider.Provider.of<AuthenticationProvider>(
+                                      //   //         context,
+                                      //   //         listen: false);
+                                      //   // _authProvider.signIn(
+                                      //   //   username as String,
+                                      //   //   password as String,
+                                      //   //   context,
+                                      //   //   HomeRoute as String,
+                                      //   // );
+                                    }
                                   },
 
                                   // signIn;

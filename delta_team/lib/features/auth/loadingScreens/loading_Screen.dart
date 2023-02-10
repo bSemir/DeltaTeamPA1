@@ -1,8 +1,12 @@
-import 'package:delta_team/home.dart';
+import 'package:delta_team/home_mobile.dart';
+import 'package:delta_team/home_web.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:google_fonts/google_fonts.dart';
+
 class LoadingScreenMobile extends StatefulWidget {
+  static const routeName = '/loading';
   const LoadingScreenMobile({
     super.key,
 
@@ -21,12 +25,12 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
   }
 
   startTimeout() async {
-    var duration = const Duration(seconds: 3);
+    var duration = const Duration(seconds: 20);
     return Timer(duration, navigateToHomeScreen);
   }
 
   navigateToHomeScreen() {
-    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+    Navigator.pushReplacementNamed(context, HomeScreenMobile.routeName);
   }
 
   @override
@@ -35,79 +39,66 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+            const SizedBox(
+              height: 30,
+            ),
             SizedBox(
               height: 200,
               width: (200 / 360) * width,
-              child: Image.asset('assets/images/logotop.png'),
+              child: Image.asset('assets/images/footer_logo.png'),
             ),
             const SizedBox(
-              height: 20,
+              height: 100,
             ),
-            const CircularProgressIndicator(
-              color: Colors.green,
-              semanticsLabel: "we're brewing up",
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LoadingScreenWeb extends StatefulWidget {
-  const LoadingScreenWeb({
-    super.key,
-
-    // required this.suffixIcon
-  });
-
-  @override
-  _LoadingScreenWebState createState() => _LoadingScreenWebState();
-}
-
-class _LoadingScreenWebState extends State<LoadingScreenMobile> {
-  @override
-  void initState() {
-    super.initState();
-    startTimeout();
-  }
-
-  startTimeout() async {
-    var duration = const Duration(seconds: 3);
-    return Timer(duration, navigateToHomeScreen);
-  }
-
-  navigateToHomeScreen() {
-    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            // SizedBox(
-            //   height: 200,
-            //   width: (200 / 1440) * width,
-            //   child: Image.asset('assets/your_logo.png'),
-            // ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-            CircularProgressIndicator(
-              color: Colors.green,
-              semanticsLabel: "we're brewing up",
-            ),
-          ],
-        ),
-      ),
+            Stack(alignment: Alignment.center, children: [
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 5),
+                        RichText(
+                          text: TextSpan(
+                            text: "We're",
+                            style: GoogleFonts.notoSans(
+                              fontWeight: FontWeight.bold,
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 10.0,
+                            ),
+                          ),
+                        ),
+                        RichText(
+                          text: TextSpan(
+                            text: "brewing up...",
+                            style: GoogleFonts.notoSans(
+                              fontWeight: FontWeight.bold,
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              fontSize: 10.0,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 98,
+                height: 98,
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Color.fromARGB(255, 44, 250, 51)),
+                  strokeWidth: 13.0,
+                ),
+              ),
+            ]),
+            Column()
+          ])),
     );
   }
 }

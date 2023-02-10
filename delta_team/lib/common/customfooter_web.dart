@@ -149,6 +149,8 @@ class FooterWidget extends StatelessWidget {
                               // width: (34 / 1440) * width,
                               child: Row(children: [
                                 InkWell(
+                                  key: const Key(
+                                      'Not_routed_to_the_PrivacyPage'),
                                   onTap: () {
                                     // Navigate to privacy page
                                   },
@@ -172,6 +174,7 @@ class FooterWidget extends StatelessWidget {
                               // width: (24 / 1440) * width,
                               child: Row(children: [
                                 InkWell(
+                                  key: const Key('Not_routed_to_the_TermsPage'),
                                   onTap: () {
                                     // Navigate to privacy page
                                   },
