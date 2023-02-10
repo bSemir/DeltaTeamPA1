@@ -32,6 +32,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
   bool isPressed = false;
   bool isConfirmationCodeCorrect = false;
   bool canSendCode = false;
+  bool sendCodePressed = false;
 
   String num1Str = "";
   String num2Str = "";
@@ -110,7 +111,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: !isConfirmationCodeCorrect && isPressed
+                            color: !isConfirmationCodeCorrect &&
+                                    isPressed &&
+                                    !sendCodePressed
                                 ? errorColor
                                 : const Color.fromARGB(255, 121, 116, 126)),
                       ),
@@ -151,7 +154,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: !isConfirmationCodeCorrect && isPressed
+                            color: !isConfirmationCodeCorrect &&
+                                    isPressed &&
+                                    !sendCodePressed
                                 ? errorColor
                                 : const Color.fromARGB(255, 121, 116, 126)),
                       ),
@@ -192,7 +197,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: !isConfirmationCodeCorrect && isPressed
+                            color: !isConfirmationCodeCorrect &&
+                                    isPressed &&
+                                    !sendCodePressed
                                 ? errorColor
                                 : const Color.fromARGB(255, 121, 116, 126)),
                       ),
@@ -233,7 +240,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: !isConfirmationCodeCorrect && isPressed
+                            color: !isConfirmationCodeCorrect &&
+                                    isPressed &&
+                                    !sendCodePressed
                                 ? errorColor
                                 : const Color.fromARGB(255, 121, 116, 126)),
                       ),
@@ -274,7 +283,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: !isConfirmationCodeCorrect && isPressed
+                            color: !isConfirmationCodeCorrect &&
+                                    isPressed &&
+                                    !sendCodePressed
                                 ? errorColor
                                 : const Color.fromARGB(255, 121, 116, 126)),
                       ),
@@ -315,7 +326,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: !isConfirmationCodeCorrect && isPressed
+                            color: !isConfirmationCodeCorrect &&
+                                    isPressed &&
+                                    !sendCodePressed
                                 ? errorColor
                                 : const Color.fromARGB(255, 121, 116, 126)),
                       ),
@@ -343,7 +356,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
         const SizedBox(
           height: 10,
         ),
-        !isConfirmationCodeCorrect && isPressed
+        !isConfirmationCodeCorrect && isPressed && !sendCodePressed
             ? Column(
                 children: [
                   Text(
@@ -361,9 +374,13 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                     children: [
                       InkWell(
                         onDoubleTap: () {
+                          setState(() {
+                            isPressed = false;
+                          });
                           if (counter == 0) {
                             setState(() {
                               canSendCode = true;
+                              sendCodePressed = true;
                             });
                           }
                           if (counter == 0 && !isConfirmationCodeCorrect) {
@@ -382,9 +399,13 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                           }
                         },
                         onTap: () async {
+                          setState(() {
+                            isPressed = false;
+                          });
                           if (counter == 0) {
                             setState(() {
                               canSendCode = true;
+                              sendCodePressed = true;
                             });
                           }
                           if (counter == 0 && !isConfirmationCodeCorrect) {
@@ -430,7 +451,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                 ],
               )
             : Container(),
-        !isConfirmationCodeCorrect && isPressed
+        !isConfirmationCodeCorrect && isPressed && !sendCodePressed
             ? const SizedBox(
                 height: 9,
               )
@@ -448,6 +469,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
               ),
             ),
             buttonFunction: () async {
+              setState(() {
+                sendCodePressed = false;
+              });
               if (clickCounter == 0 && !isConfirmationCodeCorrect) {
                 _startTimer();
               }
