@@ -357,107 +357,103 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
           height: 10,
         ),
         !isConfirmationCodeCorrect && isPressed && !sendCodePressed
-            ? Column(
+            ? Text(
+                "Confirmation code does not match",
+                style: GoogleFonts.notoSans(
+                  fontSize: 14,
+                  color: errorColor,
+                ),
+              )
+            : const SizedBox(
+                height: 16,
+              ),
+        const SizedBox(
+          height: 36,
+        ),
+        clickCounter == 0
+            ? const SizedBox(
+                height: 28,
+              )
+            : Container(),
+        (!isConfirmationCodeCorrect && isPressed) ||
+                (isPressed && clickCounter == 1)
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Confirmation code does not match",
-                    style: GoogleFonts.notoSans(
-                      fontSize: 14,
-                      color: errorColor,
+                  InkWell(
+                    onDoubleTap: () {
+                      if (counter == 0) {
+                        setState(() {
+                          canSendCode = true;
+                        });
+                      }
+                      if (counter == 0 && !isConfirmationCodeCorrect) {
+                        setState(() {
+                          counter = 20;
+                          sendCodePressed = true;
+                        });
+                        _startTimer();
+                      }
+                      if (counter != 0) {
+                        setState(() {
+                          canSendCode = false;
+                        });
+                      }
+                      if (canSendCode) {
+                        sendMessage(emailProvider.email);
+                      }
+                    },
+                    onTap: () async {
+                      if (counter == 0) {
+                        setState(() {
+                          canSendCode = true;
+                        });
+                      }
+                      if (counter == 0 && !isConfirmationCodeCorrect) {
+                        setState(() {
+                          counter = 20;
+                          sendCodePressed = true;
+                        });
+                        _startTimer();
+                      }
+                      if (counter != 0) {
+                        setState(() {
+                          canSendCode = false;
+                        });
+                      }
+                      if (canSendCode) {
+                        sendMessage(emailProvider.email);
+                      }
+                    },
+                    child: Text(
+                      "Send code again",
+                      style: GoogleFonts.notoSans(
+                        fontWeight: FontWeight.w700,
+                        color: const Color.fromRGBO(96, 93, 102, 1),
+                      ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 33,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onDoubleTap: () {
-                          setState(() {
-                            isPressed = false;
-                          });
-                          if (counter == 0) {
-                            setState(() {
-                              canSendCode = true;
-                              sendCodePressed = true;
-                            });
-                          }
-                          if (counter == 0 && !isConfirmationCodeCorrect) {
-                            setState(() {
-                              counter = 20;
-                            });
-                            _startTimer();
-                          }
-                          if (counter != 0) {
-                            setState(() {
-                              canSendCode = false;
-                            });
-                          }
-                          if (canSendCode) {
-                            sendMessage(emailProvider.email);
-                          }
-                        },
-                        onTap: () async {
-                          setState(() {
-                            isPressed = false;
-                          });
-                          if (counter == 0) {
-                            setState(() {
-                              canSendCode = true;
-                              sendCodePressed = true;
-                            });
-                          }
-                          if (counter == 0 && !isConfirmationCodeCorrect) {
-                            setState(() {
-                              counter = 20;
-                            });
-                            _startTimer();
-                          }
-                          if (counter != 0) {
-                            setState(() {
-                              canSendCode = false;
-                            });
-                          }
-                          if (canSendCode) {
-                            sendMessage(emailProvider.email);
-                          }
-                        },
-                        child: Text(
-                          "Send code again",
+                  counter > 9
+                      ? Text(
+                          " 00:$counter",
                           style: GoogleFonts.notoSans(
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w400,
+                            color: const Color.fromRGBO(96, 93, 102, 1),
+                          ),
+                        )
+                      : Text(
+                          " 00:0$counter",
+                          style: GoogleFonts.notoSans(
+                            fontWeight: FontWeight.w400,
                             color: const Color.fromRGBO(96, 93, 102, 1),
                           ),
                         ),
-                      ),
-                      counter > 9
-                          ? Text(
-                              " 00:$counter",
-                              style: GoogleFonts.notoSans(
-                                fontWeight: FontWeight.w400,
-                                color: const Color.fromRGBO(96, 93, 102, 1),
-                              ),
-                            )
-                          : Text(
-                              " 00:0$counter",
-                              style: GoogleFonts.notoSans(
-                                fontWeight: FontWeight.w400,
-                                color: const Color.fromRGBO(96, 93, 102, 1),
-                              ),
-                            ),
-                    ],
-                  )
                 ],
               )
             : Container(),
-        !isConfirmationCodeCorrect && isPressed && !sendCodePressed
-            ? const SizedBox(
-                height: 9,
-              )
-            : const SizedBox(
-                height: 80,
-              ),
+        const SizedBox(
+          height: 9,
+        ),
         Padding(
           padding: const EdgeInsets.only(left: 32, right: 32),
           child: CustomButton(
