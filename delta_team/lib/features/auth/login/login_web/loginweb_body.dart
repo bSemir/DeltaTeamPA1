@@ -2,7 +2,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
 import 'package:delta_team/common/customfooter_web.dart';
-import 'package:delta_team/features/auth/loadingScreens/loading_Screen.dart';
+import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_form.dart';
 import 'package:flutter/material.dart';

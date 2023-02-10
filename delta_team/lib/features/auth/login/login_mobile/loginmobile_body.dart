@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:delta_team/features/auth/loadingScreens/loading_Screen.dart';
+import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/login/amplify_auth.dart';
 import 'package:delta_team/features/auth/login/login_form.dart';
 import 'package:delta_team/home_mobile.dart';

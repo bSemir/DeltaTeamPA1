@@ -46,19 +46,20 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
               height: 30,
             ),
             SizedBox(
-              height: 200,
-              width: (200 / 360) * width,
+              height: 61.26,
+              width: (80 / 360) * width,
               child: Image.asset('assets/images/footer_logo.png'),
             ),
             const SizedBox(
-              height: 100,
+              height: 154.74,
             ),
             Stack(alignment: Alignment.center, children: [
               Positioned.fill(
                 child: Align(
                   alignment: Alignment.center,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 30),
+                    padding: const EdgeInsets.only(
+                        top: 85, right: 61, bottom: 77, left: 60),
                     child: Column(
                       children: [
                         const SizedBox(height: 5),
@@ -66,9 +67,9 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
                           text: TextSpan(
                             text: "We're",
                             style: GoogleFonts.notoSans(
-                              fontWeight: FontWeight.bold,
-                              color: const Color.fromARGB(255, 0, 0, 0),
-                              fontSize: 10.0,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF000000),
+                              fontSize: 14.0,
                             ),
                           ),
                         ),
@@ -76,9 +77,9 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
                           text: TextSpan(
                             text: "brewing up...",
                             style: GoogleFonts.notoSans(
-                              fontWeight: FontWeight.bold,
-                              color: const Color.fromARGB(255, 0, 0, 0),
-                              fontSize: 10.0,
+                              fontWeight: FontWeight.w700,
+                              color: const Color(0xFF000000),
+                              fontSize: 14.0,
                             ),
                           ),
                         ),
@@ -87,10 +88,11 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 98,
-                height: 98,
-                child: CircularProgressIndicator(
+              SizedBox(
+                width: (150 / 360) * width,
+                height: 150,
+                child: const CircularProgressIndicator(
+                  backgroundColor: Color(0xffffffff),
                   valueColor: AlwaysStoppedAnimation<Color>(
                       Color.fromARGB(255, 44, 250, 51)),
                   strokeWidth: 13.0,

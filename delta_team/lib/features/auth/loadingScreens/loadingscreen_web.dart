@@ -41,7 +41,7 @@ class _LoadingScreenWebState extends State<LoadingScreenWeb> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
+          children: <Widget>[
             // SizedBox(
             //   height: 200,
             //   width: (200 / 1440) * width,
@@ -50,21 +50,24 @@ class _LoadingScreenWebState extends State<LoadingScreenWeb> {
             // const SizedBox(
             //   height: 20,
             // ),
-            SizedBox(
-              width: 98,
-              height: 98,
+            const SizedBox(
+              width: 150,
+              height: 150,
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                    Color.fromARGB(255, 44, 250, 51)),
-                strokeWidth: 13.0,
+                backgroundColor: Color(0xFFFF4086),
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF22E974)),
+                strokeWidth: 25.0,
               ),
             ),
-            SizedBox(height: 20),
-            Text("Loading...",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700))
+            const SizedBox(height: 25),
+            Text(
+              "Loading...",
+              style: GoogleFonts.notoSans(
+                fontWeight: FontWeight.w400,
+                color: const Color(0xFF000000),
+                fontSize: 48.0,
+              ),
+            )
           ],
         ),
       ),

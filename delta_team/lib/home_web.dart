@@ -1,5 +1,5 @@
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:delta_team/features/auth/loadingScreens/loading_Screen.dart';
+import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/amplify_auth.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';

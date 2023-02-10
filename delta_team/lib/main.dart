@@ -1,7 +1,7 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
-import 'package:delta_team/features/auth/loadingScreens/loading_Screen.dart';
+import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
