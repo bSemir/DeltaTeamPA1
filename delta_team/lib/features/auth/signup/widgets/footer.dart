@@ -18,16 +18,22 @@ class Footer extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Privacy",
-                    style: GoogleFonts.notoSans(
-                      fontSize: 10,
-                      color: const Color.fromRGBO(120, 120, 120, 1),
-                    )),
-                Text("Terms",
-                    style: GoogleFonts.notoSans(
-                      fontSize: 10,
-                      color: const Color.fromRGBO(120, 120, 120, 1),
-                    ))
+                GestureDetector(
+                  key: const Key("privacyKey"),
+                  child: Text("Privacy",
+                      style: GoogleFonts.notoSans(
+                        fontSize: 10,
+                        color: const Color.fromRGBO(120, 120, 120, 1),
+                      )),
+                ),
+                GestureDetector(
+                  key: const Key("termsKey"),
+                  child: Text("Terms",
+                      style: GoogleFonts.notoSans(
+                        fontSize: 10,
+                        color: const Color.fromRGBO(120, 120, 120, 1),
+                      )),
+                )
               ],
             ),
             const SizedBox(

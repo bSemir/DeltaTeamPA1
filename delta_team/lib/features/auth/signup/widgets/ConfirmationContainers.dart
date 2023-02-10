@@ -98,6 +98,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   height: 49,
                   width: 39,
                   child: TextFormField(
+                    key: const Key("num1Key"),
                     controller: _num1,
                     style: GoogleFonts.notoSans(
                         fontSize: 16, fontWeight: FontWeight.w700),
@@ -141,6 +142,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   height: 49,
                   width: 39,
                   child: TextFormField(
+                    key: const Key("num2Key"),
                     controller: _num2,
                     style: GoogleFonts.notoSans(
                         fontSize: 16, fontWeight: FontWeight.w700),
@@ -184,6 +186,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   height: 49,
                   width: 39,
                   child: TextFormField(
+                    key: const Key("num3Key"),
                     controller: _num3,
                     style: GoogleFonts.notoSans(
                         fontSize: 16, fontWeight: FontWeight.w700),
@@ -227,6 +230,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   height: 49,
                   width: 39,
                   child: TextFormField(
+                    key: const Key("num4Key"),
                     controller: _num4,
                     style: GoogleFonts.notoSans(
                         fontSize: 16, fontWeight: FontWeight.w700),
@@ -270,6 +274,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   height: 49,
                   width: 39,
                   child: TextFormField(
+                    key: const Key("num5Key"),
                     controller: _num5,
                     style: GoogleFonts.notoSans(
                         fontSize: 16, fontWeight: FontWeight.w700),
@@ -313,6 +318,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   height: 49,
                   width: 39,
                   child: TextFormField(
+                    key: const Key("num6Key"),
                     controller: _num6,
                     style: GoogleFonts.notoSans(
                         fontSize: 16, fontWeight: FontWeight.w700),
@@ -381,6 +387,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InkWell(
+                    key: const Key('sendCodeAgain'),
                     onDoubleTap: () {
                       if (counter == 0) {
                         setState(() {
@@ -457,6 +464,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
         Padding(
           padding: const EdgeInsets.only(left: 32, right: 32),
           child: CustomButton(
+            key: const Key("verifyConfirmationKey"),
             content: Text(
               "Verify",
               style: GoogleFonts.notoSans(

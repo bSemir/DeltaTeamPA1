@@ -33,10 +33,13 @@ class SignupScreen extends StatelessWidget {
                     "Already have an account? ",
                     style: GoogleFonts.notoSans(fontSize: 14),
                   ),
-                  Text(
-                    'Log in',
-                    style: GoogleFonts.notoSans(
-                        fontSize: 14, fontWeight: FontWeight.bold),
+                  GestureDetector(
+                    key: const Key("loginKey"),
+                    child: Text(
+                      'Log in',
+                      style: GoogleFonts.notoSans(
+                          fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),

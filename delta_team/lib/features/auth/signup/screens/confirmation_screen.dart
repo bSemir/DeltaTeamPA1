@@ -1,4 +1,4 @@
-import 'package:delta_team/features/auth/signup/widgets/ConfirmationContainers.dart';
+import 'package:delta_team/features/auth/signup/widgets/confirmationContainers.dart';
 import 'package:delta_team/features/auth/signup/widgets/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -70,10 +70,13 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                       "Already have an account? ",
                       style: GoogleFonts.notoSans(fontSize: 14),
                     ),
-                    Text(
-                      'Log in',
-                      style: GoogleFonts.notoSans(
-                          fontSize: 14, fontWeight: FontWeight.bold),
+                    GestureDetector(
+                      key: const Key("loginKey"),
+                      child: Text(
+                        'Log in',
+                        style: GoogleFonts.notoSans(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),

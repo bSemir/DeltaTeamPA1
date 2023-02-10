@@ -91,6 +91,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
       child: Column(
         children: [
           TextFormField(
+            key: const Key("nameKey"),
             controller: nameController,
             onChanged: (value) {
               if (value.isNotEmpty && isNameValid) {
@@ -164,6 +165,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             height: 24,
           ),
           TextFormField(
+            key: const Key("surnameKey"),
             controller: surnameController,
             onChanged: (value) {
               if (value.isNotEmpty && isSurnameValid) {
@@ -237,6 +239,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             height: 24,
           ),
           TextFormField(
+            key: const Key("birthDateKey"),
             controller: birthDateController,
             onChanged: (value) {
               if (value.isNotEmpty && isBirthDateValid) {
@@ -312,6 +315,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             height: 24,
           ),
           TextFormField(
+            key: const Key("cityKey"),
             controller: cityController,
             onChanged: (value) {
               if (value.isNotEmpty && isCityValid) {
@@ -387,6 +391,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
           SizedBox(
             width: double.infinity,
             child: DropdownButtonFormField<String>(
+              key: const Key("statusKey"),
               hint: Text(
                 'Status',
                 style: GoogleFonts.notoSans(
@@ -459,6 +464,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             height: 24,
           ),
           TextFormField(
+            key: const Key("phoneNumberKey"),
             controller: phoneNumberController,
             onChanged: (value) {
               if (value.isNotEmpty && isPhoneValid) {
@@ -533,6 +539,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             height: 24,
           ),
           TextFormField(
+            key: const Key("emailKey"),
             controller: emailController,
             onChanged: (value) {
               if (value.isNotEmpty && isEmailValid) {
@@ -605,6 +612,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             height: 24,
           ),
           TextFormField(
+            key: const Key("passwordKey"),
             controller: passwordController,
             onChanged: (value) {
               if (value.isNotEmpty && isPasswordValid) {
@@ -649,6 +657,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             },
             decoration: InputDecoration(
               suffixIcon: InkWell(
+                  key: const Key("passwordVisible"),
                   child: Icon(
                     viewPassword ? Icons.visibility : Icons.visibility_off,
                     color: viewPassword
@@ -694,6 +703,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             height: 33,
           ),
           CustomButton(
+            key: const Key("createAccountKey"),
             content: Text(
               "Create Your account",
               style: GoogleFonts.notoSans(
