@@ -1,6 +1,11 @@
+import 'dart:async';
+
+import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:delta_team/features/auth/signup/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../common/custom_signlog_button.dart';
 
@@ -21,13 +26,40 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
 
   final _confirmationKey = GlobalKey<FormState>();
 
-  String dummyNum = "234567";
+  Color errorColor = const Color.fromRGBO(179, 38, 30, 1);
+
   bool isNumberCorrect = true;
-  int counter = 0;
   bool isPressed = false;
+  bool isConfirmationCodeCorrect = false;
+  bool canSendCode = false;
+
+  String num1Str = "";
+  String num2Str = "";
+  String num3Str = "";
+  String num4Str = "";
+  String num5Str = "";
+  String num6Str = "";
+  String code = "";
+
+  int counter = 20;
+  int clickCounter = 0;
+
+  void _startTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (counter > 0) {
+          counter--;
+        } else {
+          timer.cancel();
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final emailProvider = Provider.of<MyEmail>(context, listen: false);
+
     return Column(
       children: [
         Form(
@@ -54,23 +86,18 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: isNumberCorrect
-                                ? const Color.fromARGB(255, 121, 116, 126)
-                                : Colors.red),
+                            color: !isConfirmationCodeCorrect && isPressed
+                                ? errorColor
+                                : const Color.fromARGB(255, 121, 116, 126)),
                       ),
                     ),
                     onChanged: (value) {
+                      setState(() {
+                        num1Str = value;
+                      });
                       if (value.length == 1) {
                         FocusScope.of(context).nextFocus();
                       }
-                    },
-                    validator: (value) {
-                      if (value != dummyNum[0]) {
-                        setState(() {
-                          isNumberCorrect = false;
-                        });
-                      }
-                      return null;
                     },
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.right,
@@ -88,14 +115,6 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   width: 39,
                   child: TextFormField(
                     controller: _num2,
-                    validator: (value) {
-                      if (value != dummyNum[1]) {
-                        setState(() {
-                          isNumberCorrect = false;
-                        });
-                      }
-                      return null;
-                    },
                     style: GoogleFonts.notoSans(
                         fontSize: 16, fontWeight: FontWeight.w700),
                     decoration: InputDecoration(
@@ -108,12 +127,15 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: isNumberCorrect
-                                ? const Color.fromARGB(255, 121, 116, 126)
-                                : Colors.red),
+                            color: !isConfirmationCodeCorrect && isPressed
+                                ? errorColor
+                                : const Color.fromARGB(255, 121, 116, 126)),
                       ),
                     ),
                     onChanged: (value) {
+                      setState(() {
+                        num2Str = value;
+                      });
                       if (value.length == 1) {
                         FocusScope.of(context).nextFocus();
                       }
@@ -134,14 +156,6 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   width: 39,
                   child: TextFormField(
                     controller: _num3,
-                    validator: (value) {
-                      if (value != dummyNum[2]) {
-                        setState(() {
-                          isNumberCorrect = false;
-                        });
-                      }
-                      return null;
-                    },
                     style: GoogleFonts.notoSans(
                         fontSize: 16, fontWeight: FontWeight.w700),
                     decoration: InputDecoration(
@@ -154,12 +168,15 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: isNumberCorrect
-                                ? const Color.fromARGB(255, 121, 116, 126)
-                                : Colors.red),
+                            color: !isConfirmationCodeCorrect && isPressed
+                                ? errorColor
+                                : const Color.fromARGB(255, 121, 116, 126)),
                       ),
                     ),
                     onChanged: (value) {
+                      setState(() {
+                        num3Str = value;
+                      });
                       if (value.length == 1) {
                         FocusScope.of(context).nextFocus();
                       }
@@ -180,14 +197,6 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   width: 39,
                   child: TextFormField(
                     controller: _num4,
-                    validator: (value) {
-                      if (value != dummyNum[3]) {
-                        setState(() {
-                          isNumberCorrect = false;
-                        });
-                      }
-                      return null;
-                    },
                     style: GoogleFonts.notoSans(
                         fontSize: 16, fontWeight: FontWeight.w700),
                     decoration: InputDecoration(
@@ -200,12 +209,15 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: isNumberCorrect
-                                ? const Color.fromARGB(255, 121, 116, 126)
-                                : Colors.red),
+                            color: !isConfirmationCodeCorrect && isPressed
+                                ? errorColor
+                                : const Color.fromARGB(255, 121, 116, 126)),
                       ),
                     ),
                     onChanged: (value) {
+                      setState(() {
+                        num4Str = value;
+                      });
                       if (value.length == 1) {
                         FocusScope.of(context).nextFocus();
                       }
@@ -226,14 +238,6 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   width: 39,
                   child: TextFormField(
                     controller: _num5,
-                    validator: (value) {
-                      if (value != dummyNum[4]) {
-                        setState(() {
-                          isNumberCorrect = false;
-                        });
-                      }
-                      return null;
-                    },
                     style: GoogleFonts.notoSans(
                         fontSize: 16, fontWeight: FontWeight.w700),
                     decoration: InputDecoration(
@@ -246,12 +250,15 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: isNumberCorrect
-                                ? const Color.fromARGB(255, 121, 116, 126)
-                                : Colors.red),
+                            color: !isConfirmationCodeCorrect && isPressed
+                                ? errorColor
+                                : const Color.fromARGB(255, 121, 116, 126)),
                       ),
                     ),
                     onChanged: (value) {
+                      setState(() {
+                        num5Str = value;
+                      });
                       if (value.length == 1) {
                         FocusScope.of(context).nextFocus();
                       }
@@ -272,24 +279,6 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   width: 39,
                   child: TextFormField(
                     controller: _num6,
-                    validator: (value) {
-                      if (value != dummyNum[5]) {
-                        setState(() {
-                          isNumberCorrect = false;
-                        });
-                      }
-                      if (_num1.text == dummyNum[0] &&
-                          _num2.text == dummyNum[1] &&
-                          _num3.text == dummyNum[2] &&
-                          _num4.text == dummyNum[3] &&
-                          _num5.text == dummyNum[4] &&
-                          _num6.text == dummyNum[5]) {
-                        setState(() {
-                          isNumberCorrect = true;
-                        });
-                      }
-                      return null;
-                    },
                     style: GoogleFonts.notoSans(
                         fontSize: 16, fontWeight: FontWeight.w700),
                     decoration: InputDecoration(
@@ -302,12 +291,15 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: isNumberCorrect
-                                ? const Color.fromARGB(255, 121, 116, 126)
-                                : Colors.red),
+                            color: !isConfirmationCodeCorrect && isPressed
+                                ? errorColor
+                                : const Color.fromARGB(255, 121, 116, 126)),
                       ),
                     ),
                     onChanged: (value) {
+                      setState(() {
+                        num6Str = value;
+                      });
                       if (value.length == 1) {
                         FocusScope.of(context).nextFocus();
                       }
@@ -327,14 +319,14 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
         const SizedBox(
           height: 10,
         ),
-        !isNumberCorrect
+        !isConfirmationCodeCorrect && isPressed
             ? Column(
                 children: [
                   Text(
                     "Confirmation code does not match",
                     style: GoogleFonts.notoSans(
                       fontSize: 14,
-                      color: Colors.red,
+                      color: errorColor,
                     ),
                   ),
                   const SizedBox(
@@ -343,26 +335,79 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Send code again",
-                        style: GoogleFonts.notoSans(
-                          fontWeight: FontWeight.w700,
-                          color: const Color.fromRGBO(96, 93, 102, 1),
+                      InkWell(
+                        onTap: () async {
+                          if (counter == 0) {
+                            setState(() {
+                              canSendCode = true;
+                            });
+                          }
+                          if (counter == 0 && !isConfirmationCodeCorrect) {
+                            setState(() {
+                              counter = 20;
+                            });
+                            _startTimer();
+                          }
+                          if (counter != 0) {
+                            setState(() {
+                              canSendCode = false;
+                            });
+                          }
+                          if (canSendCode) {
+                            _num1.clear();
+                            _num2.clear();
+                            _num3.clear();
+                            _num4.clear();
+                            _num5.clear();
+                            _num6.clear();
+                            setState(() {
+                              isPressed = false;
+                            });
+                            try {
+                              await Amplify.Auth.resendSignUpCode(
+                                  username: emailProvider.email);
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                      backgroundColor: Colors.green,
+                                      content: Text(
+                                        "Confirmation code resent. Check your email",
+                                        style: GoogleFonts.notoSans(
+                                            fontSize: 15, color: Colors.white),
+                                      )));
+                            } on AuthException catch (e) {
+                              safePrint(e.message);
+                            }
+                          }
+                        },
+                        child: Text(
+                          "Send code again",
+                          style: GoogleFonts.notoSans(
+                            fontWeight: FontWeight.w700,
+                            color: const Color.fromRGBO(96, 93, 102, 1),
+                          ),
                         ),
                       ),
-                      Text(
-                        " 00:20",
-                        style: GoogleFonts.notoSans(
-                          fontWeight: FontWeight.w400,
-                          color: const Color.fromRGBO(96, 93, 102, 1),
-                        ),
-                      ),
+                      counter > 9
+                          ? Text(
+                              " 00:$counter",
+                              style: GoogleFonts.notoSans(
+                                fontWeight: FontWeight.w400,
+                                color: const Color.fromRGBO(96, 93, 102, 1),
+                              ),
+                            )
+                          : Text(
+                              " 00:0$counter",
+                              style: GoogleFonts.notoSans(
+                                fontWeight: FontWeight.w400,
+                                color: const Color.fromRGBO(96, 93, 102, 1),
+                              ),
+                            ),
                     ],
                   )
                 ],
               )
             : Container(),
-        !isNumberCorrect
+        !isConfirmationCodeCorrect && isPressed
             ? const SizedBox(
                 height: 9,
               )
@@ -379,12 +424,30 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            buttonFunction: () {
+            buttonFunction: () async {
+              if (clickCounter == 0 && !isConfirmationCodeCorrect) {
+                _startTimer();
+              }
               setState(() {
+                clickCounter++;
                 isPressed = true;
+                code = "";
+                code +=
+                    num1Str + num2Str + num3Str + num4Str + num5Str + num6Str;
               });
               if (_confirmationKey.currentState!.validate()) {
-                Navigator.pushNamed(context, "/confirmationMessage");
+                try {
+                  final result = await Amplify.Auth.confirmSignUp(
+                      username: emailProvider.email, confirmationCode: code);
+                  setState(() {
+                    isConfirmationCodeCorrect = result.isSignUpComplete;
+                  });
+                  if (isConfirmationCodeCorrect) {
+                    Navigator.pushNamed(context, "/confirmationMessage");
+                  }
+                } on AuthException catch (e) {
+                  safePrint(e.message);
+                }
               }
             },
             color: Colors.black,

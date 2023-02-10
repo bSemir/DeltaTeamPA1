@@ -1,6 +1,11 @@
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:auth/auth.dart';
+import 'package:delta_team/features/auth/signup/provider/auth_provider.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../common/custom_signlog_button.dart';
 
@@ -14,6 +19,26 @@ class TextFieldSignUp extends StatefulWidget {
 class _TextFieldSignUpState extends State<TextFieldSignUp> {
   bool viewPassword = false;
   bool isButtonPressed = false;
+
+  Future<bool> userExist(String email) async {
+    try {
+      final user =
+          await Amplify.Auth.signIn(username: email, password: "Password1!");
+    } catch (error) {
+      if (error.toString().contains("UserNotConfirmedException")) {
+        setState(() {
+          isEmailTaken = true;
+        });
+      } else {
+        setState(() {
+          isEmailTaken = false;
+        });
+      }
+    }
+    return false;
+  }
+
+  Color errorColor = const Color.fromRGBO(179, 38, 30, 1);
 
   Color _nameLabelColor = const Color.fromRGBO(96, 93, 102, 1);
   Color _isSurnameLabelColor = const Color.fromRGBO(96, 93, 102, 1);
@@ -49,8 +74,18 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
   bool isPasswordValid = false;
   bool isBirthDateValid = false;
 
+  bool isSignUpCompleted = false;
+  bool isEmailTaken = false;
+
+  void changeScreen() {
+    if (isSignUpCompleted) {
+      Navigator.pushNamed(context, '/confirmation');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final emailProvider = Provider.of<MyEmail>(context, listen: false);
     return Form(
       key: _signUpKey,
       child: Column(
@@ -83,7 +118,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 setState(() {
                   isNameValid = false;
                 });
-                return 'Please enter your name';
+                return 'Please fill the required field.';
               } else if (!regExp.hasMatch(value)) {
                 setState(() {
                   isNameValid = false;
@@ -97,18 +132,26 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               return null;
             },
             decoration: InputDecoration(
+              suffixIcon: Visibility(
+                visible: !isNameValid && isButtonPressed,
+                child: Icon(
+                  Icons.error,
+                  color: errorColor,
+                  size: 24,
+                ),
+              ),
               label: Text(
                 "Name",
                 style: GoogleFonts.notoSans(
                     color: !isNameValid && isButtonPressed
-                        ? Colors.red
+                        ? errorColor
                         : _nameLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: !isNameValid && isButtonPressed
-                      ? Colors.red
+                      ? errorColor
                       : _nameLabelColor,
                 ),
               ),
@@ -148,7 +191,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 setState(() {
                   isSurnameValid = false;
                 });
-                return 'Please enter your surname';
+                return 'Please fill the required field.';
               } else if (!regExp.hasMatch(value)) {
                 setState(() {
                   isSurnameValid = false;
@@ -162,18 +205,26 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               return null;
             },
             decoration: InputDecoration(
+              suffixIcon: Visibility(
+                visible: !isSurnameValid && isButtonPressed,
+                child: Icon(
+                  Icons.error,
+                  color: errorColor,
+                  size: 24,
+                ),
+              ),
               label: Text(
                 "Surname",
                 style: GoogleFonts.notoSans(
                     color: !isSurnameValid && isButtonPressed
-                        ? Colors.red
+                        ? errorColor
                         : _isSurnameLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: !isSurnameValid && isButtonPressed
-                      ? Colors.red
+                      ? errorColor
                       : _isSurnameLabelColor,
                 ),
               ),
@@ -207,20 +258,22 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               });
             },
             validator: (value) {
-              String pattern =
-                  r'(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})';
-              RegExp regExp = RegExp(pattern);
+              RegExp exp = RegExp(
+                r'^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$',
+              );
+              print(value);
               if (value!.isEmpty) {
                 setState(() {
                   isBirthDateValid = false;
                 });
-                return 'Please enter birth date';
-              } else if (!regExp.hasMatch(value)) {
+                return 'Please fill the required field.';
+              } else if (!exp.hasMatch(value)) {
                 setState(() {
                   isBirthDateValid = false;
                 });
-                return 'Please enter valid birth date (01/01/01)';
-              } else {
+                return 'Please enter valid birth date (dd/mm/yy)';
+              }
+              if (exp.hasMatch(value)) {
                 setState(() {
                   isBirthDateValid = true;
                 });
@@ -228,18 +281,26 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               return null;
             },
             decoration: InputDecoration(
+              suffixIcon: Visibility(
+                visible: !isBirthDateValid && isButtonPressed,
+                child: Icon(
+                  Icons.error,
+                  color: errorColor,
+                  size: 24,
+                ),
+              ),
               label: Text(
                 "Birth Date",
                 style: GoogleFonts.notoSans(
                     color: !isBirthDateValid && isButtonPressed
-                        ? Colors.red
+                        ? errorColor
                         : _isBirthDateLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: !isBirthDateValid && isButtonPressed
-                      ? Colors.red
+                      ? errorColor
                       : const Color.fromRGBO(34, 233, 116, 1),
                 ),
               ),
@@ -279,7 +340,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 setState(() {
                   isCityValid = false;
                 });
-                return 'Please enter your city';
+                return 'Please fill the required field.';
               } else if (!regExp.hasMatch(value)) {
                 setState(() {
                   isCityValid = false;
@@ -293,18 +354,26 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               return null;
             },
             decoration: InputDecoration(
+              suffixIcon: Visibility(
+                visible: !isCityValid && isButtonPressed,
+                child: Icon(
+                  Icons.error,
+                  color: errorColor,
+                  size: 24,
+                ),
+              ),
               label: Text(
                 "City",
                 style: GoogleFonts.notoSans(
                     color: !isCityValid && isButtonPressed
-                        ? Colors.red
+                        ? errorColor
                         : _cityLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: !isCityValid && isButtonPressed
-                      ? Colors.red
+                      ? errorColor
                       : _cityLabelColor,
                 ),
               ),
@@ -323,7 +392,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 'Status',
                 style: GoogleFonts.notoSans(
                     color: !isStatusValid && isButtonPressed
-                        ? Colors.red
+                        ? errorColor
                         : const Color.fromRGBO(96, 93, 102, 1),
                     fontSize: 14,
                     fontWeight: FontWeight.w700),
@@ -412,13 +481,14 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               });
             },
             validator: (value) {
-              String patttern = r'(^(?:[+0]9)?[0-9]{10,12}$)';
+              String patttern =
+                  r'^[\+]?((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$';
               RegExp regExp = RegExp(patttern);
               if (value!.isEmpty) {
                 setState(() {
                   isPhoneValid = false;
                 });
-                return 'Please enter phone number';
+                return 'Please fill the required field.';
               } else if (!regExp.hasMatch(value)) {
                 setState(() {
                   isPhoneValid = false;
@@ -432,18 +502,26 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               return null;
             },
             decoration: InputDecoration(
+              suffixIcon: Visibility(
+                visible: !isPhoneValid && isButtonPressed,
+                child: Icon(
+                  Icons.error,
+                  color: errorColor,
+                  size: 24,
+                ),
+              ),
               label: Text(
                 "Phone",
                 style: GoogleFonts.notoSans(
                     color: !isPhoneValid && isButtonPressed
-                        ? Colors.red
+                        ? errorColor
                         : _isPhoneLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: !isPhoneValid && isButtonPressed
-                      ? Colors.red
+                      ? errorColor
                       : const Color.fromRGBO(34, 233, 116, 1),
                 ),
               ),
@@ -477,13 +555,19 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               });
             },
             validator: (value) {
-              if (!EmailValidator.validate(value!)) {
+              if (value!.isEmpty) {
+                return 'Please fill the required field.';
+              } else if (!EmailValidator.validate(value)) {
                 setState(() {
                   isEmailValid = false;
                 });
                 return "Enter the valid email";
-              }
-              if (EmailValidator.validate(value)) {
+              } else if (isEmailTaken) {
+                setState(() {
+                  isEmailValid = false;
+                });
+                return "Email already exists";
+              } else if (EmailValidator.validate(value)) {
                 setState(() {
                   isEmailValid = true;
                 });
@@ -491,18 +575,26 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               return null;
             },
             decoration: InputDecoration(
+              suffixIcon: Visibility(
+                visible: !isEmailValid && isButtonPressed,
+                child: Icon(
+                  Icons.error,
+                  color: errorColor,
+                  size: 24,
+                ),
+              ),
               label: Text(
                 "Email",
                 style: GoogleFonts.notoSans(
                     color: !isEmailValid && isButtonPressed
-                        ? Colors.red
+                        ? errorColor
                         : _isEmailLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: !isEmailValid && isButtonPressed
-                        ? Colors.red
+                        ? errorColor
                         : const Color.fromRGBO(34, 233, 116, 1)),
               ),
               border: OutlineInputBorder(
@@ -536,23 +628,23 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               });
             },
             validator: (value) {
-              String patttern =
-                  r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$';
-              RegExp regExp = RegExp(patttern);
+              String regex =
+                  r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
+              RegExp regExp = RegExp(regex);
               if (value!.isEmpty) {
                 setState(() {
                   isPasswordValid = false;
                 });
-                return 'Please enter password';
-              } else if (!regExp.hasMatch(value)) {
+                return 'Please fill the required field.';
+              } else if (regExp.hasMatch(value)) {
+                setState(() {
+                  isPasswordValid = true;
+                });
+              } else {
                 setState(() {
                   isPasswordValid = false;
                 });
                 return 'Password must contain a minimum of 8 characters, \nuppercase, lower case, number and special character.';
-              } else {
-                setState(() {
-                  isPasswordValid = true;
-                });
               }
               return null;
             },
@@ -573,14 +665,14 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 "Password",
                 style: GoogleFonts.notoSans(
                     color: !isPasswordValid && isButtonPressed
-                        ? Colors.red
+                        ? errorColor
                         : _isPasswordLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                     color: !isPasswordValid && isButtonPressed
-                        ? Colors.red
+                        ? errorColor
                         : const Color.fromRGBO(34, 233, 116, 1)),
               ),
               border: OutlineInputBorder(
@@ -610,12 +702,44 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            buttonFunction: () {
+            buttonFunction: () async {
               setState(() {
                 isButtonPressed = true;
               });
+              await userExist(emailController.text);
               if (_signUpKey.currentState!.validate()) {
-                Navigator.pushNamed(context, "/confirmation");
+                try {
+                  final userAttributes = <CognitoUserAttributeKey, String>{
+                    CognitoUserAttributeKey.email: emailController.text,
+                    CognitoUserAttributeKey.phoneNumber:
+                        phoneNumberController.text,
+                    CognitoUserAttributeKey.givenName: nameController.text,
+                    CognitoUserAttributeKey.address: cityController.text,
+                    CognitoUserAttributeKey.familyName: surnameController.text,
+                    CognitoUserAttributeKey.birthdate: birthDateController.text,
+                    const CognitoUserAttributeKey.custom("Status"):
+                        _statusValue!,
+
+                    // additional attributes as needed
+                  };
+                  final result = await Amplify.Auth.signUp(
+                    username: emailController.text,
+                    password: passwordController.text,
+                    options:
+                        CognitoSignUpOptions(userAttributes: userAttributes),
+                  );
+                  if (result.isSignUpComplete) {
+                    setState(() {
+                      emailProvider.email = emailController.text;
+                      isSignUpCompleted = true;
+                    });
+                  }
+                } on AuthException catch (e) {
+                  safePrint(e.message);
+                }
+              }
+              if (isSignUpCompleted) {
+                changeScreen();
               }
             },
             color: Colors.black,

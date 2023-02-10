@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:delta_team/features/auth/signup/widgets/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +9,10 @@ class ConfirmationMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Timer(const Duration(seconds: 5),
+        () => Navigator.pushNamed(context, "/redirectingScreen"));
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
