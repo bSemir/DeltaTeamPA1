@@ -261,7 +261,6 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               RegExp exp = RegExp(
                 r'^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$',
               );
-              print(value);
               if (value!.isEmpty) {
                 setState(() {
                   isBirthDateValid = false;

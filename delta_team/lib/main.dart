@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
       ),
-      home: const SignupScreen(),
+      home: const ConfirmationScreen(),
       routes: {
         '/signup': (context) => const SignupScreen(),
         '/confirmation': (context) => const ConfirmationScreen(),

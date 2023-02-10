@@ -56,6 +56,30 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
     });
   }
 
+  Future<void> sendMessage(email) async {
+    _num1.clear();
+    _num2.clear();
+    _num3.clear();
+    _num4.clear();
+    _num5.clear();
+    _num6.clear();
+
+    try {
+      await Amplify.Auth.resendSignUpCode(username: email);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.green,
+          content: Text(
+            "Confirmation code resent. Check your email",
+            style: GoogleFonts.notoSans(fontSize: 15, color: Colors.white),
+          ),
+        ),
+      );
+    } on AuthException catch (e) {
+      safePrint(e.message);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final emailProvider = Provider.of<MyEmail>(context, listen: false);
@@ -336,6 +360,27 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InkWell(
+                        onDoubleTap: () {
+                          if (counter == 0) {
+                            setState(() {
+                              canSendCode = true;
+                            });
+                          }
+                          if (counter == 0 && !isConfirmationCodeCorrect) {
+                            setState(() {
+                              counter = 20;
+                            });
+                            _startTimer();
+                          }
+                          if (counter != 0) {
+                            setState(() {
+                              canSendCode = false;
+                            });
+                          }
+                          if (canSendCode) {
+                            sendMessage(emailProvider.email);
+                          }
+                        },
                         onTap: () async {
                           if (counter == 0) {
                             setState(() {
@@ -354,29 +399,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                             });
                           }
                           if (canSendCode) {
-                            _num1.clear();
-                            _num2.clear();
-                            _num3.clear();
-                            _num4.clear();
-                            _num5.clear();
-                            _num6.clear();
-                            setState(() {
-                              isPressed = false;
-                            });
-                            try {
-                              await Amplify.Auth.resendSignUpCode(
-                                  username: emailProvider.email);
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                      backgroundColor: Colors.green,
-                                      content: Text(
-                                        "Confirmation code resent. Check your email",
-                                        style: GoogleFonts.notoSans(
-                                            fontSize: 15, color: Colors.white),
-                                      )));
-                            } on AuthException catch (e) {
-                              safePrint(e.message);
-                            }
+                            sendMessage(emailProvider.email);
                           }
                         },
                         child: Text(
