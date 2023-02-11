@@ -60,6 +60,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
   Future<void> sendMessage(email) async {
     try {
       await Amplify.Auth.resendSignUpCode(username: email);
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.green,
@@ -416,6 +417,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                           sendCodePressed = true;
                           canSendCode = true;
                         });
+
                         _startTimer();
                       } else if (counter == 0) {
                         setState(() {
@@ -428,6 +430,12 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       }
 
                       if (canSendCode) {
+                        _num1.clear();
+                        _num2.clear();
+                        _num3.clear();
+                        _num4.clear();
+                        _num5.clear();
+                        _num6.clear();
                         sendMessage(emailProvider.email);
                       }
                     },
@@ -485,6 +493,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                 code +=
                     num1Str + num2Str + num3Str + num4Str + num5Str + num6Str;
               });
+
               if (_confirmationKey.currentState!.validate()) {
                 try {
                   final result = await Amplify.Auth.confirmSignUp(
