@@ -58,13 +58,6 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
   }
 
   Future<void> sendMessage(email) async {
-    _num1.clear();
-    _num2.clear();
-    _num3.clear();
-    _num4.clear();
-    _num5.clear();
-    _num6.clear();
-
     try {
       await Amplify.Auth.resendSignUpCode(username: email);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -407,27 +400,33 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                         });
                       }
                       if (canSendCode) {
+                        _num1.clear();
+                        _num2.clear();
+                        _num3.clear();
+                        _num4.clear();
+                        _num5.clear();
+                        _num6.clear();
                         sendMessage(emailProvider.email);
                       }
                     },
                     onTap: () async {
-                      if (counter == 0) {
-                        setState(() {
-                          canSendCode = true;
-                        });
-                      }
                       if (counter == 0 && !isConfirmationCodeCorrect) {
                         setState(() {
                           counter = 20;
                           sendCodePressed = true;
+                          canSendCode = true;
                         });
                         _startTimer();
-                      }
-                      if (counter != 0) {
+                      } else if (counter == 0) {
+                        setState(() {
+                          canSendCode = true;
+                        });
+                      } else if (counter != 0) {
                         setState(() {
                           canSendCode = false;
                         });
                       }
+
                       if (canSendCode) {
                         sendMessage(emailProvider.email);
                       }

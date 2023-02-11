@@ -1,6 +1,5 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:auth/auth.dart';
 import 'package:delta_team/features/auth/signup/provider/auth_provider.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +24,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
       final user =
           await Amplify.Auth.signIn(username: email, password: "Password1!");
     } catch (error) {
-      if (error.toString().contains("UserNotConfirmedException")) {
+      if (!error.toString().contains("UserNotFoundException")) {
         setState(() {
           isEmailTaken = true;
         });
@@ -489,16 +488,22 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               String patttern =
                   r'^[\+]?((?:9[679]|8[035789]|6[789]|5[90]|42|3[578]|2[1-689])|9[0-58]|8[1246]|6[0-6]|5[1-8]|4[013-9]|3[0-469]|2[70]|7|1)(?:\W*\d){0,13}\d$';
               RegExp regExp = RegExp(patttern);
+
               if (value!.isEmpty) {
                 setState(() {
                   isPhoneValid = false;
                 });
                 return 'Please fill the required field.';
+              } else if (phoneNumberController.text[0] != "+") {
+                setState(() {
+                  isPhoneValid = false;
+                });
+                return 'Please enter valid phone number (+387 format)';
               } else if (!regExp.hasMatch(value)) {
                 setState(() {
                   isPhoneValid = false;
                 });
-                return 'Please enter valid phone number (387 format)';
+                return 'Please enter valid phone number (+387 format)';
               } else {
                 setState(() {
                   isPhoneValid = true;
@@ -726,8 +731,8 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                     CognitoUserAttributeKey.address: cityController.text,
                     CognitoUserAttributeKey.familyName: surnameController.text,
                     CognitoUserAttributeKey.birthdate: birthDateController.text,
-                    const CognitoUserAttributeKey.custom("Status"):
-                        _statusValue!,
+                    // const CognitoUserAttributeKey.custom("Status"):
+                    //     _statusValue!,
 
                     // additional attributes as needed
                   };
