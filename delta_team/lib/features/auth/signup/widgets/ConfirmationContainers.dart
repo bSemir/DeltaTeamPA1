@@ -30,9 +30,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
 
   bool isNumberCorrect = true;
   bool isPressed = false;
-  bool isConfirmationCodeCorrect = false;
+  bool codeErrored = false;
   bool canSendCode = false;
-  bool sendCodePressed = false;
+  bool notSendCodeAgainPressed = false;
 
   String num1Str = "";
   String num2Str = "";
@@ -106,9 +106,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: !isConfirmationCodeCorrect &&
+                            color: codeErrored &&
                                     isPressed &&
-                                    !sendCodePressed
+                                    notSendCodeAgainPressed
                                 ? errorColor
                                 : const Color.fromARGB(255, 121, 116, 126)),
                       ),
@@ -117,6 +117,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       setState(() {
                         num1Str = value;
                       });
+
                       if (value.length == 1) {
                         FocusScope.of(context).nextFocus();
                       }
@@ -150,9 +151,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: !isConfirmationCodeCorrect &&
+                            color: codeErrored &&
                                     isPressed &&
-                                    !sendCodePressed
+                                    notSendCodeAgainPressed
                                 ? errorColor
                                 : const Color.fromARGB(255, 121, 116, 126)),
                       ),
@@ -194,9 +195,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: !isConfirmationCodeCorrect &&
+                            color: codeErrored &&
                                     isPressed &&
-                                    !sendCodePressed
+                                    notSendCodeAgainPressed
                                 ? errorColor
                                 : const Color.fromARGB(255, 121, 116, 126)),
                       ),
@@ -238,9 +239,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: !isConfirmationCodeCorrect &&
+                            color: codeErrored &&
                                     isPressed &&
-                                    !sendCodePressed
+                                    notSendCodeAgainPressed
                                 ? errorColor
                                 : const Color.fromARGB(255, 121, 116, 126)),
                       ),
@@ -282,9 +283,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: !isConfirmationCodeCorrect &&
+                            color: codeErrored &&
                                     isPressed &&
-                                    !sendCodePressed
+                                    notSendCodeAgainPressed
                                 ? errorColor
                                 : const Color.fromARGB(255, 121, 116, 126)),
                       ),
@@ -326,9 +327,9 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide(
-                            color: !isConfirmationCodeCorrect &&
+                            color: codeErrored &&
                                     isPressed &&
-                                    !sendCodePressed
+                                    notSendCodeAgainPressed
                                 ? errorColor
                                 : const Color.fromARGB(255, 121, 116, 126)),
                       ),
@@ -356,7 +357,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
         const SizedBox(
           height: 10,
         ),
-        !isConfirmationCodeCorrect && isPressed && !sendCodePressed
+        codeErrored && notSendCodeAgainPressed
             ? Text(
                 "Confirmation code does not match",
                 style: GoogleFonts.notoSans(
@@ -370,34 +371,37 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
         const SizedBox(
           height: 36,
         ),
-        clickCounter == 0
+        !codeErrored
             ? const SizedBox(
-                height: 28,
+                height: 16,
               )
-            : Container(),
-        (!isConfirmationCodeCorrect && isPressed) ||
-                (isPressed && clickCounter == 1)
+            : const SizedBox(
+                height: 26,
+              ),
+        codeErrored && isPressed
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InkWell(
                     key: const Key('sendCodeAgain'),
                     onDoubleTap: () {
-                      if (counter == 0) {
-                        setState(() {
-                          canSendCode = true;
-                        });
-                      }
-                      if (counter == 0 && !isConfirmationCodeCorrect) {
+                      if (counter == 0 && codeErrored) {
                         setState(() {
                           counter = 20;
-                          sendCodePressed = true;
+                          notSendCodeAgainPressed = false;
+                          canSendCode = true;
                         });
+
                         _startTimer();
-                      }
-                      if (counter != 0) {
+                      } else if (counter == 0) {
+                        setState(() {
+                          canSendCode = true;
+                          notSendCodeAgainPressed = false;
+                        });
+                      } else if (counter != 0) {
                         setState(() {
                           canSendCode = false;
+                          notSendCodeAgainPressed = true;
                         });
                       }
                       if (canSendCode) {
@@ -411,10 +415,10 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       }
                     },
                     onTap: () async {
-                      if (counter == 0 && !isConfirmationCodeCorrect) {
+                      if (counter == 0 && codeErrored) {
                         setState(() {
                           counter = 20;
-                          sendCodePressed = true;
+                          notSendCodeAgainPressed = false;
                           canSendCode = true;
                         });
 
@@ -422,10 +426,12 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       } else if (counter == 0) {
                         setState(() {
                           canSendCode = true;
+                          notSendCodeAgainPressed = false;
                         });
                       } else if (counter != 0) {
                         setState(() {
                           canSendCode = false;
+                          notSendCodeAgainPressed = true;
                         });
                       }
 
@@ -480,12 +486,12 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
               ),
             ),
             buttonFunction: () async {
-              setState(() {
-                sendCodePressed = false;
-              });
-              if (clickCounter == 0 && !isConfirmationCodeCorrect) {
+              if (clickCounter == 0) {
                 _startTimer();
               }
+              setState(() {
+                notSendCodeAgainPressed = true;
+              });
               setState(() {
                 clickCounter++;
                 isPressed = true;
@@ -499,13 +505,26 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                   final result = await Amplify.Auth.confirmSignUp(
                       username: emailProvider.email, confirmationCode: code);
                   setState(() {
-                    isConfirmationCodeCorrect = result.isSignUpComplete;
+                    codeErrored = !result.isSignUpComplete;
                   });
-                  if (isConfirmationCodeCorrect) {
+                  if (!codeErrored) {
                     Navigator.pushNamed(context, "/confirmationMessage");
                   }
                 } on AuthException catch (e) {
-                  safePrint(e.message);
+                  if (e.message.toString().contains(
+                          "Confirmation code entered is not correct.") ||
+                      e.message
+                          .toString()
+                          .contains("One or more parameters are incorrect.")) {
+                    setState(() {
+                      codeErrored = true;
+                    });
+                  } else {
+                    setState(() {
+                      codeErrored = false;
+                    });
+                  }
+                  print(e.message);
                 }
               }
             },

@@ -64,14 +64,14 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
 
   final _signUpKey = GlobalKey<FormState>();
 
-  bool isNameValid = false;
-  bool isSurnameValid = false;
-  bool isStatusValid = false;
-  bool isEmailValid = false;
-  bool isPhoneValid = false;
-  bool isCityValid = false;
-  bool isPasswordValid = false;
-  bool isBirthDateValid = false;
+  bool nameErrored = false;
+  bool surnameErrored = false;
+  bool birthDateErrored = false;
+  bool statusErrored = false;
+  bool cityErrored = false;
+  bool phoneErrored = false;
+  bool emailErrored = false;
+  bool passwordErrored = false;
 
   bool isSignUpCompleted = false;
   bool isEmailTaken = false;
@@ -93,7 +93,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             key: const Key("nameKey"),
             controller: nameController,
             onChanged: (value) {
-              if (value.isNotEmpty && isNameValid) {
+              if (value.isNotEmpty && !nameErrored) {
                 setState(() {
                   isButtonPressed = false;
                 });
@@ -116,24 +116,23 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               RegExp regExp = RegExp(pattern);
               if (value!.isEmpty) {
                 setState(() {
-                  isNameValid = false;
+                  nameErrored = true;
                 });
                 return 'Please fill the required field.';
               } else if (!regExp.hasMatch(value)) {
                 setState(() {
-                  isNameValid = false;
+                  nameErrored = true;
                 });
                 return 'Please enter valid name';
-              } else {
-                setState(() {
-                  isNameValid = true;
-                });
               }
+              setState(() {
+                nameErrored = false;
+              });
               return null;
             },
             decoration: InputDecoration(
               suffixIcon: Visibility(
-                visible: !isNameValid && isButtonPressed,
+                visible: nameErrored,
                 child: Icon(
                   Icons.error,
                   color: errorColor,
@@ -143,14 +142,14 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               label: Text(
                 "Name",
                 style: GoogleFonts.notoSans(
-                    color: !isNameValid && isButtonPressed
+                    color: nameErrored && isButtonPressed
                         ? errorColor
                         : _nameLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: !isNameValid && isButtonPressed
+                  color: nameErrored && isButtonPressed
                       ? errorColor
                       : _nameLabelColor,
                 ),
@@ -167,7 +166,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             key: const Key("surnameKey"),
             controller: surnameController,
             onChanged: (value) {
-              if (value.isNotEmpty && isSurnameValid) {
+              if (value.isNotEmpty && !surnameErrored) {
                 setState(() {
                   isButtonPressed = false;
                 });
@@ -190,24 +189,24 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               RegExp regExp = RegExp(pattern);
               if (value!.isEmpty) {
                 setState(() {
-                  isSurnameValid = false;
+                  surnameErrored = true;
                 });
                 return 'Please fill the required field.';
               } else if (!regExp.hasMatch(value)) {
                 setState(() {
-                  isSurnameValid = false;
+                  surnameErrored = true;
                 });
                 return 'Please enter valid surname';
               } else {
                 setState(() {
-                  isSurnameValid = true;
+                  surnameErrored = false;
                 });
               }
               return null;
             },
             decoration: InputDecoration(
               suffixIcon: Visibility(
-                visible: !isSurnameValid && isButtonPressed,
+                visible: surnameErrored && isButtonPressed,
                 child: Icon(
                   Icons.error,
                   color: errorColor,
@@ -217,14 +216,14 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               label: Text(
                 "Surname",
                 style: GoogleFonts.notoSans(
-                    color: !isSurnameValid && isButtonPressed
+                    color: surnameErrored && isButtonPressed
                         ? errorColor
                         : _isSurnameLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: !isSurnameValid && isButtonPressed
+                  color: surnameErrored && isButtonPressed
                       ? errorColor
                       : _isSurnameLabelColor,
                 ),
@@ -241,7 +240,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             key: const Key("birthDateKey"),
             controller: birthDateController,
             onChanged: (value) {
-              if (value.isNotEmpty && isBirthDateValid) {
+              if (value.isNotEmpty && !birthDateErrored) {
                 setState(() {
                   isButtonPressed = false;
                 });
@@ -265,25 +264,25 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               );
               if (value!.isEmpty) {
                 setState(() {
-                  isBirthDateValid = false;
+                  birthDateErrored = true;
                 });
                 return 'Please fill the required field.';
               } else if (!exp.hasMatch(value)) {
                 setState(() {
-                  isBirthDateValid = false;
+                  birthDateErrored = true;
                 });
                 return 'Please enter valid birth date (dd/mm/yy)';
               }
               if (exp.hasMatch(value)) {
                 setState(() {
-                  isBirthDateValid = true;
+                  birthDateErrored = false;
                 });
               }
               return null;
             },
             decoration: InputDecoration(
               suffixIcon: Visibility(
-                visible: !isBirthDateValid && isButtonPressed,
+                visible: birthDateErrored,
                 child: Icon(
                   Icons.error,
                   color: errorColor,
@@ -293,14 +292,13 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               label: Text(
                 "Birth Date",
                 style: GoogleFonts.notoSans(
-                    color: !isBirthDateValid && isButtonPressed
-                        ? errorColor
-                        : _isBirthDateLabelColor,
+                    color:
+                        birthDateErrored ? errorColor : _isBirthDateLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: !isBirthDateValid && isButtonPressed
+                  color: birthDateErrored
                       ? errorColor
                       : const Color.fromRGBO(34, 233, 116, 1),
                 ),
@@ -317,7 +315,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             key: const Key("cityKey"),
             controller: cityController,
             onChanged: (value) {
-              if (value.isNotEmpty && isCityValid) {
+              if (value.isNotEmpty && !cityErrored) {
                 setState(() {
                   isButtonPressed = false;
                 });
@@ -340,24 +338,24 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               RegExp regExp = RegExp(pattern);
               if (value!.isEmpty) {
                 setState(() {
-                  isCityValid = false;
+                  cityErrored = true;
                 });
                 return 'Please fill the required field.';
               } else if (!regExp.hasMatch(value)) {
                 setState(() {
-                  isCityValid = false;
+                  cityErrored = true;
                 });
                 return 'Please enter valid city';
               } else {
                 setState(() {
-                  isCityValid = true;
+                  cityErrored = false;
                 });
               }
               return null;
             },
             decoration: InputDecoration(
               suffixIcon: Visibility(
-                visible: !isCityValid && isButtonPressed,
+                visible: cityErrored,
                 child: Icon(
                   Icons.error,
                   color: errorColor,
@@ -367,16 +365,12 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               label: Text(
                 "City",
                 style: GoogleFonts.notoSans(
-                    color: !isCityValid && isButtonPressed
-                        ? errorColor
-                        : _cityLabelColor,
+                    color: cityErrored ? errorColor : _cityLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: !isCityValid && isButtonPressed
-                      ? errorColor
-                      : _cityLabelColor,
+                  color: cityErrored ? errorColor : _cityLabelColor,
                 ),
               ),
               border: OutlineInputBorder(
@@ -394,7 +388,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               hint: Text(
                 'Status',
                 style: GoogleFonts.notoSans(
-                    color: !isStatusValid && isButtonPressed
+                    color: statusErrored && isButtonPressed
                         ? errorColor
                         : const Color.fromRGBO(96, 93, 102, 1),
                     fontSize: 14,
@@ -415,12 +409,12 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               validator: (value) {
                 if (_statusValue == null) {
                   setState(() {
-                    isStatusValid = false;
+                    statusErrored = true;
                   });
                   return "Select your status";
                 } else {
                   setState(() {
-                    isStatusValid = true;
+                    statusErrored = false;
                   });
                 }
                 return null;
@@ -466,7 +460,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             key: const Key("phoneNumberKey"),
             controller: phoneNumberController,
             onChanged: (value) {
-              if (value.isNotEmpty && isPhoneValid) {
+              if (value.isNotEmpty && !phoneErrored) {
                 setState(() {
                   isButtonPressed = false;
                 });
@@ -491,29 +485,29 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
 
               if (value!.isEmpty) {
                 setState(() {
-                  isPhoneValid = false;
+                  phoneErrored = true;
                 });
                 return 'Please fill the required field.';
               } else if (phoneNumberController.text[0] != "+") {
                 setState(() {
-                  isPhoneValid = false;
+                  phoneErrored = true;
                 });
                 return 'Please enter valid phone number (+387 format)';
               } else if (!regExp.hasMatch(value)) {
                 setState(() {
-                  isPhoneValid = false;
+                  phoneErrored = true;
                 });
                 return 'Please enter valid phone number (+387 format)';
               } else {
                 setState(() {
-                  isPhoneValid = true;
+                  phoneErrored = false;
                 });
               }
               return null;
             },
             decoration: InputDecoration(
               suffixIcon: Visibility(
-                visible: !isPhoneValid && isButtonPressed,
+                visible: phoneErrored,
                 child: Icon(
                   Icons.error,
                   color: errorColor,
@@ -523,14 +517,12 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               label: Text(
                 "Phone",
                 style: GoogleFonts.notoSans(
-                    color: !isPhoneValid && isButtonPressed
-                        ? errorColor
-                        : _isPhoneLabelColor,
+                    color: phoneErrored ? errorColor : _isPhoneLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: !isPhoneValid && isButtonPressed
+                  color: phoneErrored
                       ? errorColor
                       : const Color.fromRGBO(34, 233, 116, 1),
                 ),
@@ -547,7 +539,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             key: const Key("emailKey"),
             controller: emailController,
             onChanged: (value) {
-              if (value.isNotEmpty && isEmailValid) {
+              if (value.isNotEmpty && !emailErrored) {
                 setState(() {
                   isButtonPressed = false;
                 });
@@ -567,27 +559,28 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             },
             validator: (value) {
               if (value!.isEmpty) {
+                emailErrored = true;
                 return 'Please fill the required field.';
               } else if (!EmailValidator.validate(value)) {
                 setState(() {
-                  isEmailValid = false;
+                  emailErrored = true;
                 });
                 return "Enter the valid email";
               } else if (isEmailTaken) {
                 setState(() {
-                  isEmailValid = false;
+                  emailErrored = true;
                 });
                 return "Email already exists";
-              } else if (EmailValidator.validate(value)) {
-                setState(() {
-                  isEmailValid = true;
-                });
               }
+
+              setState(() {
+                emailErrored = false;
+              });
               return null;
             },
             decoration: InputDecoration(
               suffixIcon: Visibility(
-                visible: !isEmailValid && isButtonPressed,
+                visible: emailErrored,
                 child: Icon(
                   Icons.error,
                   color: errorColor,
@@ -597,14 +590,14 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               label: Text(
                 "Email",
                 style: GoogleFonts.notoSans(
-                    color: !isEmailValid && isButtonPressed
+                    color: emailErrored && isButtonPressed
                         ? errorColor
                         : _isEmailLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: !isEmailValid && isButtonPressed
+                    color: emailErrored && isButtonPressed
                         ? errorColor
                         : const Color.fromRGBO(34, 233, 116, 1)),
               ),
@@ -620,7 +613,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             key: const Key("passwordKey"),
             controller: passwordController,
             onChanged: (value) {
-              if (value.isNotEmpty && isPasswordValid) {
+              if (value.isNotEmpty && !passwordErrored) {
                 setState(() {
                   isButtonPressed = false;
                 });
@@ -645,18 +638,18 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               RegExp regExp = RegExp(regex);
               if (value!.isEmpty) {
                 setState(() {
-                  isPasswordValid = false;
+                  passwordErrored = true;
                 });
                 return 'Please fill the required field.';
-              } else if (regExp.hasMatch(value)) {
+              } else if (!regExp.hasMatch(value)) {
                 setState(() {
-                  isPasswordValid = true;
-                });
-              } else {
-                setState(() {
-                  isPasswordValid = false;
+                  passwordErrored = true;
                 });
                 return 'Password must contain a minimum of 8 characters, \nuppercase, lower case, number and special character.';
+              } else {
+                setState(() {
+                  passwordErrored = false;
+                });
               }
               return null;
             },
@@ -677,14 +670,12 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               label: Text(
                 "Password",
                 style: GoogleFonts.notoSans(
-                    color: !isPasswordValid && isButtonPressed
-                        ? errorColor
-                        : _isPasswordLabelColor,
+                    color: passwordErrored ? errorColor : _isPasswordLabelColor,
                     fontSize: 14),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                    color: !isPasswordValid && isButtonPressed
+                    color: passwordErrored
                         ? errorColor
                         : const Color.fromRGBO(34, 233, 116, 1)),
               ),
@@ -693,7 +684,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               ),
             ),
           ),
-          !isPasswordValid && isButtonPressed
+          passwordErrored
               ? const SizedBox(
                   height: 72,
                 )
@@ -720,6 +711,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               setState(() {
                 isButtonPressed = true;
               });
+
               await userExist(emailController.text);
               if (_signUpKey.currentState!.validate()) {
                 try {
