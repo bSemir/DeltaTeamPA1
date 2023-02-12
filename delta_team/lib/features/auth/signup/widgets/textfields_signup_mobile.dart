@@ -78,6 +78,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
 
   void changeScreen() {
     if (isSignUpCompleted) {
+      FocusManager.instance.primaryFocus?.unfocus();
       Navigator.pushNamed(context, '/confirmation');
     }
   }
@@ -334,7 +335,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               });
             },
             validator: (value) {
-              String pattern = r'^[a-zA-Z]+$';
+              String pattern = r'^[^\W\d_]+(?:[-\s][^\W\d_]+)*[.]?$';
               RegExp regExp = RegExp(pattern);
               if (value!.isEmpty) {
                 setState(() {

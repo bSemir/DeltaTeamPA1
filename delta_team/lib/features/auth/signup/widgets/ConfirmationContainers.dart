@@ -357,7 +357,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
         const SizedBox(
           height: 10,
         ),
-        codeErrored && notSendCodeAgainPressed
+        codeErrored
             ? Text(
                 "Confirmation code does not match",
                 style: GoogleFonts.notoSans(
@@ -508,6 +508,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                     codeErrored = !result.isSignUpComplete;
                   });
                   if (!codeErrored) {
+                    FocusManager.instance.primaryFocus?.unfocus();
                     Navigator.pushNamed(context, "/confirmationMessage");
                   }
                 } on AuthException catch (e) {
