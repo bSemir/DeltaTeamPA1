@@ -43,7 +43,7 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
             const SizedBox(
-              height: 30,
+              height: 80,
             ),
             SizedBox(
               height: 61.26,
@@ -59,7 +59,7 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
                   alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 85, right: 61, bottom: 77, left: 60),
+                        top: 65, right: 0, bottom: 0, left: 0),
                     child: Column(
                       children: [
                         const SizedBox(height: 5),

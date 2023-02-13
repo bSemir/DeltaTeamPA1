@@ -22,12 +22,13 @@ class RoundedButton extends StatelessWidget {
     this.borderRadius = 3,
     this.padding = const EdgeInsets.fromLTRB(20.0, 7.5, 20.0, 7.5),
     this.textStyle = const TextStyle(fontFamily: 'Noto Sans'),
-    this.borderSide = BorderSide.none,
+    required this.borderSide,
   });
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+
     return SizedBox(
       height: 34,
       width: (92 / 1440) * width,
@@ -35,7 +36,10 @@ class RoundedButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                elevation: 10, backgroundColor: color, side: borderSide),
+              elevation: 10,
+              backgroundColor: color,
+              side: borderSide,
+            ),
             onPressed: press,
             child: Center(
                 child: Text(

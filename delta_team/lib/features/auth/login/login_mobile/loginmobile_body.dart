@@ -88,181 +88,150 @@ class _MyMobileBodyState extends State<MyMobileBody> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: height,
-              width: width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 40),
-                  Column(
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                                text: 'Welcome to',
-                                style: GoogleFonts.notoSans(
-                                  fontSize: 32.0,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400,
-                                )),
-                          ],
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(height: 40),
+                Column(
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: 'Welcome to',
+                              style: GoogleFonts.notoSans(
+                                fontSize: 32.0,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                              )),
+                        ],
+                      ),
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'Product Arena',
+                        style: GoogleFonts.notoSans(
+                          fontWeight: FontWeight.w700,
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 32.0,
                         ),
                       ),
-                      RichText(
-                        text: TextSpan(
-                          text: 'Product Arena',
-                          style: GoogleFonts.notoSans(
-                            fontWeight: FontWeight.w700,
-                            color: const Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 32.0,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 128.0),
+                Form(
+                    key: _formKey,
+                    child: SizedBox(
+                      width: (296 / 360) * width,
+                      child: Column(
+                        children: [
+                          CustomEmailField(
+                            controller: username,
+                            showErrorIcon: username.text.isNotEmpty &&
+                                !username.text.contains("@"),
+                            // &&
+                            // !username.text.endsWith(".com"),
+                            text: 'Email',
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 168.0),
-                  Form(
-                      key: _formKey,
-                      child: SizedBox(
-                        height: 268,
-                        width: (296 / 360) * width,
-                        child: Column(
-                          children: [
-                            Column(
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          CustomPasswordField(
+                            key: const Key(
+                                'password_controllers_toggle_to_reveal_password'),
+                            controller: password,
+                            hintText: 'Password',
+                            obscureText: passwordObscured,
+                          ),
+                          const SizedBox(
+                            height: 40,
+                          ),
+                          SizedBox(
+                            width: (296 / 360) * width,
+                            child: ElevatedButton(
                               key: const Key('email_form_field'),
-                              children: [
-                                CustomEmailField(
-                                  controller: username,
-                                  showErrorIcon: username.text.isNotEmpty &&
-                                      !username.text.contains("@"),
-                                  // &&
-                                  // !username.text.endsWith(".com"),
-                                  text: 'Email',
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  usersignIn(
+                                      context, username.text, password.text);
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.black,
+                              ),
+                              child: Text(
+                                "Login",
+                                style: GoogleFonts.montserrat(
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                  fontSize: 14.0,
                                 ),
-                              ],
+                              ),
                             ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            Column(
-                              key: const Key('password_form_field'),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          SizedBox(
+                            height: 14,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                CustomPasswordField(
+                                Column(children: [
+                                  Text(
+                                    'Don’t you have an account?',
+                                    style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w400,
+                                      color: const Color(0xFF000000),
+                                      fontSize: 10.0,
+                                    ),
+                                  )
+                                ]),
+                                GestureDetector(
                                   key: const Key(
-                                      'password_controllers_toggle_to_reveal_password'),
-                                  controller: password,
-                                  hintText: 'Password',
-                                  obscureText: passwordObscured,
+                                      'This_supposed_to_be_a_signUp_but_for_now_I_use_it_for_signOut'),
+                                  onTap: () async {
+                                    Navigator.of(context).pop();
+                                    try {
+                                      await signOutCurrentUser(
+                                          null, null, context);
+                                    } on AmplifyException catch (e) {
+                                      safePrint(e.message);
+                                    }
+                                  },
+                                  child: Text(
+                                    ' Sign up',
+                                    style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.w700,
+                                      color: const Color(0xFF000000),
+                                      fontSize: 10.0,
+                                    ),
+                                  ),
                                 )
                               ],
                             ),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            SizedBox(
-                              width: (296 / 360) * width,
-                              height: 40.0,
-                              child: ElevatedButton(
-                                key: const Key('email_form_field'),
-                                onPressed: () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    usersignIn(
-                                        context, username.text, password.text);
-                                    // // showDialog(
-                                    // //     context: context,
-                                    // //     builder: (context) {
-                                    // //       return const Center(
-                                    // //           child: CircularProgressIndicator(
-                                    // //         value: 0.3,
-                                    // //         color: Colors.greenAccent,
-                                    // //         backgroundColor: Colors.grey,
-                                    // //       ));
-                                    // //     });
-
-                                    // // Navigator.of(context).pop();
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.black,
-                                ),
-                                child: Text(
-                                  "Login",
-                                  style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
-                                    fontSize: 14.0,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            SizedBox(
-                              width: 220,
-                              height: 20,
-                              child: Row(
-                                children: [
-                                  Column(children: [
-                                    Text(
-                                      'Don’t you have an account?',
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w400,
-                                        color: const Color(0xFF000000),
-                                        fontSize: 12.0,
-                                      ),
-                                    )
-                                  ]),
-                                  const SizedBox(
-                                    width: 3,
-                                  ),
-                                  GestureDetector(
-                                    key: const Key(
-                                        'This_supposed_to_be_a_signUp_but_for_now_I_use_it_for_signOut'),
-                                    onTap: () async {
-                                      Navigator.of(context).pop();
-                                      try {
-                                        await signOutCurrentUser(
-                                            null, null, context);
-                                      } on AmplifyException catch (e) {
-                                        safePrint(e.message);
-                                      }
-                                    },
-                                    child: Text(
-                                      'Sign up',
-                                      style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.w700,
-                                        color: const Color(0xFF000000),
-                                        fontSize: 12.0,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      )),
-                  const SizedBox(
-                    height: 185,
+                          )
+                        ],
+                      ),
+                    )),
+                const SizedBox(
+                  height: 185,
+                ),
+                SizedBox(
+                  height: 70,
+                  width: 70,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [Image.asset("assets/images/tech387.png")],
                   ),
-                  SizedBox(
-                    height: 70,
-                    width: 70,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [Image.asset("assets/images/tech387.png")],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+              ],
             ),
             Align(
               alignment: Alignment.bottomCenter,

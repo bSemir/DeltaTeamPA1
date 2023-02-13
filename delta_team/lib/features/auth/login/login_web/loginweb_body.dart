@@ -2,9 +2,9 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
 import 'package:delta_team/common/customfooter_web.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_form.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -19,6 +19,43 @@ class MyDesktopBody extends StatefulWidget {
 }
 
 class _MyDesktopBodyState extends State<MyDesktopBody> {
+  final ScrollController _controller = ScrollController();
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _handleKeyEvent(RawKeyEvent event) {
+    var offset = _controller.offset; //Getting current position
+    if (event.logicalKey.debugName == "Arrow Down") {
+      setState(() {
+        if (kReleaseMode) {
+          //This block only runs when the application was compiled in release mode.
+          _controller.animateTo(offset + 50,
+              duration: const Duration(milliseconds: 200), curve: Curves.ease);
+        } else {
+          // This will only print useful information in debug mode.
+          // print(_controller.position); to get information..
+          _controller.animateTo(offset + 50,
+              duration: const Duration(milliseconds: 200), curve: Curves.ease);
+        }
+      });
+    } else if (event.logicalKey.debugName == "Arrow Up") {
+      setState(() {
+        if (kReleaseMode) {
+          _controller.animateTo(offset - 50,
+              duration: const Duration(milliseconds: 200), curve: Curves.ease);
+        } else {
+          _controller.animateTo(offset - 50,
+              duration: const Duration(milliseconds: 200), curve: Curves.ease);
+        }
+      });
+    }
+  }
+
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -65,24 +102,6 @@ class _MyDesktopBodyState extends State<MyDesktopBody> {
     }
   }
 
-  // Future<void> userLogin(
-  //     BuildContext context, String username, String password) async {
-  //   if (username.isEmpty || password.isEmpty) {
-  //     (() {
-  //       errorMessage = 'Username and password cannot be empty';
-  //     });
-  //   } else {
-  //     try {
-  //       await Amplify.Auth.signIn(username: username, password: password);
-  //       Navigator.pushNamed(context, '/home');
-  //     } on AuthException catch (error) {
-  //       (() {
-  //         errorMessage = error.message;
-  //       });
-  //     }
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -92,143 +111,129 @@ class _MyDesktopBodyState extends State<MyDesktopBody> {
           title: 'Tech387',
           leading: Image.asset('assets/images/logo.png'),
           action: RoundedButton(
-              key: const Key('Not_routed_to_SignUpPage'),
-              text: 'Sign Up',
-              press: () {},
-              color: const Color(0xFF000000),
-              textColor: Colors.white,
-              borderColor: Colors.black)),
+            key: const Key('Not_routed_to_SignUpPage'),
+            text: 'Sign Up',
+            press: () {},
+            color: const Color(0xFF000000),
+            textColor: Colors.white,
+            borderColor: Colors.black,
+            borderSide: const BorderSide(width: 1, color: Color(0xFF000000)),
+          )),
       backgroundColor: const Color(0xFFE9E9E9),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-                height: 965,
-                width: width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 185,
-                    ),
-                    Image.asset('assets/images/logotop.png'),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                              text: 'Welcome to',
-                              style: GoogleFonts.notoSans(
-                                fontSize: (48 / 1440) * width,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                              )),
-                        ],
+      body: RawKeyboardListener(
+        autofocus: true,
+        focusNode: _focusNode,
+        onKey: _handleKeyEvent,
+        child: SingleChildScrollView(
+          controller: _controller,
+          child: Column(
+            children: [
+              SizedBox(
+                  height: 965,
+                  width: width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 185,
                       ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                              text: 'Product Arena',
-                              style: GoogleFonts.notoSans(
-                                fontSize: (48 / 1440) * width,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                              )),
-                        ],
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: 'All great things take time to accomplish',
-                        style: GoogleFonts.notoSans(
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xFF605D66),
-                          fontSize: (32 / 1440) * width,
+                      Image.asset('assets/images/logotop.png'),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text: 'Welcome to',
+                                style: GoogleFonts.notoSans(
+                                  fontSize: (48 / 1440) * width,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                )),
+                          ],
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 75.0),
-                    Form(
-                      key: _formKey,
-                      child: SizedBox(
-                        height: 228,
-                        width: (452 / 1440) * width,
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CustomEmailField(
-                                key: const Key('email_field'),
-                                controller: username,
-                                showErrorIcon: username.text.isNotEmpty &&
-                                    !username.text.contains("@"),
-                                // &&
-                                // !username.text.endsWith(".com"),
-                                text: 'Email',
-                              ),
-                              CustomPasswordField(
-                                key: const Key(
-                                    'Password_field_Unreveal_Password'),
-                                controller: password,
-                                hintText: 'Password',
-                                obscureText: passwordObscured,
-                              ),
-                              SizedBox(
-                                height: 56,
-                                width: (452 / 1440) * width,
-                                child: ElevatedButton(
-                                  key: const Key('Login_Button'),
-                                  onPressed: () async {
-                                    if (_formKey.currentState!.validate()) {
-                                      usersignIn(context, username.text,
-                                          password.text);
-
-                                      //   // final _authProvider =
-                                      //   //     provider.Provider.of<AuthenticationProvider>(
-                                      //   //         context,
-                                      //   //         listen: false);
-                                      //   // _authProvider.signIn(
-                                      //   //   username as String,
-                                      //   //   password as String,
-                                      //   //   context,
-                                      //   //   HomeRoute as String,
-                                      //   // );
-                                    }
-                                  },
-
-                                  // signIn;
-                                  // Navigator.push(
-                                  //     context,
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) => const HomeRoute()));
-                                  //   }
-                                  // },
-                                  // Add your login logic here
-
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.black,
-                                  ),
-                                  child: Text(
-                                    "Login",
-                                    style: GoogleFonts.notoSans(
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white,
-                                      fontSize: (15 / 1440) * width,
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text: 'Product Arena',
+                                style: GoogleFonts.notoSans(
+                                  fontSize: (48 / 1440) * width,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                )),
+                          ],
+                        ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: 'All great things take time to accomplish',
+                          style: GoogleFonts.notoSans(
+                            fontWeight: FontWeight.w400,
+                            color: const Color(0xFF605D66),
+                            fontSize: (32 / 1440) * width,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 75.0),
+                      Form(
+                        key: _formKey,
+                        child: SizedBox(
+                          height: 228,
+                          width: (452 / 1440) * width,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomEmailField(
+                                  key: const Key('email_field'),
+                                  controller: username,
+                                  // showErrorIcon: username.text.isNotEmpty &&
+                                  //     !username.text.contains("@") &&
+                                  //     !username.text.endsWith(".com"),
+                                  text: 'Email',
+                                ),
+                                CustomPasswordField(
+                                  key: const Key(
+                                      'Password_field_Unreveal_Password'),
+                                  controller: password,
+                                  hintText: 'Password',
+                                  obscureText: passwordObscured,
+                                ),
+                                SizedBox(
+                                  height: 56,
+                                  width: (452 / 1440) * width,
+                                  child: ElevatedButton(
+                                    key: const Key('Login_Button'),
+                                    onPressed: () async {
+                                      if (_formKey.currentState!.validate()) {
+                                        usersignIn(context, username.text,
+                                            password.text);
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.black,
+                                    ),
+                                    child: Text(
+                                      "Login",
+                                      style: GoogleFonts.notoSans(
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                        fontSize: (16 / 1440) * width,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ]),
+                              ]),
+                        ),
                       ),
-                    ),
-                  ],
-                )),
-            const SizedBox(
-              height: 198,
-            ),
-            const FooterWidget()
-          ],
+                    ],
+                  )),
+              const SizedBox(
+                height: 198,
+              ),
+              const FooterWidget()
+            ],
+          ),
         ),
       ),
     );
