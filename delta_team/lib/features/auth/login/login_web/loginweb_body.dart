@@ -187,9 +187,9 @@ class _MyDesktopBodyState extends State<MyDesktopBody> {
                                 CustomEmailField(
                                   key: const Key('email_field'),
                                   controller: username,
-                                  // showErrorIcon: username.text.isNotEmpty &&
-                                  //     !username.text.contains("@") &&
-                                  //     !username.text.endsWith(".com"),
+                                  showErrorIcon: username.text.isNotEmpty &&
+                                      !username.text.contains("@") &&
+                                      !username.text.endsWith(".com"),
                                   text: 'Email',
                                 ),
                                 CustomPasswordField(

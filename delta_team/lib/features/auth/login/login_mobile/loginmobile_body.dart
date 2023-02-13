@@ -101,7 +101,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                           TextSpan(
                               text: 'Welcome to',
                               style: GoogleFonts.notoSans(
-                                fontSize: 32.0,
+                                fontSize: (32.0 / 360) * width,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w400,
                               )),
@@ -114,7 +114,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                         style: GoogleFonts.notoSans(
                           fontWeight: FontWeight.w700,
                           color: const Color.fromARGB(255, 0, 0, 0),
-                          fontSize: 32.0,
+                          fontSize: (32.0 / 360) * width,
                         ),
                       ),
                     ),
@@ -128,6 +128,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                       child: Column(
                         children: [
                           CustomEmailField(
+                            key: const Key('email_controller_field'),
                             controller: username,
                             showErrorIcon: username.text.isNotEmpty &&
                                 !username.text.contains("@"),
@@ -151,7 +152,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                           SizedBox(
                             width: (296 / 360) * width,
                             child: ElevatedButton(
-                              key: const Key('email_form_field'),
+                              key: const Key('login_button'),
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   usersignIn(
@@ -166,7 +167,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                                 style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w700,
                                   color: Colors.white,
-                                  fontSize: 14.0,
+                                  fontSize: (14.0 / 360) * width,
                                 ),
                               ),
                             ),
@@ -185,7 +186,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                                     style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w400,
                                       color: const Color(0xFF000000),
-                                      fontSize: 10.0,
+                                      fontSize: (10.0 / 360) * width,
                                     ),
                                   )
                                 ]),
@@ -206,7 +207,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                                     style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w700,
                                       color: const Color(0xFF000000),
-                                      fontSize: 10.0,
+                                      fontSize: (10.0 / 360) * width,
                                     ),
                                   ),
                                 )
@@ -221,7 +222,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                 ),
                 SizedBox(
                   height: 70,
-                  width: 70,
+                  width: (70 / 360) * width,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -257,7 +258,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                             style: GoogleFonts.notoSans(
                               fontWeight: FontWeight.w400,
                               color: const Color.fromARGB(255, 142, 142, 142),
-                              fontSize: 13.0,
+                              fontSize: (13.0 / 360) * width,
                             ),
                           ),
                         ),
@@ -268,10 +269,9 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                           child: Text(
                             "© Credits, 2023, Product Arena",
                             style: GoogleFonts.notoSans(
-                              fontWeight: FontWeight.w400,
-                              color: const Color.fromARGB(255, 142, 142, 142),
-                              fontSize: 12.0,
-                            ),
+                                fontWeight: FontWeight.w400,
+                                color: const Color.fromARGB(255, 142, 142, 142),
+                                fontSize: (12.0 / 360) * width),
                           ),
                         ),
                       ),
@@ -287,7 +287,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                             style: GoogleFonts.notoSans(
                               fontWeight: FontWeight.w400,
                               color: const Color.fromARGB(255, 142, 142, 142),
-                              fontSize: 13.0,
+                              fontSize: (13.0 / 360) * width,
                             ),
                           ),
                         ),
@@ -299,18 +299,6 @@ class _MyMobileBodyState extends State<MyMobileBody> {
             )
           ],
         ),
-        // SizedBox(
-        //   height: 148.0,
-        //   width: (296 / 360) * width,
-        //   child: Column(
-
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     crossAxisAlignment: CrossAxisAlignment.center,
-        //     children: [
-
-        //     ],
-        //   ),
-        // ),
       ),
     );
   }

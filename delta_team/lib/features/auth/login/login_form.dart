@@ -31,6 +31,7 @@ class _CustomEmailFieldState extends State<CustomEmailField> {
     return Column(
       children: [
         TextFormField(
+          key: const Key('email_controller_field'),
           validator: (value) {
             if (value!.isEmpty) {
               setState(() {
@@ -133,6 +134,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: const Key('password_controller_field'),
       validator: (value) {
         if (value!.isEmpty) {
           setState(() {
@@ -198,6 +200,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           fontSize: 14.0,
         ),
         suffixIcon: IconButton(
+          key: const Key('toggle_eye_icon'),
           color: validatorError ? Colors.red : Colors.black,
           icon: Icon(
             passwordObscured
