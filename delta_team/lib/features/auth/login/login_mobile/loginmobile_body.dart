@@ -101,7 +101,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                           TextSpan(
                               text: 'Welcome to',
                               style: GoogleFonts.notoSans(
-                                fontSize: (32.0 / 360) * width,
+                                fontSize: 32.0,
                                 color: Colors.black,
                                 fontWeight: FontWeight.w400,
                               )),
@@ -112,10 +112,9 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                       text: TextSpan(
                         text: 'Product Arena',
                         style: GoogleFonts.notoSans(
-                          fontWeight: FontWeight.w700,
-                          color: const Color.fromARGB(255, 0, 0, 0),
-                          fontSize: (32.0 / 360) * width,
-                        ),
+                            fontWeight: FontWeight.w700,
+                            color: const Color.fromARGB(255, 0, 0, 0),
+                            fontSize: 32.0),
                       ),
                     ),
                   ],
@@ -165,10 +164,9 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                               child: Text(
                                 "Login",
                                 style: GoogleFonts.montserrat(
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                  fontSize: (14.0 / 360) * width,
-                                ),
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                    fontSize: 14.0),
                               ),
                             ),
                           ),
@@ -186,7 +184,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                                     style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w400,
                                       color: const Color(0xFF000000),
-                                      fontSize: (10.0 / 360) * width,
+                                      fontSize: 10.0,
                                     ),
                                   )
                                 ]),
@@ -207,7 +205,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                                     style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w700,
                                       color: const Color(0xFF000000),
-                                      fontSize: (10.0 / 360) * width,
+                                      fontSize: 10.0,
                                     ),
                                   ),
                                 )
@@ -222,7 +220,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                 ),
                 SizedBox(
                   height: 70,
-                  width: (70 / 360) * width,
+                  width: 70,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -258,7 +256,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                             style: GoogleFonts.notoSans(
                               fontWeight: FontWeight.w400,
                               color: const Color.fromARGB(255, 142, 142, 142),
-                              fontSize: (13.0 / 360) * width,
+                              fontSize: 13.0,
                             ),
                           ),
                         ),
@@ -271,7 +269,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                             style: GoogleFonts.notoSans(
                                 fontWeight: FontWeight.w400,
                                 color: const Color.fromARGB(255, 142, 142, 142),
-                                fontSize: (12.0 / 360) * width),
+                                fontSize: 12.0),
                           ),
                         ),
                       ),
@@ -285,10 +283,9 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                           child: Text(
                             "Terms",
                             style: GoogleFonts.notoSans(
-                              fontWeight: FontWeight.w400,
-                              color: const Color.fromARGB(255, 142, 142, 142),
-                              fontSize: (13.0 / 360) * width,
-                            ),
+                                fontWeight: FontWeight.w400,
+                                color: const Color.fromARGB(255, 142, 142, 142),
+                                fontSize: 13.0),
                           ),
                         ),
                       ),
