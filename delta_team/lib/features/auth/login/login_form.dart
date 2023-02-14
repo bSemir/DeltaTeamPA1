@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:email_validator/email_validator.dart';
@@ -26,7 +27,7 @@ class _LoginFieldState extends State<LoginField> {
   bool viewPassword = false;
   bool showErrorIcon = false;
   String errorMessage = '';
-  bool emailExists = true;
+  bool emailNotExist = true;
   final _signInKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -38,17 +39,18 @@ class _LoginFieldState extends State<LoginField> {
       final user =
           await Amplify.Auth.signIn(username: email, password: "Password1!");
     } catch (error) {
-      if (!error.toString().contains("User does not exist.")) {
+      if (!error.toString().contains("UserNotFoundException") &&
+          !error.toString().contains("AuthException")) {
         setState(() {
-          emailExists = true;
+          emailNotExist = true;
         });
-        print(error.toString());
-        print("a");
+        print(error);
+        print("ERR");
       } else {
         setState(() {
-          emailExists = false;
+          emailNotExist = false;
         });
-        print(emailExists);
+        print(error);
       }
     }
     return false;
@@ -65,7 +67,7 @@ class _LoginFieldState extends State<LoginField> {
         return true;
       }
     } catch (error) {
-      print(error.toString());
+      // print(error.toString());
     }
     return false;
   }
@@ -82,12 +84,12 @@ class _LoginFieldState extends State<LoginField> {
   // //   } catch (error) {
   // //     if (error.toString().contains("UserNotFoundException")) {
   // //       setState(() {
-  // //         emailExists = false;
+  // //         emailNotExist = false;
   // //       });
   // //       print("A");
   // //     } else {
   // //       setState(() {
-  // //         emailExists = true;
+  // //         emailNotExist = true;
   // //       });
   // //       print("B");
   // //     }
@@ -179,15 +181,13 @@ class _LoginFieldState extends State<LoginField> {
                 setState(() {
                   emailErrored = true;
                   showErrorIcon = true;
-                  emailExists = false;
+                  emailNotExist = false;
                 });
-                return "Enter the valid email";
-              } else if (!emailExists) {
+              } else if (!emailNotExist) {
                 setState(() {
                   emailErrored = true;
                   showErrorIcon = true;
                 });
-                return "Email does not exists!";
               }
               setState(() {
                 emailErrored = false;
@@ -227,6 +227,7 @@ class _LoginFieldState extends State<LoginField> {
             obscureText: !viewPassword,
             style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
             validator: (value) {
+              print(emailNotExist);
               String regex =
                   r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
               RegExp regExp = RegExp(regex);
@@ -235,11 +236,13 @@ class _LoginFieldState extends State<LoginField> {
                   passwordErrored = true;
                 });
                 return 'Please fill the required field.';
-              } else if (!regExp.hasMatch(value)) {
+              } else if (!regExp.hasMatch(value) ||
+                  emailErrored ||
+                  !emailNotExist) {
                 setState(() {
                   passwordErrored = true;
                 });
-                return 'Password must contain a minimum of 8 characters, \nuppercase, lower case, number and special character.';
+                return "Username or email incorrect";
               } else {
                 setState(() {
                   passwordErrored = false;
@@ -285,7 +288,7 @@ class _LoginFieldState extends State<LoginField> {
             child: ElevatedButton(
               key: const Key('Login_Button'),
               onPressed: () async {
-                userExist(emailController.text);
+                await userExist(emailController.text);
                 if (_signInKey.currentState!.validate()) {
                   usersignIn(emailController.text, passwordController.text);
                 }
