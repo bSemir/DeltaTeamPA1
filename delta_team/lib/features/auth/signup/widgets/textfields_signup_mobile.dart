@@ -100,7 +100,10 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 });
               }
             },
-            style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
+            style: GoogleFonts.notoSans(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                color: nameErrored ? errorColor : Colors.black),
             onTap: () {
               setState(() {
                 _isBirthDateLabelColor = const Color.fromRGBO(96, 93, 102, 1);
@@ -173,7 +176,10 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 });
               }
             },
-            style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
+            style: GoogleFonts.notoSans(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                color: surnameErrored ? errorColor : Colors.black),
             onTap: () {
               setState(() {
                 _isBirthDateLabelColor = const Color.fromRGBO(96, 93, 102, 1);
@@ -247,7 +253,10 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 });
               }
             },
-            style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
+            style: GoogleFonts.notoSans(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                color: birthDateErrored ? errorColor : Colors.black),
             onTap: () {
               setState(() {
                 _nameLabelColor = const Color.fromRGBO(96, 93, 102, 1);
@@ -260,23 +269,14 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               });
             },
             validator: (value) {
-              String yearStr = birthDateController.text
-                  .substring(birthDateController.text.length - 4);
-              int yearInt = int.parse(yearStr);
               RegExp exp = RegExp(
-                r'^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$',
-              );
+                  r'^(0[1-9]|[1-2][0-9]|3[0-1])/(0[1-9]|1[0-2])/(19[0-9]{2}|200[0-9]|201[0-2])$');
               if (value!.isEmpty) {
                 setState(() {
                   birthDateErrored = true;
                 });
                 return 'Please fill the required field.';
               } else if (!exp.hasMatch(value)) {
-                setState(() {
-                  birthDateErrored = true;
-                });
-                return 'Please enter valid birth date (dd/mm/yy)';
-              } else if (yearInt >= 2012) {
                 setState(() {
                   birthDateErrored = true;
                 });
@@ -330,7 +330,10 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 });
               }
             },
-            style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
+            style: GoogleFonts.notoSans(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                color: cityErrored ? errorColor : Colors.black),
             onTap: () {
               setState(() {
                 _isBirthDateLabelColor = const Color.fromRGBO(96, 93, 102, 1);
@@ -435,7 +438,9 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                       child: Text(
                         item,
                         style: GoogleFonts.notoSans(
-                          color: const Color.fromRGBO(96, 93, 102, 1),
+                          color: statusErrored
+                              ? errorColor
+                              : Color.fromRGBO(96, 93, 102, 1),
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -475,7 +480,10 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 });
               }
             },
-            style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
+            style: GoogleFonts.notoSans(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                color: phoneErrored ? errorColor : Colors.black),
             onTap: () {
               setState(() {
                 _nameLabelColor = const Color.fromRGBO(96, 93, 102, 1);
@@ -554,7 +562,10 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 });
               }
             },
-            style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
+            style: GoogleFonts.notoSans(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                color: emailErrored ? errorColor : Colors.black),
             onTap: () {
               setState(() {
                 _nameLabelColor = const Color.fromRGBO(96, 93, 102, 1);
@@ -628,7 +639,10 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 });
               }
             },
-            style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
+            style: GoogleFonts.notoSans(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                color: passwordErrored ? errorColor : Colors.black),
             obscureText: !viewPassword ? true : false,
             onTap: () {
               setState(() {
