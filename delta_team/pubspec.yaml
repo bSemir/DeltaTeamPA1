@@ -44,6 +44,7 @@ dependencies:
   # amplify_flutter: ^0.6.12
   # amplify_auth_cognito: ^0.6.12
   riverpod_extension: ^1.5.0
+  email_validator: ^2.1.17
   # amplify_api: ^0.6.12
 
 dev_dependencies:

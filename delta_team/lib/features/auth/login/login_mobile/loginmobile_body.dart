@@ -126,50 +126,63 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                       width: (296 / 360) * width,
                       child: Column(
                         children: [
-                          CustomEmailField(
-                            key: const Key('email_controller_field'),
-                            controller: username,
-                            showErrorIcon: username.text.isNotEmpty &&
-                                !username.text.contains("@"),
-                            // &&
-                            // !username.text.endsWith(".com"),
-                            text: 'Email',
-                          ),
-                          const SizedBox(
-                            height: 24,
-                          ),
-                          CustomPasswordField(
-                            key: const Key(
-                                'password_controllers_toggle_to_reveal_password'),
-                            controller: password,
-                            hintText: 'Password',
-                            obscureText: passwordObscured,
-                          ),
-                          const SizedBox(
-                            height: 40,
-                          ),
-                          SizedBox(
-                            width: (296 / 360) * width,
-                            child: ElevatedButton(
-                              key: const Key('login_button'),
-                              onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  usersignIn(
-                                      context, username.text, password.text);
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.black,
-                              ),
-                              child: Text(
-                                "Login",
-                                style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
-                                    fontSize: 14.0),
-                              ),
-                            ),
-                          ),
+                          LoginField(),
+                          // CustomTextField(
+                          //   hintText: 'Email',
+                          //   controller: username,
+                          //   obscureText: false,
+                          // ),
+                          // const SizedBox(height: 16),
+                          // CustomTextField(
+                          //   controller: password,
+                          //   hintText: 'Password',
+                          //   obscureText: true,
+                          // ),
+
+                          // CustomEmailField(
+                          //   key: const Key('email_controller_field'),
+                          //   controller: username,
+                          //   showErrorIcon: username.text.isNotEmpty &&
+                          //       !username.text.contains("@"),
+                          //   // &&
+                          //   // !username.text.endsWith(".com"),
+                          //   text: 'Email',
+                          // ),
+                          // const SizedBox(
+                          //   height: 24,
+                          // ),
+                          // CustomPasswordField(
+                          //   key: const Key(
+                          //       'password_controllers_toggle_to_reveal_password'),
+                          //   controller: password,
+                          //   hintText: 'Password',
+                          //   obscureText: passwordObscured,
+                          // ),
+                          // const SizedBox(
+                          //   height: 40,
+                          // ),
+                          // SizedBox(
+                          //   width: (296 / 360) * width,
+                          //   child: ElevatedButton(
+                          //     key: const Key('login_button'),
+                          //     onPressed: () async {
+                          //       if (_formKey.currentState!.validate()) {
+                          //         usersignIn(
+                          //             context, username.text, password.text);
+                          //       }
+                          //     },
+                          //     style: ElevatedButton.styleFrom(
+                          //       backgroundColor: Colors.black,
+                          //     ),
+                          //     child: Text(
+                          //       "Login",
+                          //       style: GoogleFonts.montserrat(
+                          //           fontWeight: FontWeight.w700,
+                          //           color: Colors.white,
+                          //           fontSize: 14.0),
+                          //     ),
+                          //   ),
+                          // ),
                           const SizedBox(
                             height: 10,
                           ),
