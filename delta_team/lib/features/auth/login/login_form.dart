@@ -32,7 +32,6 @@ class _LoginFieldState extends State<LoginField> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   Color labelEmailColor = Colors.grey;
-  final FocusNode _focusEmailNode = FocusNode();
 
   Future<bool> userExist(String email) async {
     try {
@@ -140,27 +139,6 @@ class _LoginFieldState extends State<LoginField> {
     String passwordError = '';
     bool isButtonPressed = false;
 
-    void togglePasswordObscure() {
-      setState(() {
-        passwordObscured = !passwordObscured;
-      });
-    }
-
-    void _onFocusChange() {
-      debugPrint("Focus: ${_focusEmailNode.hasFocus.toString()}");
-    }
-
-    void initState() {
-      super.initState();
-      _focusEmailNode.addListener(_onFocusChange);
-    }
-
-    void dispose() {
-      super.dispose();
-      _focusEmailNode.removeListener(_onFocusChange);
-      _focusEmailNode.dispose();
-    }
-
     double width = MediaQuery.of(context).size.width;
     return Form(
       key: _signInKey,
@@ -168,17 +146,16 @@ class _LoginFieldState extends State<LoginField> {
         children: [
           TextFormField(
             key: const Key("emailKey"),
-            focusNode: _focusEmailNode,
             controller: emailController,
             style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
             validator: (value) {
               if (value!.isEmpty) {
-                emailErrored = true;
                 showErrorIcon = true;
 
                 return 'Please fill the required field.';
               } else if (!EmailValidator.validate(value)) {
                 setState(() {
+                  passwordErrored = true;
                   emailErrored = true;
                   showErrorIcon = true;
                   emailNotExist = false;
@@ -187,7 +164,11 @@ class _LoginFieldState extends State<LoginField> {
                 setState(() {
                   emailErrored = true;
                   showErrorIcon = true;
+                  passwordErrored = true;
                 });
+              }
+              if (passwordErrored && passwordController.text.isNotEmpty) {
+                return "";
               }
               setState(() {
                 emailErrored = false;
@@ -201,13 +182,7 @@ class _LoginFieldState extends State<LoginField> {
               ),
               label: Text(
                 "Email",
-                style: GoogleFonts.notoSans(
-                    color:
-                        _focusEmailNode.hasFocus ? Colors.green : Colors.grey,
-                    fontSize: 14),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color.fromRGBO(34, 233, 116, 1)),
+                style: GoogleFonts.notoSans(fontSize: 14),
               ),
               suffixIcon: showErrorIcon
                   ? const Icon(
@@ -227,7 +202,6 @@ class _LoginFieldState extends State<LoginField> {
             obscureText: !viewPassword,
             style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
             validator: (value) {
-              print(emailNotExist);
               String regex =
                   r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
               RegExp regExp = RegExp(regex);
@@ -248,6 +222,10 @@ class _LoginFieldState extends State<LoginField> {
                   passwordErrored = false;
                 });
               }
+              if (emailErrored && emailController.text.isNotEmpty) {
+                return "";
+              }
+
               return null;
             },
             decoration: InputDecoration(
@@ -256,14 +234,7 @@ class _LoginFieldState extends State<LoginField> {
                 ),
                 label: Text(
                   "Password",
-                  style: GoogleFonts.notoSans(
-                      color:
-                          _focusEmailNode.hasFocus ? Colors.green : Colors.grey,
-                      fontSize: 14),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Color.fromRGBO(34, 233, 116, 1)),
+                  style: GoogleFonts.notoSans(fontSize: 14),
                 ),
                 suffixIcon: InkWell(
                     key: const Key("passwordVisible"),
