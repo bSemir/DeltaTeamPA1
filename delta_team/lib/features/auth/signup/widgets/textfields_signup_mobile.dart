@@ -260,6 +260,9 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               });
             },
             validator: (value) {
+              String yearStr = birthDateController.text
+                  .substring(birthDateController.text.length - 4);
+              int yearInt = int.parse(yearStr);
               RegExp exp = RegExp(
                 r'^(?:0[1-9]|[12]\d|3[01])([\/.-])(?:0[1-9]|1[012])\1(?:19|20)\d\d$',
               );
@@ -269,6 +272,11 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 });
                 return 'Please fill the required field.';
               } else if (!exp.hasMatch(value)) {
+                setState(() {
+                  birthDateErrored = true;
+                });
+                return 'Please enter valid birth date (dd/mm/yy)';
+              } else if (yearInt >= 2012) {
                 setState(() {
                   birthDateErrored = true;
                 });
