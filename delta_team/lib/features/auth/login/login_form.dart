@@ -28,6 +28,9 @@ class _LoginFieldState extends State<LoginField> {
   bool showErrorIcon = false;
   String errorMessage = '';
   bool emailNotExist = true;
+
+  bool canLogIn = false;
+
   final _signInKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -35,21 +38,24 @@ class _LoginFieldState extends State<LoginField> {
 
   Future<bool> userExist(String email) async {
     try {
-      final user =
-          await Amplify.Auth.signIn(username: email, password: "Password1!");
+      final user = await Amplify.Auth.signIn(
+          username: email, password: passwordController.text);
+
+      setState(() {
+        canLogIn = user.isSignedIn;
+      });
+      print(canLogIn);
     } catch (error) {
+      print(error);
       if (!error.toString().contains("UserNotFoundException") &&
           !error.toString().contains("AuthException")) {
         setState(() {
           emailNotExist = true;
         });
-        print(error);
-        print("ERR");
       } else {
         setState(() {
           emailNotExist = false;
         });
-        print(error);
       }
     }
     return false;
@@ -66,7 +72,7 @@ class _LoginFieldState extends State<LoginField> {
         return true;
       }
     } catch (error) {
-      // print(error.toString());
+      print(error.toString());
     }
     return false;
   }
@@ -155,7 +161,7 @@ class _LoginFieldState extends State<LoginField> {
                 showErrorIcon = true;
 
                 return 'Please fill the required field.';
-              } else if (!EmailValidator.validate(value)) {
+              } else if (!EmailValidator.validate(value) || !canLogIn) {
                 setState(() {
                   passwordErrored = true;
                   emailErrored = true;
@@ -168,6 +174,15 @@ class _LoginFieldState extends State<LoginField> {
                   showErrorIcon = true;
                   passwordErrored = true;
                 });
+              }
+              if (canLogIn) {
+                print("Log in");
+                setState(() {
+                  passwordErrored = false;
+                  emailErrored = false;
+                  showErrorIcon = false;
+                });
+                return null;
               }
               if (passwordErrored && passwordController.text.isNotEmpty) {
                 return "";
@@ -211,6 +226,7 @@ class _LoginFieldState extends State<LoginField> {
               String regex =
                   r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
               RegExp regExp = RegExp(regex);
+
               if (value!.isEmpty) {
                 setState(() {
                   passwordErrored = true;
@@ -218,7 +234,7 @@ class _LoginFieldState extends State<LoginField> {
                 return 'Please fill the required field.';
               } else if (!regExp.hasMatch(value) ||
                   emailErrored ||
-                  !emailNotExist) {
+                  emailNotExist) {
                 setState(() {
                   passwordErrored = true;
                 });
@@ -227,6 +243,15 @@ class _LoginFieldState extends State<LoginField> {
                 setState(() {
                   passwordErrored = false;
                 });
+              }
+              if (canLogIn) {
+                print("LOGIN");
+                setState(() {
+                  passwordErrored = false;
+                  emailErrored = false;
+                  showErrorIcon = false;
+                });
+                return null;
               }
               if (emailErrored && emailController.text.isNotEmpty) {
                 return "";
@@ -267,7 +292,10 @@ class _LoginFieldState extends State<LoginField> {
               onPressed: () async {
                 await userExist(emailController.text);
                 if (_signInKey.currentState!.validate()) {
-                  usersignIn(emailController.text, passwordController.text);
+                  print(emailController.text);
+                  print(passwordController.text);
+                  await usersignIn(
+                      emailController.text, passwordController.text);
                 }
               },
               style: ElevatedButton.styleFrom(
