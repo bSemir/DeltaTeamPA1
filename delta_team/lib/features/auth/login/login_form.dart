@@ -147,7 +147,9 @@ class _LoginFieldState extends State<LoginField> {
           TextFormField(
             key: const Key("emailKey"),
             controller: emailController,
-            style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
+            style: GoogleFonts.notoSans(
+              fontWeight: FontWeight.w500,
+            ),
             validator: (value) {
               if (value!.isEmpty) {
                 showErrorIcon = true;
@@ -200,7 +202,11 @@ class _LoginFieldState extends State<LoginField> {
             key: const Key("passwordKey"),
             controller: passwordController,
             obscureText: !viewPassword,
-            style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
+            style: GoogleFonts.notoSans(
+                fontWeight: FontWeight.w500,
+                color: emailErrored || passwordErrored
+                    ? Colors.redAccent
+                    : Colors.black),
             validator: (value) {
               String regex =
                   r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
