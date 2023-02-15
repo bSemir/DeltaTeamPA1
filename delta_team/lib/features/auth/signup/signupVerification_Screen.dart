@@ -30,7 +30,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
 
   bool isNumberCorrect = true;
   bool isPressed = true;
-  bool codeError = true;
+  bool codeError = false;
   bool canSendCode = true;
   bool notSendCodeAgainPressed = false;
 
@@ -497,6 +497,11 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                               code5Str +
                                               code6Str;
                                         });
+                                        if (code.length < 6) {
+                                          setState(() {
+                                            codeError = true;
+                                          });
+                                        }
 
                                         if (_emailVerificationKey.currentState!
                                             .validate()) {
@@ -517,19 +522,21 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                                   "/confirmationMessage");
                                             }
                                           } on AuthException catch (e) {
-                                            if (e.message.toString().contains(
-                                                    "Confirmation code entered is not correct.") ||
-                                                e.message.toString().contains(
-                                                    "One or more parameters are incorrect.")) {
-                                              setState(() {
-                                                codeError = true;
-                                              });
-                                            } else {
-                                              setState(() {
-                                                codeError = false;
-                                              });
-                                            }
-                                            print(e.message);
+                                            setState(() {
+                                              codeError = true;
+                                            });
+                                            // if (e.message.toString().contains(
+                                            //         "Confirmation code entered is not correct.") ||
+                                            //     e.message.toString().contains(
+                                            //         "One or more parameters are incorrect.")) {
+                                            //   setState(() {
+                                            //     codeError = true;
+                                            //   });
+                                            // } else {
+                                            //   setState(() {
+                                            //     codeError = false;
+                                            //   });
+                                            // }
                                           }
                                         }
                                       },

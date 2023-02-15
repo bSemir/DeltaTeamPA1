@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
       home: HomeScreen(),
       routes: {
         '/signup': (context) => const SignupScreen(),
-        '/conformation': (context) => const SignupVerificationScreen(),
+        '/confirmation': (context) => const SignupVerificationScreen(),
         '/confirmationMessage': (context) => const EmailVerifiedScreen(),
       },
     );

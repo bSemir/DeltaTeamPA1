@@ -70,7 +70,7 @@ class _SignupScreenState extends State<SignupScreen> {
   void changeScreen() {
     if (isSignUpCompleted) {
       FocusManager.instance.primaryFocus?.unfocus();
-      Navigator.pushNamed(context as BuildContext, "/conformation");
+      Navigator.pushNamed(context as BuildContext, "/confirmation");
     }
   }
 
@@ -435,7 +435,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     print(result.isSignUpComplete);
                                     if (!result.isSignUpComplete) {
                                       Navigator.pushNamed(
-                                          context, "/conformation");
+                                          context, "/confirmation");
                                       setState(() {
                                         emailProvider.email =
                                             emailController.text;
@@ -455,7 +455,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           ),
                           ElevatedButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, "/conformation");
+                                Navigator.pushNamed(context, "/confirmation");
                               },
                               child: Text("redirect"))
                         ],
