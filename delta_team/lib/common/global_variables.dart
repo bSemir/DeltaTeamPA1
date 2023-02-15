@@ -1,7 +1,7 @@
 class GlobalVariables {
   static const List<Map<String, String>> socialMedia = [
     {
-      'image': '../../assets/images/fb.png',
+      'image': '../../assets/images/facebook.png',
       'url': 'https://www.facebook.com/tech387',
     },
     {
