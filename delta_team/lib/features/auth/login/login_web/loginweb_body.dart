@@ -4,6 +4,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
 import 'package:delta_team/common/customfooter_web.dart';
+import 'package:delta_team/common/footer/footer.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_form.dart';
 import 'package:flutter/foundation.dart';
@@ -289,7 +290,7 @@ class MyDesktopBodyState extends State<MyDesktopBody> {
               const SizedBox(
                 height: 198,
               ),
-              const FooterWidget()
+              const Footer()
             ],
           ),
         ),
