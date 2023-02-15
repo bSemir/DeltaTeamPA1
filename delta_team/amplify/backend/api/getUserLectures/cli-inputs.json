@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "paths": {
+    "/api/user/lectures": {
+      "name": "/api/user/lectures",
+      "lambdaFunction": "getUserLecturesLambda",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}

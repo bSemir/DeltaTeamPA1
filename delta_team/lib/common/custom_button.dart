@@ -1,51 +1,26 @@
 import 'package:flutter/material.dart';
 
-class RoundedButton extends StatelessWidget {
-  final String text;
-  final VoidCallback press;
+class CustomButton extends StatelessWidget {
   final Color color;
-  final Color textColor;
-  final Color borderColor;
+  final Function buttonFunction;
+  final Widget content;
 
-  final double borderRadius;
-  final EdgeInsetsGeometry padding;
-  final TextStyle textStyle;
-  final BorderSide borderSide;
-
-  const RoundedButton({
-    super.key,
-    required this.text,
-    required this.press,
+  const CustomButton({
+    Key? key,
+    required this.content,
+    required this.buttonFunction,
     required this.color,
-    required this.textColor,
-    required this.borderColor,
-    this.borderRadius = 3,
-    this.padding = const EdgeInsets.fromLTRB(20.0, 7.5, 20.0, 7.5),
-    this.textStyle = const TextStyle(fontFamily: 'Noto Sans'),
-    this.borderSide = BorderSide.none,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    return SizedBox(
-      height: 34,
-      width: (92 / 1440) * width,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(borderRadius),
-        child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                elevation: 10, backgroundColor: color, side: borderSide),
-            onPressed: press,
-            child: Center(
-                child: Text(
-              text,
-              style: TextStyle(
-                  color: textColor,
-                  fontSize: (14 / 1440) * width,
-                  fontWeight: FontWeight.w700),
-            ))),
-      ),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          backgroundColor: color, minimumSize: const Size(double.infinity, 40)),
+      onPressed: () {
+        buttonFunction();
+      },
+      child: content,
     );
   }
 }
