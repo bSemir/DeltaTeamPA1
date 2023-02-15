@@ -26,7 +26,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
   final _code6 = TextEditingController();
   final _emailVerificationKey = GlobalKey<FormState>();
 
-  Color errorColor = const Color.fromRGBO(179, 38, 30, 1);
+  Color errorColor = Color.fromARGB(255, 255, 0, 0);
 
   bool isNumberCorrect = true;
   bool isPressed = true;
@@ -77,8 +77,12 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
     });
   }
 
+  double? screenWidth;
+  double? screenHeight;
   @override
   Widget build(BuildContext context) {
+    screenWidth ??= MediaQuery.of(context).size.width;
+    screenHeight ??= MediaQuery.of(context).size.height;
     final emailProvider = Provider.of<MyEmail>(context, listen: false);
 
     return Scaffold(
@@ -176,16 +180,23 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                                       isPressed &&
                                                       notSendCodeAgainPressed
                                                   ? errorColor
-                                                  : const Color.fromARGB(
-                                                      255, 121, 116, 126),
+                                                  : Color.fromARGB(
+                                                      255, 126, 116, 116),
                                             ),
                                           ),
                                         ),
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            fontSize: 32,
-                                            fontWeight: FontWeight.bold),
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold,
+                                          color: codeError &&
+                                                  isPressed &&
+                                                  notSendCodeAgainPressed
+                                              ? errorColor
+                                              : const Color.fromARGB(
+                                                  255, 121, 116, 126),
+                                        ),
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(1),
                                           FilteringTextInputFormatter
@@ -235,8 +246,15 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            fontSize: 32,
-                                            fontWeight: FontWeight.bold),
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold,
+                                          color: codeError &&
+                                                  isPressed &&
+                                                  notSendCodeAgainPressed
+                                              ? errorColor
+                                              : const Color.fromARGB(
+                                                  255, 121, 116, 126),
+                                        ),
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(1),
                                           FilteringTextInputFormatter
@@ -286,8 +304,15 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            fontSize: 32,
-                                            fontWeight: FontWeight.bold),
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold,
+                                          color: codeError &&
+                                                  isPressed &&
+                                                  notSendCodeAgainPressed
+                                              ? errorColor
+                                              : const Color.fromARGB(
+                                                  255, 121, 116, 126),
+                                        ),
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(1),
                                           FilteringTextInputFormatter
@@ -337,8 +362,15 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            fontSize: 32,
-                                            fontWeight: FontWeight.bold),
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold,
+                                          color: codeError &&
+                                                  isPressed &&
+                                                  notSendCodeAgainPressed
+                                              ? errorColor
+                                              : const Color.fromARGB(
+                                                  255, 121, 116, 126),
+                                        ),
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(1),
                                           FilteringTextInputFormatter
@@ -388,8 +420,15 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            fontSize: 32,
-                                            fontWeight: FontWeight.bold),
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold,
+                                          color: codeError &&
+                                                  isPressed &&
+                                                  notSendCodeAgainPressed
+                                              ? errorColor
+                                              : const Color.fromARGB(
+                                                  255, 121, 116, 126),
+                                        ),
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(1),
                                           FilteringTextInputFormatter
@@ -439,8 +478,15 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            fontSize: 32,
-                                            fontWeight: FontWeight.bold),
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold,
+                                          color: codeError &&
+                                                  isPressed &&
+                                                  notSendCodeAgainPressed
+                                              ? errorColor
+                                              : const Color.fromARGB(
+                                                  255, 121, 116, 126),
+                                        ),
                                         inputFormatters: [
                                           LengthLimitingTextInputFormatter(1),
                                           FilteringTextInputFormatter
@@ -458,7 +504,8 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         padding: EdgeInsets.only(top: 25),
                                         child: Text(
                                           "Conformation code does not match",
-                                          style: TextStyle(fontSize: 14),
+                                          style: TextStyle(
+                                              fontSize: 14, color: Colors.red),
                                         ),
                                       )
                                     : const SizedBox(

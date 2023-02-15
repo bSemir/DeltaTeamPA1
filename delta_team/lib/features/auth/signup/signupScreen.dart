@@ -1,11 +1,13 @@
 import 'dart:js';
 import 'dart:math';
+import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:delta_team/features/auth/signup/provider/auth_provider.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
-
+import 'package:flutter/services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:validators/validators.dart';
@@ -90,6 +92,9 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
+  final phoneMaskFormatter = MaskTextInputFormatter(mask: "+############");
+  final dateMaskFormatter = MaskTextInputFormatter(mask: "##/##/####");
+
   @override
   Widget build(BuildContext context) {
     final emailProvider = Provider.of<MyEmail>(context, listen: false);
@@ -149,6 +154,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               Container(
                                 width: 220,
                                 child: TextFormField(
+                                  key: const Key("nameKey"),
                                   controller: nameController,
                                   validator: (value) {
                                     String pattern = r'^[a-zA-Z]+$';
@@ -169,13 +175,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                     });
                                     return null;
                                   },
-                                  // validator: (value) {
-                                  //   if (value!.isEmpty) {
-                                  //     return "PLeas populate field";
-                                  //   }
-                                  //   return null;
-                                  // },
-
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
                                     label: Text("Name"),
@@ -185,11 +184,26 @@ class _SignupScreenState extends State<SignupScreen> {
                               Container(
                                 width: 220,
                                 child: TextFormField(
+                                  key: const Key("surnameKey"),
                                   controller: surnameController,
                                   validator: (value) {
+                                    String pattern = r'^[a-zA-Z]+$';
+                                    RegExp regExp = RegExp(pattern);
                                     if (value!.isEmpty) {
-                                      return "PLeas populate field";
+                                      setState(() {
+                                        nameErrored = true;
+                                      });
+                                      return 'Please fill the required field.';
+                                    } else if (!regExp.hasMatch(value)) {
+                                      setState(() {
+                                        nameErrored = true;
+                                      });
+                                      return 'Please enter valid surname';
                                     }
+                                    setState(() {
+                                      nameErrored = false;
+                                    });
+                                    return null;
                                   },
                                   decoration: InputDecoration(
                                     border: OutlineInputBorder(),
@@ -202,10 +216,12 @@ class _SignupScreenState extends State<SignupScreen> {
                           Container(
                             width: 452,
                             child: TextFormField(
+                              key: const Key("birthDateKey"),
+                              inputFormatters: [dateMaskFormatter],
                               controller: birthDateController,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "PLeas populate field";
+                                  return "Please fill the required field.";
                                 }
                               },
                               decoration: InputDecoration(
@@ -217,15 +233,16 @@ class _SignupScreenState extends State<SignupScreen> {
                           Container(
                             width: 452,
                             child: TextFormField(
+                              key: const Key("cityKey"),
                               controller: cityController,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "PLeas populate field";
+                                  return "Please fill the required field.";
                                 }
                               },
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
-                                label: Text("Citx"),
+                                label: Text("City"),
                               ),
                             ),
                           ),
@@ -282,20 +299,16 @@ class _SignupScreenState extends State<SignupScreen> {
                           Container(
                             width: 452,
                             child: TextFormField(
+                              key: const Key("phoneNumberKey"),
                               controller: phoneNumberController,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "PLeas populate field";
+                                  return "Please fill the required field.";
                                 }
                                 return null;
                               },
+                              inputFormatters: [phoneMaskFormatter],
                               keyboardType: TextInputType.phone,
-                              // inputFormatters: [
-                              //   MaskedTextInputFormatter(
-                              //     mask: '+387-##-###-###',
-                              //     separator: '-',
-                              //   ),
-                              // ],
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 label: Text("Phone"),
@@ -305,6 +318,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           Container(
                             width: 452,
                             child: TextFormField(
+                              key: const Key("emailKey"),
                               controller: emailController,
                               onChanged: (value) {
                                 setState(() {
@@ -316,7 +330,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   return 'Please fill the required field.';
                                 } else if (isEmailTaken) {
                                   return "Email already exists";
-                                }
+                                } else if (isEmail(value)) {}
                                 return null;
                               },
                               decoration: InputDecoration(
@@ -342,6 +356,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           Container(
                             width: 452,
                             child: TextFormField(
+                              key: const Key("passwordKey"),
                               controller: passwordController,
                               onChanged: (value) {
                                 setState(() {
@@ -350,7 +365,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               },
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return "PLeas populate field";
+                                  return "Please fill the required field.";
                                 } else {
                                   bool result = validatePassword(value);
                                   if (result) {
@@ -394,6 +409,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             width: 452,
                             height: 56,
                             child: ElevatedButton(
+                              key: const Key("createAccountKey"),
                               child: Text(
                                 "Create your account",
                                 style: TextStyle(fontSize: 16),
@@ -453,11 +469,6 @@ class _SignupScreenState extends State<SignupScreen> {
                               },
                             ),
                           ),
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, "/confirmation");
-                              },
-                              child: Text("redirect"))
                         ],
                       ),
                     ),

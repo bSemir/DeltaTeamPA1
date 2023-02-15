@@ -19,6 +19,8 @@ class LoadingPage extends StatelessWidget {
     }
 
     return Container(
+      width: 221,
+      height: 267,
       color: const Color.fromRGBO(255, 255, 255, 1),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
