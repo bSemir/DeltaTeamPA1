@@ -21,10 +21,8 @@ class HomeScreen extends StatelessWidget {
       body: Container(
         // height: defaultHeight * 10,
         // width: defaultWidth * 5,
-        // child: SingleChildScrollView(child: SignupScreen()),
         child: SingleChildScrollView(child: SignupScreen()),
       ),
-      // child: SignupScreen(),
     );
 
     // },
