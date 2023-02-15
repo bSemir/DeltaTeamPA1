@@ -34,7 +34,8 @@ class _LoginFieldState extends State<LoginField> {
   final _signInKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  Color labelEmailColor = Colors.grey;
+  Color labelEmailColor = Colors.black;
+  Color labelPasswordColor = Colors.black;
 
   Future<bool> logUserIn(String email) async {
     try {
@@ -44,9 +45,7 @@ class _LoginFieldState extends State<LoginField> {
       setState(() {
         canLogIn = user.isSignedIn;
       });
-      print(canLogIn);
     } catch (error) {
-      print(error);
       if (!error.toString().contains("UserNotFoundException") &&
           !error.toString().contains("AuthException")) {
         setState(() {
@@ -138,15 +137,22 @@ class _LoginFieldState extends State<LoginField> {
             key: const Key("emailKey"),
             controller: emailController,
             style: GoogleFonts.notoSans(
+              color: labelEmailColor,
               fontWeight: FontWeight.w500,
             ),
             validator: (value) {
               if (value!.isEmpty) {
-                showErrorIcon = true;
+                setState(() {
+                  showErrorIcon = true;
+                  emailErrored = true;
+                  labelEmailColor = Colors.red;
+                });
 
                 return 'Please fill the required field.';
-              } else if (!EmailValidator.validate(value) || !canLogIn) {
+              } else if ((!EmailValidator.validate(value) || !canLogIn) &&
+                  passwordController.text.isNotEmpty) {
                 setState(() {
+                  labelEmailColor = Colors.red;
                   passwordErrored = true;
                   emailErrored = true;
                   showErrorIcon = true;
@@ -159,9 +165,16 @@ class _LoginFieldState extends State<LoginField> {
                   passwordErrored = true;
                 });
               }
-              if (canLogIn) {
-                print("Log in");
+              if (passwordController.text.isEmpty &&
+                  emailController.text.isNotEmpty) {
                 setState(() {
+                  labelEmailColor = Colors.black;
+                });
+              }
+
+              if (canLogIn) {
+                setState(() {
+                  labelEmailColor = Colors.black;
                   passwordErrored = false;
                   emailErrored = false;
                   showErrorIcon = false;
@@ -183,7 +196,8 @@ class _LoginFieldState extends State<LoginField> {
               ),
               label: Text(
                 "Email",
-                style: GoogleFonts.notoSans(fontSize: 14),
+                style:
+                    GoogleFonts.notoSans(color: labelEmailColor, fontSize: 14),
               ),
               suffixIcon: showErrorIcon
                   ? const Icon(
@@ -202,10 +216,9 @@ class _LoginFieldState extends State<LoginField> {
             controller: passwordController,
             obscureText: !viewPassword,
             style: GoogleFonts.notoSans(
-                fontWeight: FontWeight.w500,
-                color: emailErrored || passwordErrored
-                    ? Colors.redAccent
-                    : Colors.black),
+              color: labelPasswordColor,
+              fontWeight: FontWeight.w500,
+            ),
             validator: (value) {
               String regex =
                   r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
@@ -214,12 +227,16 @@ class _LoginFieldState extends State<LoginField> {
               if (value!.isEmpty) {
                 setState(() {
                   passwordErrored = true;
+                  labelPasswordColor = Colors.red;
                 });
                 return 'Please fill the required field.';
-              } else if (!regExp.hasMatch(value) ||
-                  emailErrored ||
-                  emailNotExist) {
+              } else if ((!regExp.hasMatch(value) ||
+                      emailErrored ||
+                      emailNotExist) &&
+                  emailController.text.isNotEmpty) {
                 setState(() {
+                  labelPasswordColor = Colors.red;
+
                   passwordErrored = true;
                 });
                 return "Username or email incorrect";
@@ -228,7 +245,13 @@ class _LoginFieldState extends State<LoginField> {
                   passwordErrored = false;
                 });
               }
-              if (canLogIn) {
+              if (emailController.text.isEmpty &&
+                  passwordController.text.isNotEmpty) {
+                setState(() {
+                  labelPasswordColor = Colors.black;
+                });
+              }
+              if (canLogIn || emailController.text.isNotEmpty) {
                 print("LOGIN");
                 setState(() {
                   passwordErrored = false;
@@ -236,9 +259,6 @@ class _LoginFieldState extends State<LoginField> {
                   showErrorIcon = false;
                 });
                 return null;
-              }
-              if (emailErrored && emailController.text.isNotEmpty) {
-                return "";
               }
 
               return null;
@@ -249,7 +269,8 @@ class _LoginFieldState extends State<LoginField> {
                 ),
                 label: Text(
                   "Password",
-                  style: GoogleFonts.notoSans(fontSize: 14),
+                  style: GoogleFonts.notoSans(
+                      fontSize: 14, color: labelPasswordColor),
                 ),
                 suffixIcon: InkWell(
                     key: const Key("passwordVisible"),
