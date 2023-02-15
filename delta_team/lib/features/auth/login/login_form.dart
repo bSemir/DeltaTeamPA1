@@ -138,32 +138,32 @@ class _LoginFieldState extends State<LoginField> {
             controller: emailController,
             style: GoogleFonts.notoSans(
               color: labelEmailColor,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w700,
             ),
             validator: (value) {
               if (value!.isEmpty) {
                 setState(() {
                   showErrorIcon = true;
                   emailErrored = true;
-                  labelEmailColor = Colors.red;
+                  labelEmailColor = const Color.fromRGBO(179, 38, 30, 1);
                 });
 
                 return 'Please fill the required field.';
-              } else if ((!EmailValidator.validate(value) || !canLogIn) &&
-                  passwordController.text.isNotEmpty) {
+              } else if (!canLogIn && passwordController.text.isNotEmpty) {
                 setState(() {
-                  labelEmailColor = Colors.red;
                   passwordErrored = true;
                   emailErrored = true;
                   showErrorIcon = true;
                   emailNotExist = false;
                 });
+                return "";
               } else if (!emailNotExist) {
                 setState(() {
                   emailErrored = true;
                   showErrorIcon = true;
                   passwordErrored = true;
                 });
+                return "";
               }
               if (passwordController.text.isEmpty &&
                   emailController.text.isNotEmpty) {
@@ -181,9 +181,7 @@ class _LoginFieldState extends State<LoginField> {
                 });
                 return null;
               }
-              if (passwordErrored && passwordController.text.isNotEmpty) {
-                return "";
-              }
+
               setState(() {
                 emailErrored = false;
                 showErrorIcon = false;
@@ -191,18 +189,22 @@ class _LoginFieldState extends State<LoginField> {
               return null;
             },
             decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: labelEmailColor)),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
               ),
               label: Text(
                 "Email",
-                style:
-                    GoogleFonts.notoSans(color: labelEmailColor, fontSize: 14),
+                style: GoogleFonts.notoSans(
+                    fontWeight: FontWeight.w400,
+                    color: labelEmailColor,
+                    fontSize: 14),
               ),
               suffixIcon: showErrorIcon
                   ? const Icon(
                       Icons.error,
-                      color: Colors.red,
+                      color: Color.fromRGBO(179, 38, 30, 1),
                       size: 18,
                     )
                   : null,
@@ -217,7 +219,7 @@ class _LoginFieldState extends State<LoginField> {
             obscureText: !viewPassword,
             style: GoogleFonts.notoSans(
               color: labelPasswordColor,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w700,
             ),
             validator: (value) {
               String regex =
@@ -227,16 +229,18 @@ class _LoginFieldState extends State<LoginField> {
               if (value!.isEmpty) {
                 setState(() {
                   passwordErrored = true;
-                  labelPasswordColor = Colors.red;
+                  labelPasswordColor = const Color.fromRGBO(179, 38, 30, 1);
+                  ;
                 });
                 return 'Please fill the required field.';
-              } else if ((!regExp.hasMatch(value) ||
-                      emailErrored ||
-                      emailNotExist) &&
+              } else if ((!regExp.hasMatch(value) || emailErrored) &&
                   emailController.text.isNotEmpty) {
                 setState(() {
-                  labelPasswordColor = Colors.red;
-
+                  labelPasswordColor = const Color.fromRGBO(179, 38, 30, 1);
+                  ;
+                  labelEmailColor = const Color.fromRGBO(179, 38, 30, 1);
+                  ;
+                  emailErrored = true;
                   passwordErrored = true;
                 });
                 return "Username or email incorrect";
@@ -252,7 +256,6 @@ class _LoginFieldState extends State<LoginField> {
                 });
               }
               if (canLogIn || emailController.text.isNotEmpty) {
-                print("LOGIN");
                 setState(() {
                   passwordErrored = false;
                   emailErrored = false;
@@ -264,13 +267,17 @@ class _LoginFieldState extends State<LoginField> {
               return null;
             },
             decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: labelPasswordColor)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),
                 label: Text(
                   "Password",
                   style: GoogleFonts.notoSans(
-                      fontSize: 14, color: labelPasswordColor),
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      color: labelPasswordColor),
                 ),
                 suffixIcon: InkWell(
                     key: const Key("passwordVisible"),
