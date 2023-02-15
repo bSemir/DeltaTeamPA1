@@ -27,7 +27,7 @@ class _LoginFieldState extends State<LoginField> {
   bool viewPassword = false;
   bool showErrorIcon = false;
   String errorMessage = '';
-  bool emailNotExist = true;
+  bool emailExist = true;
 
   bool canLogIn = false;
 
@@ -37,23 +37,22 @@ class _LoginFieldState extends State<LoginField> {
   Color labelEmailColor = Colors.black;
   Color labelPasswordColor = Colors.black;
 
-  Future<bool> logUserIn(String email) async {
+  Future<bool> logUserIn(String email, String password) async {
     try {
-      final user = await Amplify.Auth.signIn(
-          username: email, password: passwordController.text);
+      final user =
+          await Amplify.Auth.signIn(username: email, password: password);
 
       setState(() {
         canLogIn = user.isSignedIn;
       });
     } catch (error) {
-      if (!error.toString().contains("UserNotFoundException") &&
-          !error.toString().contains("AuthException")) {
+      if (error.toString().contains("UserNotFoundException")) {
         setState(() {
-          emailNotExist = true;
+          emailExist = false;
         });
       } else {
         setState(() {
-          emailNotExist = false;
+          emailExist = true;
         });
       }
     }
@@ -72,12 +71,12 @@ class _LoginFieldState extends State<LoginField> {
   // //   } catch (error) {
   // //     if (error.toString().contains("UserNotFoundException")) {
   // //       setState(() {
-  // //         emailNotExist = false;
+  // //         emailExist = false;
   // //       });
   // //       print("A");
   // //     } else {
   // //       setState(() {
-  // //         emailNotExist = true;
+  // //         emailExist = true;
   // //       });
   // //       print("B");
   // //     }
@@ -149,19 +148,12 @@ class _LoginFieldState extends State<LoginField> {
                 });
 
                 return 'Please fill the required field.';
-              } else if (!canLogIn && passwordController.text.isNotEmpty) {
-                setState(() {
-                  passwordErrored = true;
-                  emailErrored = true;
-                  showErrorIcon = true;
-                  emailNotExist = false;
-                });
-                return "";
-              } else if (!emailNotExist) {
+              } else if ((!EmailValidator.validate(value) && !canLogIn) &&
+                  passwordController.text.isNotEmpty) {
                 setState(() {
                   emailErrored = true;
-                  showErrorIcon = true;
                   passwordErrored = true;
+                  showErrorIcon = true;
                 });
                 return "";
               }
@@ -230,20 +222,19 @@ class _LoginFieldState extends State<LoginField> {
                 setState(() {
                   passwordErrored = true;
                   labelPasswordColor = const Color.fromRGBO(179, 38, 30, 1);
-                  ;
                 });
                 return 'Please fill the required field.';
-              } else if ((!regExp.hasMatch(value) || emailErrored) &&
+              } else if ((!regExp.hasMatch(value) ||
+                      emailErrored ||
+                      !canLogIn) &&
                   emailController.text.isNotEmpty) {
                 setState(() {
                   labelPasswordColor = const Color.fromRGBO(179, 38, 30, 1);
-                  ;
                   labelEmailColor = const Color.fromRGBO(179, 38, 30, 1);
-                  ;
                   emailErrored = true;
                   passwordErrored = true;
                 });
-                return "Username or email incorrect";
+                return "Username or password incorrect";
               } else {
                 setState(() {
                   passwordErrored = false;
@@ -302,7 +293,7 @@ class _LoginFieldState extends State<LoginField> {
             child: ElevatedButton(
               key: const Key('Login_Button'),
               onPressed: () async {
-                await logUserIn(emailController.text);
+                await logUserIn(emailController.text, passwordController.text);
                 if (_signInKey.currentState!.validate()) {
                   if (canLogIn) {
                     Navigator.pushNamed(context, LoadingScreenWeb.routeName);
