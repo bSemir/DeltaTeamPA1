@@ -1,6 +1,7 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/signup/emailVerified_screen.dart';
+import 'package:delta_team/features/auth/signup/loadingPage.dart';
 import 'package:delta_team/features/auth/signup/signupScreen.dart';
 import 'package:delta_team/features/auth/signup/signupVerification_Screen.dart';
 import 'package:delta_team/home.dart';
@@ -74,6 +75,7 @@ class _MyAppState extends State<MyApp> {
         '/signup': (context) => const SignupScreen(),
         '/confirmation': (context) => const SignupVerificationScreen(),
         '/confirmationMessage': (context) => const EmailVerifiedScreen(),
+        '/loadingPage': (context) => const LoadingPage(),
       },
     );
   }
