@@ -36,7 +36,7 @@ class _LoginFieldState extends State<LoginField> {
   TextEditingController passwordController = TextEditingController();
   Color labelEmailColor = Colors.grey;
 
-  Future<bool> userExist(String email) async {
+  Future<bool> logUserIn(String email) async {
     try {
       final user = await Amplify.Auth.signIn(
           username: email, password: passwordController.text);
@@ -57,22 +57,6 @@ class _LoginFieldState extends State<LoginField> {
           emailNotExist = false;
         });
       }
-    }
-    return false;
-  }
-
-  Future<bool> usersignIn(String email, String password) async {
-    try {
-      final result =
-          await Amplify.Auth.signIn(username: email, password: password);
-
-      if (result.isSignedIn) {
-        safePrint('User Logged In');
-        Navigator.pushNamed(context, LoadingScreenWeb.routeName);
-        return true;
-      }
-    } catch (error) {
-      print(error.toString());
     }
     return false;
   }
@@ -290,12 +274,11 @@ class _LoginFieldState extends State<LoginField> {
             child: ElevatedButton(
               key: const Key('Login_Button'),
               onPressed: () async {
-                await userExist(emailController.text);
+                await logUserIn(emailController.text);
                 if (_signInKey.currentState!.validate()) {
-                  print(emailController.text);
-                  print(passwordController.text);
-                  await usersignIn(
-                      emailController.text, passwordController.text);
+                  if (canLogIn) {
+                    Navigator.pushNamed(context, LoadingScreenWeb.routeName);
+                  }
                 }
               },
               style: ElevatedButton.styleFrom(
