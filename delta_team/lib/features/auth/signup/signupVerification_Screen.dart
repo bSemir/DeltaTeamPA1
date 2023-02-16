@@ -89,7 +89,6 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-            width: 1440,
             height: 1129,
             decoration: const BoxDecoration(
               image: DecorationImage(
