@@ -1,16 +1,21 @@
+// ignore: file_names
 import 'dart:js';
+// ignore: unused_import
 import 'dart:math';
+// ignore: unused_import
 import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:flutter/material.dart';
 
 import 'package:delta_team/features/auth/signup/provider/auth_provider.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+// ignore: unused_import
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:validators/validators.dart';
+// ignore: unnecessary_import
+import 'package:flutter/services.dart';
 
 // import 'package:amplify_api/amplify_api.dart';
 // import 'package:masked_text_input_formatter/masked_text_input_formatter.dart';
@@ -100,7 +105,7 @@ class _SignupScreenState extends State<SignupScreen> {
     final emailProvider = Provider.of<MyEmail>(context, listen: false);
     return Container(
       height: 1133,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage("images/paBackground.png"),
           fit: BoxFit.cover,
@@ -121,14 +126,14 @@ class _SignupScreenState extends State<SignupScreen> {
                     padding: EdgeInsets.only(top: 30),
                     child: Image.asset("images/PAlogoWhite.png"),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(top: 10),
                     child: Text(
                       "Welcome to",
                       style: TextStyle(fontSize: 48),
                     ),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(top: 10),
                     child: Text(
                       "Product Arena",
@@ -177,7 +182,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         });
                                         return null;
                                       },
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         label: Text("Name"),
                                       ),
@@ -209,7 +214,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         });
                                         return null;
                                       },
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         label: Text("Surname"),
                                       ),
@@ -230,7 +235,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       return "Please fill the required field.";
                                     }
                                   },
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     label: Text("Birth date"),
                                   ),
@@ -248,7 +253,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       return "Please fill the required field.";
                                     }
                                   },
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     label: Text("City"),
                                   ),
@@ -260,7 +265,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 width: 452,
                                 child: DropdownButtonFormField<String>(
                                   key: const Key("statusKey"),
-                                  hint: Text('Status',
+                                  hint: const Text('Status',
                                       style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w700)),
@@ -322,7 +327,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                   },
                                   inputFormatters: [phoneMaskFormatter],
                                   keyboardType: TextInputType.phone,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     label: Text("Phone"),
                                   ),
@@ -421,7 +426,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               child: Container(
                                 width: 452,
                                 height: 56,
-                                child: Text(
+                                child: const Text(
                                   "By creating an account, you agree to our  Terms and have read and acknowledge the Global Privacy Statement.",
                                   style: TextStyle(fontSize: 10),
                                 ),
@@ -433,10 +438,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                 height: 56,
                                 child: ElevatedButton(
                                   key: const Key("createAccountKey"),
-                                  child: Text(
-                                    "Create your account",
-                                    style: TextStyle(fontSize: 16),
-                                  ),
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.black),
                                   onPressed: () async {
@@ -475,6 +476,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         );
                                         print(result.isSignUpComplete);
                                         if (!result.isSignUpComplete) {
+                                          // ignore: use_build_context_synchronously
                                           Navigator.pushNamed(
                                               context, "/confirmation");
                                           setState(() {
@@ -492,6 +494,10 @@ class _SignupScreenState extends State<SignupScreen> {
                                       changeScreen();
                                     }
                                   },
+                                  child: const Text(
+                                    "Create your account",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
                                 ),
                               ),
                             ),

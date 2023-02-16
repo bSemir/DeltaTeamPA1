@@ -13,10 +13,10 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
   void initState() {
     super.initState();
     // Schedule the opening of a new page after 3 seconds
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoadingPage()),
+        MaterialPageRoute(builder: (context) => const LoadingPage()),
       );
     });
   }
@@ -30,7 +30,7 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
     return Scaffold(
       body: Container(
         height: 1133,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("images/paBackground.png"),
             fit: BoxFit.cover,
@@ -47,14 +47,14 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 85,
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 30),
+                    padding: const EdgeInsets.only(top: 30),
                     child: Image.asset("images/check_circle.png"),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(top: 10),
                     child: Text(
                       "Email Verified",
@@ -64,7 +64,7 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
                       ),
                     ),
                   ),
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(top: 13),
                     child: Text(
                       "Your email is successfully verified",

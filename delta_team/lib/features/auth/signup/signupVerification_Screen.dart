@@ -89,7 +89,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
       body: SingleChildScrollView(
         child: Container(
             height: 1133,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("images/paBackground.png"),
                 fit: BoxFit.cover,
@@ -108,14 +108,14 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 140,
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 30),
                             child: Image.asset("images/PAlogoWhite.png"),
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(top: 10),
                             child: Text(
                               "Just to be sure...",
@@ -125,7 +125,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                               ),
                             ),
                           ),
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.only(top: 13),
                             child: Text(
                               "We've sent a 6-digit code to your e-mail Verify",
@@ -366,7 +366,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                               key: const Key("code4Key"),
                                               decoration: InputDecoration(
                                                 contentPadding:
-                                                    EdgeInsets.symmetric(
+                                                    const EdgeInsets.symmetric(
                                                         vertical: 25),
                                                 focusedBorder:
                                                     OutlineInputBorder(
@@ -432,7 +432,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                               },
                                               decoration: InputDecoration(
                                                 contentPadding:
-                                                    EdgeInsets.symmetric(
+                                                    const EdgeInsets.symmetric(
                                                         vertical: 25),
                                                 focusedBorder:
                                                     OutlineInputBorder(
@@ -551,7 +551,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                     //Text error
 
                                     codeError
-                                        ? Padding(
+                                        ? const Padding(
                                             padding: EdgeInsets.only(top: 25),
                                             child: Text(
                                               "Conformation code does not match",
