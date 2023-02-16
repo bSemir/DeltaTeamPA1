@@ -4,6 +4,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
 import 'package:delta_team/common/customfooter_web.dart';
+import 'package:delta_team/common/footer/footer.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_form.dart';
 import 'package:flutter/foundation.dart';
@@ -107,44 +108,6 @@ class MyDesktopBodyState extends State<MyDesktopBody> {
     });
     return false;
   }
-  // FutureOr<bool> usersignIn(
-  //     BuildContext context, String email, String password) async {
-  //   if (email.isEmpty || password.isEmpty) {
-  //     setState(() {
-  //       errorMessage = 'Incorrect email or password';
-  //     });
-  //     return Future.value(false);
-  //   } else {
-  //     try {
-  //       final result =
-  //           await Amplify.Auth.signIn(username: email, password: password);
-  //       if (result.isSignedIn) {
-  //         safePrint('User Logged In');
-  //         Navigator.pushNamed(context, LoadingScreenWeb.routeName);
-  //         return Future.value(true);
-  //       }
-  //     } on AuthException catch (error) {
-  //       setState(() {
-  //         errorMessage = error.message;
-  //       });
-  //       return Future.value(false);
-  //     } on HttpException catch (e) {
-  //       final response = e.response;
-  //       if (response.statusCode == 400) {
-  //         setState(() {
-  //           errorMessage = 'Please enter a valid email or password';
-  //         });
-  //         return Future.value(false);
-  //       } else {
-  //         setState(() {
-  //           errorMessage = 'Sign in failed';
-  //         });
-  //         return Future.value(false);
-  //       }
-  //     }
-  //   }
-  //   return Future.value(false);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -231,58 +194,6 @@ class MyDesktopBodyState extends State<MyDesktopBody> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: const [
                                 LoginField(),
-
-                                // CustomEmailField(
-                                //   key: const Key('email_field'),
-                                //   controller: username,
-                                //   showErrorIcon: username.text.isNotEmpty &&
-                                //       !username.text.contains("@") &&
-                                //       !username.text.endsWith(".com"),
-                                //   text: 'Email',
-                                // ),
-                                // CustomPasswordField(
-                                //   key: const Key(
-                                //       'Password_field_Unreveal_Password'),
-                                //   controller: password,
-                                //   hintText: 'Password',
-                                //   obscureText: passwordObscured,
-                                // ),
-                                // ignore: unnecessary_null_comparison
-                                // if (errorMessage != null)
-                                //   Container(
-                                //     // margin: const EdgeInsets.only(top: 2.0),
-                                //     child: Text(
-                                //       errorMessage,
-                                //       style: const TextStyle(
-                                //         color: Colors.red,
-                                //         fontSize: 10.0,
-                                //       ),
-                                //     ),
-                                //   ),
-                                // SizedBox(
-                                //   height: 56,
-                                //   width: (452 / 1440) * width,
-                                //   child: ElevatedButton(
-                                //     key: const Key('Login_Button'),
-                                //     onPressed: () async {
-                                //       if (_formKey.currentState!.validate()) {
-                                //         usersignIn(context, username.text,
-                                //             password.text);
-                                //       }
-                                //     },
-                                //     style: ElevatedButton.styleFrom(
-                                //       backgroundColor: Colors.black,
-                                //     ),
-                                //     child: Text(
-                                //       "Login",
-                                //       style: GoogleFonts.notoSans(
-                                //         fontWeight: FontWeight.w700,
-                                //         color: Colors.white,
-                                //         fontSize: (16 / 1440) * width,
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
                               ]),
                         ),
                       ),
@@ -291,7 +202,7 @@ class MyDesktopBodyState extends State<MyDesktopBody> {
               const SizedBox(
                 height: 198,
               ),
-              const FooterWidget()
+              const Footer()
             ],
           ),
         ),

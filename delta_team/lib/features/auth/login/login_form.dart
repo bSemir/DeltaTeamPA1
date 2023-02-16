@@ -225,11 +225,10 @@ class _LoginFieldState extends State<LoginField> {
               return null;
             },
             decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: labelPasswordColor)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFF000000)),
                 ),
                 filled: true,
                 floatingLabelBehavior: FloatingLabelBehavior.auto,
