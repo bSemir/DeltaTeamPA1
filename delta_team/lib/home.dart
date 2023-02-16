@@ -1,5 +1,7 @@
 import 'package:delta_team/features/auth/signup/signupScreen.dart';
 import 'package:delta_team/features/auth/signup/signupVerification_screen.dart';
+import 'package:delta_team/features/footer/column_footer.dart';
+import 'package:delta_team/features/footer/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -18,10 +20,12 @@ class HomeScreen extends StatelessWidget {
     //return LayoutBuilder(
     //builder: (context, constraints) {
     return Scaffold(
-      body: Container(
+      body: ListView(
         // height: defaultHeight * 10,
         // width: defaultWidth * 5,
-        child: SingleChildScrollView(child: SignupScreen()),
+        children: [
+          SignupScreen(),
+        ],
       ),
     );
 
