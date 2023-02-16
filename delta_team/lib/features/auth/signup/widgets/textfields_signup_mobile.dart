@@ -24,7 +24,8 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
       final user =
           await Amplify.Auth.signIn(username: email, password: "Password1!");
     } catch (error) {
-      if (!error.toString().contains("UserNotFoundException")) {
+      if (!error.toString().contains("UserNotFoundException") &&
+          !error.toString().contains("AuthException")) {
         setState(() {
           isEmailTaken = true;
         });
