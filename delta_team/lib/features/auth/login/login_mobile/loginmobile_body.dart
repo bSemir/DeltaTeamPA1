@@ -4,6 +4,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/login/amplify_auth.dart';
 import 'package:delta_team/features/auth/login/login_form.dart';
+import 'package:delta_team/features/auth/login/loginform_mobile.dart';
 import 'package:delta_team/home_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_extension/riverpod_extension.dart';
@@ -19,17 +20,17 @@ class MyMobileBody extends StatefulWidget {
 }
 
 class _MyMobileBodyState extends State<MyMobileBody> {
-  TextEditingController username = TextEditingController();
-  TextEditingController password = TextEditingController();
+  // TextEditingController username = TextEditingController();
+  // TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  bool passwordObscured = true;
-  String errorMessage = 'Incorrect email or password';
+  // bool passwordObscured = true;
+  String errorMessage = '';
 
-  void togglePasswordObscure() {
-    setState(() {
-      passwordObscured = !passwordObscured;
-    });
-  }
+  // void togglePasswordObscure() {
+  //   setState(() {
+  //     passwordObscured = !passwordObscured;
+  //   });
+  // }
 
   //   setState(() {
   // }
@@ -126,63 +127,7 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                       width: (296 / 360) * width,
                       child: Column(
                         children: [
-                          LoginField(),
-                          // CustomTextField(
-                          //   hintText: 'Email',
-                          //   controller: username,
-                          //   obscureText: false,
-                          // ),
-                          // const SizedBox(height: 16),
-                          // CustomTextField(
-                          //   controller: password,
-                          //   hintText: 'Password',
-                          //   obscureText: true,
-                          // ),
-
-                          // CustomEmailField(
-                          //   key: const Key('email_controller_field'),
-                          //   controller: username,
-                          //   showErrorIcon: username.text.isNotEmpty &&
-                          //       !username.text.contains("@"),
-                          //   // &&
-                          //   // !username.text.endsWith(".com"),
-                          //   text: 'Email',
-                          // ),
-                          // const SizedBox(
-                          //   height: 24,
-                          // ),
-                          // CustomPasswordField(
-                          //   key: const Key(
-                          //       'password_controllers_toggle_to_reveal_password'),
-                          //   controller: password,
-                          //   hintText: 'Password',
-                          //   obscureText: passwordObscured,
-                          // ),
-                          // const SizedBox(
-                          //   height: 40,
-                          // ),
-                          // SizedBox(
-                          //   width: (296 / 360) * width,
-                          //   child: ElevatedButton(
-                          //     key: const Key('login_button'),
-                          //     onPressed: () async {
-                          //       if (_formKey.currentState!.validate()) {
-                          //         usersignIn(
-                          //             context, username.text, password.text);
-                          //       }
-                          //     },
-                          //     style: ElevatedButton.styleFrom(
-                          //       backgroundColor: Colors.black,
-                          //     ),
-                          //     child: Text(
-                          //       "Login",
-                          //       style: GoogleFonts.montserrat(
-                          //           fontWeight: FontWeight.w700,
-                          //           color: Colors.white,
-                          //           fontSize: 14.0),
-                          //     ),
-                          //   ),
-                          // ),
+                          const LoginFieldMobile(),
                           const SizedBox(
                             height: 10,
                           ),
@@ -202,16 +147,10 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                                   )
                                 ]),
                                 GestureDetector(
-                                  key: const Key(
-                                      'This_supposed_to_be_a_signUp_but_for_now_I_use_it_for_signOut'),
+                                  key: const Key('SignUp_Homepage'),
                                   onTap: () async {
-                                    Navigator.of(context).pop();
-                                    try {
-                                      await signOutCurrentUser(
-                                          null, null, context);
-                                    } on AmplifyException catch (e) {
-                                      safePrint(e.message);
-                                    }
+                                    Navigator.pushNamed(
+                                        context, LoadingScreenMobile.routeName);
                                   },
                                   child: Text(
                                     ' Sign up',
@@ -260,8 +199,10 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: InkWell(
-                          key: const Key('Not_routed_to_privacyPage'),
-                          onTap: () {
+                          key: const Key('routed_to_loadingScreen'),
+                          onTap: () async {
+                            Navigator.pushNamed(
+                                context, LoadingScreenMobile.routeName);
                             // Navigate to privacy page
                           },
                           child: Text(
@@ -289,8 +230,10 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: InkWell(
-                          key: const Key('Not_routed_to_privacyPage'),
-                          onTap: () {
+                          key: const Key('routed_to_LoadingScreen'),
+                          onTap: () async {
+                            Navigator.pushNamed(
+                                context, LoadingScreenMobile.routeName);
                             // Navigate to privacy page
                           },
                           child: Text(

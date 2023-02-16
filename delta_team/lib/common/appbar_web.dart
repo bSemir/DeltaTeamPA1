@@ -21,13 +21,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     double width = MediaQuery.of(context).size.width;
     return Container(
       width: width,
-      height: 70.0,
+      height: MediaQuery.of(context).size.height / 11.428,
       padding: EdgeInsets.only(
           left: (50 / 1440) * width, right: (50 / 1440) * width),
       decoration: const BoxDecoration(
         color: Color(0xFFFFFFFF),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           leading == null
               ? SizedBox(width: (170 / 1440) * width, height: 34.0)
@@ -36,19 +37,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   height: 34.0,
                   child: leading,
                 ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Container(
-              height: 22.0,
-              width: (62 / 1440) * width,
-              alignment: Alignment.center,
-              child: Text(
-                title,
-                style: GoogleFonts.notoSans(
-                  fontWeight: FontWeight.w400,
-                  fontSize: (16 / 1440) * width,
-                  color: const Color(0xFF000000),
-                ),
+          SizedBox(
+            width: (10 / 1440) * width,
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: Text(
+              title,
+              style: GoogleFonts.notoSans(
+                fontWeight: FontWeight.w400,
+                fontSize: (16 / 1440) * width,
+                color: const Color(0xFF000000),
               ),
             ),
           ),
@@ -108,18 +107,16 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   height: 34.0,
                   child: leading,
                 ),
-          Expanded(
-            child: Container(
-              height: 22.0,
-              width: (40 / 1440) * width,
-              alignment: Alignment.center,
-              child: Text(
-                title,
-                style: GoogleFonts.notoSans(
-                  fontWeight: FontWeight.w400,
-                  fontSize: (16 / 1440) * width,
-                  color: const Color(0xFF000000),
-                ),
+          Container(
+            // height: 22.0,
+            // width: (40 / 1440) * width,
+            alignment: Alignment.center,
+            child: Text(
+              title,
+              style: GoogleFonts.notoSans(
+                fontWeight: FontWeight.w400,
+                fontSize: (16 / 1440) * width,
+                color: const Color(0xFF000000),
               ),
             ),
           ),

@@ -58,18 +58,18 @@ class MyDesktopBodyState extends State<MyDesktopBody> {
     }
   }
 
-  TextEditingController username = TextEditingController();
-  TextEditingController password = TextEditingController();
+  // TextEditingController username = TextEditingController();
+  // TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  bool passwordObscured = true;
+  // bool passwordObscured = true;
   String errorMessage = '';
 
-  void togglePasswordObscure() {
-    setState(() {
-      passwordObscured = !passwordObscured;
-    });
-  }
+  // void togglePasswordObscure() {
+  //   setState(() {
+  //     passwordObscured = !passwordObscured;
+  //   });
+  // }
 
   FutureOr<bool> usersignIn(
       BuildContext context, String email, String password) async {
@@ -155,9 +155,11 @@ class MyDesktopBodyState extends State<MyDesktopBody> {
           title: 'Tech387',
           leading: Image.asset('assets/images/logo.png'),
           action: RoundedButton(
-            key: const Key('Not_routed_to_SignUpPage'),
+            key: const Key('SignUpPage_homepage'),
             text: 'Sign Up',
-            press: () {},
+            press: () async {
+              Navigator.pushNamed(context, LoadingScreenWeb.routeName);
+            },
             color: const Color(0xFF000000),
             textColor: Colors.white,
             borderColor: Colors.black,
@@ -227,7 +229,7 @@ class MyDesktopBodyState extends State<MyDesktopBody> {
                           width: (452 / 1440) * width,
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
+                              children: const [
                                 LoginField(),
 
                                 // CustomEmailField(

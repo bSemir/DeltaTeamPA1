@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:email_validator/email_validator.dart';
@@ -12,7 +13,7 @@ import 'package:riverpod_extension/riverpod_extension.dart';
 class LoginField extends StatefulWidget {
   // final IconData suffixIcon;
 
-  LoginField({
+  const LoginField({
     super.key,
 
     // required this.suffixIcon
@@ -26,138 +27,44 @@ class _LoginFieldState extends State<LoginField> {
   bool viewPassword = false;
   bool showErrorIcon = false;
   String errorMessage = '';
-  bool emailExists = true;
+  bool emailNotExist = true;
+
+  bool canLogIn = false;
+
   final _signInKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  Color labelEmailColor = Colors.grey;
-  final FocusNode _focusEmailNode = FocusNode();
+  Color labelEmailColor = const Color(0xFF605D66);
+  Color labelPasswordColor = const Color(0xFF605D66);
+  Color eyelid = const Color(0xFF000000);
 
-  Future<bool> userExist(String email) async {
+  Future<bool> logUserIn(String email, String password) async {
     try {
       final user =
-          await Amplify.Auth.signIn(username: email, password: "Password1!");
+          await Amplify.Auth.signIn(username: email, password: password);
+      print('successful');
+      setState(() {
+        canLogIn = user.isSignedIn;
+      });
     } catch (error) {
-      if (!error.toString().contains("User does not exist.")) {
+      if (!error.toString().contains("UserNotFoundException") &&
+          !error.toString().contains("underlyingException")) {
         setState(() {
-          emailExists = true;
+          emailNotExist = true;
         });
-        print(error.toString());
-        print("a");
       } else {
         setState(() {
-          emailExists = false;
+          emailNotExist = false;
         });
-        print(emailExists);
       }
     }
     return false;
   }
-
-  Future<bool> usersignIn(String email, String password) async {
-    try {
-      final result =
-          await Amplify.Auth.signIn(username: email, password: password);
-
-      if (result.isSignedIn) {
-        safePrint('User Logged In');
-        Navigator.pushNamed(context, LoadingScreenWeb.routeName);
-        return true;
-      }
-    } catch (error) {
-      print(error.toString());
-    }
-    return false;
-  }
-
-  // // Future<bool> usersignIn(String email, String password) async {
-  // //   try {
-  // //     final result =
-  // //         await Amplify.Auth.signIn(username: email, password: password);
-  // //     if (result.isSignedIn) {
-  // //       safePrint('User Logged In');
-  // //       Navigator.pushNamed(context, LoadingScreenWeb.routeName);
-  // //       return true;
-  // //     }
-  // //   } catch (error) {
-  // //     if (error.toString().contains("UserNotFoundException")) {
-  // //       setState(() {
-  // //         emailExists = false;
-  // //       });
-  // //       print("A");
-  // //     } else {
-  // //       setState(() {
-  // //         emailExists = true;
-  // //       });
-  // //       print("B");
-  // //     }
-  // //     print(error.toString());
-  // //   }
-  // //   return false;
-  // // }
-
-  // FutureOr<bool> usersignIn(String email, String password) async {
-  //   try {
-  //     final result =
-  //         await Amplify.Auth.signIn(username: email, password: password);
-  //     if (result.isSignedIn) {
-  //       safePrint('User Logged In');
-  //       Navigator.pushNamed(context, LoadingScreenWeb.routeName);
-  //       return true;
-  //     }
-  //   } on AuthException catch (error) {
-  //     setState(() {
-  //       errorMessage = error.message;
-  //     });
-  //     return false;
-  //   } on HttpException catch (e) {
-  //     final response = e.response;
-  //     if (response.statusCode == 400) {
-  //       setState(() {
-  //         errorMessage = 'Please enter a valid email or password';
-  //       });
-  //       return false;
-  //     } else {
-  //       setState(() {
-  //         errorMessage = 'Sign in failed';
-  //       });
-  //       return false;
-  //     }
-  //   }
-  //   setState(() {
-  //     errorMessage = 'Sign in failed';
-  //   });
-  //   return false;
-  // }
 
   @override
   Widget build(BuildContext context) {
-    bool passwordObscured = true;
     bool emailErrored = false;
     bool passwordErrored = false;
-    String passwordError = '';
-    bool isButtonPressed = false;
-
-    void togglePasswordObscure() {
-      setState(() {
-        passwordObscured = !passwordObscured;
-      });
-    }
-
-    void _onFocusChange() {
-      debugPrint("Focus: ${_focusEmailNode.hasFocus.toString()}");
-    }
-
-    void initState() {
-      super.initState();
-      _focusEmailNode.addListener(_onFocusChange);
-    }
-
-    void dispose() {
-      super.dispose();
-      _focusEmailNode.removeListener(_onFocusChange);
-      _focusEmailNode.dispose();
-    }
 
     double width = MediaQuery.of(context).size.width;
     return Form(
@@ -166,29 +73,55 @@ class _LoginFieldState extends State<LoginField> {
         children: [
           TextFormField(
             key: const Key("emailKey"),
-            focusNode: _focusEmailNode,
             controller: emailController,
-            style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
+            style: GoogleFonts.notoSans(
+              color: labelEmailColor,
+              fontWeight: FontWeight.w700,
+            ),
             validator: (value) {
               if (value!.isEmpty) {
-                emailErrored = true;
-                showErrorIcon = true;
+                setState(() {
+                  showErrorIcon = true;
+                  emailErrored = true;
+                  labelEmailColor = const Color(0xFFB3261E);
+                });
 
                 return 'Please fill the required field.';
-              } else if (!EmailValidator.validate(value)) {
+              } else if ((!EmailValidator.validate(value) && !canLogIn) &&
+                  passwordController.text.isNotEmpty) {
+                setState(() {
+                  labelEmailColor = const Color(0xFFB3261E);
+                  passwordErrored = true;
+                  emailErrored = true;
+                  showErrorIcon = true;
+                  emailNotExist = false;
+                });
+                return '';
+              } else if (!emailNotExist) {
                 setState(() {
                   emailErrored = true;
                   showErrorIcon = true;
-                  emailExists = false;
+                  passwordErrored = true;
+                  labelEmailColor = const Color(0xFFB3261E);
                 });
-                return "Enter the valid email";
-              } else if (!emailExists) {
-                setState(() {
-                  emailErrored = true;
-                  showErrorIcon = true;
-                });
-                return "Email does not exists!";
               }
+              if (passwordController.text.isEmpty &&
+                  emailController.text.isNotEmpty) {
+                setState(() {
+                  labelEmailColor = const Color(0xFF000000);
+                });
+              }
+
+              if (canLogIn) {
+                setState(() {
+                  labelEmailColor = const Color(0xFF000000);
+                  passwordErrored = false;
+                  emailErrored = false;
+                  showErrorIcon = false;
+                });
+                return null;
+              }
+
               setState(() {
                 emailErrored = false;
                 showErrorIcon = false;
@@ -199,21 +132,34 @@ class _LoginFieldState extends State<LoginField> {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
               ),
+              filled: true,
+              floatingLabelBehavior: FloatingLabelBehavior.auto,
+              floatingLabelStyle: TextStyle(
+                color: labelEmailColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+                fontFamily: GoogleFonts.notoSans().fontFamily,
+              ),
+              focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFF000000)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: labelEmailColor),
+              ),
+              disabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF605D66))),
               label: Text(
                 "Email",
                 style: GoogleFonts.notoSans(
-                    color:
-                        _focusEmailNode.hasFocus ? Colors.green : Colors.grey,
-                    fontSize: 14),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color.fromRGBO(34, 233, 116, 1)),
+                    color: labelEmailColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700),
               ),
               suffixIcon: showErrorIcon
                   ? const Icon(
                       Icons.error,
-                      color: Colors.red,
-                      size: 18,
+                      color: Color(0xFFB3261E),
+                      size: 24,
                     )
                   : null,
             ),
@@ -225,51 +171,91 @@ class _LoginFieldState extends State<LoginField> {
             key: const Key("passwordKey"),
             controller: passwordController,
             obscureText: !viewPassword,
-            style: GoogleFonts.notoSans(fontWeight: FontWeight.w500),
+            style: GoogleFonts.notoSans(
+              color: labelPasswordColor,
+              fontWeight: FontWeight.w700,
+            ),
             validator: (value) {
               String regex =
                   r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
               RegExp regExp = RegExp(regex);
+
               if (value!.isEmpty) {
                 setState(() {
                   passwordErrored = true;
+                  labelPasswordColor = const Color(0xFFB3261E);
+                  eyelid = const Color(0xFFB3261E);
                 });
                 return 'Please fill the required field.';
-              } else if (!regExp.hasMatch(value)) {
+              } else if ((!regExp.hasMatch(value) ||
+                      emailErrored ||
+                      !canLogIn) &&
+                  emailController.text.isNotEmpty) {
                 setState(() {
+                  labelPasswordColor = const Color(0xFFB3261E);
+                  eyelid = const Color(0xFFB3261E);
+                  labelEmailColor = const Color(0xFFB3261E);
+                  emailErrored = true;
                   passwordErrored = true;
+                  showErrorIcon = true;
                 });
-                return 'Password must contain a minimum of 8 characters, \nuppercase, lower case, number and special character.';
+                return "Incorrect email or password";
               } else {
                 setState(() {
                   passwordErrored = false;
                 });
               }
+              if (emailController.text.isEmpty &&
+                  passwordController.text.isNotEmpty) {
+                setState(() {
+                  labelPasswordColor = const Color(0xFF000000);
+                  eyelid = const Color(0xFF000000);
+                });
+              }
+              if (canLogIn || emailController.text.isNotEmpty) {
+                print("LOGIN");
+                setState(() {
+                  passwordErrored = false;
+                  emailErrored = false;
+                  showErrorIcon = false;
+                });
+                return null;
+              }
+
               return null;
             },
             decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF000000)),
+                ),
+                filled: true,
+                floatingLabelBehavior: FloatingLabelBehavior.auto,
+                floatingLabelStyle: TextStyle(
+                  color: labelPasswordColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: GoogleFonts.notoSans().fontFamily,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: labelEmailColor),
+                ),
+                disabledBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF605D66))),
                 label: Text(
                   "Password",
                   style: GoogleFonts.notoSans(
-                      color:
-                          _focusEmailNode.hasFocus ? Colors.green : Colors.grey,
-                      fontSize: 14),
-                ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: Color.fromRGBO(34, 233, 116, 1)),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14,
+                      color: labelPasswordColor),
                 ),
                 suffixIcon: InkWell(
                     key: const Key("passwordVisible"),
                     child: Icon(
-                      viewPassword ? Icons.visibility : Icons.visibility_off,
-                      color: viewPassword
-                          ? Colors.black
-                          : const Color.fromRGBO(96, 93, 102, 1),
-                    ),
+                        viewPassword ? Icons.visibility : Icons.visibility_off,
+                        color: eyelid),
                     onTap: () {
                       setState(() {
                         viewPassword = !viewPassword;
@@ -285,14 +271,16 @@ class _LoginFieldState extends State<LoginField> {
             child: ElevatedButton(
               key: const Key('Login_Button'),
               onPressed: () async {
-                userExist(emailController.text);
+                await logUserIn(emailController.text, passwordController.text);
                 if (_signInKey.currentState!.validate()) {
-                  usersignIn(emailController.text, passwordController.text);
+                  if (canLogIn) {
+                    print('successful');
+                    Navigator.pushNamed(context, LoadingScreenWeb.routeName);
+                  }
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
-              ),
+                  backgroundColor: const Color(0xFF000000)),
               child: Text(
                 "Login",
                 style: GoogleFonts.notoSans(
