@@ -4,6 +4,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/signup/provider/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -88,7 +89,8 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-            height: 1133,
+            width: 1440,
+            height: 1129,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage("images/paBackground.png"),
@@ -112,8 +114,8 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                             height: 140,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 30),
-                            child: Image.asset("images/PAlogoWhite.png"),
+                            padding: const EdgeInsets.only(top: 30),
+                            child: SvgPicture.asset("images/pA_logo_white.svg"),
                           ),
                           const Padding(
                             padding: EdgeInsets.only(top: 10),

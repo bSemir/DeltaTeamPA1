@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:delta_team/features/auth/signup/provider/auth_provider.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 // ignore: unused_import
 import 'package:google_fonts/google_fonts.dart';
@@ -104,10 +105,11 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     final emailProvider = Provider.of<MyEmail>(context, listen: false);
     return Container(
-      height: 1133,
+      width: 1440,
+      height: 1129,
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/paBackground.png"),
+          image: AssetImage("assets/images/paBackground.png"),
           fit: BoxFit.cover,
         ),
       ),
@@ -123,8 +125,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 30),
-                    child: Image.asset("images/PAlogoWhite.png"),
+                    padding: const EdgeInsets.only(top: 30),
+                    child: SvgPicture.asset("images/pA_logo_white.svg"),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(top: 10),

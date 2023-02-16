@@ -1,5 +1,6 @@
 import 'package:delta_team/features/auth/signup/loadingPage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class EmailVerifiedScreen extends StatefulWidget {
   const EmailVerifiedScreen({super.key});
@@ -29,10 +30,10 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
     screenHeight ??= MediaQuery.of(context).size.height;
     return Scaffold(
       body: Container(
-        height: 1133,
+        height: 1129,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("images/paBackground.png"),
+            image: AssetImage("assets/images/paBackground.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -52,7 +53,7 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
-                    child: Image.asset("images/check_circle.png"),
+                    child: SvgPicture.asset("images/check_circle.svg"),
                   ),
                   const Padding(
                     padding: EdgeInsets.only(top: 10),
