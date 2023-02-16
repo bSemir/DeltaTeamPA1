@@ -1,4 +1,5 @@
 // import 'package:delta_team/features/onboarding/modelRoleWhite.dart';
+import 'package:delta_team/features/onboarding/footer/footer.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -99,6 +100,21 @@ class _OnboardingState extends State<Onboarding> {
     var nizSaRolama = Provider.of<MyItem>(context).myItems;
     var isSelected = myItem.hasRole(role);
 
+    bool inColumn = false;
+    bool videoWithoutTitle = false;
+
+    if (MediaQuery.of(context).size.width < 910) {
+      inColumn = true;
+    } else {
+      inColumn = false;
+    }
+
+    if (MediaQuery.of(context).size.width < 580) {
+      videoWithoutTitle = true;
+    } else {
+      videoWithoutTitle = false;
+    }
+
     Future<void> submitOnboarding() async {
       await signInUser();
 
@@ -146,22 +162,14 @@ class _OnboardingState extends State<Onboarding> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Row(children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.02,
-          ),
-          Image.asset(
-            '../../assets/images/logo.png',
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.32,
-          ),
-          Container(
-              child: Text(
-            'Tech387',
-            style: TextStyle(color: Colors.black),
-          ))
-        ]),
+        leading: Image.asset(
+          'assets/images/logo.png',
+        ),
+        title: const Text(
+          'Tech387',
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -223,81 +231,84 @@ class _OnboardingState extends State<Onboarding> {
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey, width: 1),
                         borderRadius: BorderRadius.all(Radius.circular(7))),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.01,
-                        ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 24, top: 17, right: 24, left: 24),
+                      child: Column(
+                        children: [
+                          //pocetak pitanja forme
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.58,
+                            child: Text(
+                                'Product Arena je full-time tromjesečna praksa, da li spreman/a učenju i radu posvetiti 8 sati svakog radnog dana?'),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
 
-                        //pocetak pitanja forme
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.58,
-                          child: Text(
-                              'Product Arena je full-time tromjesečna praksa, da li spreman/a učenju i radu posvetiti 8 sati svakog radnog dana?'),
-                        ),
-
-                        Column(
-                          children: [
-                            ListTile(
-                              key: const Key('KeyDa'),
-                              title: const Text('Da'),
-                              leading: Radio<String>(
-                                value: "False",
-                                groupValue: _character,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _character = value;
-                                    print(value);
-                                  });
-                                },
+                          Column(
+                            children: [
+                              ListTile(
+                                key: const Key('KeyDa'),
+                                title: const Text('Da'),
+                                leading: Radio<String>(
+                                  value: "False",
+                                  groupValue: _character,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _character = value;
+                                      print(value);
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                            ListTile(
-                              key: const Key('KeyNe'),
-                              title: const Text('Ne'),
-                              leading: Radio<String>(
-                                value: "True",
-                                groupValue: _character,
-                                onChanged: (value) {
-                                  setState(() {
-                                    _character = value;
-                                    print(value);
-                                  });
-                                },
+                              ListTile(
+                                key: const Key('KeyNe'),
+                                title: const Text('Ne'),
+                                leading: Radio<String>(
+                                  value: "True",
+                                  groupValue: _character,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _character = value;
+                                      print(value);
+                                    });
+                                  },
+                                ),
                               ),
-                            ),
-                            Consumer<ErrorMessage>(
-                              builder: (context, error, child) {
-                                return Container(
-                                  padding:
-                                      EdgeInsets.only(left: 20.0, top: 5.0),
-                                  height: error.errorHeight,
-                                  child: Row(
-                                    children: <Widget>[
-                                      // Icon(error.errorIcon,
-                                      //     size: 20.0, color: Colors.red[700]),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 5.0),
-                                        child: Text(
-                                          error.errorText,
-                                          style: TextStyle(
-                                            fontSize: 12.0,
-                                            color: Colors.red[700],
+                              Consumer<ErrorMessage>(
+                                builder: (context, error, child) {
+                                  return Container(
+                                    padding:
+                                        EdgeInsets.only(left: 20.0, top: 5.0),
+                                    height: error.errorHeight,
+                                    child: Row(
+                                      children: <Widget>[
+                                        // Icon(error.errorIcon,
+                                        //     size: 20.0, color: Colors.red[700]),
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 5.0),
+                                          child: Text(
+                                            error.errorText,
+                                            style: TextStyle(
+                                              fontSize: 12.0,
+                                              color: Colors.red[700],
+                                            ),
                                           ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
 
-                        // Column
+                          // Column
 
-                        // FormField
-                      ],
+                          // FormField
+                        ],
+                      ),
                     ),
                   ),
                   //drugi container
@@ -307,28 +318,19 @@ class _OnboardingState extends State<Onboarding> {
                   Container(
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey, width: 1),
-                        borderRadius: BorderRadius.all(Radius.circular(7))),
-                    height: MediaQuery.of(context).size.height * 0.18,
-                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(7))),
+                    margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     width: MediaQuery.of(context).size.width * 0.60,
-                    // color: Colors.white,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                        Container(
-                          // margin: EdgeInsets.fromLTRB(0, 0, 710, 0),
-                          // color: Colors.green,
-                          width: MediaQuery.of(context).size.width * 0.57,
-                          //umjesto margine uradi width  sa querijem zbog responsiva
-                          child: Text('Šta te motiviše?'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 28, 0),
-                          width: MediaQuery.of(context).size.width * 0.54,
-                          child: TextFormField(
-                            key: const Key('Key1'),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 17, right: 24, left: 24, bottom: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("Šta te motiviše?"),
+                          TextFormField(
+                            key: const Key('TextFieldKey2'),
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 18),
                             decoration: const InputDecoration(
@@ -338,33 +340,42 @@ class _OnboardingState extends State<Onboarding> {
                                 color: Colors.black,
                               )),
                               label: Text(
-                                'Unesi text',
+                                'Vaš odgovor',
                                 style: TextStyle(fontSize: 12),
                               ),
                             ),
                             textInputAction: TextInputAction.next,
+                            // controller: _controllers[2],
                             controller: _motivacija,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Ovo polje je obavezno ! ';
                               } else {
+                                print(value);
                                 return null;
                               }
                             },
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(690, 10, 0, 0),
-                          child: GestureDetector(
-                              onTap: () {
-                                _motivacija.clear();
-                              },
-                              child: Text(
-                                'Clear Section',
-                                style: TextStyle(color: Colors.grey),
-                              )),
-                        )
-                      ],
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: 20,
+                              right: MediaQuery.of(context).size.width / 80,
+                            ),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  _motivacija.clear();
+                                },
+                                child: const Text(
+                                  'Clear Section',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -374,26 +385,20 @@ class _OnboardingState extends State<Onboarding> {
                   Container(
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey, width: 1),
-                        borderRadius: BorderRadius.all(Radius.circular(7))),
-                    height: MediaQuery.of(context).size.height * 0.18,
-                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(7))),
+                    margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     width: MediaQuery.of(context).size.width * 0.60,
-                    // color: Colors.white,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.57,
-                          child: Text(
-                              'Da li imaš ili si imao/la neki hobi ili se baviš nekim sportom?'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 28, 0),
-                          width: MediaQuery.of(context).size.width * 0.54,
-                          child: TextFormField(
-                            key: const Key('Key2'),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 17, right: 24, left: 24, bottom: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                              "Da li imaš ili si imao/la neki hobi ili se baviš nekim sportom?"),
+                          TextFormField(
+                            key: const Key('TextFieldKey3'),
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 18),
                             decoration: const InputDecoration(
@@ -403,12 +408,12 @@ class _OnboardingState extends State<Onboarding> {
                                 color: Colors.black,
                               )),
                               label: Text(
-                                'Unesi text',
+                                'Vaš odgovor',
                                 style: TextStyle(fontSize: 12),
                               ),
                             ),
                             textInputAction: TextInputAction.next,
-                            // controller: _controllers[1],
+                            // controller: _controllers[2],
                             controller: _hobi,
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -419,17 +424,26 @@ class _OnboardingState extends State<Onboarding> {
                               }
                             },
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(690, 10, 0, 0),
-                          child: GestureDetector(
-                              onTap: () {
-                                _hobi.clear();
-                              },
-                              child: Text('Clear Section',
-                                  style: TextStyle(color: Colors.grey))),
-                        )
-                      ],
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: 20,
+                              right: MediaQuery.of(context).size.width / 26,
+                            ),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  _hobi.clear();
+                                },
+                                child: const Text(
+                                  'Clear Section',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   //OVDJE treci
@@ -439,26 +453,20 @@ class _OnboardingState extends State<Onboarding> {
                   Container(
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey, width: 1),
-                        borderRadius: BorderRadius.all(Radius.circular(7))),
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(7))),
+                    margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     width: MediaQuery.of(context).size.width * 0.60,
-                    // color: Colors.white,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.57,
-                          child: Text(
-                              'Postoji li neko interesovanje koje imaš, ali ga trenutno ne možeš ostvariti?'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 28, 0),
-                          width: MediaQuery.of(context).size.width * 0.54,
-                          child: TextFormField(
-                            key: const Key('Key3'),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 17, right: 24, left: 24, bottom: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                              "Postoji li neko interesovanje koje imaš, ali ga trenutno ne možeš ostvariti?"),
+                          TextFormField(
+                            key: const Key('TextFieldKey4'),
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 18),
                             decoration: const InputDecoration(
@@ -468,7 +476,7 @@ class _OnboardingState extends State<Onboarding> {
                                 color: Colors.black,
                               )),
                               label: Text(
-                                'Unesi text',
+                                'Vaš odgovor',
                                 style: TextStyle(fontSize: 12),
                               ),
                             ),
@@ -484,19 +492,26 @@ class _OnboardingState extends State<Onboarding> {
                               }
                             },
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(690, 10, 0, 0),
-                          child: GestureDetector(
-                              onTap: () {
-                                _interesovanja.clear();
-                              },
-                              child: Text(
-                                'Clear Section',
-                                style: TextStyle(color: Colors.grey),
-                              )),
-                        )
-                      ],
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: 20,
+                              right: MediaQuery.of(context).size.width / 26,
+                            ),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  _interesovanja.clear();
+                                },
+                                child: const Text(
+                                  'Clear Section',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -506,29 +521,21 @@ class _OnboardingState extends State<Onboarding> {
                   Container(
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey, width: 1),
-                        borderRadius: BorderRadius.all(Radius.circular(7))),
-                    height: MediaQuery.of(context).size.height * 0.18,
-                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(7))),
+                    margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     width: MediaQuery.of(context).size.width * 0.60,
-                    // color: Colors.white,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                        Container(
-                          // margin: EdgeInsets.fromLTRB(0, 0, 710, 0),
-                          // color: Colors.green,
-                          width: MediaQuery.of(context).size.width * 0.57,
-                          //umjesto margine uradi width  sa querijem zbog responsiva
-                          child: Text(
-                              'Da li bi vodio/la brigu o kućnom ljubimcu svojih komšija dok su oni na godišnjem odmoru?'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 28, 0),
-                          width: MediaQuery.of(context).size.width * 0.54,
-                          child: TextFormField(
-                            key: const Key('Key4'),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 17, right: 24, left: 24, bottom: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                              "Da li bi vodio/la brigu o kucnom ljubimcu svojih komsija dok su oni na godisnjem odmoru?"),
+                          TextFormField(
+                            key: const Key('TextFieldKey5'),
+
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 18),
                             decoration: const InputDecoration(
@@ -543,29 +550,37 @@ class _OnboardingState extends State<Onboarding> {
                               ),
                             ),
                             textInputAction: TextInputAction.next,
-                            // controller: _controllers[3],
+                            // controller: _controllers[2],
                             controller: _kucniLjubimac,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Ovo polje je obavezno ! ';
                               } else {
+                                print(value);
                                 return null;
                               }
                             },
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(690, 10, 0, 0),
-                          child: GestureDetector(
-                              onTap: () {
-                                _kucniLjubimac.clear();
-                              },
-                              child: Text(
-                                'Clear Section',
-                                style: TextStyle(color: Colors.grey),
-                              )),
-                        )
-                      ],
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: 20,
+                              right: MediaQuery.of(context).size.width / 26,
+                            ),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  _kucniLjubimac.clear();
+                                },
+                                child: const Text(
+                                  'Clear Section',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -574,29 +589,20 @@ class _OnboardingState extends State<Onboarding> {
                   Container(
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey, width: 1),
-                        borderRadius: BorderRadius.all(Radius.circular(7))),
-                    height: MediaQuery.of(context).size.height * 0.19,
-                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(7))),
+                    margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     width: MediaQuery.of(context).size.width * 0.60,
-                    // color: Colors.white,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                        Container(
-                          // margin: EdgeInsets.fromLTRB(0, 0, 710, 0),
-                          // color: Colors.green,
-                          width: MediaQuery.of(context).size.width * 0.57,
-                          //umjesto margine uradi width  sa querijem zbog responsiva
-                          child: Text(
-                              'Kapetan si piratskog broda, tvoja posada može da glasa kako se dijeli zlato. Ako se manje od polovine pirata složi sa tobom, umrijet ćeš. Kakvu podjelu zlata bi predložio/la tako da dobiješ dobar dio plijena, a ipak preživiš?'),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 28, 0),
-                          width: MediaQuery.of(context).size.width * 0.54,
-                          child: TextFormField(
-                            key: const Key('Key5'),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 17, right: 24, left: 24, bottom: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                              "Kapetan si piratskog broda, tvoja posada može da glasa kako se dijeli zlato. Ako se manje od polovine pirata složi sa tobom, umrijet ćeš. Kakvu podjelu zlata bi predložio/la tako da dobiješ dobar dio plijena, a ipak preživiš?"),
+                          TextFormField(
+                            key: const Key('TextFieldKey6'),
                             style: const TextStyle(
                                 color: Colors.black, fontSize: 18),
                             decoration: const InputDecoration(
@@ -606,172 +612,260 @@ class _OnboardingState extends State<Onboarding> {
                                 color: Colors.black,
                               )),
                               label: Text(
-                                'Unesi text',
+                                'Vaš odgovor',
                                 style: TextStyle(fontSize: 12),
                               ),
                             ),
                             textInputAction: TextInputAction.next,
-                            // controller: _controllers[4],
+                            // controller: _controllers[2],
                             controller: _kapetan,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Ovo polje je obavezno ! ';
                               } else {
+                                print(value);
                                 return null;
                               }
                             },
                           ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(690, 10, 0, 0),
-                          child: GestureDetector(
-                              onTap: () {
-                                _kapetan.clear();
-                              },
-                              child: Text(
-                                'Clear Section',
-                                style: TextStyle(color: Colors.grey),
-                              )),
-                        )
-                      ],
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: 20,
+                              right: MediaQuery.of(context).size.width / 26,
+                            ),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  _kapetan.clear();
+                                },
+                                child: const Text(
+                                  'Clear Section',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.10,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.all(Radius.circular(7))),
-                        // color: Colors.white,
-                        width: MediaQuery.of(context).size.width * 0.27,
-                        height: MediaQuery.of(context).size.height * 0.42,
-                        child: Column(
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.04,
+                  ),
+                  inColumn
+                      ? Column(
                           children: [
-                            Container(
-                              margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
-                              width: MediaQuery.of(context).size.width * 0.50,
-                              child: Text(
-                                'Pogledajte video snimak Amera i poslušajte njegovu poruku.',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            Container(
-                              child: Column(
-                                children: [
-                                  // YoutubePlayer(
-                                  //   controller: _controller!,
-                                  //   showVideoProgressIndicator: true,
-                                  //   progressIndicatorColor: Colors.amber,
-                                  //   progressColors: ProgressBarColors(
-                                  //       playedColor: Colors.amber,
-                                  //       handleColor: Colors.amberAccent),
-                                  // ),
-                                  YoutubePlayer(
-                                    controller: _controller,
-                                    aspectRatio: 16 / 9,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.04,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 1),
-                            borderRadius: BorderRadius.all(Radius.circular(7))),
-                        // color: Colors.white,
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 60),
-                        width: MediaQuery.of(context).size.width * 0.28,
-                        height: MediaQuery.of(context).size.height * 0.35,
-                        child: Row(
-                          children: [
-                            Column(children: [
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.22,
-                                  child: Text(
-                                    'Pritisnite dugme za snimanje i predstavite se! Recite nam nešto zanimljivo o sebi ili nečemu što vas zanima.',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.04,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.fromLTRB(0, 0, 70, 0),
-                                child: Container(
-                                    // color: Colors.black12,
+                            videoWithoutTitle
+                                ? Padding(
+                                    padding: const EdgeInsets.all(70),
+                                    child: YoutubePlayer(
+                                      controller: _controller,
+                                      aspectRatio: 16 / 9,
+                                    ),
+                                  )
+                                : Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.grey, width: 1),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(7))),
+                                    margin:
+                                        const EdgeInsets.fromLTRB(10, 0, 0, 0),
                                     width: MediaQuery.of(context).size.width *
-                                        0.15,
-                                    // margin: EdgeInsets.fromLTRB(0, 0, 160, 0),
-                                    child: Text(
-                                      'Molimo te da link staviš u box!',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    )),
-                              ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.02,
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.20,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.04,
-                                child: TextFormField(
-                                  key: const Key('keyUrl'),
-                                  style: const TextStyle(
-                                      color: Colors.black, fontSize: 18),
-                                  decoration: const InputDecoration(
-                                    floatingLabelBehavior:
-                                        FloatingLabelBehavior.never,
-                                    labelStyle: TextStyle(fontSize: 20),
-                                    enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                      color: Colors.black,
-                                    )),
-                                    label: Text(
-                                      'https://',
-                                      style: TextStyle(
-                                          color: Colors.grey, fontSize: 14),
+                                        0.30,
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 17,
+                                          right: 24,
+                                          left: 24,
+                                          bottom: 24),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text(
+                                              "Pogledajte video snimak Amera i poslušajte njegovu poruku.",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          const SizedBox(height: 6),
+                                          YoutubePlayer(
+                                            controller: _controller,
+                                            aspectRatio: 50 / 30,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                  textInputAction: TextInputAction.next,
-                                  controller: _UnesiYtUrl,
-                                  // controller: _controllers[5],
+                            const SizedBox(height: 20),
+                            Container(
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey, width: 1),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(7))),
+                              margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              width: videoWithoutTitle
+                                  ? MediaQuery.of(context).size.width * 0.60
+                                  : MediaQuery.of(context).size.width * 0.30,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 17, right: 24, left: 24, bottom: 24),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                        "Snimi video i predstavi se!\nRecite nam nešto zanimljivo o sebi ili nečemu što vas zanima.",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    const SizedBox(height: 29),
+                                    const Text(
+                                        "Molimo te da link staviš u box!",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    TextFormField(
+                                      key: const Key('urlKey'),
+                                      style: const TextStyle(
+                                          color: Colors.grey, fontSize: 18),
+                                      decoration: const InputDecoration(
+                                        labelStyle: TextStyle(fontSize: 20),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        label: Text(
+                                          'https://',
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                      ),
+                                      textInputAction: TextInputAction.next,
+                                      // controller: _controllers[2],
+                                      controller: _kapetan,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Ovo polje je obavezno ! ';
+                                        } else {
+                                          print(value);
+                                          return null;
+                                        }
+                                      },
+                                    ),
+                                    const SizedBox(height: 4),
+                                    const Text(
+                                      "Za učitavanje slika koristiti: file.io",
+                                      style: TextStyle(
+                                          color: Colors.grey, fontSize: 10),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.03,
+                            ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey, width: 1),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(7))),
+                              margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              width: MediaQuery.of(context).size.width * 0.30,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 17, right: 24, left: 24, bottom: 24),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                        "Pogledajte video snimak Amera i poslušajte njegovu poruku.",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    const SizedBox(height: 6),
+                                    YoutubePlayer(
+                                      controller: _controller,
+                                      aspectRatio: 16 / 9,
+                                    ),
+                                  ],
+                                ),
                               ),
-
-                              //STAVI NA SVAKI CONTAINER POTREBNI WIDTH DA NE BI DOSLO DO GRESKE ZA RESPONSIVE
-                              Container(
-                                  // color: Colors.green,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.20,
-                                  child: Text(
-                                      'Za učitavanje videa koristi file.io'))
-                            ]),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey, width: 1),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(7))),
+                              margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              width: MediaQuery.of(context).size.width * 0.30,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 17, right: 24, left: 24, bottom: 24),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                        "Snimi video i predstavi se!\nRecite nam nešto zanimljivo o sebi ili nečemu što vas zanima.",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    const SizedBox(height: 29),
+                                    const Text(
+                                        "Molimo te da link staviš u box!",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold)),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    TextFormField(
+                                      key: const Key('urlKey'),
+                                      style: const TextStyle(
+                                          color: Colors.grey, fontSize: 18),
+                                      decoration: const InputDecoration(
+                                        labelStyle: TextStyle(fontSize: 20),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        label: Text(
+                                          'https://',
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                      ),
+                                      textInputAction: TextInputAction.next,
+                                      // controller: _controllers[2],
+                                      controller: _kapetan,
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Ovo polje je obavezno ! ';
+                                        } else {
+                                          print(value);
+                                          return null;
+                                        }
+                                      },
+                                    ),
+                                    const SizedBox(height: 4),
+                                    const Text(
+                                      "Za učitavanje slika koristiti: file.io",
+                                      style: TextStyle(
+                                          color: Colors.grey, fontSize: 10),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
@@ -791,10 +885,11 @@ class _OnboardingState extends State<Onboarding> {
               children: [
                 Container(
                   // color: Colors.green,
-                  height: 160,
+                  height: inColumn ? 750 : 160,
                   width: 930,
                   child: ListView(
-                      scrollDirection: Axis.horizontal,
+                      scrollDirection:
+                          inColumn ? Axis.vertical : Axis.horizontal,
                       children: List.generate(
                         listaRola.length,
                         (index) => Item(
@@ -1002,117 +1097,7 @@ class _OnboardingState extends State<Onboarding> {
               height: MediaQuery.of(context).size.height * 0.10,
             ),
 
-            Container(
-              color: Colors.white,
-              height: MediaQuery.of(context).size.height * 0.25,
-              width: MediaQuery.of(context).size.width * 1.0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    child: Image.asset(
-                      '../../assets/images/footer_logo.png',
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.04,
-                  ),
-                  Container(
-                    // color: Colors.green,
-                    width: MediaQuery.of(context).size.width * 0.90,
-                    child: const Divider(
-                      height: 1,
-                      thickness: 1,
-                      indent: 10,
-                      endIndent: 0,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.01,
-                  ),
-                  Container(
-                    // color: Colors.green,
-                    width: MediaQuery.of(context).size.width * 0.89,
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.asset('../../assets/images/pin.png'),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.01,
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                          width: MediaQuery.of(context).size.width * 0.31,
-                          child: Text(
-                            'Put Mladih Muslimana 2, City Gardens Residence, 71 000 Sarajevo, Bosnia and Herzegovina 14425 Falconhead Blvd, Bee Cave, TX 78738, United States',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ),
-                        // SizedBox(
-                        //   width: MediaQuery.of(context).size.width * 0.01,
-                        // ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.16,
-                          height: MediaQuery.of(context).size.height * 0.03,
-
-                          // color: Colors.green,
-                          // margin: EdgeInsets.fromLTRB(233, 0, 0, 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: GlobalVariables.socialMedia
-                                .map(
-                                  (e) => InkWell(
-                                    onTap: () async {
-                                      await launchUrl(
-                                        Uri.parse(e['url'] as String),
-                                      );
-                                    },
-                                    child: Image.asset(e['image'] as String),
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                        ),
-                        // SizedBox(
-                        //   width: MediaQuery.of(context).size.width * 0.35,
-                        // ),
-
-                        Container(
-                          // padding: EdgeInsets.fromLTRB(350, 0, 0, 0),
-                          width: MediaQuery.of(context).size.width * 0.36,
-                          // color: Colors.green,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [Text('Privacy '), Text('Terms')]),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.89,
-                    height: MediaQuery.of(context).size.height * 0.05,
-                    child: Row(
-                      children: [
-                        Image.asset('../../assets/images/email.png'),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.01,
-                        ),
-                        Text('hello@tech387.com'),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.28,
-                        ),
-                        Text(
-                          '© Credits, 2023, Product Arena',
-                          style: TextStyle(fontSize: 13),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
+            const Footer(),
 
             //OVDJE
           ],
