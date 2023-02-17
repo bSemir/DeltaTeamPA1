@@ -1,10 +1,7 @@
-// import 'package:delta_team/features/onboarding/modelRoleWhite.dart';
 import 'package:delta_team/features/onboarding/footer/footer.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
-// import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 import 'errorMsg.dart';
