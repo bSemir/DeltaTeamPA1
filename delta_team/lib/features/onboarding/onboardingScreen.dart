@@ -358,9 +358,9 @@ class _OnboardingState extends State<Onboarding> {
                             },
                           ),
                           Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               top: 20,
-                              right: MediaQuery.of(context).size.width / 80,
+                              right: 0,
                             ),
                             child: Align(
                               alignment: Alignment.bottomRight,
@@ -427,9 +427,9 @@ class _OnboardingState extends State<Onboarding> {
                             },
                           ),
                           Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               top: 20,
-                              right: MediaQuery.of(context).size.width / 26,
+                              right: 0,
                             ),
                             child: Align(
                               alignment: Alignment.bottomRight,
@@ -496,9 +496,9 @@ class _OnboardingState extends State<Onboarding> {
                             },
                           ),
                           Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               top: 20,
-                              right: MediaQuery.of(context).size.width / 26,
+                              right: 0,
                             ),
                             child: Align(
                               alignment: Alignment.bottomRight,
@@ -566,9 +566,9 @@ class _OnboardingState extends State<Onboarding> {
                             },
                           ),
                           Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               top: 20,
-                              right: MediaQuery.of(context).size.width / 26,
+                              right: 0,
                             ),
                             child: Align(
                               alignment: Alignment.bottomRight,
@@ -634,9 +634,9 @@ class _OnboardingState extends State<Onboarding> {
                             },
                           ),
                           Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               top: 20,
-                              right: MediaQuery.of(context).size.width / 26,
+                              right: 0,
                             ),
                             child: Align(
                               alignment: Alignment.bottomRight,
