@@ -30,6 +30,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  double fontSize = 48;
   bool isButtonPressed = false;
 
   Future<bool> userExist(String email) async {
@@ -103,6 +104,9 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (MediaQuery.of(context).size.width < 310) {
+      fontSize = 26;
+    }
     final emailProvider = Provider.of<MyEmail>(context, listen: false);
     return Container(
       width: 1440,
@@ -128,19 +132,19 @@ class _SignupScreenState extends State<SignupScreen> {
                     padding: const EdgeInsets.only(top: 30),
                     child: SvgPicture.asset("images/pA_logo_white.svg"),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
                     child: Text(
                       "Welcome to",
-                      style: TextStyle(fontSize: 48),
+                      style: TextStyle(fontSize: fontSize),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
                     child: Text(
                       "Product Arena",
                       style: TextStyle(
-                        fontSize: 48,
+                        fontSize: fontSize,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
