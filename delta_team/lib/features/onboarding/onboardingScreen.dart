@@ -109,7 +109,7 @@ class _OnboardingState extends State<Onboarding> {
       inColumn = false;
     }
 
-    if (MediaQuery.of(context).size.width < 580) {
+    if (MediaQuery.of(context).size.width < 300) {
       videoWithoutTitle = true;
     } else {
       videoWithoutTitle = false;
@@ -162,9 +162,13 @@ class _OnboardingState extends State<Onboarding> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: Image.asset(
-          'assets/images/logo.png',
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 40),
+          child: Image.asset(
+            'assets/images/logo.png',
+          ),
         ),
+        leadingWidth: 240,
         title: const Text(
           'Tech387',
           style: TextStyle(color: Colors.black),
