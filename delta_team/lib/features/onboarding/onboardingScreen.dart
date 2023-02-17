@@ -683,7 +683,7 @@ class _OnboardingState extends State<Onboarding> {
                                     margin:
                                         const EdgeInsets.fromLTRB(10, 0, 0, 0),
                                     width: MediaQuery.of(context).size.width *
-                                        0.30,
+                                        0.60,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           top: 17,
@@ -716,9 +716,7 @@ class _OnboardingState extends State<Onboarding> {
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(7))),
                               margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              width: videoWithoutTitle
-                                  ? MediaQuery.of(context).size.width * 0.60
-                                  : MediaQuery.of(context).size.width * 0.30,
+                              width: MediaQuery.of(context).size.width * 0.60,
                               child: Padding(
                                 padding: const EdgeInsets.only(
                                     top: 17, right: 24, left: 24, bottom: 24),
