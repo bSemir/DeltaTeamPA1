@@ -669,11 +669,11 @@ class _OnboardingState extends State<Onboarding> {
                             videoWithoutTitle
                                 ? Padding(
                                     padding: const EdgeInsets.all(70),
-                                    child: YoutubePlayer(
-                                      key: const Key('ytplayer'),
-                                      controller: _controller,
-                                      aspectRatio: 16 / 9,
-                                    ),
+                                    // child: YoutubePlayer(
+                                    //   key: const Key('ytplayer'),
+                                    //   controller: _controller,
+                                    //   aspectRatio: 16 / 9,
+                                    // ),
                                   )
                                 : Container(
                                     decoration: BoxDecoration(
@@ -700,11 +700,11 @@ class _OnboardingState extends State<Onboarding> {
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
                                           const SizedBox(height: 6),
-                                          YoutubePlayer(
-                                            key: const Key('ytPlayerManji'),
-                                            controller: _controller,
-                                            aspectRatio: 50 / 30,
-                                          ),
+                                          // YoutubePlayer(
+                                          //   key: const Key('ytPlayerManji'),
+                                          //   controller: _controller,
+                                          //   aspectRatio: 50 / 30,
+                                          // ),
                                         ],
                                       ),
                                     ),
@@ -790,11 +790,11 @@ class _OnboardingState extends State<Onboarding> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 6),
-                                    YoutubePlayer(
-                                      key: const Key('ytKiDrugaVelicina'),
-                                      controller: _controller,
-                                      aspectRatio: 16 / 9,
-                                    ),
+                                    // YoutubePlayer(
+                                    //   key: const Key('ytKiDrugaVelicina'),
+                                    //   controller: _controller,
+                                    //   aspectRatio: 16 / 9,
+                                    // ),
                                   ],
                                 ),
                               ),
