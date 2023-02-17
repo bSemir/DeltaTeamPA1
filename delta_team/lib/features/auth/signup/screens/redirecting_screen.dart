@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/svg.dart';
 
 class RedirectingScreen extends StatefulWidget {
   const RedirectingScreen({super.key});
@@ -16,7 +17,8 @@ class _RedirectingScreenState extends State<RedirectingScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Image.asset("assets/images/redirecting_logo.png"),
+          SvgPicture.asset("assets/images/redirecting_logo.svg",
+              semanticsLabel: 'Confirmation SVG'),
           const SpinKitRing(
             color: Color.fromRGBO(34, 233, 116, 1),
             size: 120.0,

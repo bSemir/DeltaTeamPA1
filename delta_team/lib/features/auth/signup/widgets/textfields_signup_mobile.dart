@@ -18,6 +18,7 @@ class TextFieldSignUp extends StatefulWidget {
 class _TextFieldSignUpState extends State<TextFieldSignUp> {
   bool viewPassword = false;
   bool isButtonPressed = false;
+  bool isPasswordEmpty = true;
 
   Future<bool> userExist(String email) async {
     try {
@@ -85,6 +86,8 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
 
   @override
   Widget build(BuildContext context) {
+    bool isPasswordEmpty = passwordController.text.isEmpty;
+
     final emailProvider = Provider.of<MyEmail>(context, listen: false);
     return Form(
       key: _signUpKey,
@@ -638,6 +641,9 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                   isButtonPressed = false;
                 });
               }
+              setState(() {
+                isPasswordEmpty = value.isEmpty;
+              });
             },
             style: GoogleFonts.notoSans(
                 fontWeight: FontWeight.w700,
@@ -659,6 +665,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               String regex =
                   r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
               RegExp regExp = RegExp(regex);
+
               if (value!.isEmpty) {
                 setState(() {
                   passwordErrored = true;
@@ -677,19 +684,22 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               return null;
             },
             decoration: InputDecoration(
-              suffixIcon: InkWell(
-                  key: const Key("passwordVisible"),
-                  child: Icon(
-                    viewPassword ? Icons.visibility : Icons.visibility_off,
-                    color: viewPassword
-                        ? Colors.black
-                        : const Color.fromRGBO(96, 93, 102, 1),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      viewPassword = !viewPassword;
-                    });
-                  }),
+              suffixIcon: Visibility(
+                visible: !isPasswordEmpty,
+                child: InkWell(
+                    key: const Key("passwordVisible"),
+                    child: Icon(
+                      viewPassword ? Icons.visibility : Icons.visibility_off,
+                      color: viewPassword
+                          ? Colors.black
+                          : const Color.fromRGBO(96, 93, 102, 1),
+                    ),
+                    onTap: () {
+                      setState(() {
+                        viewPassword = !viewPassword;
+                      });
+                    }),
+              ),
               label: Text(
                 "Password",
                 style: GoogleFonts.notoSans(

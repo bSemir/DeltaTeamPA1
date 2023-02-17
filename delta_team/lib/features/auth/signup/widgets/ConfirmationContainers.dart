@@ -525,7 +525,7 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
                       codeErrored = false;
                     });
                   }
-                  print(e.message);
+                  safePrint(e.message);
                 }
               }
             },

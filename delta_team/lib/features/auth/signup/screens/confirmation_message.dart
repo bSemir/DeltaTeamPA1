@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:delta_team/features/auth/signup/widgets/footer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ConfirmationMessage extends StatelessWidget {
@@ -17,7 +18,8 @@ class ConfirmationMessage extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Image.asset("assets/images/navbar_logo.png"),
+        title: SvgPicture.asset("assets/images/navbar_logo.svg",
+            semanticsLabel: 'Confirmation SVG'),
       ),
       body: Container(
         color: const Color.fromRGBO(243, 243, 249, 1),
@@ -28,7 +30,8 @@ class ConfirmationMessage extends StatelessWidget {
               const SizedBox(
                 height: 123,
               ),
-              Image.asset("assets/images/check_circle.png"),
+              SvgPicture.asset("assets/images/check_circle.svg",
+                  semanticsLabel: 'Confirmation SVG'),
               const SizedBox(
                 height: 16,
               ),
@@ -52,7 +55,8 @@ class ConfirmationMessage extends StatelessWidget {
               const SizedBox(
                 height: 246,
               ),
-              Image.asset("assets/images/footer_logo.png"),
+              SvgPicture.asset("assets/images/footer_logo.svg",
+                  semanticsLabel: 'Confirmation SVG'),
               const SizedBox(
                 height: 36,
               ),
