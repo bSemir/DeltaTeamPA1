@@ -279,6 +279,7 @@ class _OnboardingState extends State<Onboarding> {
                               Consumer<ErrorMessage>(
                                 builder: (context, error, child) {
                                   return Container(
+                                    key: const Key('erorrMsgNEZNAMJELOVOTREBA'),
                                     padding:
                                         EdgeInsets.only(left: 20.0, top: 5.0),
                                     height: error.errorHeight,
@@ -364,6 +365,7 @@ class _OnboardingState extends State<Onboarding> {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: GestureDetector(
+                                key: const Key('clearsection2'),
                                 onTap: () {
                                   _motivacija.clear();
                                 },
@@ -432,6 +434,7 @@ class _OnboardingState extends State<Onboarding> {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: GestureDetector(
+                                key: const Key('clearsection3'),
                                 onTap: () {
                                   _hobi.clear();
                                 },
@@ -500,6 +503,7 @@ class _OnboardingState extends State<Onboarding> {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: GestureDetector(
+                                key: const Key('clearsection4'),
                                 onTap: () {
                                   _interesovanja.clear();
                                 },
@@ -569,6 +573,7 @@ class _OnboardingState extends State<Onboarding> {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: GestureDetector(
+                                key: const Key('clearsection5'),
                                 onTap: () {
                                   _kucniLjubimac.clear();
                                 },
@@ -636,6 +641,7 @@ class _OnboardingState extends State<Onboarding> {
                             child: Align(
                               alignment: Alignment.bottomRight,
                               child: GestureDetector(
+                                key: const Key('clearsection6'),
                                 onTap: () {
                                   _kapetan.clear();
                                 },
@@ -663,6 +669,7 @@ class _OnboardingState extends State<Onboarding> {
                                 ? Padding(
                                     padding: const EdgeInsets.all(70),
                                     child: YoutubePlayer(
+                                      key: const Key('ytplayer'),
                                       controller: _controller,
                                       aspectRatio: 16 / 9,
                                     ),
@@ -693,6 +700,7 @@ class _OnboardingState extends State<Onboarding> {
                                                   fontWeight: FontWeight.bold)),
                                           const SizedBox(height: 6),
                                           YoutubePlayer(
+                                            key: const Key('ytPlayerManji'),
                                             controller: _controller,
                                             aspectRatio: 50 / 30,
                                           ),
@@ -730,7 +738,7 @@ class _OnboardingState extends State<Onboarding> {
                                       height: 4,
                                     ),
                                     TextFormField(
-                                      key: const Key('urlKey'),
+                                      key: const Key('urlKey1'),
                                       style: const TextStyle(
                                           color: Colors.grey, fontSize: 18),
                                       decoration: const InputDecoration(
@@ -746,16 +754,7 @@ class _OnboardingState extends State<Onboarding> {
                                         ),
                                       ),
                                       textInputAction: TextInputAction.next,
-                                      // controller: _controllers[2],
-                                      controller: _kapetan,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Ovo polje je obavezno ! ';
-                                        } else {
-                                          print(value);
-                                          return null;
-                                        }
-                                      },
+                                      controller: _UnesiYtUrl,
                                     ),
                                     const SizedBox(height: 4),
                                     const Text(
@@ -793,6 +792,7 @@ class _OnboardingState extends State<Onboarding> {
                                             fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 6),
                                     YoutubePlayer(
+                                      key: const Key('ytKiDrugaVelicina'),
                                       controller: _controller,
                                       aspectRatio: 16 / 9,
                                     ),
@@ -827,7 +827,7 @@ class _OnboardingState extends State<Onboarding> {
                                       height: 4,
                                     ),
                                     TextFormField(
-                                      key: const Key('urlKey'),
+                                      key: const Key('urlKey2'),
                                       style: const TextStyle(
                                           color: Colors.grey, fontSize: 18),
                                       decoration: const InputDecoration(
@@ -843,16 +843,7 @@ class _OnboardingState extends State<Onboarding> {
                                         ),
                                       ),
                                       textInputAction: TextInputAction.next,
-                                      // controller: _controllers[2],
-                                      controller: _kapetan,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Ovo polje je obavezno ! ';
-                                        } else {
-                                          print(value);
-                                          return null;
-                                        }
-                                      },
+                                      controller: _UnesiYtUrl,
                                     ),
                                     const SizedBox(height: 4),
                                     const Text(
@@ -901,128 +892,6 @@ class _OnboardingState extends State<Onboarding> {
               ],
             ),
 
-            //BLACK CONTAINER POSITIONS
-            // Container(
-            //   color: Colors.black,
-            //   width: MediaQuery.of(context).size.width * 0.60,
-            //   height: MediaQuery.of(context).size.height * 0.23,
-            //   child: Column(
-            //     children: [
-            //       Container(
-            //         margin: EdgeInsets.fromLTRB(0, 15, 0, 0),
-            //         width: MediaQuery.of(context).size.width * 0.55,
-            //         child: Text(
-            //           'Za koju se poziciju prijavljuješ',
-            //           style: TextStyle(color: Colors.white),
-            //         ),
-            //       ),
-            //       Container(
-            //         margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            //         width: MediaQuery.of(context).size.width * 0.55,
-            //         child: Text(
-            //           'Možeš odabrati jednu ili dvije pozicije!',
-            //           style: TextStyle(color: Colors.white),
-            //         ),
-            //       ),
-            //       // Padding(
-            //       //   padding: EdgeInsets.fromLTRB(0, 25, 0, 0),
-            //       //   child: Container(
-            //       //     width: MediaQuery.of(context).size.width * 0.45,
-            //       //     child: Row(
-            //       //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       //       children:
-            //       //           // Column(children: [
-            //       //           //   Container(
-            //       //           //     child: Image.asset(
-            //       //           //       '../../assets/images/qa.png',
-            //       //           //     ),
-            //       //           //   ),
-            //       //           //   Padding(
-            //       //           //     padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            //       //           //     child: Text(
-            //       //           //       'QA Engineering',
-            //       //           //       style: TextStyle(color: Colors.white),
-            //       //           //     ),
-            //       //           //   )
-            //       //           // ]),
-            //       //           // Column(children: [
-            //       //           //   Container(
-            //       //           //     child: Image.asset(
-            //       //           //       '../../assets/images/manager.png',
-            //       //           //     ),
-            //       //           //   ),
-            //       //           //   Padding(
-            //       //           //     padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            //       //           //     child: Text(
-            //       //           //       'Project Management',
-            //       //           //       style: TextStyle(color: Colors.white),
-            //       //           //     ),
-            //       //           //   )
-            //       //           // ]),
-            //       //           // Column(children: [
-            //       //           //   Container(
-            //       //           //     child: Image.asset(
-            //       //           //       '../../assets/images/backend.png',
-            //       //           //     ),
-            //       //           //   ),
-            //       //           //   Padding(
-            //       //           //     padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            //       //           //     child: Text(
-            //       //           //       'Backend',
-            //       //           //       style: TextStyle(color: Colors.white),
-            //       //           //     ),
-            //       //           //   )
-            //       //           // // ]),
-            //       //           // Column(children: [
-            //       //           //   Container(
-            //       //           //     height: 42,
-            //       //           //     width: 31.8,
-            //       //           //     child: Image.asset(
-            //       //           //       '../../assets/images/backend.png',
-            //       //           //     ),
-            //       //           //   ),
-            //       //           //   Padding(
-            //       //           //     padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            //       //           //     child: Text(
-            //       //           //       'UI/UX Desing',
-            //       //           //       style: TextStyle(color: Colors.white),
-            //       //           //     ),
-            //       //           //   )
-            //       //           // ]),
-            //       //           // Column(children: [
-            //       //           //   Container(
-            //       //           //     child: Image.asset(
-            //       //           //       '../../assets/images/fullstack.png',
-            //       //           //     ),
-            //       //           //   ),
-            //       //           //   Padding(
-            //       //           //     padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            //       //           //     child: Text(
-            //       //           //       'Full Stack Developer',
-            //       //           //       style: TextStyle(color: Colors.white),
-            //       //           //     ),
-            //       //           //   )
-            //       //           // ]),
-            //       //           GlobalForImages.forImages
-            //       //               .map(
-            //       //                 (e) => InkWell(
-            //       //                   // onTap: () async {
-            //       //                   //   await launchUrl(
-            //       //                   //     Uri.parse(e['text'] as String),
-            //       //                   //   );
-            //       //                   // },
-            //       //                   child: Image.asset(e['image'] as String),
-
-            //       //                 ),
-            //       //               )
-            //       //               .toList(),
-            //       //     ),
-            //       //   ),
-            //       // )
-            //     ],
-            //   ),
-            // ),
-
             SizedBox(
               height: 20,
             ),
@@ -1036,6 +905,7 @@ class _OnboardingState extends State<Onboarding> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ElevatedButton(
+                      key: const Key('posaljikey'),
                       onPressed: () {
                         if (_formKey.currentState!.validate() &&
                             _character != null &&
@@ -1088,7 +958,9 @@ class _OnboardingState extends State<Onboarding> {
                   // GestureDetector(
 
                   GestureDetector(
-                      onTap: clearFields, child: Text('Ocisti odabir'))
+                      key: const Key('ocistiKey'),
+                      onTap: clearFields,
+                      child: Text('Ocisti odabir'))
                 ],
               ),
             ),
@@ -1135,6 +1007,7 @@ class _ItemState extends State<Item> {
     }
 
     return GestureDetector(
+      key: const Key('rolekey'),
       onTap: () {
         fja();
       },
@@ -1143,6 +1016,7 @@ class _ItemState extends State<Item> {
         mainAxisSize: MainAxisSize.max,
         children: [
           Container(
+            key: const Key('colorkey'),
             margin: const EdgeInsets.fromLTRB(40.0, 16.0, 16.0, 16.0),
             padding: const EdgeInsets.all(16.0),
             width: 124,
@@ -1158,6 +1032,7 @@ class _ItemState extends State<Item> {
             ),
             child: Column(children: [
               Container(
+                  key: const Key('slikakey'),
                   margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: isSelected
                       ? Image.asset(widget.role.image as String)
@@ -1172,6 +1047,7 @@ class _ItemState extends State<Item> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
+                      key: const Key('textkey'),
                       widget.role.id,
                       style: TextStyle(
                           color: isSelected ? Colors.black : Colors.white,
