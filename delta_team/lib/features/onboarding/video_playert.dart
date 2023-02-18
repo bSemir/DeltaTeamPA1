@@ -18,6 +18,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: const Key('VideoPlayerKey'),
       height: 186.0,
       width: double.infinity,
       child: YoutubePlayer(

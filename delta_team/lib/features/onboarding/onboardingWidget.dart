@@ -2,8 +2,6 @@ import 'package:delta_team/common/colors.dart';
 import 'package:delta_team/features/onboarding/form_buttons.dart';
 import 'package:delta_team/features/onboarding/providers/answer.dart';
 import 'package:delta_team/features/onboarding/providers/error_provider.dart';
-import 'package:delta_team/features/onboarding/providers/provider.dart';
-import 'package:delta_team/features/onboarding/providers/role_provider.dart';
 import 'package:delta_team/features/onboarding/role.dart';
 import 'package:delta_team/features/onboarding/role_item.dart';
 import 'package:delta_team/features/onboarding/role_white_items.dart';
@@ -43,7 +41,6 @@ class _OnboardingFormState extends State<OnboardingForm> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 15.0),
             Text(
               widget.questionText,
               style: GoogleFonts.notoSans(
@@ -118,6 +115,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FormButton(
+                  key: const Key('OnboardingBackButtonKey'),
                   backgroundColor: AppColors.secondaryColor3,
                   textColor: AppColors.primaryColor,
                   text: 'Back',
@@ -130,6 +128,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
                   buttonWidth: 100,
                   buttonHeight: 42),
               FormButton(
+                  key: const Key('OnboardingNextButtonKey'),
                   backgroundColor: AppColors.primaryColor,
                   textColor: AppColors.secondaryColor3,
                   text: 'Next',
@@ -249,6 +248,7 @@ class _FormWithRadioButtonsState extends State<FormWithRadioButtons> {
         Padding(
           padding: const EdgeInsets.only(left: 240, bottom: 20),
           child: FormButton(
+            key: const Key('FirstQuestionNextButtonKey'),
             backgroundColor: AppColors.primaryColor,
             textColor: AppColors.secondaryColor3,
             borderColor: AppColors.primaryColor,
@@ -290,20 +290,15 @@ class VideoPageForm extends StatelessWidget {
       width: double.infinity,
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.only(top: 20),
-            child: Text(
-              key: const Key('Pitanje7TextKey'),
-              textAlign: TextAlign.left,
-              questionText,
-              style: GoogleFonts.notoSans(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
+          Text(
+            textAlign: TextAlign.left,
+            questionText,
+            style: GoogleFonts.notoSans(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
             ),
           ),
           Container(
-            key: const Key('VideoContainerKey'),
             padding: const EdgeInsets.only(top: 20),
             alignment: Alignment.centerLeft,
             height: 186.0,
@@ -313,7 +308,6 @@ class VideoPageForm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 2.0),
             child: Text(
-              key: const Key('VideoText1Key'),
               'Snimi video i predstavi se!\nRecite nam nešto zanimljivo o sebi ili o nečemu što vas zanima.',
               style: GoogleFonts.notoSans(
                 fontSize: 14,
@@ -325,7 +319,6 @@ class VideoPageForm extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20),
             alignment: Alignment.centerLeft,
             child: Text(
-              key: const Key('VideoText2Key'),
               'Molimo te da link staviš u box!',
               style: GoogleFonts.notoSans(
                 fontSize: 10,
@@ -335,7 +328,6 @@ class VideoPageForm extends StatelessWidget {
           ),
           const SizedBox(height: 3.0),
           TextField(
-            key: const Key('HttpTextFieldKey'),
             decoration: InputDecoration(
               hintText: 'https://',
               hintStyle: GoogleFonts.notoSans(
@@ -355,9 +347,9 @@ class VideoPageForm extends StatelessWidget {
             padding: const EdgeInsets.only(top: 2),
             alignment: Alignment.centerLeft,
             child: InkWell(
+              key: const Key('HyperlinkKey'),
               onTap: () => launchUrl(Uri.parse('https://www.file.io')),
               child: Text(
-                key: const Key('VideoText3Key'),
                 'Za učitavanje videa koristi file.io',
                 style: GoogleFonts.notoSans(
                   fontSize: 10,
@@ -366,10 +358,12 @@ class VideoPageForm extends StatelessWidget {
               ),
             ),
           ),
+          Spacer(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FormButton(
+                  key: const Key('VideoPageBackButtonKey'),
                   backgroundColor: AppColors.secondaryColor3,
                   textColor: AppColors.primaryColor,
                   text: 'Back',
@@ -382,6 +376,7 @@ class VideoPageForm extends StatelessWidget {
                   buttonWidth: 100,
                   buttonHeight: 42),
               FormButton(
+                  key: const Key('VideoPageNextButtonKey'),
                   backgroundColor: AppColors.primaryColor,
                   textColor: AppColors.secondaryColor3,
                   text: 'Next',
@@ -394,6 +389,9 @@ class VideoPageForm extends StatelessWidget {
                   buttonWidth: 100,
                   buttonHeight: 42)
             ],
+          ),
+          const SizedBox(
+            height: 50,
           )
         ],
       ),
@@ -418,78 +416,48 @@ class PositionPageForm extends StatefulWidget {
 class _PositionPageFormState extends State<PositionPageForm> {
   @override
   Widget build(BuildContext context) {
-    // final provider = Provider.of<MyItem>(context, listen: false);
-
     return Container(
       alignment: Alignment.center,
+      width: double.infinity,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            padding: const EdgeInsets.only(top: 27),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              key: const Key('Pitanje8TextKey'),
-              widget.questionText,
-              style: GoogleFonts.notoSans(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(top: 1),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              key: const Key('PozicijaTextKey'),
-              'Možeš odabrati jednu ili dvije pozicije!',
-              style: GoogleFonts.notoSans(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-          Container(
-            child: Column(
-              children: [
-                ListView(
-                  key: const Key('ListaPozicijaKey'),
-                  children: List.generate(
-                    listaRola.length,
-                    (index) => RoleWidget(
-                      role: listaRola[index],
-                      roleWhite: listaRolaWhite[index],
-                    ),
-                  ),
+            alignment: Alignment.topLeft,
+            child: RichText(
+              textAlign: TextAlign.start,
+              text: TextSpan(
+                text: '${widget.questionText}\n',
+                style: GoogleFonts.notoSans(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primaryColor,
                 ),
-              ],
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'Možeš odabrati jednu ili dvije pozicije!',
+                    style: GoogleFonts.notoSans(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.primaryColor),
+                  )
+                ],
+              ),
             ),
           ),
-
-          // Column(
-          //   children: [
-          //     PositionCard(
-          //         positionName: 'QA Engineering',
-          //         positionImage: 'assets/images/qa_icon.png',
-          //         onPressed: () {}),
-          //     PositionCard(
-          //         positionName: 'Project Manager',
-          //         positionImage: 'assets/images/manager_icon.png',
-          //         onPressed: () {}),
-          //     PositionCard(
-          //         positionName: 'Backend',
-          //         positionImage: 'assets/images/backend_icon.png',
-          //         onPressed: () {}),
-          //     PositionCard(
-          //         positionName: 'UI/UX Design',
-          //         positionImage: 'assets/images/ui_ux_designer_icon.png',
-          //         onPressed: () {}),
-          //     PositionCard(
-          //         positionName: 'Full Stack Developer',
-          //         positionImage: 'assets/images/full_stack_developer.png',
-          //         onPressed: () {}),
-          //   ],
-          // ),
-          const Spacer(),
+          SizedBox(
+            width: double.infinity,
+            height: 400,
+            child: ListView(
+              children: List.generate(
+                listaRola.length,
+                (index) => RoleWidget(
+                  role: listaRola[index],
+                  roleWhite: listaRolaWhite[index],
+                ),
+              ),
+            ),
+          ),
           SubmitButton(
               key: const Key('SubmitButtonKey'),
               backgroundColor: AppColors.primaryColor,
@@ -505,7 +473,6 @@ class _PositionPageFormState extends State<PositionPageForm> {
               },
               buttonWidth: double.infinity,
               buttonHeight: 42),
-          const SizedBox(height: 50)
         ],
       ),
     );

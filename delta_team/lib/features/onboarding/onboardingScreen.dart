@@ -209,12 +209,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: [
                 Expanded(
                   flex: 0,
-                  child: Text(
-                    'Onboarding Form',
-                    style: GoogleFonts.notoSans(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.primaryColor,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      'Onboarding Form',
+                      style: GoogleFonts.notoSans(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primaryColor,
+                      ),
                     ),
                   ),
                 ),
@@ -229,7 +232,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 Expanded(
                   flex: 9,
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 31, right: 31),
+                    padding:
+                        const EdgeInsets.only(left: 31, right: 31, top: 31),
                     child: PageView.builder(
                       controller: _pageController,
                       onPageChanged: (index) {

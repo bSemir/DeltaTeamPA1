@@ -9,4 +9,5 @@ class AppColors {
   static const Color secondaryColor3 = Color(0xFFFFFFFF);
   static const Color errorColor = Color(0xFFB3261E);
   static const Color footerColor = Color(0xFF787878);
+  static const Color primarySecond = Color(0xFF322F37);
 }
