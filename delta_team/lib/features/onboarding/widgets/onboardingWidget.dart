@@ -1,11 +1,11 @@
 import 'package:delta_team/common/colors.dart';
-import 'package:delta_team/features/onboarding/form_buttons.dart';
+import 'package:delta_team/features/onboarding/widgets/form_buttons.dart';
 import 'package:delta_team/features/onboarding/providers/answer.dart';
 import 'package:delta_team/features/onboarding/providers/error_provider.dart';
-import 'package:delta_team/features/onboarding/role.dart';
-import 'package:delta_team/features/onboarding/role_item.dart';
-import 'package:delta_team/features/onboarding/role_white_items.dart';
-import 'package:delta_team/features/onboarding/video_playert.dart';
+import 'package:delta_team/features/onboarding/models/role.dart';
+import 'package:delta_team/features/onboarding/widgets/role_card.dart';
+import 'package:delta_team/features/onboarding/models/role_white_items.dart';
+import 'package:delta_team/features/onboarding/widgets/video_playert.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -464,15 +464,11 @@ class _PositionPageFormState extends State<PositionPageForm> {
               textColor: AppColors.secondaryColor3,
               text: 'Submit',
               onPressed: () {
-                // if (context.read<Role>().lenght > 2) {
-                //   context.read<ErrorMessage>().change();
-                // } else {
-                //   //funkcija za next button
-                //   return null;
-                // }
+                print('Onboarding submitted');
               },
               buttonWidth: double.infinity,
               buttonHeight: 42),
+          const SizedBox(height: 10)
         ],
       ),
     );

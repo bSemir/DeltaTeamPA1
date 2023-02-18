@@ -1,8 +1,6 @@
+import "package:delta_team/features/onboarding/models/role.dart";
 import "package:flutter/material.dart";
 
-import "../role.dart";
-
-//PROVIDER
 class MyItem with ChangeNotifier {
   List<String> myItems = [];
   // var imeRole = [];

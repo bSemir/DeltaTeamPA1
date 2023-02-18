@@ -5,9 +5,16 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'onboardingScreen.dart';
 
-class WelcomePage extends StatelessWidget {
+class WelcomePage extends StatefulWidget {
+  static const routeName = 'welcome-screen';
+
   const WelcomePage({super.key});
 
+  @override
+  State<WelcomePage> createState() => _WelcomePageState();
+}
+
+class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -60,6 +67,7 @@ class WelcomePage extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     MaterialButton(
+                      key: const Key('NavigateToOnboardingButtonKey'),
                       child: SvgPicture.asset(
                           'assets/images/arrow_forward_24px.svg'),
                       // Image.asset('assets/images/arrow_forward_24px.svg'),
@@ -75,19 +83,6 @@ class WelcomePage extends StatelessWidget {
                 ),
               ),
             )
-            // ElevatedButton(
-            //   child: const Text(
-            //     '-->',
-            //     style: TextStyle(color: AppColors.primaryColor),
-            //   ),
-            //   onPressed: () {
-            //     Navigator.push(
-            //       context,
-            //       MaterialPageRoute(
-            //           builder: (context) => const OnboardingScreen()),
-            //     );
-            //   },
-            // ),
           ],
         ),
       ),

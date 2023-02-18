@@ -1,7 +1,9 @@
+import 'package:delta_team/features/onboarding/onboardingScreen.dart';
 import 'package:delta_team/features/onboarding/providers/answer.dart';
 import 'package:delta_team/features/onboarding/providers/error_provider.dart';
 import 'package:delta_team/features/onboarding/providers/provider.dart';
 import 'package:delta_team/features/onboarding/providers/role_provider.dart';
+import 'package:delta_team/features/onboarding/welcome_page.dart';
 import 'package:delta_team/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +40,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      initialRoute: HomeScreen.routeName,
+      routes: {
+        HomeScreen.routeName: (context) => const HomeScreen(),
+        WelcomePage.routeName: (context) => const WelcomePage(),
+        OnboardingScreen.routeName: (context) => const OnboardingScreen()
+      },
       home: const HomeScreen(),
     );
   }

@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:delta_team/features/onboarding/widgets/onboardingWidget.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
 import 'package:delta_team/common/colors.dart';
-import 'package:delta_team/features/onboarding/custom_footer.dart';
-import 'package:delta_team/features/onboarding/onboardingWidget.dart';
-import 'package:delta_team/features/onboarding/page_indicator.dart';
+import 'package:delta_team/features/onboarding/widgets/custom_footer.dart';
+import 'package:delta_team/features/onboarding/widgets/page_indicator.dart';
 import 'package:delta_team/features/onboarding/providers/answer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,6 +16,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  static const routeName = 'onboarding-screen';
   const OnboardingScreen({super.key});
 
   @override
@@ -33,8 +34,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     5,
     (index) => GlobalKey<FormState>(),
   );
-  // final List<GlobalKey<FormState>> _globalKey =
-  //     List.generate(6, (_) => GlobalKey<FormState>());
+
   final List<TextEditingController> controllers =
       List.generate(6, (_) => TextEditingController());
 
@@ -251,7 +251,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 ),
-                const Expanded(flex: 0, child: CustomFooter())
+                const Expanded(
+                  flex: 0,
+                  child: CustomFooter(),
+                )
               ],
             ),
           ),

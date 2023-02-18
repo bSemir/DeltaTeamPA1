@@ -1,5 +1,5 @@
-import 'package:delta_team/features/onboarding/custom_footer.dart';
-import 'package:delta_team/features/onboarding/custom_navbar.dart';
+import 'package:delta_team/features/onboarding/widgets/custom_footer.dart';
+import 'package:delta_team/features/onboarding/widgets/custom_navbar.dart';
 import 'package:delta_team/features/onboarding/welcome_page.dart';
 import 'package:flutter/material.dart';
 
