@@ -112,9 +112,8 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Add your background photo here
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/paBackground.png'),
                 fit: BoxFit.cover,
@@ -137,26 +136,26 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         SvgPicture.asset("images/pA_logo_white.svg"),
-                        SizedBox(height: 16),
-                        Text(
+                        const SizedBox(height: 16),
+                        const Text(
                           'Welcome to',
                           style: TextStyle(
                             fontSize: 48,
                           ),
                         ),
-                        SizedBox(height: 8),
-                        Text(
+                        const SizedBox(height: 8),
+                        const Text(
                           'Product Arena',
                           style: TextStyle(
                               fontSize: 48, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Form(
                           key: _signupFormKey,
                           child: Padding(
-                            padding: EdgeInsets.only(right: 50, left: 50),
+                            padding: const EdgeInsets.only(right: 40, left: 40),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -191,7 +190,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(width: 16),
+                                    const SizedBox(width: 16),
                                     Flexible(
                                       child: TextFormField(
                                         key: const Key("surnameKey"),
@@ -223,7 +222,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 16),
+                                const SizedBox(height: 16),
                                 TextFormField(
                                   key: const Key("birthDateKey"),
                                   inputFormatters: [dateMaskFormatter],
@@ -238,7 +237,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     label: Text("Birth date"),
                                   ),
                                 ),
-                                SizedBox(height: 16),
+                                const SizedBox(height: 16),
                                 TextFormField(
                                   key: const Key("cityKey"),
                                   controller: cityController,
@@ -252,7 +251,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     label: Text("City"),
                                   ),
                                 ),
-                                SizedBox(height: 16),
+                                const SizedBox(height: 16),
                                 DropdownButtonFormField<String>(
                                   key: const Key("statusKey"),
                                   hint: const Text('Status',
@@ -301,7 +300,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     }
                                   },
                                 ),
-                                SizedBox(height: 16),
+                                const SizedBox(height: 16),
                                 TextFormField(
                                   key: const Key("phoneNumberKey"),
                                   controller: phoneNumberController,
@@ -318,7 +317,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     label: Text("Phone"),
                                   ),
                                 ),
-                                SizedBox(height: 16),
+                                const SizedBox(height: 16),
                                 TextFormField(
                                   key: const Key("emailKey"),
                                   controller: emailController,
@@ -336,7 +335,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     return null;
                                   },
                                   decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
+                                    border: const OutlineInputBorder(),
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: _isEmailCorrect == true
@@ -350,13 +349,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                           : null,
                                       color: Colors.red,
                                     ),
-                                    label: Text("Email"),
+                                    label: const Text("Email"),
                                     errorText: _isEmailCorrect == false
                                         ? "Invalid email format"
                                         : null,
                                   ),
                                 ),
-                                SizedBox(height: 16),
+                                const SizedBox(height: 16),
                                 TextFormField(
                                   key: const Key("passwordKey"),
                                   controller: passwordController,
@@ -379,8 +378,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                   },
                                   obscureText: !_passwordVisible,
                                   decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    label: Text("Password"),
+                                    border: const OutlineInputBorder(),
+                                    label: const Text("Password"),
                                     suffixIcon: IconButton(
                                       icon: Icon(
                                         // Based on passwordVisible state choose the icon
@@ -398,13 +397,14 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 16),
-                                Text(
+                                const SizedBox(height: 16),
+                                const Text(
                                   "By creating an account, you agree to our  Terms and have read and acknowledge the Global Privacy Statement",
                                   style: TextStyle(fontSize: 10),
                                 ),
-                                SizedBox(height: 32),
+                                const SizedBox(height: 32),
                                 ElevatedButton(
+                                  key: const Key("createAccountKey"),
                                   onPressed: () async {
                                     setState(() {
                                       isButtonPressed = true;
@@ -427,9 +427,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                               surnameController.text,
                                           CognitoUserAttributeKey.birthdate:
                                               birthDateController.text,
-                                          // const CognitoUserAttributeKey
-                                          //         .custom("Student"):
-                                          //     _statusValue!,
+                                          // const CognitoUserAttributeKey.custom(
+                                          //     "Student"): _statusValue!,
                                         };
 
                                         final result =
@@ -451,21 +450,20 @@ class _SignupScreenState extends State<SignupScreen> {
                                         }
                                       } on AuthException catch (e) {
                                         safePrint(e.message);
-                                        print(e.message);
                                       }
                                     }
                                     if (isSignUpCompleted) {
-                                      print("SIGNUP ISE COMEPLETED");
                                       changeScreen();
                                     }
                                   },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.black,
+                                    minimumSize:
+                                        const Size(double.infinity, 56),
+                                  ),
                                   child: const Text(
                                     "Create your account",
                                     style: TextStyle(fontSize: 16),
-                                  ),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.black,
-                                    minimumSize: Size(double.infinity, 56),
                                   ),
                                 ),
                               ],
