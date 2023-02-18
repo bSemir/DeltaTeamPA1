@@ -20,13 +20,11 @@ class HomeScreen extends StatelessWidget {
     //return LayoutBuilder(
     //builder: (context, constraints) {
     return Scaffold(
-      body: ListView(
-        // height: defaultHeight * 10,
-        // width: defaultWidth * 5,
-        children: [
+      body:
+          // height: defaultHeight * 10,
+          // width: defaultWidth * 5,
+
           SignupScreen(),
-        ],
-      ),
     );
 
     // },
