@@ -109,6 +109,7 @@ class _SignupScreenState extends State<SignupScreen> {
       fontSize = 26;
     }
     final emailProvider = Provider.of<MyEmail>(context, listen: false);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -131,25 +132,41 @@ class _SignupScreenState extends State<SignupScreen> {
                     borderRadius: BorderRadius.circular(2),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 110.0, vertical: 20.0),
+                    padding: MediaQuery.of(context).size.width > 600
+                        ? const EdgeInsets.symmetric(
+                            horizontal: 110.0, vertical: 20.0)
+                        : const EdgeInsets.symmetric(
+                            horizontal: 1, vertical: 20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(height: 16),
                         SvgPicture.asset("images/pA_logo_white.svg"),
                         const SizedBox(height: 16),
-                        const Text(
-                          'Welcome to',
-                          style: TextStyle(
-                            fontSize: 48,
+                        Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Text(
+                            'Welcome to',
+                            style: MediaQuery.of(context).size.width > 600
+                                ? const TextStyle(
+                                    fontSize: 48,
+                                  )
+                                : TextStyle(
+                                    fontSize: 32,
+                                  ),
                           ),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
-                          'Product Arena',
-                          style: TextStyle(
-                              fontSize: 48, fontWeight: FontWeight.bold),
+                        Padding(
+                          padding: EdgeInsets.all(5),
+                          child: Text(
+                            'Product Arena',
+                            style: MediaQuery.of(context).size.width > 600
+                                ? const TextStyle(
+                                    fontSize: 48, fontWeight: FontWeight.bold)
+                                : const TextStyle(
+                                    fontSize: 32, fontWeight: FontWeight.bold),
+                          ),
                         ),
                         const SizedBox(height: 20),
                         Form(
