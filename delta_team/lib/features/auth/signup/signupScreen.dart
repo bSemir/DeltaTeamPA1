@@ -30,6 +30,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  double fontSize = 48;
   bool isButtonPressed = false;
 
   Future<bool> userExist(String email) async {
@@ -104,124 +105,135 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (MediaQuery.of(context).size.width < 310) {
+      fontSize = 26;
+    }
     final emailProvider = Provider.of<MyEmail>(context, listen: false);
-
-    return Scaffold(
-      body: Stack(
+    return Container(
+      width: 1440,
+      height: 1129,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/paBackground.png"),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // Add your background photo here
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/paBackground.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 31.0),
-              child: Center(
-                child: Container(
-                  width: 740,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(2),
+          Flexible(
+            child: Container(
+              width: 740,
+              height: 1010,
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: SvgPicture.asset("images/pA_logo_white.svg"),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 110.0, vertical: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(height: 16),
-                        SvgPicture.asset("images/pA_logo_white.svg"),
-                        SizedBox(height: 16),
-                        Text(
-                          'Welcome to',
-                          style: TextStyle(
-                            fontSize: 48,
-                          ),
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          'Product Arena',
-                          style: TextStyle(
-                              fontSize: 48, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 20),
-                        Form(
-                          key: _signupFormKey,
-                          child: Padding(
-                            padding: EdgeInsets.only(right: 40, left: 40),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Text(
+                      "Welcome to",
+                      style: TextStyle(fontSize: 48),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Text(
+                      "Product Arena",
+                      style: TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  //user inputs fields
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: Container(
+                      width: 452,
+                      height: 728,
+                      child: Form(
+                        key: _signupFormKey,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    Flexible(
-                                      child: TextFormField(
-                                        key: const Key("nameKey"),
-                                        controller: nameController,
-                                        validator: (value) {
-                                          String pattern = r'^[a-zA-Z]+$';
-                                          RegExp regExp = RegExp(pattern);
-                                          if (value!.isEmpty) {
-                                            setState(() {
-                                              nameErrored = true;
-                                            });
-                                            return 'Please fill the required field.';
-                                          } else if (!regExp.hasMatch(value)) {
-                                            setState(() {
-                                              nameErrored = true;
-                                            });
-                                            return 'Please enter valid name';
-                                          }
+                                Flexible(
+                                  child: Container(
+                                    width: 220,
+                                    child: TextFormField(
+                                      key: const Key("nameKey"),
+                                      controller: nameController,
+                                      validator: (value) {
+                                        String pattern = r'^[a-zA-Z]+$';
+                                        RegExp regExp = RegExp(pattern);
+                                        if (value!.isEmpty) {
                                           setState(() {
-                                            nameErrored = false;
+                                            nameErrored = true;
                                           });
-                                          return null;
-                                        },
-                                        decoration: const InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          label: Text("Name"),
-                                        ),
+                                          return 'Please fill the required field.';
+                                        } else if (!regExp.hasMatch(value)) {
+                                          setState(() {
+                                            nameErrored = true;
+                                          });
+                                          return 'Please enter valid name';
+                                        }
+                                        setState(() {
+                                          nameErrored = false;
+                                        });
+                                        return null;
+                                      },
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        label: Text("Name"),
                                       ),
                                     ),
-                                    SizedBox(width: 16),
-                                    Flexible(
-                                      child: TextFormField(
-                                        key: const Key("surnameKey"),
-                                        controller: surnameController,
-                                        validator: (value) {
-                                          String pattern = r'^[a-zA-Z]+$';
-                                          RegExp regExp = RegExp(pattern);
-                                          if (value!.isEmpty) {
-                                            setState(() {
-                                              nameErrored = true;
-                                            });
-                                            return 'Please fill the required field.';
-                                          } else if (!regExp.hasMatch(value)) {
-                                            setState(() {
-                                              nameErrored = true;
-                                            });
-                                            return 'Please enter valid surname';
-                                          }
-                                          setState(() {
-                                            nameErrored = false;
-                                          });
-                                          return null;
-                                        },
-                                        decoration: const InputDecoration(
-                                          border: OutlineInputBorder(),
-                                          label: Text("Surname"),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                                SizedBox(height: 16),
-                                TextFormField(
+                                Flexible(
+                                  child: Container(
+                                    width: 220,
+                                    child: TextFormField(
+                                      key: const Key("surnameKey"),
+                                      controller: surnameController,
+                                      validator: (value) {
+                                        String pattern = r'^[a-zA-Z]+$';
+                                        RegExp regExp = RegExp(pattern);
+                                        if (value!.isEmpty) {
+                                          setState(() {
+                                            nameErrored = true;
+                                          });
+                                          return 'Please fill the required field.';
+                                        } else if (!regExp.hasMatch(value)) {
+                                          setState(() {
+                                            nameErrored = true;
+                                          });
+                                          return 'Please enter valid surname';
+                                        }
+                                        setState(() {
+                                          nameErrored = false;
+                                        });
+                                        return null;
+                                      },
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        label: Text("Surname"),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Flexible(
+                              child: Container(
+                                width: 452,
+                                child: TextFormField(
                                   key: const Key("birthDateKey"),
                                   inputFormatters: [dateMaskFormatter],
                                   controller: birthDateController,
@@ -235,8 +247,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                     label: Text("Birth date"),
                                   ),
                                 ),
-                                SizedBox(height: 16),
-                                TextFormField(
+                              ),
+                            ),
+                            Flexible(
+                              child: Container(
+                                width: 452,
+                                child: TextFormField(
                                   key: const Key("cityKey"),
                                   controller: cityController,
                                   validator: (value) {
@@ -249,8 +265,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                     label: Text("City"),
                                   ),
                                 ),
-                                SizedBox(height: 16),
-                                DropdownButtonFormField<String>(
+                              ),
+                            ),
+                            Flexible(
+                              child: Container(
+                                width: 452,
+                                child: DropdownButtonFormField<String>(
                                   key: const Key("statusKey"),
                                   hint: const Text('Status',
                                       style: TextStyle(
@@ -266,19 +286,19 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                   ),
                                   value: _statusValue,
-                                  validator: (value) {
-                                    if (_statusValue == null) {
-                                      setState(() {
-                                        statusErrored = true;
-                                      });
-                                      return "Select your status";
-                                    } else {
-                                      setState(() {
-                                        statusErrored = false;
-                                      });
-                                    }
-                                    return null;
-                                  },
+                                  // validator: (value) {
+                                  //   if (_statusValue == null) {
+                                  //     setState(() {
+                                  //       statusErrored = true;
+                                  //     });
+                                  //     return "Select your status";
+                                  //   } else {
+                                  //     setState(() {
+                                  //       statusErrored = false;
+                                  //     });
+                                  //   }
+                                  //   return null;
+                                  // },
                                   items: statusList
                                       .map(
                                         (String item) =>
@@ -298,8 +318,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                     }
                                   },
                                 ),
-                                SizedBox(height: 16),
-                                TextFormField(
+                              ),
+                            ),
+                            Flexible(
+                              child: Container(
+                                width: 452,
+                                child: TextFormField(
                                   key: const Key("phoneNumberKey"),
                                   controller: phoneNumberController,
                                   validator: (value) {
@@ -315,8 +339,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                     label: Text("Phone"),
                                   ),
                                 ),
-                                SizedBox(height: 16),
-                                TextFormField(
+                              ),
+                            ),
+                            Flexible(
+                              child: Container(
+                                width: 452,
+                                child: TextFormField(
                                   key: const Key("emailKey"),
                                   controller: emailController,
                                   onChanged: (value) {
@@ -353,8 +381,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                         : null,
                                   ),
                                 ),
-                                SizedBox(height: 16),
-                                TextFormField(
+                              ),
+                            ),
+                            Flexible(
+                              child: Container(
+                                width: 452,
+                                child: TextFormField(
                                   key: const Key("passwordKey"),
                                   controller: passwordController,
                                   onChanged: (value) {
@@ -395,13 +427,26 @@ class _SignupScreenState extends State<SignupScreen> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 16),
-                                Text(
+                              ),
+                            ),
+                            Flexible(
+                              child: Container(
+                                width: 452,
+                                height: 56,
+                                child: const Text(
                                   "By creating an account, you agree to our  Terms and have read and acknowledge the Global Privacy Statement.",
                                   style: TextStyle(fontSize: 10),
                                 ),
-                                SizedBox(height: 32),
-                                ElevatedButton(
+                              ),
+                            ),
+                            Flexible(
+                              child: Container(
+                                width: 452,
+                                height: 56,
+                                child: ElevatedButton(
+                                  key: const Key("createAccountKey"),
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.black),
                                   onPressed: () async {
                                     setState(() {
                                       isButtonPressed = true;
@@ -424,9 +469,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                               surnameController.text,
                                           CognitoUserAttributeKey.birthdate:
                                               birthDateController.text,
-                                          // const CognitoUserAttributeKey
-                                          //         .custom("Student"):
-                                          //     _statusValue!,
+                                          // const CognitoUserAttributeKey.custom(
+                                          //     "Student"): _statusValue!,
+                                          // additional attributes as needed
                                         };
 
                                         final result =
@@ -460,22 +505,18 @@ class _SignupScreenState extends State<SignupScreen> {
                                     "Create your account",
                                     style: TextStyle(fontSize: 16),
                                   ),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.black,
-                                    minimumSize: Size(double.infinity, 56),
-                                  ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
-          ),
+          )
         ],
       ),
     );
