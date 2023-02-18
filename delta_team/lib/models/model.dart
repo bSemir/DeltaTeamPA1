@@ -1,5 +1,4 @@
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter/material.dart';
 
 //ovo cemo dodavati zavisno od modela koji nam bude trebao
 class Model extends StatelessWidget {

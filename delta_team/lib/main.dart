@@ -1,9 +1,29 @@
-import 'package:delta_team/features/auth/login/loginScreen.dart';
+import 'package:delta_team/features/onboarding/providers/answer.dart';
+import 'package:delta_team/features/onboarding/providers/error_provider.dart';
+import 'package:delta_team/features/onboarding/providers/provider.dart';
+import 'package:delta_team/features/onboarding/providers/role_provider.dart';
 import 'package:delta_team/home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<MyProvider>(
+        create: (_) => MyProvider(),
+      ),
+      ChangeNotifierProvider<AnswerProvider>(
+        create: (_) => AnswerProvider(),
+      ),
+      ChangeNotifierProvider<ErrorMessage>(
+        create: (_) => ErrorMessage(),
+      ),
+      ChangeNotifierProvider<MyItem>(
+        create: (_) => MyItem(),
+      ),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,11 +33,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
