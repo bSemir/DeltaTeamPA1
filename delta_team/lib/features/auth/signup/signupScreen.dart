@@ -241,20 +241,32 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ),
                                 const SizedBox(height: 16),
                                 TextFormField(
-                                  key: const Key("birthDateKey"),
-                                  inputFormatters: [dateMaskFormatter],
                                   controller: birthDateController,
+                                  keyboardType: TextInputType.datetime,
+                                  key: const Key("birthDateKey"),
+                                  inputFormatters: [
+                                    dateMaskFormatter,
+                                  ],
+                                  onChanged: (value) {},
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Please fill the required field.";
                                     }
+                                    var year = int.tryParse(value.substring(6));
+                                    if (year != null && year > 2021) {
+                                      return "Please enter a valid year.";
+                                    }
+                                    return null;
                                   },
                                   decoration: const InputDecoration(
                                     border: OutlineInputBorder(),
                                     label: Text("Birth date"),
                                   ),
                                 ),
+
                                 const SizedBox(height: 16),
+
+                                ////
                                 TextFormField(
                                   key: const Key("cityKey"),
                                   controller: cityController,
