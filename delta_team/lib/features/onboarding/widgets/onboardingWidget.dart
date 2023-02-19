@@ -246,7 +246,7 @@ class _FormWithRadioButtonsState extends State<FormWithRadioButtons> {
         ),
         const Spacer(),
         Padding(
-          padding: const EdgeInsets.only(left: 240, bottom: 20),
+          padding: const EdgeInsets.only(left: 240),
           child: FormButton(
             key: const Key('FirstQuestionNextButtonKey'),
             backgroundColor: AppColors.primaryColor,
@@ -266,6 +266,9 @@ class _FormWithRadioButtonsState extends State<FormWithRadioButtons> {
               }
             },
           ),
+        ),
+        const SizedBox(
+          height: 50,
         )
       ],
     );

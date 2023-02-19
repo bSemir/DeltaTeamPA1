@@ -1,4 +1,5 @@
 import 'package:delta_team/common/colors.dart';
+import 'package:delta_team/features/onboarding/widgets/custom_footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,8 +19,17 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    return Center(
-      child: Container(
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: AppColors.secondaryColor3,
+        title: Container(
+          padding: const EdgeInsets.only(top: 10, bottom: 10),
+          height: 55,
+          child: SvgPicture.asset('assets/images/pa_logo_white.svg'),
+        ),
+      ),
+      body: Container(
         height: mediaQuery.size.height * 0.75,
         width: double.infinity,
         color: AppColors.primaryColor,
@@ -73,11 +83,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         'assets/images/arrow_forward_24px.svg'),
                     // Image.asset('assets/images/arrow_forward_24px.svg'),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const OnboardingScreen()),
-                      );
+                      Navigator.pushNamed(context, OnboardingScreen.routeName);
                     },
                   )
                 ],
@@ -86,6 +92,7 @@ class _WelcomePageState extends State<WelcomePage> {
           ],
         ),
       ),
+      bottomNavigationBar: const CustomFooter(),
     );
   }
 }
