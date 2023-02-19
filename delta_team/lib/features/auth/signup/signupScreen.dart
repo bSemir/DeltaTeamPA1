@@ -255,7 +255,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                     if (value!.isEmpty) {
                                       return "Please fill the required field.";
                                     }
-
                                     var day =
                                         int.tryParse(value.substring(0, 2));
                                     var month =
@@ -279,7 +278,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                     label: Text("Birth date"),
                                   ),
                                 ),
-
                                 const SizedBox(height: 16),
 
                                 ////
@@ -374,6 +372,8 @@ class _SignupScreenState extends State<SignupScreen> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return 'Please fill the required field.';
+                                    } else if (isEmail(value)) {
+                                      return "Email not valid";
                                     } else if (isEmailTaken) {
                                       return "Email already exists";
                                     } else if (isEmail(value)) {}
