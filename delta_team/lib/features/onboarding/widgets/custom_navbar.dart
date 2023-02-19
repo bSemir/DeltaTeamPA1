@@ -6,9 +6,11 @@ class CustomNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     return Container(
-      width: double.infinity,
-      height: 55,
+      height: mediaQuery.size.height * 0.10,
+      width: mediaQuery.size.width * 0.30,
       alignment: Alignment.center,
       padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: SvgPicture.asset('assets/images/pa_logo_white.svg'),
