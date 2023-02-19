@@ -62,7 +62,7 @@ class ColumnFooter extends StatelessWidget {
             Row(
               children: [
                 Image.asset(
-                  "assets/images/footer/facebook.png",
+                  "assets/images/facebook.png",
                   width: 37.5,
                   height: 37.37,
                 ),
@@ -70,7 +70,7 @@ class ColumnFooter extends StatelessWidget {
                   width: 18.5,
                 ),
                 Image.asset(
-                  "assets/images/footer/instagram.png",
+                  "assets/images/instagram.png",
                   width: 37.5,
                   height: 37.37,
                 ),
@@ -78,7 +78,7 @@ class ColumnFooter extends StatelessWidget {
                   width: 18.5,
                 ),
                 Image.asset(
-                  "assets/images/footer/linkedin.png",
+                  "assets/images/linkedin.png",
                   width: 37.5,
                   height: 37.37,
                 ),
@@ -86,7 +86,7 @@ class ColumnFooter extends StatelessWidget {
                   width: 18.5,
                 ),
                 Image.asset(
-                  "assets/images/footer/tech387.png",
+                  "assets/images/tech387.png",
                   width: 37.5,
                   height: 37.37,
                 ),

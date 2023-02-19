@@ -81,6 +81,5 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
         ),
       ),
     );
-    ;
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import "row_footer.dart";
 
 import 'column_footer.dart';
@@ -43,7 +42,7 @@ class Footer extends StatelessWidget {
             children: [
               Container(),
               Image.asset(
-                "assets/images/footer/footer_logo.png",
+                "assets/images/footer_logo.png",
                 width: 51.9,
                 height: 39.74,
               ),

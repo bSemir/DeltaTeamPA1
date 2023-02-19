@@ -21,6 +21,7 @@ import 'package:flutter/services.dart';
 // import 'package:amplify_api/amplify_api.dart';
 // import 'package:masked_text_input_formatter/masked_text_input_formatter.dart';
 import '../../../common/custom_button.dart';
+import '../../footer/footer.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
