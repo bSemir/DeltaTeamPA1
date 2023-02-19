@@ -247,13 +247,29 @@ class _SignupScreenState extends State<SignupScreen> {
                                   inputFormatters: [
                                     dateMaskFormatter,
                                   ],
-                                  onChanged: (value) {},
+                                  onChanged: (value) {
+                                    var year = int.tryParse(value.substring(6));
+                                    print(value.substring(5));
+                                  },
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return "Please fill the required field.";
                                     }
+
+                                    var day =
+                                        int.tryParse(value.substring(0, 2));
+                                    var month =
+                                        int.tryParse(value.substring(3, 5));
                                     var year = int.tryParse(value.substring(6));
-                                    if (year != null && year > 2021) {
+                                    if (day != null && (day < 1 || day > 31)) {
+                                      return "Please enter a valid day (1-31).";
+                                    }
+                                    if (month != null &&
+                                        (month < 1 || month > 12)) {
+                                      return "Please enter a valid month (1-12).";
+                                    }
+                                    if (year != null &&
+                                        (year < 1900 || year > 2022)) {
                                       return "Please enter a valid year.";
                                     }
                                     return null;
