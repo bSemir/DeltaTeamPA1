@@ -60,7 +60,7 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(height: 16),
-                      SvgPicture.asset("images/check_circle.svg"),
+                      SvgPicture.asset("assets/images/check_circle.svg"),
                       const SizedBox(height: 16),
                       Padding(
                         padding: const EdgeInsets.all(5),

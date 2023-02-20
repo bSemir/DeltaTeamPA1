@@ -118,7 +118,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(height: 16),
-                        SvgPicture.asset("images/pA_logo_white.svg"),
+                        SvgPicture.asset("assets/images/pA_logo_white.svg"),
                         const SizedBox(height: 16),
                         Padding(
                           padding: const EdgeInsets.all(5),

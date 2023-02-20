@@ -142,7 +142,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(height: 16),
-                        SvgPicture.asset("images/pA_logo_white.svg"),
+                        SvgPicture.asset("assets/images/pA_logo_white.svg"),
                         const SizedBox(height: 16),
                         Padding(
                           padding: const EdgeInsets.all(5),
