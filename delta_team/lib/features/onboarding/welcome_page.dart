@@ -30,7 +30,7 @@ class _WelcomePageState extends State<WelcomePage> {
         ),
       ),
       body: Container(
-        height: mediaQuery.size.height * 0.75,
+        height: mediaQuery.size.height * 0.82,
         width: double.infinity,
         color: AppColors.primaryColor,
         child: Column(

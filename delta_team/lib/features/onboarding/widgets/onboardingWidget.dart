@@ -198,6 +198,7 @@ class _FormWithRadioButtonsState extends State<FormWithRadioButtons> {
         Column(
           children: [
             RadioListTile(
+              key: const Key('RadioButtonDaKey'),
               activeColor: Colors.black,
               tileColor: const Color(0xFFE9E9E9),
               contentPadding: EdgeInsets.zero,
@@ -212,6 +213,7 @@ class _FormWithRadioButtonsState extends State<FormWithRadioButtons> {
                   })),
             ),
             RadioListTile(
+              key: const Key('RadioButtonNeKey'),
               contentPadding: EdgeInsets.zero,
               activeColor: Colors.black,
               tileColor: const Color(0xFFE9E9E9),
@@ -288,9 +290,11 @@ class VideoPageForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     return Container(
       alignment: Alignment.center,
       width: double.infinity,
+      height: mediaQuery.size.height * 0.5,
       child: Column(
         children: [
           Text(
@@ -330,19 +334,23 @@ class VideoPageForm extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 3.0),
-          TextField(
-            decoration: InputDecoration(
-              hintText: 'https://',
-              hintStyle: GoogleFonts.notoSans(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: AppColors.primaryColor),
-                borderRadius: BorderRadius.circular(10.0),
+          SizedBox(
+            height: 34,
+            child: TextField(
+              // textAlignVertical: TextAlignVertical.center,
+              decoration: InputDecoration(
+                hintText: 'https://',
+                hintStyle: GoogleFonts.notoSans(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.primaryColor),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
               ),
             ),
           ),
@@ -361,7 +369,7 @@ class VideoPageForm extends StatelessWidget {
               ),
             ),
           ),
-          Spacer(),
+          const SizedBox(height: 20.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -393,9 +401,6 @@ class VideoPageForm extends StatelessWidget {
                   buttonHeight: 42)
             ],
           ),
-          const SizedBox(
-            height: 50,
-          )
         ],
       ),
     );

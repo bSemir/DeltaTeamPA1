@@ -233,7 +233,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   flex: 9,
                   child: Padding(
                     padding:
-                        const EdgeInsets.only(left: 31, right: 31, top: 31),
+                        const EdgeInsets.only(left: 31, right: 31, top: 20),
                     child: PageView.builder(
                       controller: _pageController,
                       onPageChanged: (index) {
