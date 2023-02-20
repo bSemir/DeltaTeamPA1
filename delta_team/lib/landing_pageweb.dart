@@ -10,12 +10,14 @@ import 'package:delta_team/testimonial_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomeScreenWeb extends StatelessWidget {
-  static const routeName = '/homeweb';
-  const HomeScreenWeb({super.key});
+class LandingPage extends StatelessWidget {
+  static const routeName = '/landingweb';
+  const LandingPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class HomeScreenWeb extends StatelessWidget {
     return Scaffold(
       appBar: HomeAppBar(
         title: 'Tech387',
-        leading: Image.asset('assets/images/logo.png'),
+        leading: SvgPicture.asset('assets/images/logo.svg'),
         optionalAction: RoundedButton(
           key: const Key('Not_routed_to_SignUpPage'),
           text: 'Sign In',
@@ -67,7 +69,9 @@ class HomeScreenWeb extends StatelessWidget {
               height: 747.0,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage("assets/images/homeBackground.png"),
+                    image: NetworkImage(
+                      "assets/images/homeBackground.png",
+                    ),
                     fit: BoxFit.fill),
               ),
               child: Row(
@@ -426,7 +430,8 @@ class HomeScreenWeb extends StatelessWidget {
                                                                   if (index ==
                                                                       0)
                                                                     Container(
-                                                                      padding: EdgeInsets.symmetric(
+                                                                      padding: const EdgeInsets
+                                                                              .symmetric(
                                                                           horizontal:
                                                                               44,
                                                                           vertical:

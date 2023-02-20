@@ -9,6 +9,7 @@ import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_form.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -116,7 +117,7 @@ class MyDesktopBodyState extends State<MyDesktopBody> {
     return Scaffold(
       appBar: CustomAppBar(
           title: 'Tech387',
-          leading: Image.asset('assets/images/logo.png'),
+          leading: SvgPicture.asset('assets/images/logo.svg'),
           action: RoundedButton(
             key: const Key('SignUpPage_homepage'),
             text: 'Sign Up',
@@ -147,7 +148,13 @@ class MyDesktopBodyState extends State<MyDesktopBody> {
                       const SizedBox(
                         height: 185,
                       ),
-                      Image.asset('assets/images/logotop.png'),
+                      SvgPicture.asset(
+                        'assets/images/logotop.svg',
+                        width: (99.7 / 1440) * width,
+                      ),
+                      const SizedBox(
+                        height: 17,
+                      ),
                       RichText(
                         text: TextSpan(
                           children: [
@@ -202,7 +209,7 @@ class MyDesktopBodyState extends State<MyDesktopBody> {
               const SizedBox(
                 height: 198,
               ),
-              const Footer()
+              const FooterWidget()
             ],
           ),
         ),

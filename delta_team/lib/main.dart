@@ -6,7 +6,7 @@ import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/home_mobile.dart';
-import 'package:delta_team/home_web.dart';
+import 'package:delta_team/landing_pageweb.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             ? const MyMobileBody()
             : const MyDesktopBody(),
         routes: {
-          HomeScreenWeb.routeName: (context) => HomeScreenWeb(),
+          LandingPage.routeName: (context) => const LandingPage(),
           HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
           LoadingScreenMobile.routeName: (context) =>
               const LoadingScreenMobile(),

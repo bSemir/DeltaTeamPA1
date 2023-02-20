@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FooterWidget extends StatelessWidget {
@@ -17,7 +18,10 @@ class FooterWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/images/footer_logo.png'),
+              SvgPicture.asset(
+                'assets/images/footer_logo.svg',
+                width: (51.9 / 1440) * width,
+              ),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -41,9 +45,9 @@ class FooterWidget extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Image.asset(
-                              'assets/images/pin.png',
-                              height: 21.65,
+                            SvgPicture.asset(
+                              'assets/images/pin.svg',
+                              // height: 21.65,
                               width: (18 / 1440) * width,
                             ),
                             SizedBox(width: (11.25 / 1440) * width),
@@ -63,9 +67,9 @@ class FooterWidget extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Image.asset(
-                              'assets/images/email.png',
-                              height: 28,
+                            SvgPicture.asset(
+                              'assets/images/email.svg',
+                              // height: 16.14,
                               width: (18 / 1440) * width,
                             ),
                             SizedBox(width: (11.25 / 1440) * width),
@@ -93,33 +97,33 @@ class FooterWidget extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            Image.asset(
-                              'assets/images/facebook.png',
-                              height: 37.48,
+                            SvgPicture.asset(
+                              'assets/images/facebook.svg',
+                              // height: 37.48,
                               width: (37.45 / 1440) * width,
                             ),
                             SizedBox(
                               width: (18.5 / 1440) * width,
                             ),
-                            Image.asset(
-                              'assets/images/instagram.png',
-                              height: 37.48,
+                            SvgPicture.asset(
+                              'assets/images/instagram.svg',
+                              // height: 37.48,
                               width: (37.45 / 1440) * width,
                             ),
                             SizedBox(
                               width: (18.5 / 1440) * width,
                             ),
-                            Image.asset(
-                              'assets/images/linkedin.png',
-                              height: 37.48,
+                            SvgPicture.asset(
+                              'assets/images/linkedin.svg',
+                              // height: 37.48,
                               width: (37.45 / 1440) * width,
                             ),
                             SizedBox(
                               width: (18.5 / 1440) * width,
                             ),
-                            Image.asset(
-                              'assets/images/tech387.png',
-                              height: 37.48,
+                            SvgPicture.asset(
+                              'assets/images/tech387.svg',
+                              // height: 37.48,
                               width: (37.45 / 1440) * width,
                             )
                           ],
