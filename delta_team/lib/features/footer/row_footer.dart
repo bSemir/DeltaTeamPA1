@@ -12,14 +12,6 @@ class RowFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isPrivacyRow = false;
-    if (MediaQuery.of(context).size.width < 1080) {
-      isPrivacyRow = false;
-    }
-    if (MediaQuery.of(context).size.width > 1080) {
-      isPrivacyRow = true;
-    }
-
     return Row(
       children: [
         Column(
@@ -41,7 +33,7 @@ class RowFooter extends StatelessWidget {
                           "Put Mladih Muslimana 2,\nCity Gardens Residence,\n71 000 Sarajevo, Bosnia and Herzegovina14425 Falconhead Blvd, Bee Cave,\nTX 78738, United States",
                           style: TextStyle(fontSize: 10))
                       : const Text(
-                          "Put Mladih Muslimana 2, City Gardens Residence, 71 000 Sarajevo, Bosnia and Herzegovina14425 Falconhead Blvd, Bee Cave, TX 78738, United States",
+                          "Put Mladih Muslimana 2, City Gardens Residence, 71 000 Sarajevo,\nBosnia and Herzegovina14425 Falconhead Blvd, Bee Cave, TX 78738, United States",
                           style: TextStyle(fontSize: 10),
                         ),
                 ],
@@ -75,7 +67,7 @@ class RowFooter extends StatelessWidget {
               Row(
                 children: [
                   Image.asset(
-                    "assets/images/footer/facebook.png",
+                    "assets/images/facebook.png",
                     width: 37.5,
                     height: 37.37,
                   ),
@@ -83,7 +75,7 @@ class RowFooter extends StatelessWidget {
                     width: 18.5,
                   ),
                   Image.asset(
-                    "assets/images/footer/instagram.png",
+                    "assets/images/instagram.png",
                     width: 37.5,
                     height: 37.37,
                   ),
@@ -91,7 +83,7 @@ class RowFooter extends StatelessWidget {
                     width: 18.5,
                   ),
                   Image.asset(
-                    "assets/images/footer/linkedin.png",
+                    "assets/images/linkedin.png",
                     width: 37.5,
                     height: 37.37,
                   ),
@@ -99,7 +91,7 @@ class RowFooter extends StatelessWidget {
                     width: 18.5,
                   ),
                   Image.asset(
-                    "assets/images/footer/tech387.png",
+                    "assets/images/tech387.png",
                     width: 37.5,
                     height: 37.37,
                   ),
