@@ -24,6 +24,7 @@ class LoginField extends StatefulWidget {
 }
 
 class _LoginFieldState extends State<LoginField> {
+  bool _showPasswordSuffixIcon = false;
   bool viewPassword = false;
   bool showErrorIcon = false;
   String errorMessage = '';
@@ -175,6 +176,11 @@ class _LoginFieldState extends State<LoginField> {
               color: labelPasswordColor,
               fontWeight: FontWeight.w700,
             ),
+            onChanged: (value) {
+              setState(() {
+                _showPasswordSuffixIcon = value.isNotEmpty;
+              });
+            },
             validator: (value) {
               String regex =
                   r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
@@ -250,16 +256,20 @@ class _LoginFieldState extends State<LoginField> {
                       fontSize: 14,
                       color: labelPasswordColor),
                 ),
-                suffixIcon: InkWell(
-                    key: const Key("passwordVisible"),
-                    child: Icon(
-                        viewPassword ? Icons.visibility : Icons.visibility_off,
-                        color: eyelid),
-                    onTap: () {
-                      setState(() {
-                        viewPassword = !viewPassword;
-                      });
-                    })),
+                suffixIcon: _showPasswordSuffixIcon
+                    ? InkWell(
+                        key: const Key("passwordVisible"),
+                        child: Icon(
+                            viewPassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: eyelid),
+                        onTap: () {
+                          setState(() {
+                            viewPassword = !viewPassword;
+                          });
+                        })
+                    : null),
           ),
           const SizedBox(
             height: 40,

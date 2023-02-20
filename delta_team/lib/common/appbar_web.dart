@@ -99,6 +99,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         color: Color(0xFFFFFFFF),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           leading == null
               ? SizedBox(width: (170 / 1440) * width, height: 34.0)
@@ -120,26 +121,25 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
           ),
-          SizedBox(
-            width: (60 / 1440) * width,
-          ),
-          optionalAction == null
-              ? SizedBox(width: (92 / 1440) * width, height: 34.0)
-              : SizedBox(
-                  width: (92 / 1440) * width,
-                  height: 34.0,
-                  child: optionalAction,
-                ),
-          SizedBox(
-            width: (10 / 1440) * width,
-          ),
-          action == null
-              ? SizedBox(width: (92 / 1440) * width, height: 34.0)
-              : SizedBox(
-                  width: (92 / 1440) * width,
-                  height: 34.0,
-                  child: action,
-                ),
+          Row(children: [
+            optionalAction == null
+                ? SizedBox(width: (92 / 1440) * width, height: 34.0)
+                : SizedBox(
+                    width: (92 / 1440) * width,
+                    height: 34.0,
+                    child: optionalAction,
+                  ),
+            SizedBox(
+              width: (10 / 1440) * width,
+            ),
+            action == null
+                ? SizedBox(width: (92 / 1440) * width, height: 34.0)
+                : SizedBox(
+                    width: (92 / 1440) * width,
+                    height: 34.0,
+                    child: action,
+                  ),
+          ])
         ],
       ),
     );

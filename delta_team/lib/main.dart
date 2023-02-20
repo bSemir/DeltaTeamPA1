@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             ? const MyMobileBody()
             : const MyDesktopBody(),
         routes: {
-          HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
+          HomeScreenWeb.routeName: (context) => HomeScreenWeb(),
           HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
           LoadingScreenMobile.routeName: (context) =>
               const LoadingScreenMobile(),
