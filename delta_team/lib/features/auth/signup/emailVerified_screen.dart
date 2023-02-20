@@ -97,59 +97,5 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
         ],
       ),
     );
-
-    // return Scaffold(
-    //   body: Container(
-    //     height: 1129,
-    //     decoration: const BoxDecoration(
-    //       image: DecorationImage(
-    //         image: AssetImage("assets/images/paBackground.png"),
-    //         fit: BoxFit.cover,
-    //       ),
-    //     ),
-    //     child: Row(
-    //       mainAxisAlignment: MainAxisAlignment.center,
-    //       crossAxisAlignment: CrossAxisAlignment.center,
-    //       children: [
-    //         Container(
-    //           width: 742,
-    //           height: 465,
-    //           color: Colors.white,
-    //           child: Column(
-    //             crossAxisAlignment: CrossAxisAlignment.center,
-    //             children: [
-    //               const SizedBox(
-    //                 height: 85,
-    //               ),
-    //               Padding(
-    //                 padding: const EdgeInsets.only(top: 30),
-    //                 child: SvgPicture.asset("images/check_circle.svg"),
-    //               ),
-    //               const Padding(
-    //                 padding: EdgeInsets.only(top: 10),
-    //                 child: Text(
-    //                   "Email Verified",
-    //                   style: TextStyle(
-    //                     fontSize: 48,
-    //                     fontWeight: FontWeight.bold,
-    //                   ),
-    //                 ),
-    //               ),
-    //               const Padding(
-    //                 padding: EdgeInsets.only(top: 13),
-    //                 child: Text(
-    //                   "Your email is successfully verified",
-    //                   style:
-    //                       TextStyle(fontSize: 32, fontWeight: FontWeight.w400),
-    //                 ),
-    //               ),
-    //               //user inputs digits field
-    //             ],
-    //           ),
-    //         )
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }
