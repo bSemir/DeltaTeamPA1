@@ -6,7 +6,6 @@ import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dar
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/amplify_auth.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
-import 'package:delta_team/testimonial_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';

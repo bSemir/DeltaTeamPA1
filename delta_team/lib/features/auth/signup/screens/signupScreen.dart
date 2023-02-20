@@ -1,3 +1,4 @@
+import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/signup/widgets/textfields_signup_mobile.dart';
 import 'package:delta_team/features/auth/signup/widgets/title_signup_mobile.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,9 @@ class SignupScreenMobile extends StatelessWidget {
                     style: GoogleFonts.notoSans(fontSize: 14),
                   ),
                   GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, MyMobileBody.routeName);
+                    },
                     key: const Key("loginKey"),
                     child: Text(
                       'Log in',

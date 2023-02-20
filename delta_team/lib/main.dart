@@ -3,6 +3,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
+import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/home_mobile.dart';
 import 'package:delta_team/landing_pageweb.dart';
@@ -29,9 +30,9 @@ Future<void> _configureAmplify() async {
     await Amplify.addPlugin(auth);
     await Amplify.configure(amplifyconfig);
   } on AmplifyAlreadyConfiguredException catch (e) {
-    print('Amplify was already configured: $e');
+    safePrint('Amplify was already configured: $e');
   } catch (e) {
-    print('An error occurred while configuring Amplify: $e');
+    safePrint('An error occurred while configuring Amplify: $e');
   }
 }
 
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
                 ? const SignupScreenMobile()
                 : const MyDesktopBody(),
             routes: {
+              MyMobileBody.routeName: (context) => const MyMobileBody(),
               LandingPage.routeName: (context) => const LandingPage(),
               HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
               LoadingScreenMobile.routeName: (context) =>

@@ -778,7 +778,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 }
               }
               if (isSignUpCompleted) {
-                changeScreen();
+                Navigator.pushNamed(context, "/confirmation");
               }
             },
             color: Colors.black,

@@ -5,14 +5,17 @@ import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dar
 import 'package:delta_team/features/auth/login/amplify_auth.dart';
 import 'package:delta_team/features/auth/login/login_form.dart';
 import 'package:delta_team/features/auth/login/loginform_mobile.dart';
+import 'package:delta_team/features/auth/signup/screens/signupScreen.dart';
 import 'package:delta_team/home_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:riverpod_extension/riverpod_extension.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
 class MyMobileBody extends StatefulWidget {
+  static const routeName = '/loginmobile';
   const MyMobileBody({super.key});
 
   @override
@@ -74,16 +77,10 @@ class _MyMobileBodyState extends State<MyMobileBody> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: const Color(0xFFFFFFFF),
-        elevation: 0.0,
-        title: Container(
-          alignment: Alignment.center,
-          child: Image.asset(
-            "assets/images/logotop.png",
-            fit: BoxFit.contain,
-            height: 35,
-          ),
-        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: SvgPicture.asset("assets/images/navbar_logo.svg",
+            semanticsLabel: 'Confirmation SVG'),
       ),
       backgroundColor: const Color(0xFFE9E9E9),
       body: SingleChildScrollView(
@@ -147,10 +144,9 @@ class _MyMobileBodyState extends State<MyMobileBody> {
                                   )
                                 ]),
                                 GestureDetector(
-                                  key: const Key('SignUp_Homepage'),
+                                  key: const Key('SignUp'),
                                   onTap: () async {
-                                    Navigator.pushNamed(
-                                        context, LoadingScreenMobile.routeName);
+                                    Navigator.pushNamed(context, "/signup");
                                   },
                                   child: Text(
                                     ' Sign up',

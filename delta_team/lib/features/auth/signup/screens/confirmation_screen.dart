@@ -1,3 +1,4 @@
+import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/signup/widgets/confirmationContainers.dart';
 import 'package:delta_team/features/auth/signup/widgets/footer.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,9 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                       style: GoogleFonts.notoSans(fontSize: 14),
                     ),
                     GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, MyMobileBody.routeName);
+                      },
                       key: const Key("loginKey"),
                       child: Text(
                         'Log in',
