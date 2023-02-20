@@ -43,8 +43,11 @@ git
 /android/app/profile
 /android/app/release
 <<<<<<< HEAD
+<<<<<<< HEAD
 amplify/
 =======
+=======
+>>>>>>> 100265adbe5e56e89a36caaf7aabe7c47b0fcb96
 
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
@@ -67,4 +70,7 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+<<<<<<< HEAD
 >>>>>>> 8b1fb4ba6566b25401f3f97b5445d71778542949
+=======
+>>>>>>> 100265adbe5e56e89a36caaf7aabe7c47b0fcb96

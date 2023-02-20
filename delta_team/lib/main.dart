@@ -5,6 +5,12 @@ import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dar
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
+import 'package:delta_team/features/onboarding/onboardingScreen.dart';
+import 'package:delta_team/features/onboarding/providers/answer.dart';
+import 'package:delta_team/features/onboarding/providers/error_provider.dart';
+import 'package:delta_team/features/onboarding/providers/provider.dart';
+import 'package:delta_team/features/onboarding/providers/role_provider.dart';
+import 'package:delta_team/features/onboarding/welcome_page.dart';
 import 'package:delta_team/home_mobile.dart';
 import 'package:delta_team/landing_pageweb.dart';
 import 'package:flutter/foundation.dart';
@@ -45,6 +51,18 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => MyEmail()),
+          ChangeNotifierProvider<MyProvider>(
+            create: (_) => MyProvider(),
+          ),
+          ChangeNotifierProvider<AnswerProvider>(
+            create: (_) => AnswerProvider(),
+          ),
+          ChangeNotifierProvider<ErrorMessage>(
+            create: (_) => ErrorMessage(),
+          ),
+          ChangeNotifierProvider<MyItem>(
+            create: (_) => MyItem(),
+          ),
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -78,6 +96,8 @@ class MyApp extends StatelessWidget {
               '/confirmation': (context) => const ConfirmationScreen(),
               '/confirmationMessage': (context) => const ConfirmationMessage(),
               '/redirectingScreen': (context) => const RedirectingScreen(),
+              WelcomePage.routeName: (context) => const WelcomePage(),
+              OnboardingScreen.routeName: (context) => const OnboardingScreen()
             }));
   }
 }
