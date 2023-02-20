@@ -1,3 +1,4 @@
+import 'package:delta_team/features/auth/signup/emailVerified_screen.dart';
 import 'package:delta_team/features/auth/signup/signupScreen.dart';
 import 'package:delta_team/features/auth/signup/signupVerification_screen.dart';
 import 'package:delta_team/features/footer/column_footer.dart';

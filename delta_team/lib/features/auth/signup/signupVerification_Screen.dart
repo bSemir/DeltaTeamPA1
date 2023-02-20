@@ -133,7 +133,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                         ),
                         const SizedBox(height: 8),
                         Padding(
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           child: Text(
                             'We’ve sent a 6-digit code to your e-mail',
                             style: MediaQuery.of(context).size.width > 630
@@ -317,8 +317,9 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         controller: _code3,
                                         key: const Key("code3Key"),
                                         decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.symmetric(
-                                              vertical: 25),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 25),
                                           focusedBorder: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(6),
@@ -372,7 +373,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 7,
                                     ),
                                     Flexible(
@@ -445,7 +446,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 7,
                                     ),
                                     Flexible(
@@ -518,7 +519,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         ],
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 7,
                                     ),
                                     Flexible(
@@ -535,8 +536,9 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         controller: _code6,
                                         key: const Key("code6Key"),
                                         decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.symmetric(
-                                              vertical: 25),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 25),
                                           focusedBorder: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(6),
@@ -605,7 +607,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                     : const SizedBox(
                                         height: 1,
                                       ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 25,
                                 ),
                                 ElevatedButton(
