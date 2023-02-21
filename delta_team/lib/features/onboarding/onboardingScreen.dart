@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-import 'errorMsg.dart';
+import 'errorMsg-web.dart';
 import 'modelRoleWhite.dart';
 import 'modelmyItem.dart';
 
@@ -700,11 +700,11 @@ class _OnboardingState extends State<Onboarding> {
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold)),
                                           const SizedBox(height: 6),
-                                          // YoutubePlayer(
-                                          //   key: const Key('ytPlayerManji'),
-                                          //   controller: _controller,
-                                          //   aspectRatio: 50 / 30,
-                                          // ),
+                                          YoutubePlayer(
+                                            key: const Key('ytPlayerManji'),
+                                            controller: _controller,
+                                            aspectRatio: 50 / 30,
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -790,11 +790,13 @@ class _OnboardingState extends State<Onboarding> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold)),
                                     const SizedBox(height: 6),
-                                    // YoutubePlayer(
-                                    //   key: const Key('ytKiDrugaVelicina'),
-                                    //   controller: _controller,
-                                    //   aspectRatio: 16 / 9,
-                                    // ),
+                                    // probaj staviti width i height za video NADJI EROR STO IZBACUJE
+
+                                    YoutubePlayer(
+                                      key: const Key('ytKiDrugaVelicina'),
+                                      controller: _controller,
+                                      aspectRatio: 16 / 9,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -863,9 +865,8 @@ class _OnboardingState extends State<Onboarding> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.04,
             ),
-            //DVA CONTAINERA SA VIDEOM I URL-om
 
-            ElevatedButton(onPressed: signOutUser, child: Text('sign out')),
+            // ElevatedButton(onPressed: signOutUser, child: Text('sign out')),
             SizedBox(
               height: 20,
             ),
@@ -912,6 +913,7 @@ class _OnboardingState extends State<Onboarding> {
                                 myItem.length <= 2 && myItem.length >= 1)) {
                           // clearFields();
                           submitOnboarding();
+                          // myItem.remove(role);
 
                           myItem.remove(widget.role);
                           // clearFields();
@@ -1021,20 +1023,20 @@ class _ItemState extends State<Item> {
             width: 124,
             height: 110,
             decoration: BoxDecoration(
-              color: isSelected ? Colors.white : Colors.black54,
+              color: isSelected ? Colors.white : Color.fromRGBO(50, 47, 55, 1),
               border: isSelected
                   ? Border.all(
                       width: 2,
                     )
                   : Border.all(width: 1),
-              borderRadius: BorderRadius.zero,
+              borderRadius: BorderRadius.circular(5),
             ),
             child: Column(children: [
               Container(
                   key: const Key('slikakey'),
                   margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: isSelected
-                      ? Image.asset(widget.role.image as String)
+                      ? Image.asset(widget.role.image)
                       : Image.asset(
                           widget.roleWhite.imageWhite,
                         )),

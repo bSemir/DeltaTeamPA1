@@ -1,11 +1,6 @@
-import 'dart:convert';
-
-import 'package:delta_team/features/auth/login/loginScreen.dart';
-import 'package:delta_team/features/onboarding/errorMsg.dart';
+import 'package:delta_team/features/onboarding/errorMsg-web.dart';
 import 'package:delta_team/features/onboarding/modelRole.dart';
-import 'package:delta_team/features/onboarding/modelRoleWhite.dart';
 import 'package:delta_team/features/onboarding/onboardingScreen.dart';
-import 'package:delta_team/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,15 +17,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ErrorMessage()),
-        ChangeNotifierProvider(create: (_) => MyItem())
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(primaryColor: Colors.white),
-        home: Onboarding(role: listaRola.first),
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider(create: (_) => ErrorMessage()),
+          ChangeNotifierProvider(create: (_) => MyItem())
+        ],
+        child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(primaryColor: Colors.white),
+            home: Onboarding(role: listaRola.first))
+        // home: HomeScreen()),
+        );
   }
 }
