@@ -4,7 +4,7 @@ import 'package:delta_team/common/custom_button.dart';
 import 'package:delta_team/common/customfooter_web.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:flutter/material.dart';
-import 'dart:js';
+
 // ignore: unused_import
 import 'dart:math';
 // ignore: unused_import

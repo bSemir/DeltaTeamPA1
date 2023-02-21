@@ -34,7 +34,6 @@ import 'package:provider/provider.dart';
 
 import 'features/auth/signup/screens/confirmation_message_mobile.dart';
 import 'features/mobile_onboarding/modelRole.dart';
-import 'dart:js';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
