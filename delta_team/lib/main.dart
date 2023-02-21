@@ -10,12 +10,15 @@ import 'package:delta_team/features/auth/signup/signup_web/Web_emailVerified_scr
 import 'package:delta_team/features/auth/signup/signup_web/Web_loadingPage.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupVerification_Screen.dart';
+import 'package:delta_team/features/mobile_onboarding/errorMsg-web.dart';
+import 'package:delta_team/features/mobile_onboarding/modelmyItem.dart';
 import 'package:delta_team/features/mobile_onboarding/onboarding_screen_mobile.dart';
 import 'package:delta_team/features/mobile_onboarding/mobile_providers/answer_mobile.dart';
 import 'package:delta_team/features/mobile_onboarding/mobile_providers/error_provider_mobile.dart';
 import 'package:delta_team/features/mobile_onboarding/mobile_providers/provider_mobile.dart';
 import 'package:delta_team/features/mobile_onboarding/mobile_providers/role_provider_mobile.dart';
 import 'package:delta_team/features/mobile_onboarding/welcome_page_mobile.dart';
+import 'package:delta_team/features/onboarding/onboardingScreen.dart';
 import 'package:delta_team/home_mobile.dart';
 import 'package:delta_team/home_web.dart';
 import 'package:delta_team/landing_pageweb.dart';
@@ -30,6 +33,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'features/auth/signup/screens/confirmation_message_mobile.dart';
+import 'features/mobile_onboarding/modelRole.dart';
+import 'dart:js';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -81,6 +86,8 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<MyItem>(
             create: (_) => MyItem(),
           ),
+          ChangeNotifierProvider(create: (_) => ErrorMessageWeb()),
+          ChangeNotifierProvider(create: (_) => MyItemWeb())
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -119,6 +126,9 @@ class _MyAppState extends State<MyApp> {
               '/redirectingScreen': (context) => const RedirectingScreen(),
               WelcomePage.routeName: (context) => const WelcomePage(),
               OnboardingScreen.routeName: (context) => const OnboardingScreen(),
+              OnboardingWeb.routeName: (context) => OnboardingWeb(
+                    role: listaRola.first,
+                  ),
               '/signupWeb': (context) => const SignUpScreenWeb(),
               '/confirmationWeb': (context) => const SignupVerificationScreen(),
               '/confirmationMessageWeb': (context) =>

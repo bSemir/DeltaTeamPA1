@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../onboarding/onboardingScreen.dart';
+
 class LoadingPage extends StatefulWidget {
   static const routeName = '/loadingtoOnboard';
   const LoadingPage({super.key});
@@ -21,11 +23,11 @@ class _LoadingPageState extends State<LoadingPage> {
 
   startTimeout() async {
     var duration = const Duration(seconds: 20);
-    return Timer(duration, navigateToHomeScreen);
+    return Timer(duration, navigateToOnboardingWeb);
   }
 
-  navigateToHomeScreen() {
-    // Navigator.pushReplacementNamed(context, LandingPage.routeName);
+  navigateToOnboardingWeb() {
+    Navigator.pushReplacementNamed(context, OnboardingWeb.routeName);
   }
 
   @override
