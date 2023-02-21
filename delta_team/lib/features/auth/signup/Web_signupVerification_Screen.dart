@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:delta_team/features/auth/signup/provider/auth_provider.dart';
+import 'package:delta_team/features/auth/signup/provider/Web_auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';

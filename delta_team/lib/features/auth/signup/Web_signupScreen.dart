@@ -6,7 +6,7 @@ import 'dart:math';
 // ignore: unused_import
 import 'package:amplify_authenticator/amplify_authenticator.dart';
 
-import 'package:delta_team/features/auth/signup/provider/auth_provider.dart';
+import 'package:delta_team/features/auth/signup/provider/Web_auth_provider.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -152,14 +152,14 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ? const TextStyle(
                                     fontSize: 48,
                                   )
-                                : TextStyle(
+                                : const TextStyle(
                                     fontSize: 32,
                                   ),
                           ),
                         ),
                         const SizedBox(height: 8),
                         Padding(
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           child: Text(
                             'Product Arena',
                             style: MediaQuery.of(context).size.width > 600

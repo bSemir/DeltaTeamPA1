@@ -1,4 +1,4 @@
-import 'package:delta_team/features/auth/signup/loadingPage.dart';
+import 'Web_loadingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

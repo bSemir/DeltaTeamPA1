@@ -1,11 +1,10 @@
-import 'package:delta_team/features/auth/signup/emailVerified_screen.dart';
-import 'package:delta_team/features/auth/signup/signupScreen.dart';
-import 'package:delta_team/features/auth/signup/signupVerification_screen.dart';
+import 'package:delta_team/features/auth/signup/Web_emailVerified_screen.dart';
+import 'features/auth/signup/Web_signupScreen.dart';
+import 'package:delta_team/features/auth/signup/Web_signupScreen.dart';
+import 'package:delta_team/features/auth/signup/Web_signupVerification_Screen.dart';
 import 'package:delta_team/features/footer/column_footer.dart';
 import 'package:delta_team/features/footer/footer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 double? screenWidth;
 double? screenHeight;
@@ -20,7 +19,7 @@ class HomeScreen extends StatelessWidget {
     // final double defaultWidth = screenSize.width / 5;
     //return LayoutBuilder(
     //builder: (context, constraints) {
-    return Scaffold(
+    return const Scaffold(
       body:
           // height: defaultHeight * 10,
           // width: defaultWidth * 5,
