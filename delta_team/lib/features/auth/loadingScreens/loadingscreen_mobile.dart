@@ -25,7 +25,7 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
   }
 
   startTimeout() async {
-    var duration = const Duration(seconds: 20);
+    var duration = const Duration(seconds: 5);
     return Timer(duration, navigateToHomeScreen);
   }
 

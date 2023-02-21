@@ -6,6 +6,7 @@ import 'package:delta_team/features/onboarding/models/role.dart';
 import 'package:delta_team/features/onboarding/widgets/role_card.dart';
 import 'package:delta_team/features/onboarding/models/role_white_items.dart';
 import 'package:delta_team/features/onboarding/widgets/video_playert.dart';
+import 'package:delta_team/home_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -472,6 +473,8 @@ class _PositionPageFormState extends State<PositionPageForm> {
               textColor: AppColors.secondaryColor3,
               text: 'Submit',
               onPressed: () {
+                Navigator.pushReplacementNamed(
+                    context, HomeScreenMobile.routeName);
                 print('Onboarding submitted');
               },
               buttonWidth: double.infinity,

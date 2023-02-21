@@ -23,7 +23,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
   Future<bool> userExist(String email) async {
     try {
       final user =
-          await Amplify.Auth.signIn(username: email, password: "Password1!");
+          await Amplify.Auth.signIn(username: email, password: "dummypass");
     } catch (error) {
       if (!error.toString().contains("UserNotFoundException")) {
         setState(() {
@@ -78,11 +78,12 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
   bool isEmailTaken = false;
 
   void changeScreen() {
-    if (isSignUpCompleted) {
-      FocusManager.instance.primaryFocus?.unfocus();
-      safePrint('navigated');
-      Navigator.pushNamed(context, '/confirmation');
-    }
+    Navigator.pushNamed(context, '/confirmation');
+    // if (isSignUpCompleted) {
+    //   // FocusManager.instance.primaryFocus?.unfocus();
+    //   // safePrint('navigated');
+
+    // }
   }
 
   @override
@@ -746,7 +747,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 isButtonPressed = true;
               });
 
-              await userExist(emailController.text);
+              // await userExist(emailController.text);
               if (_signUpKey.currentState!.validate()) {
                 try {
                   final userAttributes = <CognitoUserAttributeKey, String>{
@@ -759,8 +760,6 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                     CognitoUserAttributeKey.birthdate: birthDateController.text,
                     // const CognitoUserAttributeKey.custom("Status"):
                     //     _statusValue!,
-
-                    // additional attributes as needed
                   };
                   final result = await Amplify.Auth.signUp(
                     username: emailController.text,
@@ -770,20 +769,12 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                   );
                   emailProvider.email = emailController.text;
                   isSignUpCompleted = true;
-                  // if (result.isSignUpComplete) {
-                  //   setState(() {
-
-                  //     safePrint('emailsent');
-                  //   });
-                  // }
                 } catch (e) {
                   safePrint(e.toString());
                 }
               }
               if (isSignUpCompleted) {
                 changeScreen();
-                safePrint('calling changescreen');
-                // Navigator.pushNamed(context, "/confirmation");
               }
             },
             color: Colors.black,
