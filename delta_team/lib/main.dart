@@ -5,24 +5,24 @@ import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dar
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
-import 'package:delta_team/features/onboarding/onboardingScreen.dart';
-import 'package:delta_team/features/onboarding/providers/answer.dart';
-import 'package:delta_team/features/onboarding/providers/error_provider.dart';
-import 'package:delta_team/features/onboarding/providers/provider.dart';
-import 'package:delta_team/features/onboarding/providers/role_provider.dart';
-import 'package:delta_team/features/onboarding/welcome_page.dart';
+import 'package:delta_team/features/mobile_onboarding/onboarding_screen_mobile.dart';
+import 'package:delta_team/features/mobile_onboarding/mobile_providers/answer_mobile.dart';
+import 'package:delta_team/features/mobile_onboarding/mobile_providers/error_provider_mobile.dart';
+import 'package:delta_team/features/mobile_onboarding/mobile_providers/provider_mobile.dart';
+import 'package:delta_team/features/mobile_onboarding/mobile_providers/role_provider_mobile.dart';
+import 'package:delta_team/features/mobile_onboarding/welcome_page_mobile.dart';
 import 'package:delta_team/home_mobile.dart';
 import 'package:delta_team/landing_pageweb.dart';
 import 'package:flutter/foundation.dart';
-import 'package:delta_team/features/auth/signup/provider/auth_provider.dart';
-import 'package:delta_team/features/auth/signup/screens/confirmation_screen.dart';
-import 'package:delta_team/features/auth/signup/screens/redirecting_screen.dart';
-import 'package:delta_team/features/auth/signup/screens/signupScreen.dart';
+import 'package:delta_team/features/auth/signup/provider/auth_provider_mobile.dart';
+import 'package:delta_team/features/auth/signup/screens/confirmation_screen_mobile.dart';
+import 'package:delta_team/features/auth/signup/screens/redirecting_screen_mobile.dart';
+import 'package:delta_team/features/auth/signup/screens/signupScreen_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'features/auth/signup/screens/confirmation_message.dart';
+import 'features/auth/signup/screens/confirmation_message_mobile.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -5,7 +5,7 @@ import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dar
 import 'package:delta_team/features/auth/login/amplify_auth.dart';
 import 'package:delta_team/features/auth/login/login_form.dart';
 import 'package:delta_team/features/auth/login/loginform_mobile.dart';
-import 'package:delta_team/features/auth/signup/screens/signupScreen.dart';
+import 'package:delta_team/features/auth/signup/screens/signupScreen_mobile.dart';
 import 'package:delta_team/home_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

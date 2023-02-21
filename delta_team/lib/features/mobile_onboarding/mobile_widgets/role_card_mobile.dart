@@ -1,8 +1,8 @@
 import 'package:delta_team/common/colors.dart';
-import 'package:delta_team/features/onboarding/widgets/form_buttons.dart';
-import 'package:delta_team/features/onboarding/providers/role_provider.dart';
-import 'package:delta_team/features/onboarding/models/role.dart';
-import 'package:delta_team/features/onboarding/models/role_white_items.dart';
+import 'package:delta_team/features/mobile_onboarding/mobile_widgets/form_buttons_mobile.dart';
+import 'package:delta_team/features/mobile_onboarding/mobile_providers/role_provider_mobile.dart';
+import 'package:delta_team/features/mobile_onboarding/mobile_models/role_mobile.dart';
+import 'package:delta_team/features/mobile_onboarding/mobile_models/role_white_items_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';

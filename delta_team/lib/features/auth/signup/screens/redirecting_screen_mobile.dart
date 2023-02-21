@@ -1,4 +1,4 @@
-import 'package:delta_team/features/onboarding/welcome_page.dart';
+import 'package:delta_team/features/mobile_onboarding/welcome_page_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';

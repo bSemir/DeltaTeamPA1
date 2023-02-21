@@ -1,4 +1,4 @@
-import "package:delta_team/features/onboarding/models/role.dart";
+import 'package:delta_team/features/mobile_onboarding/mobile_models/role_mobile.dart';
 import "package:flutter/material.dart";
 
 class MyItem with ChangeNotifier {
