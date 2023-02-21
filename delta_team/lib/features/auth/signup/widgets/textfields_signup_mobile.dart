@@ -80,6 +80,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
   void changeScreen() {
     if (isSignUpCompleted) {
       FocusManager.instance.primaryFocus?.unfocus();
+      safePrint('navigated');
       Navigator.pushNamed(context, '/confirmation');
     }
   }
@@ -767,18 +768,22 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                     options:
                         CognitoSignUpOptions(userAttributes: userAttributes),
                   );
-                  if (result.isSignUpComplete) {
-                    setState(() {
-                      emailProvider.email = emailController.text;
-                      isSignUpCompleted = true;
-                    });
-                  }
-                } on AuthException catch (e) {
-                  safePrint(e.message);
+                  emailProvider.email = emailController.text;
+                  isSignUpCompleted = true;
+                  // if (result.isSignUpComplete) {
+                  //   setState(() {
+
+                  //     safePrint('emailsent');
+                  //   });
+                  // }
+                } catch (e) {
+                  safePrint(e.toString());
                 }
               }
               if (isSignUpCompleted) {
-                Navigator.pushNamed(context, "/confirmation");
+                changeScreen();
+                safePrint('calling changescreen');
+                // Navigator.pushNamed(context, "/confirmation");
               }
             },
             color: Colors.black,
