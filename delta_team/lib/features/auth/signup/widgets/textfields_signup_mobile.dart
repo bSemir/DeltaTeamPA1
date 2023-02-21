@@ -23,7 +23,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
   Future<bool> userExist(String email) async {
     try {
       final user =
-          await Amplify.Auth.signIn(username: email, password: "Password1!");
+          await Amplify.Auth.signIn(username: email, password: "dummypass");
     } catch (error) {
       if (!error.toString().contains("UserNotFoundException")) {
         setState(() {
@@ -758,8 +758,6 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                     CognitoUserAttributeKey.birthdate: birthDateController.text,
                     // const CognitoUserAttributeKey.custom("Status"):
                     //     _statusValue!,
-
-                    // additional attributes as needed
                   };
                   final result = await Amplify.Auth.signUp(
                     username: emailController.text,
@@ -767,18 +765,14 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                     options:
                         CognitoSignUpOptions(userAttributes: userAttributes),
                   );
-                  if (result.isSignUpComplete) {
-                    setState(() {
-                      emailProvider.email = emailController.text;
-                      isSignUpCompleted = true;
-                    });
-                  }
-                } on AuthException catch (e) {
-                  safePrint(e.message);
+                  emailProvider.email = emailController.text;
+                  isSignUpCompleted = true;
+                } catch (e) {
+                  safePrint(e.toString());
                 }
               }
               if (isSignUpCompleted) {
-                Navigator.pushNamed(context, "/confirmation");
+                changeScreen();
               }
             },
             color: Colors.black,
