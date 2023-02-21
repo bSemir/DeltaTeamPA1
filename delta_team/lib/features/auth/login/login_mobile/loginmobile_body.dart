@@ -14,15 +14,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-class MyMobileBody extends StatefulWidget {
+class LoginScreenMobile extends StatefulWidget {
   static const routeName = '/loginmobile';
-  const MyMobileBody({super.key});
+  const LoginScreenMobile({super.key});
 
   @override
-  _MyMobileBodyState createState() => _MyMobileBodyState();
+  _LoginScreenMobileState createState() => _LoginScreenMobileState();
 }
 
-class _MyMobileBodyState extends State<MyMobileBody> {
+class _LoginScreenMobileState extends State<LoginScreenMobile> {
   // TextEditingController username = TextEditingController();
   // TextEditingController password = TextEditingController();
   final _formKey = GlobalKey<FormState>();

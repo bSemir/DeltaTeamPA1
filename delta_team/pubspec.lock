@@ -81,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0-next.5"
+  amplify_authenticator:
+    dependency: "direct main"
+    description:
+      name: amplify_authenticator
+      sha256: e6990432309288a5744f7775daf0fd18420749c2e9f3fdc13c88338108d87fb9
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0-next.4"
   amplify_core:
     dependency: transitive
     description:
@@ -510,6 +518,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_riverpod:
     dependency: transitive
     description:
@@ -768,6 +781,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  mask_text_input_formatter:
+    dependency: "direct main"
+    description:
+      name: mask_text_input_formatter
+      sha256: "19bb7809c3c2559277e95521b3ee421e1409eb2cc85efd2feb191696c92490f4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.0"
   matcher:
     dependency: transitive
     description:

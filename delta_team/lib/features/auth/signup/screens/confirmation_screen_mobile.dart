@@ -75,7 +75,8 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(context, MyMobileBody.routeName);
+                        Navigator.pushNamed(
+                            context, LoginScreenMobile.routeName);
                       },
                       key: const Key("loginKey"),
                       child: Text(

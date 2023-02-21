@@ -7,6 +7,7 @@ import 'package:delta_team/common/customfooter_web.dart';
 import 'package:delta_team/common/footer/footer.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_form.dart';
+import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,14 +16,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:riverpod_extension/riverpod_extension.dart';
 
-class MyDesktopBody extends StatefulWidget {
-  const MyDesktopBody({Key? key}) : super(key: key);
+class LoginScreenWeb extends StatefulWidget {
+  static const routeName = '/loginmobileWeb';
+  const LoginScreenWeb({Key? key}) : super(key: key);
 
   @override
-  MyDesktopBodyState createState() => MyDesktopBodyState();
+  LoginScreenWebState createState() => LoginScreenWebState();
 }
 
-class MyDesktopBodyState extends State<MyDesktopBody> {
+class LoginScreenWebState extends State<LoginScreenWeb> {
   final ScrollController _controller = ScrollController();
   final FocusNode _focusNode = FocusNode();
 
@@ -122,7 +124,7 @@ class MyDesktopBodyState extends State<MyDesktopBody> {
             key: const Key('SignUpPage_homepage'),
             text: 'Sign Up',
             press: () async {
-              Navigator.pushNamed(context, LoadingScreenWeb.routeName);
+              Navigator.pushNamed(context, '/signupWeb');
             },
             color: const Color(0xFF000000),
             textColor: Colors.white,

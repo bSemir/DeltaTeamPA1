@@ -38,7 +38,7 @@ class SignupScreenMobile extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, MyMobileBody.routeName);
+                      Navigator.pushNamed(context, LoginScreenMobile.routeName);
                     },
                     key: const Key("loginKey"),
                     child: Text(

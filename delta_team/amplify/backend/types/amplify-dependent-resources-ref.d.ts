@@ -10,6 +10,14 @@ export type AmplifyDependentResourcesAttributes = {
       "ApiName": "string",
       "RootUrl": "string"
     },
+<<<<<<< HEAD
+=======
+    "getUserLectures": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
+>>>>>>> b251eee011e22980675c33fdb8caaf27e0612827
     "lecturesroles": {
       "ApiId": "string",
       "ApiName": "string",
@@ -29,6 +37,16 @@ export type AmplifyDependentResourcesAttributes = {
     }
   },
   "function": {
+<<<<<<< HEAD
+=======
+    "getUserLecturesLambda": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+>>>>>>> b251eee011e22980675c33fdb8caaf27e0612827
     "initializeUserObject": {
       "Arn": "string",
       "LambdaExecutionRole": "string",

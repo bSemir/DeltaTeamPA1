@@ -47,7 +47,7 @@ class LandingPage extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const MyDesktopBody()),
+                      builder: (context) => const LoginScreenWeb()),
                 );
               } on AmplifyException catch (e) {
                 safePrint(e.message);

@@ -17,6 +17,13 @@
         "pa113c12a32": {}
       },
       "function": {
+<<<<<<< HEAD
+=======
+        "getUserLecturesLambda": {
+          "deploymentBucketName": "amplify-pa1-dev-131313-deployment",
+          "s3Key": "amplify-builds/getUserLecturesLambda-2b5836466e4f62486873-build.zip"
+        },
+>>>>>>> b251eee011e22980675c33fdb8caaf27e0612827
         "initializeUserObject": {
           "deploymentBucketName": "amplify-pa1-dev-131313-deployment",
           "s3Key": "amplify-builds/initializeUserObject-43537973366a2b666936-build.zip"

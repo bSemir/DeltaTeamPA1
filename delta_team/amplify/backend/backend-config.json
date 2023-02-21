@@ -28,6 +28,23 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+<<<<<<< HEAD
+=======
+    "getUserLectures": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "getUserLecturesLambda"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+>>>>>>> b251eee011e22980675c33fdb8caaf27e0612827
     "lecturesroles": {
       "dependsOn": [
         {
@@ -77,6 +94,15 @@
     }
   },
   "function": {
+<<<<<<< HEAD
+=======
+    "getUserLecturesLambda": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+>>>>>>> b251eee011e22980675c33fdb8caaf27e0612827
     "initializeUserObject": {
       "build": true,
       "dependsOn": [],
@@ -95,6 +121,25 @@
     }
   },
   "parameters": {
+<<<<<<< HEAD
+=======
+    "AMPLIFY_function_getUserLecturesLambda_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getUserLecturesLambda"
+        }
+      ]
+    },
+    "AMPLIFY_function_getUserLecturesLambda_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "getUserLecturesLambda"
+        }
+      ]
+    },
+>>>>>>> b251eee011e22980675c33fdb8caaf27e0612827
     "AMPLIFY_function_initializeUserObject_deploymentBucketName": {
       "usedBy": [
         {

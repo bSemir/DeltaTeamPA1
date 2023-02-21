@@ -5,6 +5,11 @@ import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dar
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
+
+import 'package:delta_team/features/auth/signup/signup_web/Web_emailVerified_screen.dart';
+import 'package:delta_team/features/auth/signup/signup_web/Web_loadingPage.dart';
+import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
+import 'package:delta_team/features/auth/signup/signup_web/Web_signupVerification_Screen.dart';
 import 'package:delta_team/features/mobile_onboarding/onboarding_screen_mobile.dart';
 import 'package:delta_team/features/mobile_onboarding/mobile_providers/answer_mobile.dart';
 import 'package:delta_team/features/mobile_onboarding/mobile_providers/error_provider_mobile.dart';
@@ -12,9 +17,11 @@ import 'package:delta_team/features/mobile_onboarding/mobile_providers/provider_
 import 'package:delta_team/features/mobile_onboarding/mobile_providers/role_provider_mobile.dart';
 import 'package:delta_team/features/mobile_onboarding/welcome_page_mobile.dart';
 import 'package:delta_team/home_mobile.dart';
+import 'package:delta_team/home_web.dart';
 import 'package:delta_team/landing_pageweb.dart';
 import 'package:flutter/foundation.dart';
 import 'package:delta_team/features/auth/signup/provider/auth_provider_mobile.dart';
+import 'package:delta_team/features/auth/signup/provider/Web_auth_provider.dart';
 import 'package:delta_team/features/auth/signup/screens/confirmation_screen_mobile.dart';
 import 'package:delta_team/features/auth/signup/screens/redirecting_screen_mobile.dart';
 import 'package:delta_team/features/auth/signup/screens/signupScreen_mobile.dart';
@@ -60,6 +67,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) => MyEmailWeb()),
           ChangeNotifierProvider(create: (_) => MyEmail()),
           ChangeNotifierProvider<MyProvider>(
             create: (_) => MyProvider(),
@@ -94,10 +102,13 @@ class _MyAppState extends State<MyApp> {
             home: defaultTargetPlatform == TargetPlatform.iOS ||
                     defaultTargetPlatform == TargetPlatform.android
                 ? const SignupScreenMobile()
-                : const MyDesktopBody(),
+                : const SignUpScreenWeb(),
             routes: {
-              MyMobileBody.routeName: (context) => const MyMobileBody(),
+              LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
+              LoginScreenMobile.routeName: (context) =>
+                  const LoginScreenMobile(),
               LandingPage.routeName: (context) => const LandingPage(),
+              HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
               HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
               LoadingScreenMobile.routeName: (context) =>
                   const LoadingScreenMobile(),
@@ -107,7 +118,12 @@ class _MyAppState extends State<MyApp> {
               '/confirmationMessage': (context) => const ConfirmationMessage(),
               '/redirectingScreen': (context) => const RedirectingScreen(),
               WelcomePage.routeName: (context) => const WelcomePage(),
-              OnboardingScreen.routeName: (context) => const OnboardingScreen()
+              OnboardingScreen.routeName: (context) => const OnboardingScreen(),
+              '/signupWeb': (context) => const SignUpScreenWeb(),
+              '/confirmationWeb': (context) => const SignupVerificationScreen(),
+              '/confirmationMessageWeb': (context) =>
+                  const EmailVerifiedScreen(),
+              '/loadingPage': (context) => const LoadingPage()
             }));
   }
 }
