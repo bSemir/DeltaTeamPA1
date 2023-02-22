@@ -14,7 +14,7 @@ import 'package:delta_team/features/auth/signup/signup_web/Web_signupVerificatio
 import 'package:delta_team/features/onboarding_web/onboardingScreen.dart';
 import 'package:delta_team/home_mobile.dart';
 import 'package:delta_team/home_web.dart';
-import 'package:delta_team/landing_pageweb.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:delta_team/features/auth/signup/provider/auth_provider_mobile.dart';
 import 'package:delta_team/features/auth/signup/provider/Web_auth_provider.dart';
@@ -115,7 +115,6 @@ class _MyAppState extends State<MyApp> {
               LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
               LoginScreenMobile.routeName: (context) =>
                   const LoginScreenMobile(),
-              LandingPage.routeName: (context) => const LandingPage(),
               HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
               HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
               LoadingScreenMobile.routeName: (context) =>

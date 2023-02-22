@@ -1,5 +1,5 @@
 import 'package:delta_team/home_mobile.dart';
-import 'package:delta_team/landing_pageweb.dart';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
