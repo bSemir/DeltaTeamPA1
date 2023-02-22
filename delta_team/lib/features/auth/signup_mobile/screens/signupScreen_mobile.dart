@@ -4,7 +4,7 @@ import 'package:delta_team/features/auth/signup/widgets/title_signup_mobile.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../widgets/footer.dart';
+import '../../signup/widgets/footer.dart';
 
 class SignupScreenMobile extends StatelessWidget {
   const SignupScreenMobile({super.key});

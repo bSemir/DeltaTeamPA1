@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../onboarding/onboardingScreen.dart';
+import '../../../onboarding_web/onboardingScreen.dart';
 
 class LoadingPage extends StatefulWidget {
   static const routeName = '/loadingtoOnboard';

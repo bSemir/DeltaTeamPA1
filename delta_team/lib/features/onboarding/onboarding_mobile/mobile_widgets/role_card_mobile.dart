@@ -1,12 +1,14 @@
 import 'package:delta_team/common/colors.dart';
-import 'package:delta_team/features/mobile_onboarding/mobile_widgets/form_buttons_mobile.dart';
-import 'package:delta_team/features/mobile_onboarding/mobile_providers/role_provider_mobile.dart';
-import 'package:delta_team/features/mobile_onboarding/mobile_models/role_mobile.dart';
-import 'package:delta_team/features/mobile_onboarding/mobile_models/role_white_items_mobile.dart';
+
+import 'package:delta_team/features/onboarding/mobile_providers/role_provider_mobile.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+import '../mobile_models/role_mobile.dart';
+import '../mobile_models/role_white_items_mobile.dart';
 
 class RoleWidget extends StatefulWidget {
   final Role role;

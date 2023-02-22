@@ -1,9 +1,10 @@
 import 'package:delta_team/common/colors.dart';
-import 'package:delta_team/features/mobile_onboarding/mobile_widgets/custom_footer_mobile.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'mobile_widgets/custom_footer_mobile.dart';
 import 'onboarding_screen_mobile.dart';
 
 class WelcomePage extends StatefulWidget {

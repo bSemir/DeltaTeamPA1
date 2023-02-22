@@ -1,5 +1,6 @@
-import 'package:delta_team/features/mobile_onboarding/mobile_models/role_mobile.dart';
 import "package:flutter/material.dart";
+
+import '../mobile_models/role_mobile.dart';
 
 class MyItem with ChangeNotifier {
   List<String> myItems = [];

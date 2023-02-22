@@ -1,16 +1,11 @@
-import 'package:delta_team/features/mobile_onboarding/modelRole.dart';
-
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 import '../../home_web.dart';
-import '../mobile_onboarding/errorMsg-web.dart';
-import '../mobile_onboarding/footer/footer.dart';
-import '../mobile_onboarding/modelRoleWhite.dart';
 
-import '../mobile_onboarding/modelmyItem.dart';
+import '../onboarding/footer/footer.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,6 +17,11 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
+
+import 'errorMsg-web.dart';
+import 'modelRole.dart';
+import 'modelRoleWhite.dart';
+import 'modelmyItem.dart';
 
 class OnboardingWeb extends StatefulWidget {
   static const routeName = '/onboardingweb';
