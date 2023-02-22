@@ -6,9 +6,10 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/onboarding/mobile_widgets/onboarding_widget_mobile.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
 import 'package:delta_team/common/colors.dart';
-import 'package:delta_team/features/onboarding/mobile_widgets/custom_footer_mobile.dart';
-import 'package:delta_team/features/onboarding/mobile_widgets/page_indicator_mobile.dart';
-import 'package:delta_team/features/onboarding/mobile_providers/answer_mobile.dart';
+
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/answer_mobile.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/custom_footer_mobile.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/page_indicator_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';

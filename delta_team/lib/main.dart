@@ -11,8 +11,6 @@ import 'package:delta_team/features/auth/signup/signup_web/Web_loadingPage.dart'
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupVerification_Screen.dart';
 
-import 'package:delta_team/features/onboarding/mobile_providers/role_provider_mobile.dart';
-
 import 'package:delta_team/features/onboarding_web/onboardingScreen.dart';
 import 'package:delta_team/home_mobile.dart';
 import 'package:delta_team/home_web.dart';
@@ -32,6 +30,7 @@ import 'features/auth/signup_mobile/screens/signupScreen_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/answer_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/error_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
+import 'features/onboarding/onboarding_mobile/mobile_providers/role_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/onboarding_screen_mobile.dart';
 import 'features/onboarding/onboarding_mobile/welcome_page_mobile.dart';
 import 'features/onboarding_web/errorMsg-web.dart';
