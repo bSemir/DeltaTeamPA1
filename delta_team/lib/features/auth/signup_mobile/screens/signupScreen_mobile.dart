@@ -21,7 +21,7 @@ class SignupScreenMobile extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: const Color.fromRGBO(243, 243, 249, 1),
+          color: const Color(0xFFE9E9E9),
           child: Column(
             children: [
               const Center(child: TitleSignUpMobile()),
@@ -34,7 +34,8 @@ class SignupScreenMobile extends StatelessWidget {
                 children: [
                   Text(
                     "Already have an account? ",
-                    style: GoogleFonts.notoSans(fontSize: 14),
+                    style: GoogleFonts.notoSans(
+                        fontSize: 10, fontWeight: FontWeight.w400),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -44,7 +45,7 @@ class SignupScreenMobile extends StatelessWidget {
                     child: Text(
                       'Log in',
                       style: GoogleFonts.notoSans(
-                          fontSize: 14, fontWeight: FontWeight.bold),
+                          fontSize: 10, fontWeight: FontWeight.w700),
                     ),
                   ),
                 ],

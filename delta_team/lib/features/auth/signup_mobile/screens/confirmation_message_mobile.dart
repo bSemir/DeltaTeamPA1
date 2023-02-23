@@ -22,7 +22,7 @@ class ConfirmationMessage extends StatelessWidget {
             semanticsLabel: 'Confirmation SVG'),
       ),
       body: Container(
-        color: const Color.fromRGBO(243, 243, 249, 1),
+        color: const Color(0xFFE9E9E9),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
