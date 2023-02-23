@@ -1,3 +1,4 @@
+import 'package:delta_team/home_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,14 +7,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../onboarding/onboarding_mobile/welcome_page_mobile.dart';
 
-class RedirectingScreen extends StatefulWidget {
-  const RedirectingScreen({super.key});
+class Onboardingredirecting extends StatefulWidget {
+  const Onboardingredirecting({super.key});
 
   @override
-  State<RedirectingScreen> createState() => _RedirectingScreenState();
+  State<Onboardingredirecting> createState() => _OnboardingredirectingState();
 }
 
-class _RedirectingScreenState extends State<RedirectingScreen> {
+class _OnboardingredirectingState extends State<Onboardingredirecting> {
   @override
   void initState() {
     super.initState();
@@ -26,7 +27,7 @@ class _RedirectingScreenState extends State<RedirectingScreen> {
   }
 
   navigateToHomeScreen() {
-    Navigator.pushReplacementNamed(context, WelcomePage.routeName);
+    Navigator.pushReplacementNamed(context, HomeScreenMobile.routeName);
   }
 
   @override
@@ -44,7 +45,7 @@ class _RedirectingScreenState extends State<RedirectingScreen> {
             SizedBox(
               height: 61.26,
               width: (80 / 360) * width,
-              child: SvgPicture.asset('assets/images/footer_logo.svg'),
+              child: Image.asset('assets/images/footer_logo.png'),
             ),
             const SizedBox(
               height: 154.74,

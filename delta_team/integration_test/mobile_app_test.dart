@@ -12,6 +12,7 @@ import 'package:delta_team/features/auth/signup_mobile/screens/confirmation_mess
 import 'package:delta_team/features/auth/signup_mobile/screens/confirmation_screen_mobile.dart';
 import 'package:delta_team/features/auth/signup_mobile/screens/redirecting_screen_mobile.dart';
 import 'package:delta_team/features/auth/signup_mobile/screens/signupScreen_mobile.dart';
+import 'package:delta_team/features/onboarding/mobile_widgets/role_card_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/answer_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/error_provider_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
@@ -175,6 +176,8 @@ void main() {
       when(test.API).thenReturn(MockAPI());
       AmplifyClass.instance = test;
 
+      ////singup
+
       await tester.pumpWidget(createMobileSignupScreen());
       await tester.pumpAndSettle();
 
@@ -262,6 +265,130 @@ void main() {
       await tester.ensureVisible(verifyButton);
       await tester.tap(verifyButton);
       await tester.pumpAndSettle();
+
+      ////onboarding
+
+      final radButtonDa = find.byKey(const ValueKey('RadioButtonDaKey'));
+      expect(radButtonDa, findsOneWidget);
+      await tester.tap(radButtonDa);
+      await tester.pumpAndSettle();
+
+      final nextButtonF =
+          find.byKey(const ValueKey('FirstQuestionNextButtonKey'));
+      //await tester.ensureVisible(navButton);
+      await tester.tap(nextButtonF);
+      await tester.pumpAndSettle();
+
+      final inputField = find.byKey(const ValueKey('inputKey'));
+      await tester.tap(inputField);
+      await tester.pumpAndSettle();
+      await tester.enterText(inputField, 'motiv123');
+      await tester.pumpAndSettle();
+
+      final nextButton = find.byKey(const ValueKey('OnboardingNextButtonKey'));
+      await tester.tap(nextButton);
+      await tester.pumpAndSettle();
+
+      expect(
+          find.text(
+              'Da li imaš ili si imao/la neki hobi ili se baviš nekim sportom?'),
+          findsOneWidget);
+
+      await tester.tap(inputField);
+      await tester.pumpAndSettle();
+      await tester.enterText(inputField, 'bavim se sportom');
+      await tester.pumpAndSettle();
+
+      await tester.tap(nextButton);
+      await tester.pumpAndSettle();
+
+      expect(
+          find.text(
+              'Postoji li neko interesovanje koje imaš, ali ga trenutno ne možeš ostvariti?'),
+          findsOneWidget);
+
+      await tester.tap(inputField);
+      await tester.pumpAndSettle();
+      await tester.enterText(inputField, 'interesovanje test test ...');
+      await tester.pumpAndSettle();
+
+      await tester.tap(nextButton);
+      await tester.pumpAndSettle();
+
+      expect(
+          find.text(
+              'Da li bi vodio/la brigu o kućnom ljubimcu svojih komšija dok su oni na godišnjem odmoru?'),
+          findsOneWidget);
+
+      await tester.tap(inputField);
+      await tester.pumpAndSettle();
+      await tester.enterText(inputField, 'naravno, volim zivotinje');
+      await tester.pumpAndSettle();
+
+      await tester.tap(nextButton);
+      await tester.pumpAndSettle();
+
+      expect(
+          find.text(
+              'Kapetan si piratskog broda, tvoja posada može da glasa kako se dijeli zlato. Ako se manje od polovine pirata složi sa tobom, umrijet ćeš. \n \nKakvu podjelu zlata bi predložio/la tako da dobiješ dobar dio plijena, a ipak preživiš?'),
+          findsOneWidget);
+
+      await tester.tap(inputField);
+      await tester.pumpAndSettle();
+      await tester.enterText(inputField, 'kapetan lagani');
+      await tester.pumpAndSettle();
+
+      await tester.tap(nextButton);
+      await tester.pumpAndSettle();
+
+      expect(
+          find.text(
+              'Pogledajte video snimak Amera i poslušajte njegovu poruku.'),
+          findsOneWidget);
+
+      final nextButtonVideo =
+          find.byKey(const ValueKey('VideoPageNextButtonKey'));
+      await tester.tap(nextButtonVideo);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Submit'), findsOneWidget);
+
+      //final roleList = find.byKey(const ValueKey('RoleButtonKey'));
+      await tester.pumpAndSettle();
+
+      final roleFinder = find.byWidgetPredicate(
+          (widget) => widget is RoleWidget && widget.role == listaRola[0]);
+
+      await tester.tap(roleFinder);
+      await tester.pumpAndSettle();
+
+      final submitButton = find.byKey(const ValueKey('SubmitButtonKey'));
+      await tester.tap(submitButton);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Congratulations'), findsOneWidget);
+
+      // //login
+
+      final emailFieldLogin = find.byKey(const ValueKey('emailKey'));
+      await tester.ensureVisible(emailFieldLogin);
+      await tester.tap(emailFieldLogin);
+      await tester.enterText(emailFieldLogin, 'sblekic@pa.tech387.com');
+      await tester.pumpAndSettle();
+
+      final passwordFieldLogin = find.byKey(const ValueKey('passwordKey'));
+      await tester.ensureVisible(passwordFieldLogin);
+      await tester.tap(passwordFieldLogin);
+      await tester.enterText(passwordFieldLogin, 'Password123!');
+      await tester.pumpAndSettle();
+
+      final loginButton = find.byKey(const ValueKey('Login_Button'));
+      await tester.ensureVisible(loginButton);
+      await tester.tap(loginButton);
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(const ValueKey('routed_to_loadingScreen')),
+          findsOneWidget);
     });
   });
 }

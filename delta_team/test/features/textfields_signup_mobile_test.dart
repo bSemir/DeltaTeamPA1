@@ -51,7 +51,7 @@ void main() {
     await tester.tap(cyaButton);
     await tester.pumpAndSettle();
 
-    expect(find.text('Please fill the required field.'), findsNWidgets(6));
+    expect(find.text('Please fill the required field.'), findsNWidgets(7));
   });
 
   testWidgets(

@@ -10,6 +10,8 @@ import 'package:delta_team/features/auth/signup/signup_web/Web_emailVerified_scr
 import 'package:delta_team/features/auth/signup/signup_web/Web_loadingPage.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupVerification_Screen.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/congratulations_card_mobile.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/loading_Oboading%20mobile.dart';
 
 import 'package:delta_team/features/onboarding_web/onboardingScreen.dart';
 import 'package:delta_team/home_mobile.dart';
@@ -124,8 +126,11 @@ class _MyAppState extends State<MyApp> {
               '/confirmation': (context) => const ConfirmationScreen(),
               '/confirmationMessage': (context) => const ConfirmationMessage(),
               '/redirectingScreen': (context) => const RedirectingScreen(),
+              '/OnboardingredirectingScreen': (context) =>
+                  const Onboardingredirecting(),
               WelcomePage.routeName: (context) => const WelcomePage(),
               OnboardingScreen.routeName: (context) => const OnboardingScreen(),
+              CongratsCard.routeName: (context) => const CongratsCard(),
               OnboardingWeb.routeName: (context) => OnboardingWeb(
                     role: listaRola.first,
                   ),
