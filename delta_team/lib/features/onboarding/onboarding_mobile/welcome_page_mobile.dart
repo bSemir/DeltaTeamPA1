@@ -22,13 +22,11 @@ class _WelcomePageState extends State<WelcomePage> {
     final mediaQuery = MediaQuery.of(context);
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: AppColors.secondaryColor3,
-        title: Container(
-          padding: const EdgeInsets.only(top: 10, bottom: 10),
-          height: 55,
-          child: SvgPicture.asset('assets/images/pa_logo_white.svg'),
-        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: SvgPicture.asset("assets/images/navbar_logo.svg",
+            semanticsLabel: 'Confirmation SVG'),
       ),
       body: Container(
         height: mediaQuery.size.height * 0.82,
@@ -66,7 +64,7 @@ class _WelcomePageState extends State<WelcomePage> {
               height: mediaQuery.size.height * 0.16,
             ),
             Container(
-              padding: const EdgeInsets.only(left: 80),
+              padding: const EdgeInsets.only(left: 70),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

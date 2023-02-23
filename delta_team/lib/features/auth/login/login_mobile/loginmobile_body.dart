@@ -167,12 +167,10 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
                   height: 185,
                 ),
                 SizedBox(
-                  height: 70,
-                  width: 70,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [Image.asset("assets/images/tech387.png")],
+                    children: [SvgPicture.asset("assets/images/tech387.svg")],
                   ),
                 ),
                 const SizedBox(

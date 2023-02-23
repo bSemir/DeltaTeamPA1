@@ -194,12 +194,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: AppColors.secondaryColor3,
-        title: Container(
-            padding: const EdgeInsets.only(top: 10, bottom: 10),
-            height: 55,
-            child: SvgPicture.asset('assets/images/pa_logo_white.svg')),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        title: SvgPicture.asset("assets/images/navbar_logo.svg",
+            semanticsLabel: 'Confirmation SVG'),
       ),
       backgroundColor: AppColors.secondaryColor3,
       body: SafeArea(

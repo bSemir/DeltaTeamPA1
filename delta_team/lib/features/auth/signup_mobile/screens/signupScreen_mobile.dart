@@ -52,8 +52,13 @@ class SignupScreenMobile extends StatelessWidget {
               const SizedBox(
                 height: 57.1,
               ),
-              SvgPicture.asset("assets/images/footer_logo.svg",
-                  semanticsLabel: 'Confirmation SVG'),
+              SizedBox(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [SvgPicture.asset("assets/images/tech387.svg")],
+                ),
+              ),
               const SizedBox(
                 height: 23.1,
               ),
