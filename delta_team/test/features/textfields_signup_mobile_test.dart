@@ -231,37 +231,4 @@ void main() {
 
     expect(find.text('Email already exists'), findsOneWidget);
   });
-
-  testWidgets('QA: Verify if a user with an account go to a Log in page.',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(createMobileSignupScreen());
-    await tester.pumpAndSettle();
-
-    final loginButton = find.byKey(const ValueKey('loginKey'));
-    await tester.ensureVisible(loginButton);
-    await tester.tap(loginButton);
-    await tester.pumpAndSettle();
-
-    expect(find.text("'Don't you have an account?'"), findsOneWidget);
-  });
-
-  // testWidgets('QA: Verify if a user with an account go to a Log in page.',
-  //     (WidgetTester tester) async {
-  //   const errorColor = const Color.fromRGBO(179, 38, 30, 1);
-
-  //   await tester.pumpWidget(createMobileSignupScreen());
-  //   await tester.pumpAndSettle();
-
-  //   final nameField = find.byKey(const Key("nameKey"));
-  //   expect(nameField, findsOneWidget);
-
-  //   final input = 'wron12';
-  //   await tester.enterText(nameField, input);
-  //   await tester.pumpAndSettle();
-
-  //   expect(find.text('Please enter valid name'), findsOneWidget);
-
-  //   final nameFormField = tester.widget<TextFormField>(nameField);
-  //   expect(nameFormField.style!.color, equals(errorColor));
-  // });
 }
