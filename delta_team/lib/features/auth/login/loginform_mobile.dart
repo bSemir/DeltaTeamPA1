@@ -24,20 +24,43 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
   bool showErrorIcon = false;
   String errorMessage = '';
   bool emailNotExist = true;
-
   bool canLogIn = false;
+  bool _isFocusedPassword = false;
+  bool _isFocusedEmail = false;
+  final _passwordFocusNode = FocusNode();
   final _emailFocusNode = FocusNode();
-
   final _signInKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   Color labelEmailColor = const Color(0xFF605D66);
   Color labelPasswordColor = const Color(0xFF605D66);
   Color eyelid = const Color(0xFF000000);
+  Color labelEmailFocusColor = const Color(0xFF22E974);
+  Color labelPasswordFocusColor = const Color(0xFF22E974);
+
   @override
   void dispose() {
+    // Dispose the focus node when the widget is removed from the widget tree
+    _passwordFocusNode.dispose();
     _emailFocusNode.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // Add a listener to the focus node to update the _isFocused variable
+    _passwordFocusNode.addListener(() {
+      setState(() {
+        _isFocusedPassword = _passwordFocusNode.hasFocus;
+      });
+    });
+
+    _emailFocusNode.addListener(() {
+      setState(() {
+        _isFocusedEmail = _emailFocusNode.hasFocus;
+      });
+    });
+    super.initState();
   }
 
   Future<bool> logUserIn(String email, String password) async {
@@ -75,24 +98,27 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
         children: [
           TextFormField(
             key: const Key("emailKey"),
+            focusNode: _emailFocusNode,
             controller: emailController,
             style: GoogleFonts.notoSans(
-              color: labelEmailColor,
+              color: const Color(0xFF000000),
               fontWeight: FontWeight.w700,
             ),
-            focusNode: _emailFocusNode,
+            // focusNode: _emailFocusNode,
             validator: (value) {
               if (value!.isEmpty) {
                 setState(() {
                   showErrorIcon = true;
                   emailErrored = true;
                   labelEmailColor = const Color(0xFFB3261E);
+                  labelEmailFocusColor = const Color(0xFFB3261E);
                 });
 
                 return 'Please fill the required field.';
               } else if ((!EmailValidator.validate(value) && !canLogIn) &&
                   passwordController.text.isNotEmpty) {
                 setState(() {
+                  labelEmailFocusColor = const Color(0xFFB3261E);
                   labelEmailColor = const Color(0xFFB3261E);
                   passwordErrored = true;
                   emailErrored = true;
@@ -106,6 +132,7 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
                   showErrorIcon = true;
                   passwordErrored = true;
                   labelEmailColor = const Color(0xFFB3261E);
+                  labelEmailFocusColor = const Color(0xFFB3261E);
                 });
               }
               if (passwordController.text.isEmpty &&
@@ -136,15 +163,6 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
                 borderRadius: BorderRadius.circular(4),
               ),
               filled: true,
-              floatingLabelBehavior: FloatingLabelBehavior.auto,
-              floatingLabelStyle: TextStyle(
-                color: _emailFocusNode.hasFocus
-                    ? labelEmailColor
-                    : const Color(0xFF22E974),
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-                fontFamily: GoogleFonts.notoSans().fontFamily,
-              ),
               focusedBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xFF22E974)),
               ),
@@ -156,14 +174,11 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
               label: Text(
                 "Email",
                 style: GoogleFonts.notoSans(
-                    color: labelEmailColor,
+                    color: _isFocusedEmail
+                        ? labelEmailFocusColor
+                        : labelEmailColor,
                     fontSize: 14,
                     fontWeight: FontWeight.w700),
-              ),
-              labelStyle: TextStyle(
-                color: _emailFocusNode.hasFocus
-                    ? labelEmailColor
-                    : const Color(0xFF22E974),
               ),
               suffixIcon: showErrorIcon
                   ? const Icon(
@@ -179,10 +194,11 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
           ),
           TextFormField(
             key: const Key("passwordKey"),
+            focusNode: _passwordFocusNode,
             controller: passwordController,
             obscureText: !viewPassword,
             style: GoogleFonts.notoSans(
-              color: labelPasswordColor,
+              color: const Color(0xFF000000),
               fontWeight: FontWeight.w700,
             ),
             onChanged: (value) {
@@ -198,6 +214,7 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
               if (value!.isEmpty) {
                 setState(() {
                   passwordErrored = true;
+                  labelPasswordFocusColor = const Color(0xFFB3261E);
                   labelPasswordColor = const Color(0xFFB3261E);
                   eyelid = const Color(0xFFB3261E);
                 });
@@ -209,6 +226,7 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
                 setState(() {
                   labelPasswordColor = const Color(0xFFB3261E);
                   eyelid = const Color(0xFFB3261E);
+                  labelPasswordFocusColor = const Color(0xFFB3261E);
                   labelEmailColor = const Color(0xFFB3261E);
                   emailErrored = true;
                   passwordErrored = true;
@@ -247,13 +265,6 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
                   borderSide: BorderSide(color: Color(0xFF22E974)),
                 ),
                 filled: true,
-                floatingLabelBehavior: FloatingLabelBehavior.auto,
-                floatingLabelStyle: TextStyle(
-                  color: labelPasswordColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: GoogleFonts.notoSans().fontFamily,
-                ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: labelEmailColor),
                 ),
@@ -262,9 +273,12 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
                 label: Text(
                   "Password",
                   style: GoogleFonts.notoSans(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                      color: labelPasswordColor),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14,
+                    color: _isFocusedPassword
+                        ? labelPasswordFocusColor
+                        : labelPasswordColor,
+                  ),
                 ),
                 suffixIcon: _showPasswordSuffixIcon
                     ? InkWell(
