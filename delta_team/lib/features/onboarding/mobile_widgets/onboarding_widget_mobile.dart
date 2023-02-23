@@ -1,6 +1,7 @@
 import 'package:delta_team/common/colors.dart';
 
 import 'package:delta_team/features/onboarding/mobile_widgets/role_card_mobile.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/congratulations_card_mobile.dart';
 
 import 'package:delta_team/home_mobile.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +58,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
             Form(
               key: widget.globalKey,
               child: TextFormField(
+                key: const Key('inputKey'),
                 controller: widget.controller,
                 onChanged: (value) {},
                 decoration: const InputDecoration(
@@ -252,7 +254,7 @@ class _FormWithRadioButtonsState extends State<FormWithRadioButtons> {
         ),
         const Spacer(),
         Padding(
-          padding: const EdgeInsets.only(left: 240),
+          padding: const EdgeInsets.only(left: 200),
           child: FormButton(
             key: const Key('FirstQuestionNextButtonKey'),
             backgroundColor: AppColors.primaryColor,
@@ -476,8 +478,7 @@ class _PositionPageFormState extends State<PositionPageForm> {
               textColor: AppColors.secondaryColor3,
               text: 'Submit',
               onPressed: () {
-                Navigator.pushReplacementNamed(
-                    context, HomeScreenMobile.routeName);
+                Navigator.pushNamed(context, CongratsCard.routeName);
                 print('Onboarding submitted');
               },
               buttonWidth: double.infinity,

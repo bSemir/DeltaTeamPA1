@@ -129,7 +129,6 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
                             height: 10,
                           ),
                           SizedBox(
-                            height: 14,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

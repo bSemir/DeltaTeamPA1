@@ -21,7 +21,7 @@ class _RedirectingScreenState extends State<RedirectingScreen> {
   }
 
   startTimeout() async {
-    var duration = const Duration(seconds: 5);
+    var duration = const Duration(seconds: 10);
     return Timer(duration, navigateToHomeScreen);
   }
 
@@ -37,50 +37,47 @@ class _RedirectingScreenState extends State<RedirectingScreen> {
       body: Center(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
             const SizedBox(
-              height: 80,
+              height: 74.9,
             ),
             SizedBox(
               height: 61.26,
               width: (80 / 360) * width,
               child: SvgPicture.asset('assets/images/footer_logo.svg'),
             ),
-            const SizedBox(
-              height: 154.74,
-            ),
+            const SizedBox(height: 138.74),
             Stack(alignment: Alignment.center, children: [
               Positioned.fill(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 65, right: 0, bottom: 0, left: 0),
-                    child: Column(
-                      children: [
-                        const SizedBox(height: 5),
-                        RichText(
-                          text: TextSpan(
-                            text: "We're",
-                            style: GoogleFonts.notoSans(
-                              fontWeight: FontWeight.w700,
-                              color: const Color(0xFF000000),
-                              fontSize: 14.0,
-                            ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // const SizedBox(height: 5),
+                      RichText(
+                        text: TextSpan(
+                          text: "We're",
+                          style: GoogleFonts.notoSans(
+                            fontWeight: FontWeight.w700,
+                            color: const Color(0xFF000000),
+                            fontSize: 14.0,
                           ),
                         ),
-                        RichText(
-                          text: TextSpan(
-                            text: "brewing up...",
-                            style: GoogleFonts.notoSans(
-                              fontWeight: FontWeight.w700,
-                              color: const Color(0xFF000000),
-                              fontSize: 14.0,
-                            ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          text: "brewing up",
+                          style: GoogleFonts.notoSans(
+                            fontWeight: FontWeight.w700,
+                            color: const Color(0xFF000000),
+                            fontSize: 14.0,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -95,7 +92,6 @@ class _RedirectingScreenState extends State<RedirectingScreen> {
                 ),
               ),
             ]),
-            Column()
           ])),
     );
   }

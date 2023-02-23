@@ -26,6 +26,7 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
   bool emailNotExist = true;
 
   bool canLogIn = false;
+  final _emailFocusNode = FocusNode();
 
   final _signInKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
@@ -33,6 +34,11 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
   Color labelEmailColor = const Color(0xFF605D66);
   Color labelPasswordColor = const Color(0xFF605D66);
   Color eyelid = const Color(0xFF000000);
+  @override
+  void dispose() {
+    _emailFocusNode.dispose();
+    super.dispose();
+  }
 
   Future<bool> logUserIn(String email, String password) async {
     try {
@@ -74,6 +80,7 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
               color: labelEmailColor,
               fontWeight: FontWeight.w700,
             ),
+            focusNode: _emailFocusNode,
             validator: (value) {
               if (value!.isEmpty) {
                 setState(() {
@@ -131,7 +138,9 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
               filled: true,
               floatingLabelBehavior: FloatingLabelBehavior.auto,
               floatingLabelStyle: TextStyle(
-                color: labelEmailColor,
+                color: _emailFocusNode.hasFocus
+                    ? labelEmailColor
+                    : const Color(0xFF22E974),
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
                 fontFamily: GoogleFonts.notoSans().fontFamily,
@@ -150,6 +159,11 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
                     color: labelEmailColor,
                     fontSize: 14,
                     fontWeight: FontWeight.w700),
+              ),
+              labelStyle: TextStyle(
+                color: _emailFocusNode.hasFocus
+                    ? labelEmailColor
+                    : const Color(0xFF22E974),
               ),
               suffixIcon: showErrorIcon
                   ? const Icon(

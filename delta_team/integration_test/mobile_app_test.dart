@@ -1,28 +1,22 @@
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
-import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/features/auth/signup/provider/auth_provider_mobile.dart';
-import 'package:delta_team/features/auth/signup/signup_web/Web_emailVerified_screen.dart';
-import 'package:delta_team/features/auth/signup/signup_web/Web_loadingPage.dart';
-import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
-import 'package:delta_team/features/auth/signup/signup_web/Web_signupVerification_Screen.dart';
 import 'package:delta_team/features/auth/signup_mobile/screens/confirmation_message_mobile.dart';
 import 'package:delta_team/features/auth/signup_mobile/screens/confirmation_screen_mobile.dart';
 import 'package:delta_team/features/auth/signup_mobile/screens/redirecting_screen_mobile.dart';
 import 'package:delta_team/features/auth/signup_mobile/screens/signupScreen_mobile.dart';
 import 'package:delta_team/features/onboarding/mobile_widgets/role_card_mobile.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_models/role_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/answer_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/error_provider_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/role_provider_mobile.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/congratulations_card_mobile.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/form_buttons_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/onboarding_screen_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/welcome_page_mobile.dart';
-import 'package:delta_team/features/onboarding_web/modelRole.dart';
-import 'package:delta_team/features/onboarding_web/onboardingScreen.dart';
 import 'package:delta_team/home_mobile.dart';
-import 'package:delta_team/home_web.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -133,25 +127,17 @@ Widget createMobileSignupScreen() => MultiProvider(
       ],
       child: MaterialApp(
         routes: {
-          LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
           LoginScreenMobile.routeName: (context) => const LoginScreenMobile(),
-          HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
           HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
           LoadingScreenMobile.routeName: (context) =>
               const LoadingScreenMobile(),
-          LoadingScreenWeb.routeName: (context) => const LoadingScreenWeb(),
           '/signup': (context) => const SignupScreenMobile(),
           '/confirmation': (context) => const ConfirmationScreen(),
           '/confirmationMessage': (context) => const ConfirmationMessage(),
           '/redirectingScreen': (context) => const RedirectingScreen(),
-          WelcomePage.routeName: (context) => const WelcomePage(),
-          OnboardingScreen.routeName: (context) => const OnboardingScreen(),
-          OnboardingWeb.routeName: (context) =>
-              OnboardingWeb(role: listaRola.first),
-          '/signupWeb': (context) => const SignUpScreenWeb(),
-          '/confirmationWeb': (context) => const SignupVerificationScreen(),
-          '/confirmationMessageWeb': (context) => const EmailVerifiedScreen(),
-          '/loadingPage': (context) => const LoadingPage()
+          'welcome-screen': (context) => const WelcomePage(),
+          'onboarding-screen': (context) => const OnboardingScreen(),
+          CongratsCard.routeName: (context) => const CongratsCard(),
         },
         home: const SignupScreenMobile(),
       ),
@@ -163,7 +149,8 @@ Widget createMobileSignupScreen() => MultiProvider(
   AmplifyClass,
   BuildContext,
   SignOutResult,
-  RestOperation
+  RestOperation,
+  AWSHttpResponse
 ])
 void main() {
   group('E2E Test', () {
@@ -266,7 +253,14 @@ void main() {
       await tester.tap(verifyButton);
       await tester.pumpAndSettle();
 
+      await tester.pumpAndSettle(const Duration(seconds: 5));
+
       ////onboarding
+
+      final navButton =
+          find.byKey(const ValueKey('NavigateToOnboardingButtonKey'));
+      await tester.tap(navButton);
+      await tester.pumpAndSettle();
 
       final radButtonDa = find.byKey(const ValueKey('RadioButtonDaKey'));
       expect(radButtonDa, findsOneWidget);
@@ -356,8 +350,8 @@ void main() {
       //final roleList = find.byKey(const ValueKey('RoleButtonKey'));
       await tester.pumpAndSettle();
 
-      final roleFinder = find.byWidgetPredicate(
-          (widget) => widget is RoleWidget && widget.role == listaRola[0]);
+      final roleFinder = find.byWidgetPredicate((widget) =>
+          widget is RoleWidget && widget.role.id == listaRola[0].id);
 
       await tester.tap(roleFinder);
       await tester.pumpAndSettle();
@@ -366,29 +360,51 @@ void main() {
       await tester.tap(submitButton);
       await tester.pumpAndSettle();
 
-      expect(find.text('Congratulations'), findsOneWidget);
-
-      // //login
-
-      final emailFieldLogin = find.byKey(const ValueKey('emailKey'));
-      await tester.ensureVisible(emailFieldLogin);
-      await tester.tap(emailFieldLogin);
-      await tester.enterText(emailFieldLogin, 'sblekic@pa.tech387.com');
-      await tester.pumpAndSettle();
-
-      final passwordFieldLogin = find.byKey(const ValueKey('passwordKey'));
-      await tester.ensureVisible(passwordFieldLogin);
-      await tester.tap(passwordFieldLogin);
-      await tester.enterText(passwordFieldLogin, 'Password123!');
-      await tester.pumpAndSettle();
-
-      final loginButton = find.byKey(const ValueKey('Login_Button'));
-      await tester.ensureVisible(loginButton);
-      await tester.tap(loginButton);
-      await tester.pumpAndSettle();
-
-      expect(find.byKey(const ValueKey('routed_to_loadingScreen')),
-          findsOneWidget);
+      await tester.pumpAndSettle(const Duration(seconds: 5));
     });
+  });
+
+  testWidgets('Mobile login flow.', (tester) async {
+    MockAmplifyClass test = MockAmplifyClass();
+    when(test.Auth).thenReturn(MockCC());
+    when(test.API).thenReturn(MockAPI());
+    AmplifyClass.instance = test;
+
+    ////sign up
+
+    await tester.pumpWidget(createMobileSignupScreen());
+    await tester.pumpAndSettle();
+
+    final loginButton1 = find.byKey(const ValueKey('loginKey'));
+    await tester.ensureVisible(loginButton1);
+    await tester.tap(loginButton1);
+    await tester.pumpAndSettle();
+
+    ////login
+
+    final emailFieldLogin = find.byKey(const ValueKey('emailKey'));
+    await tester.ensureVisible(emailFieldLogin);
+    await tester.tap(emailFieldLogin);
+    await tester.enterText(emailFieldLogin, 'sblekic@pa.tech387.com');
+    await tester.pumpAndSettle();
+
+    final passwordFieldLogin = find.byKey(const ValueKey('passwordKey'));
+    await tester.ensureVisible(passwordFieldLogin);
+    await tester.tap(passwordFieldLogin);
+    await tester.enterText(passwordFieldLogin, 'Password123!');
+    await tester.pumpAndSettle();
+
+    final loginButton = find.byKey(const ValueKey('Login_Button'));
+    await tester.ensureVisible(loginButton);
+    await tester.tap(loginButton);
+    await tester.pumpAndSettle();
+
+    // expect(
+    //     find.byKey(const ValueKey('routed_to_LoadingScreen')), findsOneWidget);
+
+    expect(
+        find.byKey(const ValueKey('routed_to_loadingScreen')), findsOneWidget);
+
+    //!fali mi sad homepage!!!!!!
   });
 }

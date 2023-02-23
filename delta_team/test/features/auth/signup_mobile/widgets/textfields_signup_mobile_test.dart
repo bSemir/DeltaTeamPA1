@@ -24,7 +24,8 @@ Widget createMobileSignupScreen() => ChangeNotifierProvider<MyEmail>(
   AmplifyClass,
   BuildContext,
   SignOutResult,
-  RestOperation
+  RestOperation,
+  AWSHttpResponse
 ])
 void main() {
   testWidgets('QA: Verify if a user can choose from drop dropdown filed.',

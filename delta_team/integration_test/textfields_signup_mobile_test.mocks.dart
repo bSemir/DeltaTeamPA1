@@ -4,6 +4,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
+import 'dart:convert' as _i8;
 
 import 'package:amplify_core/amplify_core.dart' as _i1;
 import 'package:amplify_core/src/types/storage/base/storage_operation_options.dart'
@@ -1131,6 +1132,64 @@ class MockRestOperation extends _i2.Mock implements _i1.RestOperation {
         returnValue: _i6.Future<void>.value(),
         returnValueForMissingStub: _i6.Future<void>.value(),
       ) as _i6.Future<void>);
+  @override
+  _i6.Future<void> close() => (super.noSuchMethod(
+        Invocation.method(
+          #close,
+          [],
+        ),
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
+}
+
+/// A class which mocks [AWSHttpResponse].
+///
+/// See the documentation for Mockito's code generation for more information.
+// ignore: must_be_immutable
+class MockAWSHttpResponse extends _i2.Mock implements _i1.AWSHttpResponse {
+  MockAWSHttpResponse() {
+    _i2.throwOnMissingStub(this);
+  }
+
+  @override
+  List<int> get bodyBytes => (super.noSuchMethod(
+        Invocation.getter(#bodyBytes),
+        returnValue: <int>[],
+      ) as List<int>);
+  @override
+  _i6.Stream<List<int>> get body => (super.noSuchMethod(
+        Invocation.getter(#body),
+        returnValue: _i6.Stream<List<int>>.empty(),
+      ) as _i6.Stream<List<int>>);
+  @override
+  int get statusCode => (super.noSuchMethod(
+        Invocation.getter(#statusCode),
+        returnValue: 0,
+      ) as int);
+  @override
+  Map<String, String> get headers => (super.noSuchMethod(
+        Invocation.getter(#headers),
+        returnValue: <String, String>{},
+      ) as Map<String, String>);
+  @override
+  _i6.Stream<List<int>> split() => (super.noSuchMethod(
+        Invocation.method(
+          #split,
+          [],
+        ),
+        returnValue: _i6.Stream<List<int>>.empty(),
+      ) as _i6.Stream<List<int>>);
+  @override
+  String decodeBody({_i8.Encoding? encoding = const _i8.Utf8Codec()}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #decodeBody,
+          [],
+          {#encoding: encoding},
+        ),
+        returnValue: '',
+      ) as String);
   @override
   _i6.Future<void> close() => (super.noSuchMethod(
         Invocation.method(
