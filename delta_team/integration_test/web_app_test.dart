@@ -4,7 +4,6 @@ import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/features/auth/signup/provider/Web_auth_provider.dart';
-import 'package:delta_team/features/auth/signup/provider/auth_provider_mobile.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_emailVerified_screen.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_loadingPage.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
@@ -13,10 +12,6 @@ import 'package:delta_team/features/auth/signup_mobile/screens/confirmation_mess
 import 'package:delta_team/features/auth/signup_mobile/screens/confirmation_screen_mobile.dart';
 import 'package:delta_team/features/auth/signup_mobile/screens/redirecting_screen_mobile.dart';
 import 'package:delta_team/features/auth/signup_mobile/screens/signupScreen_mobile.dart';
-import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/answer_mobile.dart';
-import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/error_provider_mobile.dart';
-import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
-import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/role_provider_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/onboarding_screen_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/welcome_page_mobile.dart';
 import 'package:delta_team/features/onboarding_web/errorMsg-web.dart';
@@ -28,6 +23,7 @@ import 'package:delta_team/home_web.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
@@ -139,7 +135,7 @@ Widget createMobileSignupScreen() => MultiProvider(
           '/confirmationMessageWeb': (context) => const EmailVerifiedScreen(),
           '/loadingPage': (context) => const LoadingPage()
         },
-        home: const SignupScreenMobile(),
+        home: const SignUpScreenWeb(),
       ),
     );
 
@@ -152,245 +148,103 @@ Widget createMobileSignupScreen() => MultiProvider(
   RestOperation
 ])
 void main() {
-  testWidgets('QA: Verify if a user can choose from drop dropdown filed.',
-      (WidgetTester tester) async {
-    MockAmplifyClass test = MockAmplifyClass();
-    when(test.Auth).thenReturn(MockCC());
-    when(test.API).thenReturn(MockAPI());
-    AmplifyClass.instance = test;
-    await tester.pumpWidget(createMobileSignupScreen());
-    await tester.pumpAndSettle();
+  group('E2E Test', () {
+    setUpAll(() async {
+      IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+    });
+    testWidgets('Web flow.', (tester) async {
+      MockAmplifyClass test = MockAmplifyClass();
+      when(test.Auth).thenReturn(MockCC());
+      when(test.API).thenReturn(MockAPI());
+      AmplifyClass.instance = test;
 
-    final dropDown = find.byKey(const ValueKey('statusKey'));
-    await tester.tap(dropDown);
-    await tester.pumpAndSettle();
+      await tester.pumpWidget(createMobileSignupScreen());
+      await tester.pumpAndSettle();
 
-    final status = find.text('Student').last;
-    await tester.tap(status);
+      final nameField = find.byKey(const ValueKey('nameKey'));
+      await tester.ensureVisible(nameField);
+      await tester.tap(nameField);
+      await tester.enterText(nameField, 'Amar');
+      await tester.pumpAndSettle();
+
+      final surnameField = find.byKey(const ValueKey('surnameKey'));
+      await tester.ensureVisible(surnameField);
+      await tester.tap(surnameField);
+      await tester.enterText(surnameField, 'Doe');
+      await tester.pumpAndSettle();
+
+      final birthDateField = find.byKey(const ValueKey('birthDateKey'));
+      await tester.pumpAndSettle();
+      await tester.tap(birthDateField);
+      await tester.pump();
+      await tester.enterText(birthDateField, '05/04/2003');
+
+      final cityField = find.byKey(const ValueKey('cityKey'));
+      await tester.pumpAndSettle();
+      await tester.tap(cityField);
+      await tester.pump();
+      await tester.enterText(cityField, 'Berlin');
+
+      final dropDown = find.byKey(const ValueKey('statusKey'));
+      await tester.tap(dropDown);
+      await tester.pumpAndSettle();
+
+      final status = find.text('Student').last;
+      await tester.tap(status);
+      await tester.pumpAndSettle();
+
+      final phoneField = find.byKey(const ValueKey('phoneNumberKey'));
+      await tester.pumpAndSettle();
+      await tester.tap(phoneField);
+      await tester.pump();
+      await tester.enterText(phoneField, '+38761123456789');
+
+      final emailField = find.byKey(const ValueKey('emailKey'));
+      await tester.pumpAndSettle();
+      await tester.tap(emailField);
+      await tester.pump();
+      await tester.enterText(emailField, 'tttttt@tttttt.com');
+      await tester.pumpAndSettle();
+
+      final passwordField = find.byKey(const ValueKey('passwordKey'));
+      await tester.pumpAndSettle();
+      await tester.tap(passwordField);
+      await tester.pump();
+      await tester.enterText(passwordField, 'Imeiprezime1@');
+
+      final cyaButton = find.byKey(const ValueKey('createAccountKey'));
+      await tester.ensureVisible(cyaButton);
+      await tester.tap(cyaButton);
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key("num1Key")));
+      await tester.enterText(find.byKey(const Key("num1Key")), '1');
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key("num2Key")));
+      await tester.enterText(find.byKey(const Key("num2Key")), '2');
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key("num3Key")));
+      await tester.enterText(find.byKey(const Key("num3Key")), '3');
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key("num4Key")));
+      await tester.enterText(find.byKey(const Key("num3Key")), '4');
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key("num5Key")));
+      await tester.enterText(find.byKey(const Key("num5Key")), '5');
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.byKey(const Key("num6Key")));
+      await tester.enterText(find.byKey(const Key("num6Key")), '6');
+      await tester.pumpAndSettle();
+
+      final verifyButton = find.byKey(const ValueKey('verifyConfirmationKey'));
+      await tester.ensureVisible(verifyButton);
+      await tester.tap(verifyButton);
+      await tester.pumpAndSettle();
+    });
   });
-
-  testWidgets(
-      'QA: Verify if a user can not proceed without filling all the mandatory fields.',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(createMobileSignupScreen());
-    await tester.pumpAndSettle();
-
-    final cyaButton = find.byKey(const ValueKey('createAccountKey'));
-    await tester.ensureVisible(cyaButton);
-    await tester.tap(cyaButton);
-    await tester.pumpAndSettle();
-
-    expect(find.text('Please fill the required field.'), findsNWidgets(6));
-  });
-
-  testWidgets(
-      'QA: Verify the valid age of the user when the user wants to sign up.',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(createMobileSignupScreen());
-    await tester.pumpAndSettle();
-
-    final birthDateField = find.byKey(const ValueKey('birthDateKey'));
-    await tester.tap(birthDateField);
-    await tester.enterText(birthDateField, '07/12/2056');
-    await tester.pumpAndSettle();
-
-    final cyaButton = find.byKey(const ValueKey('createAccountKey'));
-    await tester.ensureVisible(cyaButton);
-    await tester.tap(cyaButton);
-    await tester.pumpAndSettle();
-
-    expect(
-        find.text('Please enter valid birth date (dd/mm/yy)'), findsOneWidget);
-  });
-
-  testWidgets(
-      'QA:  Verify if the numbers and special characters are not allowed in the First and Last name.',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(createMobileSignupScreen());
-    await tester.pumpAndSettle();
-
-    //name
-    final nameField = find.byKey(const ValueKey('nameKey'));
-    await tester.ensureVisible(nameField);
-    await tester.tap(nameField);
-    await tester.enterText(nameField, 'aco123');
-    await tester.pumpAndSettle();
-
-    //surname
-    final surnameField = find.byKey(const ValueKey('surnameKey'));
-    await tester.ensureVisible(surnameField);
-    await tester.tap(surnameField);
-    await tester.enterText(surnameField, 'ferhat1222');
-    await tester.pumpAndSettle();
-
-    final cyaButton = find.byKey(const ValueKey('createAccountKey'));
-    await tester.ensureVisible(cyaButton);
-    await tester.tap(cyaButton);
-    await tester.pumpAndSettle();
-
-    expect(find.text('Please enter valid name'), findsOneWidget);
-    expect(find.text('Please enter valid surname'), findsOneWidget);
-  });
-
-  testWidgets(
-      'QA: Verify if a user can sign-up successfully with all the mandatory details.',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(createMobileSignupScreen());
-    await tester.pumpAndSettle();
-
-    //name
-    final nameField = find.byKey(const ValueKey('nameKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(nameField);
-    await tester.pump();
-    await tester.enterText(nameField, 'alen');
-
-    //surname
-    final surnameField = find.byKey(const ValueKey('surnameKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(surnameField);
-    await tester.pump();
-    await tester.enterText(surnameField, 'islamovic');
-
-    //birth date
-    final birthDateField = find.byKey(const ValueKey('birthDateKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(birthDateField);
-    await tester.pump();
-    await tester.enterText(birthDateField, '05/04/2006');
-
-    //city
-    final cityField = find.byKey(const ValueKey('cityKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(cityField);
-    await tester.pump();
-    await tester.enterText(cityField, 'Berlin');
-
-    //phone
-    final phoneField = find.byKey(const ValueKey('phoneNumberKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(phoneField);
-    await tester.pump();
-    await tester.enterText(phoneField, '+38761123456789');
-
-    //email
-    final emailField = find.byKey(const ValueKey('emailKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(emailField);
-    await tester.pump();
-    await tester.enterText(emailField, 'vijaypratapica@otpku.com');
-
-    //password
-    final passwordField = find.byKey(const ValueKey('passwordKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(passwordField);
-    await tester.pump();
-    await tester.enterText(passwordField, 'Imeiprezime1@');
-
-    final cyaButton = find.byKey(const ValueKey('createAccountKey'));
-    await tester.ensureVisible(cyaButton);
-    await tester.tap(cyaButton);
-    await tester.pumpAndSettle();
-
-    expect(find.text('Please fill the required field.'), findsNothing);
-
-    //expect(find.byType(ConfirmationContainers), findsOneWidget);
-
-    // I got a verification email, but in Integration, test will be processed
-  });
-
-  testWidgets('QA: Verify if duplicate email address will not get assigned.',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(createMobileSignupScreen());
-    await tester.pumpAndSettle();
-
-    //name
-    final nameField = find.byKey(const ValueKey('nameKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(nameField);
-    await tester.pump();
-    await tester.enterText(nameField, 'alen');
-
-    //surname
-    final surnameField = find.byKey(const ValueKey('surnameKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(surnameField);
-    await tester.pump();
-    await tester.enterText(surnameField, 'islamovic');
-
-    //birth date
-    final birthDateField = find.byKey(const ValueKey('birthDateKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(birthDateField);
-    await tester.pump();
-    await tester.enterText(birthDateField, '05/04/2006');
-
-    //city
-    final cityField = find.byKey(const ValueKey('cityKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(cityField);
-    await tester.pump();
-    await tester.enterText(cityField, 'Berlin');
-
-    //phone
-    final phoneField = find.byKey(const ValueKey('phoneNumberKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(phoneField);
-    await tester.pump();
-    await tester.enterText(phoneField, '+38761123456789');
-
-    //email
-    final emailField = find.byKey(const ValueKey('emailKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(emailField);
-    await tester.pump();
-    await tester.enterText(emailField, 'vijaypratapica@otpku.com');
-
-    //password
-    final passwordField = find.byKey(const ValueKey('passwordKey'));
-    await tester.pumpAndSettle();
-    await tester.tap(passwordField);
-    await tester.pump();
-    await tester.enterText(passwordField, 'Imeiprezime1@');
-
-    final cyaButton = find.byKey(const ValueKey('createAccountKey'));
-    await tester.ensureVisible(cyaButton);
-    await tester.tap(cyaButton);
-    await tester.pumpAndSettle();
-
-    expect(find.text('Email already exists'), findsOneWidget);
-  });
-
-  testWidgets('QA: Verify if a user with an account go to a Log in page.',
-      (WidgetTester tester) async {
-    await tester.pumpWidget(createMobileSignupScreen());
-    await tester.pumpAndSettle();
-
-    final loginButton = find.byKey(const ValueKey('loginKey'));
-    await tester.ensureVisible(loginButton);
-    await tester.tap(loginButton);
-    await tester.pumpAndSettle();
-
-    expect(find.text("'Don't you have an account?'"), findsOneWidget);
-  });
-
-  // testWidgets('QA: Verify if a user with an account go to a Log in page.',
-  //     (WidgetTester tester) async {
-  //   const errorColor = const Color.fromRGBO(179, 38, 30, 1);
-
-  //   await tester.pumpWidget(createMobileSignupScreen());
-  //   await tester.pumpAndSettle();
-
-  //   final nameField = find.byKey(const Key("nameKey"));
-  //   expect(nameField, findsOneWidget);
-
-  //   final input = 'wron12';
-  //   await tester.enterText(nameField, input);
-  //   await tester.pumpAndSettle();
-
-  //   expect(find.text('Please enter valid name'), findsOneWidget);
-
-  //   final nameFormField = tester.widget<TextFormField>(nameField);
-  //   expect(nameFormField.style!.color, equals(errorColor));
-  // });
 }
