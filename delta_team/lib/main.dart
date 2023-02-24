@@ -132,8 +132,6 @@ class _MyAppState extends State<MyApp> {
                   const Onboardingredirecting(),
               WelcomePage.routeName: (context) => const WelcomePage(),
               OnboardingScreen.routeName: (context) => const OnboardingScreen(),
-              Onboardingredirecting.routeName: (context) =>
-                  const Onboardingredirecting(),
               CongratsCard.routeName: (context) => const CongratsCard(),
               CongratsCardWeb.routeName: (context) => const CongratsCardWeb(),
               OnboardingWeb.routeName: (context) => OnboardingWeb(

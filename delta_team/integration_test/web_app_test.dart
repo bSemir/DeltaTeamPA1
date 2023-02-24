@@ -6,6 +6,7 @@ import 'package:delta_team/features/auth/signup/signup_web/Web_emailVerified_scr
 import 'package:delta_team/features/auth/signup/signup_web/Web_loadingPage.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupVerification_Screen.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
 import 'package:delta_team/features/onboarding_web/errorMsg-web.dart';
 import 'package:delta_team/features/onboarding_web/modelRole.dart';
 import 'package:delta_team/features/onboarding_web/modelmyItem.dart';
@@ -79,13 +80,19 @@ class MockAPI extends Mock implements APICategory {
   }
 }
 
+late MyProvider myProvider;
 late MyEmailWeb myEmailWeb;
-late AnswerProvider answerProvider;
 late ErrorMessageWeb errorMessageWeb;
 late MyItemWeb myItemWeb;
 
 Widget createWebSignupScreen() => MultiProvider(
       providers: [
+        ChangeNotifierProvider<MyProvider>(
+          create: (context) {
+            myProvider = MyProvider();
+            return myProvider;
+          },
+        ),
         ChangeNotifierProvider<MyEmailWeb>(
           create: (context) {
             myEmailWeb = MyEmailWeb();
