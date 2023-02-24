@@ -58,6 +58,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
             Form(
               key: widget.globalKey,
               child: TextFormField(
+                key: const Key('inputKey'),
                 controller: widget.controller,
                 onChanged: (value) {},
                 decoration: const InputDecoration(
