@@ -6,7 +6,6 @@ import 'package:delta_team/features/auth/signup/signup_web/Web_emailVerified_scr
 import 'package:delta_team/features/auth/signup/signup_web/Web_loadingPage.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupVerification_Screen.dart';
-import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
 import 'package:delta_team/features/onboarding_web/errorMsg-web.dart';
 import 'package:delta_team/features/onboarding_web/modelRole.dart';
 import 'package:delta_team/features/onboarding_web/modelmyItem.dart';
@@ -80,19 +79,12 @@ class MockAPI extends Mock implements APICategory {
   }
 }
 
-late MyProvider myProvider;
 late MyEmailWeb myEmailWeb;
 late ErrorMessageWeb errorMessageWeb;
 late MyItemWeb myItemWeb;
 
 Widget createWebSignupScreen() => MultiProvider(
       providers: [
-        ChangeNotifierProvider<MyProvider>(
-          create: (context) {
-            myProvider = MyProvider();
-            return myProvider;
-          },
-        ),
         ChangeNotifierProvider<MyEmailWeb>(
           create: (context) {
             myEmailWeb = MyEmailWeb();
@@ -114,12 +106,12 @@ Widget createWebSignupScreen() => MultiProvider(
       ],
       child: MaterialApp(
         routes: {
+          '/signupWeb': (context) => const SignUpScreenWeb(),
           LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
           HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
           LoadingScreenWeb.routeName: (context) => const LoadingScreenWeb(),
           OnboardingWeb.routeName: (context) =>
               OnboardingWeb(role: listaRola.first),
-          '/signupWeb': (context) => const SignUpScreenWeb(),
           '/confirmationWeb': (context) => const SignupVerificationScreen(),
           '/confirmationMessageWeb': (context) => const EmailVerifiedScreen(),
           '/loadingPage': (context) => const LoadingPage()
@@ -138,102 +130,104 @@ Widget createWebSignupScreen() => MultiProvider(
 ])
 void main() {
   group('E2E Test', () {
-    setUpAll(() async {
-      IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-    });
-    testWidgets('Web flow.', (tester) async {
-      MockAmplifyClass test = MockAmplifyClass();
-      when(test.Auth).thenReturn(MockCC());
-      when(test.API).thenReturn(MockAPI());
-      AmplifyClass.instance = test;
+    // setUpAll(() async {
+    IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+    // TestWidgetsFlutterBinding.ensureInitialized();
+  });
+  testWidgets('Web flow.', (tester) async {
+    MockAmplifyClass test = MockAmplifyClass();
+    when(test.Auth).thenReturn(MockCC());
+    when(test.API).thenReturn(MockAPI());
+    AmplifyClass.instance = test;
 
-      await tester.pumpWidget(createWebSignupScreen());
-      await tester.pumpAndSettle();
+    await tester.pumpWidget(createWebSignupScreen());
+    await tester.pumpAndSettle();
 
-      final nameField = find.byKey(const ValueKey('nameKey'));
-      await tester.ensureVisible(nameField);
-      await tester.tap(nameField);
-      await tester.enterText(nameField, 'Amar');
-      await tester.pumpAndSettle();
+    final nameField = find.byKey(const ValueKey('nameKey'));
+    await tester.ensureVisible(nameField);
+    await tester.tap(nameField);
+    await tester.enterText(nameField, 'Amar');
+    await tester.pumpAndSettle();
 
-      final surnameField = find.byKey(const ValueKey('surnameKey'));
-      await tester.ensureVisible(surnameField);
-      await tester.tap(surnameField);
-      await tester.enterText(surnameField, 'Doe');
-      await tester.pumpAndSettle();
+    final surnameField = find.byKey(const ValueKey('surnameKey'));
+    await tester.ensureVisible(surnameField);
+    await tester.tap(surnameField);
+    await tester.enterText(surnameField, 'Doe');
+    await tester.pumpAndSettle();
 
-      final birthDateField = find.byKey(const ValueKey('birthDateKey'));
-      await tester.pumpAndSettle();
-      await tester.tap(birthDateField);
-      await tester.pump();
-      await tester.enterText(birthDateField, '05/04/2003');
+    final birthDateField = find.byKey(const ValueKey('birthDateKey'));
+    await tester.pumpAndSettle();
+    await tester.tap(birthDateField);
+    await tester.pump();
+    await tester.enterText(birthDateField, '05/04/2003');
 
-      final cityField = find.byKey(const ValueKey('cityKey'));
-      await tester.pumpAndSettle();
-      await tester.tap(cityField);
-      await tester.pump();
-      await tester.enterText(cityField, 'Berlin');
+    final cityField = find.byKey(const ValueKey('cityKey'));
+    await tester.pumpAndSettle();
+    await tester.tap(cityField);
+    await tester.pump();
+    await tester.enterText(cityField, 'Berlin');
 
-      final dropDown = find.byKey(const ValueKey('statusKey'));
-      await tester.tap(dropDown);
-      await tester.pumpAndSettle();
+    final dropDown = find.byKey(const ValueKey('statusKey'));
+    await tester.tap(dropDown);
+    await tester.pumpAndSettle();
 
-      final status = find.text('Student').last;
-      await tester.tap(status);
-      await tester.pumpAndSettle();
+    final status = find.text('Student').last;
+    await tester.tap(status);
+    await tester.pumpAndSettle();
 
-      final phoneField = find.byKey(const ValueKey('phoneNumberKey'));
-      await tester.pumpAndSettle();
-      await tester.tap(phoneField);
-      await tester.pump();
-      await tester.enterText(phoneField, '+38761123456789');
+    final phoneField = find.byKey(const ValueKey('phoneNumberKey'));
+    await tester.pumpAndSettle();
+    await tester.tap(phoneField);
+    await tester.pump();
+    await tester.enterText(phoneField, '+38761123456789');
 
-      final emailField = find.byKey(const ValueKey('emailKey'));
-      await tester.pumpAndSettle();
-      await tester.tap(emailField);
-      await tester.pump();
-      await tester.enterText(emailField, 'tttttt@tttttt.com');
-      await tester.pumpAndSettle();
+    final emailField = find.byKey(const ValueKey('emailKey'));
+    await tester.pumpAndSettle();
+    await tester.tap(emailField);
+    await tester.pump();
+    await tester.enterText(emailField, 'tttttt@tttttt.com');
+    await tester.pumpAndSettle();
 
-      final passwordField = find.byKey(const ValueKey('passwordKey'));
-      await tester.pumpAndSettle();
-      await tester.tap(passwordField);
-      await tester.pump();
-      await tester.enterText(passwordField, 'Imeiprezime1@');
+    final passwordField = find.byKey(const ValueKey('passwordKey'));
+    await tester.pumpAndSettle();
+    await tester.tap(passwordField);
+    await tester.pump();
+    await tester.enterText(passwordField, 'Imeiprezime1@');
 
-      final cyaButton = find.byKey(const ValueKey('createAccountKey'));
-      await tester.ensureVisible(cyaButton);
-      await tester.tap(cyaButton);
-      await tester.pumpAndSettle();
+    final cyaButton = find.byKey(const ValueKey('createAccountKey'));
+    await tester.ensureVisible(cyaButton);
+    await tester.tap(cyaButton);
+    await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key("num1Key")));
-      await tester.enterText(find.byKey(const Key("num1Key")), '1');
-      await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key("num1Key")));
+    await tester.enterText(find.byKey(const Key("num1Key")), '1');
+    await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key("num2Key")));
-      await tester.enterText(find.byKey(const Key("num2Key")), '2');
-      await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key("num2Key")));
+    await tester.enterText(find.byKey(const Key("num2Key")), '2');
+    await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key("num3Key")));
-      await tester.enterText(find.byKey(const Key("num3Key")), '3');
-      await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key("num3Key")));
+    await tester.enterText(find.byKey(const Key("num3Key")), '3');
+    await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key("num4Key")));
-      await tester.enterText(find.byKey(const Key("num3Key")), '4');
-      await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key("num4Key")));
+    await tester.enterText(find.byKey(const Key("num3Key")), '4');
+    await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key("num5Key")));
-      await tester.enterText(find.byKey(const Key("num5Key")), '5');
-      await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key("num5Key")));
+    await tester.enterText(find.byKey(const Key("num5Key")), '5');
+    await tester.pumpAndSettle();
 
-      await tester.tap(find.byKey(const Key("num6Key")));
-      await tester.enterText(find.byKey(const Key("num6Key")), '6');
-      await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key("num6Key")));
+    await tester.enterText(find.byKey(const Key("num6Key")), '6');
+    await tester.pumpAndSettle();
 
-      final verifyButton = find.byKey(const ValueKey('verifyConfirmationKey'));
-      await tester.ensureVisible(verifyButton);
-      await tester.tap(verifyButton);
-      await tester.pumpAndSettle();
-    });
+    final verifyButton = find.byKey(const ValueKey('verifyConfirmationKey'));
+    await tester.ensureVisible(verifyButton);
+    await tester.tap(verifyButton);
+    await tester.pumpAndSettle();
   });
 }
+//   );
+// }
