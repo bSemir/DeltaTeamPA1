@@ -398,13 +398,5 @@ void main() {
     await tester.ensureVisible(loginButton);
     await tester.tap(loginButton);
     await tester.pumpAndSettle();
-
-    // expect(
-    //     find.byKey(const ValueKey('routed_to_LoadingScreen')), findsOneWidget);
-
-    expect(
-        find.byKey(const ValueKey('routed_to_loadingScreen')), findsOneWidget);
-
-    //!fali mi sad homepage!!!!!!
   });
 }

@@ -16,6 +16,7 @@ class HomeScreenMobile extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
+          key: const Key('routed_to_LoadingScreen1'),
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

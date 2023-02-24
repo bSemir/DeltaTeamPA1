@@ -63,6 +63,7 @@ class CongratsCard extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 30.0, bottom: 30),
                       child: Column(
+                        key: const Key('routed_to_homepage_from_onboarding'),
                         children: [
                           SvgPicture.asset(
                               "assets/images/check_circle_Onboard.svg",
