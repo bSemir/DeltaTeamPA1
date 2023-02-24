@@ -9,7 +9,6 @@ import '../../../onboarding/onboarding_mobile/welcome_page_mobile.dart';
 import 'package:delta_team/features/auth/signup/widgets/footer.dart';
 
 class Onboardingredirecting extends StatefulWidget {
-  static const routeName = 'LoadingtoHome_Mobile';
   const Onboardingredirecting({super.key});
 
   @override
