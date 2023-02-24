@@ -1,6 +1,7 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
+import 'package:delta_team/contact-us_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
@@ -109,31 +110,35 @@ class _MyAppState extends State<MyApp> {
             ),
             home: defaultTargetPlatform == TargetPlatform.iOS ||
                     defaultTargetPlatform == TargetPlatform.android
-                ? const SignupScreenMobile()
+                ? const ContactMobile()
+
+                // const SignupScreenMobile()
                 : const SignUpScreenWeb(),
-            routes: {
-              LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
-              LoginScreenMobile.routeName: (context) =>
-                  const LoginScreenMobile(),
-              HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
-              HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
-              LoadingScreenMobile.routeName: (context) =>
-                  const LoadingScreenMobile(),
-              LoadingScreenWeb.routeName: (context) => const LoadingScreenWeb(),
-              '/signup': (context) => const SignupScreenMobile(),
-              '/confirmation': (context) => const ConfirmationScreen(),
-              '/confirmationMessage': (context) => const ConfirmationMessage(),
-              '/redirectingScreen': (context) => const RedirectingScreen(),
-              WelcomePage.routeName: (context) => const WelcomePage(),
-              OnboardingScreen.routeName: (context) => const OnboardingScreen(),
-              OnboardingWeb.routeName: (context) => OnboardingWeb(
-                    role: listaRola.first,
-                  ),
-              '/signupWeb': (context) => const SignUpScreenWeb(),
-              '/confirmationWeb': (context) => const SignupVerificationScreen(),
-              '/confirmationMessageWeb': (context) =>
-                  const EmailVerifiedScreen(),
-              '/loadingPage': (context) => const LoadingPage()
-            }));
+            // routes: {
+            //   LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
+            //   LoginScreenMobile.routeName: (context) =>
+            //       const LoginScreenMobile(),
+            //   HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
+            //   HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
+            //   LoadingScreenMobile.routeName: (context) =>
+            //       const LoadingScreenMobile(),
+            //   LoadingScreenWeb.routeName: (context) => const LoadingScreenWeb(),
+            //   '/signup': (context) => const SignupScreenMobile(),
+            //   '/confirmation': (context) => const ConfirmationScreen(),
+            //   '/confirmationMessage': (context) => const ConfirmationMessage(),
+            //   '/redirectingScreen': (context) => const RedirectingScreen(),
+            //   WelcomePage.routeName: (context) => const WelcomePage(),
+            //   OnboardingScreen.routeName: (context) => const OnboardingScreen(),
+            //   OnboardingWeb.routeName: (context) => OnboardingWeb(
+            //         role: listaRola.first,
+            //       ),
+            //   '/signupWeb': (context) => const SignUpScreenWeb(),
+            //   '/confirmationWeb': (context) => const SignupVerificationScreen(),
+            //   '/confirmationMessageWeb': (context) =>
+            //       const EmailVerifiedScreen(),
+            //   '/loadingPage': (context) => const LoadingPage()
+            // }
+            
+            ));
   }
 }
