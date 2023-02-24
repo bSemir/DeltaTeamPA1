@@ -1,24 +1,15 @@
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
-import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/features/auth/signup/provider/Web_auth_provider.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_emailVerified_screen.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_loadingPage.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupVerification_Screen.dart';
-import 'package:delta_team/features/auth/signup_mobile/screens/confirmation_message_mobile.dart';
-import 'package:delta_team/features/auth/signup_mobile/screens/confirmation_screen_mobile.dart';
-import 'package:delta_team/features/auth/signup_mobile/screens/redirecting_screen_mobile.dart';
-import 'package:delta_team/features/auth/signup_mobile/screens/signupScreen_mobile.dart';
-import 'package:delta_team/features/onboarding/onboarding_mobile/onboarding_screen_mobile.dart';
-import 'package:delta_team/features/onboarding/onboarding_mobile/welcome_page_mobile.dart';
 import 'package:delta_team/features/onboarding_web/errorMsg-web.dart';
 import 'package:delta_team/features/onboarding_web/modelRole.dart';
 import 'package:delta_team/features/onboarding_web/modelmyItem.dart';
 import 'package:delta_team/features/onboarding_web/onboardingScreen.dart';
-import 'package:delta_team/home_mobile.dart';
 import 'package:delta_team/home_web.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -89,10 +80,11 @@ class MockAPI extends Mock implements APICategory {
 }
 
 late MyEmailWeb myEmailWeb;
+late AnswerProvider answerProvider;
 late ErrorMessageWeb errorMessageWeb;
 late MyItemWeb myItemWeb;
 
-Widget createMobileSignupScreen() => MultiProvider(
+Widget createWebSignupScreen() => MultiProvider(
       providers: [
         ChangeNotifierProvider<MyEmailWeb>(
           create: (context) {
@@ -116,18 +108,8 @@ Widget createMobileSignupScreen() => MultiProvider(
       child: MaterialApp(
         routes: {
           LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
-          LoginScreenMobile.routeName: (context) => const LoginScreenMobile(),
           HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
-          HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
-          LoadingScreenMobile.routeName: (context) =>
-              const LoadingScreenMobile(),
           LoadingScreenWeb.routeName: (context) => const LoadingScreenWeb(),
-          '/signup': (context) => const SignupScreenMobile(),
-          '/confirmation': (context) => const ConfirmationScreen(),
-          '/confirmationMessage': (context) => const ConfirmationMessage(),
-          '/redirectingScreen': (context) => const RedirectingScreen(),
-          WelcomePage.routeName: (context) => const WelcomePage(),
-          OnboardingScreen.routeName: (context) => const OnboardingScreen(),
           OnboardingWeb.routeName: (context) =>
               OnboardingWeb(role: listaRola.first),
           '/signupWeb': (context) => const SignUpScreenWeb(),
@@ -158,7 +140,7 @@ void main() {
       when(test.API).thenReturn(MockAPI());
       AmplifyClass.instance = test;
 
-      await tester.pumpWidget(createMobileSignupScreen());
+      await tester.pumpWidget(createWebSignupScreen());
       await tester.pumpAndSettle();
 
       final nameField = find.byKey(const ValueKey('nameKey'));

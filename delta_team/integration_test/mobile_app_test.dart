@@ -13,7 +13,6 @@ import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_provider
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/role_provider_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/congratulations_card_mobile.dart';
-import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/form_buttons_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/onboarding_screen_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/welcome_page_mobile.dart';
 import 'package:delta_team/home_mobile.dart';
