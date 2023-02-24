@@ -10,7 +10,7 @@ class ConfirmationMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 5),
+    Timer(const Duration(seconds: 7),
         () => Navigator.pushNamed(context, "/redirectingScreen"));
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -21,47 +21,49 @@ class ConfirmationMessage extends StatelessWidget {
         title: SvgPicture.asset("assets/images/navbar_logo.svg",
             semanticsLabel: 'Confirmation SVG'),
       ),
-      body: Container(
-        color: const Color(0xFFE9E9E9),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const SizedBox(
-                height: 123,
-              ),
-              SvgPicture.asset("assets/images/check_circle.svg",
-                  semanticsLabel: 'Confirmation SVG'),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                "Email Verified",
-                style: GoogleFonts.outfit(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w400,
+      body: SingleChildScrollView(
+        child: Container(
+          color: const Color(0xFFE9E9E9),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const SizedBox(
+                  height: 123,
                 ),
-              ),
-              const SizedBox(
-                height: 4,
-              ),
-              Text(
-                "Your email is successfully verified",
-                style: GoogleFonts.outfit(
-                    fontSize: 16,
+                SvgPicture.asset("assets/images/check_circle.svg",
+                    semanticsLabel: 'Confirmation SVG'),
+                const SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  "Email Verified",
+                  style: GoogleFonts.outfit(
+                    fontSize: 32,
                     fontWeight: FontWeight.w400,
-                    color: const Color.fromRGBO(96, 93, 102, 1)),
-              ),
-              const SizedBox(
-                height: 246,
-              ),
-              SvgPicture.asset("assets/images/footer_logo.svg",
-                  semanticsLabel: 'Confirmation SVG'),
-              const SizedBox(
-                height: 36,
-              ),
-              const Footer(),
-            ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Text(
+                  "Your email is successfully verified",
+                  style: GoogleFonts.outfit(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: const Color.fromRGBO(96, 93, 102, 1)),
+                ),
+                const SizedBox(
+                  height: 246,
+                ),
+                SvgPicture.asset("assets/images/footer_logo.svg",
+                    semanticsLabel: 'Confirmation SVG'),
+                const SizedBox(
+                  height: 36,
+                ),
+                const Footer(),
+              ],
+            ),
           ),
         ),
       ),

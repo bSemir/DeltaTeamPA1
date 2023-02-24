@@ -36,7 +36,7 @@ class CongratsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 10),
+    Timer(const Duration(seconds: 7),
         () => Navigator.pushNamed(context, "/OnboardingredirectingScreen"));
     return Scaffold(
       resizeToAvoidBottomInset: false,

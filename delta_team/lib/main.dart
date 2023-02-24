@@ -35,7 +35,9 @@ import 'features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.d
 import 'features/onboarding/onboarding_mobile/mobile_providers/role_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/onboarding_screen_mobile.dart';
 import 'features/onboarding/onboarding_mobile/welcome_page_mobile.dart';
+import 'features/onboarding_web/congratulation_web.dart';
 import 'features/onboarding_web/errorMsg-web.dart';
+import 'features/onboarding_web/loadingpageOnboarding_web.dart';
 import 'features/onboarding_web/modelRole.dart';
 import 'features/onboarding_web/modelmyItem.dart';
 
@@ -130,10 +132,15 @@ class _MyAppState extends State<MyApp> {
                   const Onboardingredirecting(),
               WelcomePage.routeName: (context) => const WelcomePage(),
               OnboardingScreen.routeName: (context) => const OnboardingScreen(),
+              Onboardingredirecting.routeName: (context) =>
+                  const Onboardingredirecting(),
               CongratsCard.routeName: (context) => const CongratsCard(),
+              CongratsCardWeb.routeName: (context) => const CongratsCardWeb(),
               OnboardingWeb.routeName: (context) => OnboardingWeb(
                     role: listaRola.first,
                   ),
+              LoadingPageOnboarding.routeName: (context) =>
+                  const LoadingPageOnboarding(),
               '/signupWeb': (context) => const SignUpScreenWeb(),
               '/confirmationWeb': (context) => const SignupVerificationScreen(),
               '/confirmationMessageWeb': (context) =>
