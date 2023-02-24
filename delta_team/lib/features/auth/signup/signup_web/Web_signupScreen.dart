@@ -22,6 +22,8 @@ import 'package:validators/validators.dart';
 // ignore: unnecessary_import
 import 'package:flutter/services.dart';
 
+import '../../../onboarding/footer/footer.dart';
+
 // import 'package:amplify_api/amplify_api.dart';
 // import 'package:masked_text_input_formatter/masked_text_input_formatter.dart';
 
@@ -114,6 +116,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
     final emailProvider = Provider.of<MyEmailWeb>(context, listen: false);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
           title: 'Tech387',
           leading: SvgPicture.asset('assets/images/logo.svg'),

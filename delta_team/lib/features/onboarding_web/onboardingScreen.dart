@@ -1,3 +1,4 @@
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/congratulations_card_mobile.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
 
+import 'congratulation_web.dart';
 import 'errorMsg-web.dart';
 import 'modelRole.dart';
 import 'modelRoleWhite.dart';
@@ -924,7 +926,7 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                           // clearFields();
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const HomeScreenWeb(),
+                              builder: (context) => const CongratsCardWeb(),
                             ),
                           );
                         } else if (_character == null) {

@@ -26,7 +26,7 @@ class _LoadingScreenWebState extends State<LoadingScreenWeb> {
   }
 
   startTimeout() async {
-    var duration = const Duration(seconds: 20);
+    var duration = const Duration(seconds: 10);
     return Timer(duration, navigateToHomeScreen);
   }
 

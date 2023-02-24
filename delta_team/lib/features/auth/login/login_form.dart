@@ -171,7 +171,7 @@ class _LoginFieldState extends State<LoginField> {
               ),
               filled: true,
               focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF000000)),
+                borderSide: BorderSide(color: Color(0xFF22E974)),
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: labelEmailColor),
@@ -265,19 +265,12 @@ class _LoginFieldState extends State<LoginField> {
               return null;
             },
             decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: labelPasswordColor)),
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF22E974))),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),
                 filled: true,
-                floatingLabelBehavior: FloatingLabelBehavior.auto,
-                floatingLabelStyle: TextStyle(
-                  color: labelPasswordColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: GoogleFonts.notoSans().fontFamily,
-                ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: labelEmailColor),
                 ),
