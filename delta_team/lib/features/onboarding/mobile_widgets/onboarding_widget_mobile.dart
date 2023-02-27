@@ -1,4 +1,5 @@
 import 'package:delta_team/common/colors.dart';
+import 'package:delta_team/features/Home_welcome_mobile/home_second_screen.dart';
 
 import 'package:delta_team/features/onboarding/mobile_widgets/role_card_mobile.dart';
 
@@ -14,6 +15,7 @@ import '../onboarding_mobile/mobile_providers/answer_mobile.dart';
 import '../onboarding_mobile/mobile_providers/error_provider_mobile.dart';
 import '../onboarding_mobile/mobile_widgets/form_buttons_mobile.dart';
 import '../onboarding_mobile/mobile_widgets/video_player_mobile.dart';
+import 'package:delta_team/features/Home_welcome_mobile/home_second_screen.dart';
 
 class OnboardingForm extends StatefulWidget {
   final String questionText;
@@ -477,7 +479,9 @@ class _PositionPageFormState extends State<PositionPageForm> {
               text: 'Submit',
               onPressed: () {
                 Navigator.pushReplacementNamed(
-                    context, HomeScreenMobile.routeName);
+                    //Changed
+                    context,
+                    HomeSecondScreen.routeName);
                 print('Onboarding submitted');
               },
               buttonWidth: double.infinity,

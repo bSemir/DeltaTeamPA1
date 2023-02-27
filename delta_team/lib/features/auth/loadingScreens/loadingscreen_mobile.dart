@@ -1,3 +1,4 @@
+import 'package:delta_team/features/Home_welcome_mobile/home_second_screen.dart';
 import 'package:delta_team/home_mobile.dart';
 
 import 'package:flutter/material.dart';
@@ -30,7 +31,8 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
   }
 
   navigateToHomeScreen() {
-    Navigator.pushReplacementNamed(context, HomeScreenMobile.routeName);
+    //Changed route
+    Navigator.pushReplacementNamed(context, HomeSecondScreen.routeName);
   }
 
   @override

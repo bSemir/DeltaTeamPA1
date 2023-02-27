@@ -1,4 +1,5 @@
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:delta_team/features/Home_welcome_mobile/home_second_screen.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/login/amplify_auth.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
@@ -29,7 +30,8 @@ class HomeScreenMobile extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LoginScreenMobile()),
+                        builder: (context) => const LoginScreenMobile(),
+                      ),
                     );
                   } on AmplifyException catch (e) {
                     print(e.message);

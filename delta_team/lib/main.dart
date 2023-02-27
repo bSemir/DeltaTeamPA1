@@ -1,6 +1,8 @@
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
+import 'package:delta_team/features/Home_welcome_mobile/home_second_screen.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
@@ -43,9 +45,10 @@ void main() {
 }
 
 Future<void> _configureAmplify() async {
+  final api = AmplifyAPI();
+  final auth = AmplifyAuthCognito();
+  await Amplify.addPlugins([auth, api]);
   try {
-    final auth = AmplifyAuthCognito();
-    await Amplify.addPlugin(auth);
     await Amplify.configure(amplifyconfig);
   } on AmplifyAlreadyConfiguredException catch (e) {
     safePrint('Amplify was already configured: $e');
@@ -109,6 +112,8 @@ class _MyAppState extends State<MyApp> {
             ),
             home: defaultTargetPlatform == TargetPlatform.iOS ||
                     defaultTargetPlatform == TargetPlatform.android
+
+                //changed from SignupScreenMobile() to HomeSecondScreen()
                 ? const SignupScreenMobile()
                 : const SignUpScreenWeb(),
             routes: {
@@ -117,6 +122,10 @@ class _MyAppState extends State<MyApp> {
                   const LoginScreenMobile(),
               HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
               HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
+
+              //added
+              HomeSecondScreen.routeName: (context) => const HomeSecondScreen(),
+
               LoadingScreenMobile.routeName: (context) =>
                   const LoadingScreenMobile(),
               LoadingScreenWeb.routeName: (context) => const LoadingScreenWeb(),

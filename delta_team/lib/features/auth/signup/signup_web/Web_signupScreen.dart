@@ -285,7 +285,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                       return "Please enter a valid month (1-12).";
                                     }
                                     if (year != null &&
-                                        (year < 1900 || year > 2022)) {
+                                        (year < 1900 || year > 2020)) {
                                       return "Please enter a valid year.";
                                     }
                                     return null;
