@@ -2,6 +2,7 @@ import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
+import 'package:delta_team/auth_provider.dart';
 import 'package:delta_team/contact-us_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
@@ -77,6 +78,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) => AuthProviderContact()),
           ChangeNotifierProvider(create: (_) => MyEmailWeb()),
           ChangeNotifierProvider(create: (_) => MyEmail()),
           ChangeNotifierProvider<MyProvider>(
@@ -95,52 +97,50 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider(create: (_) => MyItemWeb())
         ],
         child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            inputDecorationTheme: InputDecorationTheme(
-              errorStyle: GoogleFonts.notoSans(
-                fontSize: 10,
-                color: const Color.fromRGBO(179, 38, 30, 1),
-                fontWeight: FontWeight.w400,
-              ),
-              errorBorder: const OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Color.fromRGBO(179, 38, 30, 1),
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              inputDecorationTheme: InputDecorationTheme(
+                errorStyle: GoogleFonts.notoSans(
+                  fontSize: 10,
+                  color: const Color.fromRGBO(179, 38, 30, 1),
+                  fontWeight: FontWeight.w400,
+                ),
+                errorBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Color.fromRGBO(179, 38, 30, 1),
+                  ),
                 ),
               ),
             ),
-          ),
-          home: defaultTargetPlatform == TargetPlatform.iOS ||
-                  defaultTargetPlatform == TargetPlatform.android
-              ? const ContactMobile()
-
-              // const SignupScreenMobile()
-              : const SignUpScreenWeb(),
-          // routes: {
-          //   LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
-          //   LoginScreenMobile.routeName: (context) =>
-          //       const LoginScreenMobile(),
-          //   HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
-          //   HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
-          //   LoadingScreenMobile.routeName: (context) =>
-          //       const LoadingScreenMobile(),
-          //   LoadingScreenWeb.routeName: (context) => const LoadingScreenWeb(),
-          //   '/signup': (context) => const SignupScreenMobile(),
-          //   '/confirmation': (context) => const ConfirmationScreen(),
-          //   '/confirmationMessage': (context) => const ConfirmationMessage(),
-          //   '/redirectingScreen': (context) => const RedirectingScreen(),
-          //   WelcomePage.routeName: (context) => const WelcomePage(),
-          //   OnboardingScreen.routeName: (context) => const OnboardingScreen(),
-          //   OnboardingWeb.routeName: (context) => OnboardingWeb(
-          //         role: listaRola.first,
-          //       ),
-          //   '/signupWeb': (context) => const SignUpScreenWeb(),
-          //   '/confirmationWeb': (context) => const SignupVerificationScreen(),
-          //   '/confirmationMessageWeb': (context) =>
-          //       const EmailVerifiedScreen(),
-          //   '/loadingPage': (context) => const LoadingPage()
-          // }
-        ));
+            home: defaultTargetPlatform == TargetPlatform.iOS ||
+                    defaultTargetPlatform == TargetPlatform.android
+                ? const SignupScreenMobile()
+                : const SignUpScreenWeb(),
+            routes: {
+              //   LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
+              LoginScreenMobile.routeName: (context) =>
+                  const LoginScreenMobile(),
+              HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
+              HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
+              LoadingScreenMobile.routeName: (context) =>
+                  const LoadingScreenMobile(),
+              LoadingScreenWeb.routeName: (context) => const LoadingScreenWeb(),
+              ContactMobile.routeName: (context) => const ContactMobile(),
+              '/signup': (context) => const SignupScreenMobile(),
+              '/confirmation': (context) => const ConfirmationScreen(),
+              '/confirmationMessage': (context) => const ConfirmationMessage(),
+              '/redirectingScreen': (context) => const RedirectingScreen(),
+              WelcomePage.routeName: (context) => const WelcomePage(),
+              OnboardingScreen.routeName: (context) => const OnboardingScreen(),
+              OnboardingWeb.routeName: (context) => OnboardingWeb(
+                    role: listaRola.first,
+                  ),
+              '/signupWeb': (context) => const SignUpScreenWeb(),
+              '/confirmationWeb': (context) => const SignupVerificationScreen(),
+              '/confirmationMessageWeb': (context) =>
+                  const EmailVerifiedScreen(),
+              '/loadingPage': (context) => const LoadingPage()
+            }));
   }
 }

@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:delta_team/auth_provider.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class LoginFieldMobile extends StatefulWidget {
   // final IconData suffixIcon;
@@ -54,6 +56,9 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
         });
       }
     }
+    Provider.of<AuthProviderContact>(context, listen: false).email =
+        emailController.text;
+
     return false;
   }
 

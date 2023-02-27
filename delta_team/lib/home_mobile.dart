@@ -7,6 +7,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'contact-us_mobile.dart';
+
 class HomeScreenMobile extends StatelessWidget {
   static const routeName = '/homemobile';
   const HomeScreenMobile({super.key});
@@ -43,7 +45,21 @@ class HomeScreenMobile extends StatelessWidget {
                   fontSize: 32.0,
                   color: Colors.black,
                   fontWeight: FontWeight.w400,
-                ))
+                )),
+            ElevatedButton(
+              onPressed: () async {
+                Navigator.pushNamed(context, ContactMobile.routeName);
+                // Navigate to privacy page
+              },
+              child: Text(
+                "Contact Us",
+                style: GoogleFonts.notoSans(
+                  fontWeight: FontWeight.w400,
+                  color: const Color.fromARGB(255, 142, 142, 142),
+                  fontSize: 13.0,
+                ),
+              ),
+            )
           ],
         ),
       ),
