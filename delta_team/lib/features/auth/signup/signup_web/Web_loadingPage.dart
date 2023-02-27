@@ -26,7 +26,7 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   navigateToOnboardingWeb() {
-    Navigator.pushReplacementNamed(context, OnboardingWeb.routeName);
+    Navigator.pushNamed(context, '/onboardingweb');
   }
 
   @override

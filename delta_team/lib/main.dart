@@ -137,13 +137,12 @@ class _MyAppState extends State<MyApp> {
               '/onboardingweb': (context) => OnboardingWeb(
                     role: listaRola.first,
                   ),
-              LoadingPageOnboarding.routeName: (context) =>
-                  const LoadingPageOnboarding(),
+              '/loadingOnboarding': (context) => const LoadingPageOnboarding(),
               '/signupWeb': (context) => const SignUpScreenWeb(),
               '/confirmationWeb': (context) => const SignupVerificationScreen(),
               '/confirmationMessageWeb': (context) =>
                   const EmailVerifiedScreen(),
-              '/loadingPage': (context) => const LoadingPage()
+              '/loadingPageSignup': (context) => const LoadingPage()
             }));
   }
 }

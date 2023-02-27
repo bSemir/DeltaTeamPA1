@@ -31,9 +31,9 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
     screenWidth ??= MediaQuery.of(context).size.width;
     screenHeight ??= MediaQuery.of(context).size.height;
     Timer(
-        const Duration(seconds: 3),
+        const Duration(seconds: 5),
         () => //Navigator.pushNamed(context, HomeScreenWeb.routeName));
-            Navigator.pushNamed(context, '/onboardingweb'));
+            Navigator.pushNamed(context, '/loadingPageSignup'));
 
     return Scaffold(
       appBar: CustomAppBar(
