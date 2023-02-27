@@ -118,7 +118,7 @@ class _MyAppState extends State<MyApp> {
                 ? const SignupScreenMobile()
                 : const SignUpScreenWeb(),
             routes: {
-              //   LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
+              LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
               LoginScreenMobile.routeName: (context) =>
                   const LoginScreenMobile(),
               HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),

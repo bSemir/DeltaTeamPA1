@@ -56,8 +56,8 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
         });
       }
     }
-    Provider.of<AuthProviderContact>(context, listen: false).email =
-        emailController.text;
+    // Provider.of<AuthProviderContact>(context, listen: false).email =
+    //     emailController.text;
 
     return false;
   }

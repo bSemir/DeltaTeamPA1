@@ -9,8 +9,8 @@ class AuthProviderContact with ChangeNotifier {
     notifyListeners();
   }
 
-  void setEmail(String email) {
-    email = email;
+  void setEmail(String userEmail) {
+    email = userEmail;
     notifyListeners();
   }
 
