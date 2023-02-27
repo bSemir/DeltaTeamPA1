@@ -119,6 +119,7 @@ Widget createWebSignupScreen() => MultiProvider(
           '/loadingPage': (context) => const LoadingPage(),
           LoadingPageOnboarding.routeName: (context) =>
               const LoadingPageOnboarding(),
+
           // '/loadingtoOnboard': (context) => const LoadingPage()
         },
         home: const SignUpScreenWeb(),

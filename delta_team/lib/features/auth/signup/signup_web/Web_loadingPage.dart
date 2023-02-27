@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../onboarding_web/onboardingScreen.dart';
 
 class LoadingPage extends StatefulWidget {
+  static const routeName = '/loadingtoOnboard';
   const LoadingPage({super.key});
 
   @override
@@ -21,7 +22,7 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   startTimeout() async {
-    var duration = const Duration(seconds: 3);
+    var duration = const Duration(seconds: 10);
     return Timer(duration, navigateToOnboardingWeb);
   }
 
