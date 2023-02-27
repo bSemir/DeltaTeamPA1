@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class SignupVerificationScreen extends StatefulWidget {
+  static const routeName = '/confirmationWeb';
   const SignupVerificationScreen({super.key});
 
   @override

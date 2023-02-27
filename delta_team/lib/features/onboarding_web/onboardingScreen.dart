@@ -60,34 +60,34 @@ class _OnboardingWebState extends State<OnboardingWeb> {
   void initState() {
     super.initState();
 
-    _configureAmplify();
+    // _configureAmplify();
   }
 
-  Future<void> _configureAmplify() async {
-    // Add any Amplify plugins you want to use
-    final authPlugin = AmplifyAuthCognito();
-    final api = AmplifyAPI();
-    await Amplify.addPlugins([authPlugin, api]);
-    try {
-      await Amplify.configure(amplifyconfig);
-    } on AmplifyAlreadyConfiguredException {
-      safePrint(
-          "Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
-    }
-  }
+  // Future<void> _configureAmplify() async {
+  //   // Add any Amplify plugins you want to use
+  //   final authPlugin = AmplifyAuthCognito();
+  //   final api = AmplifyAPI();
+  //   await Amplify.addPlugins([authPlugin, api]);
+  //   try {
+  //     await Amplify.configure(amplifyconfig);
+  //   } on AmplifyAlreadyConfiguredException {
+  //     safePrint(
+  //         "Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
+  //   }
+  // }
 
-  Future<void> signInUser() async {
-    await _configureAmplify();
-    try {
-      final result = await Amplify.Auth.signIn(
-        username: "sblekic@pa.tech387.com", // email of user
-        password: "Password123!",
-      );
-      print('LOGINOVO SE KRALJ AMAR');
-    } on AuthException catch (e) {
-      safePrint(e.message);
-    }
-  }
+  // Future<void> signInUser() async {
+  //   await _configureAmplify();
+  //   try {
+  //     final result = await Amplify.Auth.signIn(
+  //       username: "sblekic@pa.tech387.com", // email of user
+  //       password: "Password123!",
+  //     );
+  //     print('LOGINOVO SE KRALJ AMAR');
+  //   } on AuthException catch (e) {
+  //     safePrint(e.message);
+  //   }
+  // }
 
   Future<void> signOutUser() async {
     try {
@@ -120,7 +120,7 @@ class _OnboardingWebState extends State<OnboardingWeb> {
     }
 
     Future<void> submitOnboarding() async {
-      await signInUser();
+      // await signInUser();
 
       try {
         final restOperation = Amplify.API.post("/api/onboarding/submit",

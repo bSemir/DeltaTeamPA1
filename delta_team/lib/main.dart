@@ -123,7 +123,7 @@ class _MyAppState extends State<MyApp> {
               HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
               LoadingScreenMobile.routeName: (context) =>
                   const LoadingScreenMobile(),
-              LoadingScreenWeb.routeName: (context) => const LoadingScreenWeb(),
+              '/loadingScreenWeb': (context) => const LoadingScreenWeb(),
               '/signup': (context) => const SignupScreenMobile(),
               '/confirmation': (context) => const ConfirmationScreen(),
               '/confirmationMessage': (context) => const ConfirmationMessage(),
@@ -134,7 +134,7 @@ class _MyAppState extends State<MyApp> {
               OnboardingScreen.routeName: (context) => const OnboardingScreen(),
               CongratsCard.routeName: (context) => const CongratsCard(),
               CongratsCardWeb.routeName: (context) => const CongratsCardWeb(),
-              OnboardingWeb.routeName: (context) => OnboardingWeb(
+              '/onboardingweb': (context) => OnboardingWeb(
                     role: listaRola.first,
                   ),
               LoadingPageOnboarding.routeName: (context) =>
