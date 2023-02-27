@@ -81,7 +81,7 @@ class _ContactMobileState extends State<ContactMobile> {
 
       // Show success message to user
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Thank you! Message sent.')),
+        const SnackBar(content: Text('Thank you! Message sent.')),
       );
     } on SuccessState {
       print(SuccessState);
