@@ -503,22 +503,16 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                           options: CognitoSignUpOptions(
                                               userAttributes: userAttributes),
                                         );
-                                        print(result.isSignUpComplete);
-                                        if (!result.isSignUpComplete) {
-                                          // ignore: use_build_context_synchronously
-                                          Navigator.pushNamed(
-                                              context, "/confirmationWeb");
-                                          setState(() {
-                                            emailProvider.email =
-                                                emailController.text;
-                                          });
-                                        }
+                                        // ignore: use_build_context_synchronously
+                                        Navigator.pushNamed(
+                                            context, "/confirmationWeb");
+                                        setState(() {
+                                          emailProvider.email =
+                                              emailController.text;
+                                        });
                                       } on AuthException catch (e) {
                                         safePrint(e.message);
                                       }
-                                    }
-                                    if (isSignUpCompleted) {
-                                      changeScreen();
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(

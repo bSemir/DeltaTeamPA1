@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class SignupVerificationScreen extends StatefulWidget {
+  static const routeName = '/confirmationWeb';
   const SignupVerificationScreen({super.key});
 
   @override
@@ -663,8 +664,8 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         if (!codeError) {
                                           FocusManager.instance.primaryFocus
                                               ?.unfocus();
-                                          Navigator.pushNamed(context,
-                                              "/confirmationMessageWeb");
+                                          Navigator.pushNamed(
+                                              context, '/onboardingweb');
                                         }
                                       } on AuthException catch (e) {
                                         setState(() {

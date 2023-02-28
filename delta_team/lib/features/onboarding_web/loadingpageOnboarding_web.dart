@@ -6,7 +6,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoadingPageOnboarding extends StatefulWidget {
-  static const routeName = '/loadingtoHomeWeb';
   const LoadingPageOnboarding({super.key});
 
   @override
@@ -26,7 +25,7 @@ class _LoadingPageOnboardingState extends State<LoadingPageOnboarding> {
   }
 
   navigateToHome() {
-    Navigator.pushReplacementNamed(context, HomeScreenWeb.routeName);
+    Navigator.pushNamed(context, "/homeweb");
   }
 
   @override

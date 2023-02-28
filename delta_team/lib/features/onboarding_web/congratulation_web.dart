@@ -14,7 +14,7 @@ class CongratsCardWeb extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     Timer(const Duration(seconds: 7),
-        () => Navigator.pushNamed(context, "/homeweb"));
+        () => Navigator.pushNamed(context, '/loadingOnboarding'));
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(

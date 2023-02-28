@@ -123,7 +123,7 @@ class _MyAppState extends State<MyApp> {
               HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
               LoadingScreenMobile.routeName: (context) =>
                   const LoadingScreenMobile(),
-              LoadingScreenWeb.routeName: (context) => const LoadingScreenWeb(),
+              '/loadingScreenWeb': (context) => const LoadingScreenWeb(),
               '/signup': (context) => const SignupScreenMobile(),
               '/confirmation': (context) => const ConfirmationScreen(),
               '/confirmationMessage': (context) => const ConfirmationMessage(),
@@ -132,20 +132,17 @@ class _MyAppState extends State<MyApp> {
                   const Onboardingredirecting(),
               WelcomePage.routeName: (context) => const WelcomePage(),
               OnboardingScreen.routeName: (context) => const OnboardingScreen(),
-              Onboardingredirecting.routeName: (context) =>
-                  const Onboardingredirecting(),
               CongratsCard.routeName: (context) => const CongratsCard(),
               CongratsCardWeb.routeName: (context) => const CongratsCardWeb(),
-              OnboardingWeb.routeName: (context) => OnboardingWeb(
+              '/onboardingweb': (context) => OnboardingWeb(
                     role: listaRola.first,
                   ),
-              LoadingPageOnboarding.routeName: (context) =>
-                  const LoadingPageOnboarding(),
+              '/loadingOnboarding': (context) => const LoadingPageOnboarding(),
               '/signupWeb': (context) => const SignUpScreenWeb(),
               '/confirmationWeb': (context) => const SignupVerificationScreen(),
               '/confirmationMessageWeb': (context) =>
                   const EmailVerifiedScreen(),
-              '/loadingPage': (context) => const LoadingPage()
+              '/loadingPageSignup': (context) => const LoadingPage()
             }));
   }
 }

@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
+import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
+import 'package:delta_team/features/onboarding_web/onboardingScreen.dart';
+import 'package:delta_team/home_web.dart';
 
 import 'Web_loadingPage.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +22,6 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
   @override
   void initState() {
     super.initState();
-    // Schedule the opening of a new page after 3 seconds
-    Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoadingPage()),
-      );
-    });
   }
 
   double? screenWidth;
@@ -32,6 +30,10 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
   Widget build(BuildContext context) {
     screenWidth ??= MediaQuery.of(context).size.width;
     screenHeight ??= MediaQuery.of(context).size.height;
+    Timer(
+        const Duration(seconds: 5),
+        () => //Navigator.pushNamed(context, HomeScreenWeb.routeName));
+            Navigator.pushNamed(context, '/loadingPageSignup'));
 
     return Scaffold(
       appBar: CustomAppBar(
