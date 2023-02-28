@@ -208,6 +208,7 @@ class _MyDrawerState extends State<MyDrawer> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      key: const Key('user_fullname'),
                       _userName,
                       style: const TextStyle(
                           color: Color.fromRGBO(34, 233, 116, 1),
@@ -224,6 +225,7 @@ class _MyDrawerState extends State<MyDrawer> {
                           width: 5,
                         ),
                         Text(
+                          key: const Key('user_email'),
                           _userEmail,
                           style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
@@ -258,6 +260,7 @@ class _MyDrawerState extends State<MyDrawer> {
               ),
               for (var role in roles)
                 Padding(
+                  key: const Key('user_roles'),
                   padding: const EdgeInsets.only(left: 21),
                   child: GestureDetector(
                     onTap: () {
@@ -371,6 +374,7 @@ class _MyDrawerState extends State<MyDrawer> {
                       width: 10,
                     ),
                     GestureDetector(
+                      key: const Key('open_recent_lessonScreen'),
                       onTap: () {
                         setState(() {
                           isSelectedRecentLessons = true;
@@ -407,6 +411,7 @@ class _MyDrawerState extends State<MyDrawer> {
                       width: 10,
                     ),
                     GestureDetector(
+                      key: const Key('open_contacUs_screen'),
                       onTap: () {
                         setState(() {
                           isSelectedContactUs = true;
@@ -439,6 +444,7 @@ class _MyDrawerState extends State<MyDrawer> {
               ),
               Center(
                 child: ElevatedButton(
+                  key: const Key('logout_user'),
                   onPressed: () async {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
                       Navigator.of(context).pop();

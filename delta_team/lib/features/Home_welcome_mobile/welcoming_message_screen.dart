@@ -16,6 +16,7 @@ class WelcomingScreen extends StatelessWidget {
         color: Color.fromRGBO(238, 233, 233, 1),
         child: Center(
           child: Column(
+            key: const Key('home_welcome_mesagge'),
             children: [
               const SizedBox(
                 height: 60,

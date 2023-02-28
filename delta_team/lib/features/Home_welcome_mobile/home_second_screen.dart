@@ -35,6 +35,7 @@ class _HomeScreenState extends State<HomeSecondScreen> {
         ),
         actions: [
           Padding(
+            key: const Key('open_menu_burger_icon'),
             padding: const EdgeInsets.only(right: 15),
             child: IconButton(
               icon: _isBurgerIcon
