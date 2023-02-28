@@ -257,9 +257,10 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                           Column(
                             children: [
                               ListTile(
-                                key: const Key('KeyDa'),
+                                //key: const Key('KeyDa'),
                                 title: const Text('Da'),
                                 leading: Radio<String>(
+                                  key: const Key('KeyDa'),
                                   value: "False",
                                   groupValue: _character,
                                   onChanged: (value) {
@@ -676,11 +677,11 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                             videoWithoutTitle
                                 ? Padding(
                                     padding: const EdgeInsets.all(70),
-                                    // child: YoutubePlayer(
-                                    //   key: const Key('ytplayer'),
-                                    //   controller: _controller,
-                                    //   aspectRatio: 16 / 9,
-                                    // ),
+                                    child: YoutubePlayer(
+                                      key: const Key('ytplayer'),
+                                      controller: _controller,
+                                      aspectRatio: 16 / 9,
+                                    ),
                                   )
                                 : Container(
                                     decoration: BoxDecoration(

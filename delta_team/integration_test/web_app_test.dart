@@ -110,7 +110,6 @@ Widget createWebSignupScreen() => MultiProvider(
         routes: {
           '/signupWeb': (context) => const SignUpScreenWeb(),
           LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
-          HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
           LoadingScreenWeb.routeName: (context) => const LoadingScreenWeb(),
           OnboardingWeb.routeName: (context) =>
               OnboardingWeb(role: listaRola.first),
@@ -121,6 +120,7 @@ Widget createWebSignupScreen() => MultiProvider(
           //     const LoadingPageOnboarding(),
           '/loadingPageSignup': (context) => const LoadingPage(),
           '/loadingOnboarding': (context) => const LoadingPageOnboarding(),
+          '/homeweb': (context) => const HomeScreenWeb(),
 
           // '/loadingtoOnboard': (context) => const LoadingPage()
         },
@@ -248,107 +248,81 @@ void main() {
     // //onboarding
 
     final radButtonDa = find.byKey(const ValueKey('KeyDa'));
-    expect(radButtonDa, findsOneWidget);
+
     await tester.tap(radButtonDa);
     await tester.pumpAndSettle();
 
-    final inputField = find.byKey(const ValueKey('TextFieldKey2'));
-    await tester.tap(inputField);
+    final inputField2 = find.byKey(const ValueKey('TextFieldKey2'));
+    await tester.tap(inputField2);
     await tester.pumpAndSettle();
-    await tester.enterText(inputField, 'motiv123');
+    await tester.enterText(inputField2, 'motiv123');
     await tester.pumpAndSettle();
-
-    final nextButton = find.byKey(const ValueKey('TextFieldKey3'));
-    await tester.tap(nextButton);
-    await tester.pumpAndSettle();
-
-    expect(
-        find.text(
-            'Da li imaš ili si imao/la neki hobi ili se baviš nekim sportom?'),
-        findsOneWidget);
 
     await tester.ensureVisible(find.text(
         'Da li imaš ili si imao/la neki hobi ili se baviš nekim sportom?'));
+    await tester.pumpAndSettle();
 
-    // await tester.tap(inputField);
-    // await tester.pumpAndSettle();
-    // await tester.enterText(inputField, 'bavim se sportom');
-    // await tester.pumpAndSettle();
+    final inputField3 = find.byKey(const ValueKey('TextFieldKey3'));
+    await tester.tap(inputField3);
+    await tester.pumpAndSettle();
+    await tester.enterText(inputField3, 'bavim se sportom');
+    await tester.pumpAndSettle();
 
-    // await tester.tap(nextButton);
-    // await tester.pumpAndSettle();
+    final inputField4 = find.byKey(const ValueKey('TextFieldKey4'));
+    await tester.tap(inputField4);
+    await tester.pumpAndSettle();
+    await tester.enterText(inputField4, 'interesovanje test test ...');
+    await tester.pumpAndSettle();
 
-    // expect(
-    //     find.text(
-    //         'Postoji li neko interesovanje koje imaš, ali ga trenutno ne možeš ostvariti?'),
-    //     findsOneWidget);
+    await tester.ensureVisible(find.text(
+        'Da li bi vodio/la brigu o kucnom ljubimcu svojih komsija dok su oni na godisnjem odmoru?'));
+    await tester.pumpAndSettle();
 
-    // await tester.tap(inputField);
-    // await tester.pumpAndSettle();
-    // await tester.enterText(inputField, 'interesovanje test test ...');
-    // await tester.pumpAndSettle();
+    final inputField5 = find.byKey(const ValueKey('TextFieldKey5'));
+    await tester.tap(inputField5);
+    await tester.pumpAndSettle();
+    await tester.enterText(inputField5, 'da naravno ...');
+    await tester.pumpAndSettle();
 
-    // await tester.tap(nextButton);
-    // await tester.pumpAndSettle();
+    final inputField6 = find.byKey(const ValueKey('TextFieldKey6'));
+    await tester.tap(inputField6);
+    await tester.pumpAndSettle();
+    await tester.enterText(inputField6, 'kapetan oke ...');
+    await tester.pumpAndSettle();
 
-    // expect(
-    //     find.text(
-    //         'Da li bi vodio/la brigu o kućnom ljubimcu svojih komšija dok su oni na godišnjem odmoru?'),
-    //     findsOneWidget);
-
-    // await tester.tap(inputField);
-    // await tester.pumpAndSettle();
-    // await tester.enterText(inputField, 'naravno, volim zivotinje');
-    // await tester.pumpAndSettle();
-
-    // await tester.tap(nextButton);
-    // await tester.pumpAndSettle();
-
-    // expect(
-    //     find.text(
-    //         'Kapetan si piratskog broda, tvoja posada može da glasa kako se dijeli zlato. Ako se manje od polovine pirata složi sa tobom, umrijet ćeš. \n \nKakvu podjelu zlata bi predložio/la tako da dobiješ dobar dio plijena, a ipak preživiš?'),
-    //     findsOneWidget);
-
-    // await tester.tap(inputField);
-    // await tester.pumpAndSettle();
-    // await tester.enterText(inputField, 'kapetan lagani');
+    // await tester.ensureVisible(find
+    //     .text('Pogledajte video snimak Amera i poslušajte njegovu poruku.'));
     // await tester.pumpAndSettle();
 
-    // await tester.tap(nextButton);
+    // final inputFieldVideo = find.byKey(const ValueKey('ytKiDrugaVelicina'));
+    // await tester.tap(inputFieldVideo);
     // await tester.pumpAndSettle();
 
-    // expect(
-    //     find.text(
-    //         'Pogledajte video snimak Amera i poslušajte njegovu poruku.'),
-    //     findsOneWidget);
+    // await Future.delayed(const Duration(seconds: 15));
+    // await tester.pumpAndSettle();
+    // await tester.tap(inputFieldVideo);
 
-    // final nextButtonVideo =
-    //     find.byKey(const ValueKey('VideoPageNextButtonKey'));
-    // await tester.tap(nextButtonVideo);
+    // final inputFieldVideoInput = find.byKey(const ValueKey('urlKey1'));
+    // await tester.tap(inputFieldVideoInput);
+    // await tester.pumpAndSettle();
+    // await tester.enterText(inputFieldVideoInput, 'link link');
     // await tester.pumpAndSettle();
 
-    // expect(find.text('Submit'), findsOneWidget);
+    await tester.ensureVisible(find.text('Posalji'));
+    await tester.pumpAndSettle();
 
-    // //final roleList = find.byKey(const ValueKey('RoleButtonKey'));
-    // await tester.pumpAndSettle();
+    await tester.tap(find.text('qa'));
+    await tester.pumpAndSettle();
 
-    // final roleFinder = find.byWidgetPredicate((widget) =>
-    //     widget is RoleWidget && widget.role.id == listaRola[0].id);
+    await tester.tap(find.text('uiux'));
+    await tester.pumpAndSettle();
 
-    // await tester.tap(roleFinder);
-    // await tester.pumpAndSettle();
+    final sendKey = find.byKey(const ValueKey('posaljikey'));
+    await tester.tap(sendKey);
+    await tester.pumpAndSettle();
 
-    // final submitButton = find.byKey(const ValueKey('SubmitButtonKey'));
-    // await tester.tap(submitButton);
-    // await tester.pumpAndSettle();
-
-    // await tester.pumpAndSettle(const Duration(seconds: 5));
-
-    // expect(
-    //     find.text(
-    //         'Da li imaš ili si imao/la neki hobi ili se baviš nekim sportom?'),
-    //     findsOneWidget);
+    await Future.delayed(const Duration(seconds: 15));
+    expect(find.text('Congratulations'), findsOneWidget);
+    await Future.delayed(const Duration(seconds: 15));
   });
 }
-//   );
-// }

@@ -664,8 +664,8 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         if (!codeError) {
                                           FocusManager.instance.primaryFocus
                                               ?.unfocus();
-                                          Navigator.pushNamed(context,
-                                              "/confirmationMessageWeb");
+                                          Navigator.pushNamed(
+                                              context, '/onboardingweb');
                                         }
                                       } on AuthException catch (e) {
                                         setState(() {
