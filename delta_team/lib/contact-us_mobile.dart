@@ -24,7 +24,10 @@ class ContactMobile extends StatefulWidget {
   State<ContactMobile> createState() => _ContactMobileState();
 }
 
+bool isMessageSent = false;
+
 class _ContactMobileState extends State<ContactMobile> {
+  final messageKey = GlobalKey<FormState>();
   final messageController = TextEditingController();
 
   Future<void> fetchCurrentUserAttributes(
@@ -80,9 +83,9 @@ class _ContactMobileState extends State<ContactMobile> {
       print(response);
 
       // Show success message to user
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Thank you! Message sent.')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   const SnackBar(content: Text('Thank you! Message sent.')),
+      // );
     } on SuccessState {
       print(SuccessState);
     } on ApiException catch (e) {
@@ -90,9 +93,9 @@ class _ContactMobileState extends State<ContactMobile> {
       print('Error sending email: $e');
 
       // Show error message to user
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error sending message: ${e.message}')),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text('Error sending message: ${e.message}')),
+      // );
     }
   }
 
@@ -101,58 +104,58 @@ class _ContactMobileState extends State<ContactMobile> {
     double width = MediaQuery.of(context).size.width;
     return ChangeNotifierProvider<AuthProviderContact>(
       create: (_) => AuthProviderContact(),
-      child: ScaffoldMessenger(
-        child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SvgPicture.asset(
-                "assets/images/navbar_logo.svg",
-                semanticsLabel: 'Confirmation SVG',
-              ),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SvgPicture.asset(
+              "assets/images/navbar_logo.svg",
+              semanticsLabel: 'Confirmation SVG',
             ),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.menu, color: Color(0xFF000000)),
-                onPressed: () {
-                  // Add function to execute when menu icon is pressed
-                },
-              ),
-            ],
           ),
-          backgroundColor: const Color(0xFF000000),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 42, top: 27, bottom: 20),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset("assets/images/contact-icon.svg",
-                          semanticsLabel: 'Confirmation SVG'),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      Text(
-                        'Contact Us',
-                        style: GoogleFonts.notoSans(
-                            color: const Color(0xFFFFFFFF),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700),
-                      )
-                    ],
-                  ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.menu, color: Color(0xFF000000)),
+              onPressed: () {
+                // Add function to execute when menu icon is pressed
+              },
+            ),
+          ],
+        ),
+        backgroundColor: const Color(0xFF000000),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 42, top: 27, bottom: 20),
+                child: Row(
+                  children: [
+                    SvgPicture.asset("assets/images/contact-icon.svg",
+                        semanticsLabel: 'Confirmation SVG'),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Text(
+                      'Contact Us',
+                      style: GoogleFonts.notoSans(
+                          color: const Color(0xFFFFFFFF),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700),
+                    )
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Form(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextFormField(
-                          key: const Key("messageKey"),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Form(
+                  key: messageKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextFormField(
+                          key: const Key("message"),
                           controller: messageController,
                           style: GoogleFonts.notoSans(
                             color: const Color(0xFFFFFFFF),
@@ -178,172 +181,202 @@ class _ContactMobileState extends State<ContactMobile> {
                                     BorderSide(color: Color(0xFFF3F3F9))),
                           ),
                           maxLines: 11, //
-                        ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        SizedBox(
-                          width: 90,
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                elevation: 10,
-                                backgroundColor: const Color(0xFF000000),
-                                side: const BorderSide(
-                                    color: Color(0xFFFFFFFF), width: 2),
+                          validator: (value) {
+                            if (value == "" || value == null) {
+                              setState(() {
+                                isMessageSent = false;
+                              });
+                              return "Please input your message";
+                            } else if (value.length < 10) {
+                              setState(() {
+                                isMessageSent = false;
+                              });
+                              return "Your message must contain atleast 10 characters";
+                            }
+                            safePrint('Message Sent');
+                            setState(() {
+                              isMessageSent = true;
+                            });
+                            return null;
+                          }),
+                      Visibility(
+                          visible: isMessageSent,
+                          child: Column(
+                            children: const [
+                              SizedBox(
+                                height: 10,
                               ),
-                              onPressed: () {
+                              Text(
+                                'Your Message has been Sent',
+                                style: TextStyle(color: Color(0xFFFFFFFF)),
+                              )
+                            ],
+                          )),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      SizedBox(
+                        width: 90,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 10,
+                              backgroundColor: const Color(0xFF000000),
+                              side: const BorderSide(
+                                  color: Color(0xFFFFFFFF), width: 2),
+                            ),
+                            onPressed: () async {
+                              if (messageKey.currentState!.validate()) {
                                 _submitForm(context);
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 7.5),
-                                child: Center(
-                                    child: Text(
-                                  'Submit',
-                                  style: TextStyle(
-                                      color: const Color(0xFFFFFFFF),
-                                      fontSize: (14 / 360) * width,
-                                      fontWeight: FontWeight.w700),
-                                )),
+                              }
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 7.5),
+                              child: Center(
+                                  child: Text(
+                                'Submit',
+                                style: TextStyle(
+                                    color: const Color(0xFFFFFFFF),
+                                    fontSize: (14 / 360) * width,
+                                    fontWeight: FontWeight.w700),
                               )),
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 40.0),
+                child: Row(
+                  children: [
+                    SvgPicture.asset("assets/images/contactmail.svg",
+                        semanticsLabel: 'Confirmation SVG'),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'hello@tech387.com',
+                      style: GoogleFonts.notoSans(
+                          color: const Color(0xFFFFFFFF),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 14,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 40.72, right: 19.28),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset("assets/images/contactpin.svg",
+                        semanticsLabel: 'Confirmation SVG'),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Put Mladih Muslimana 2, City Gardens Residence,  71 000 Sarajevo, Bosnia and Herzegovina',
+                            style: GoogleFonts.notoSans(
+                                color: const Color(0xFFFFFFFF),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            '14425 Falconhead Blvd, Bee Cave, TX 78738, United States',
+                            style: GoogleFonts.notoSans(
+                                color: const Color(0xFFFFFFFF),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 98,
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 55,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: (30 / 360) * width,
+                        right: (30 / 360) * width,
+                        bottom: 8),
+                    child: Row(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            key: const Key('routed_to_loadingScreen'),
+                            onTap: () async {
+                              Navigator.pushNamed(
+                                  context, LoadingScreenMobile.routeName);
+                              // Navigate to privacy page
+                            },
+                            child: Text(
+                              "Privacy",
+                              style: GoogleFonts.notoSans(
+                                fontWeight: FontWeight.w400,
+                                color: const Color.fromARGB(255, 142, 142, 142),
+                                fontSize: 13.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(
+                              "© Credits, 2023, Product Arena",
+                              style: GoogleFonts.notoSans(
+                                  fontWeight: FontWeight.w400,
+                                  color:
+                                      const Color.fromARGB(255, 142, 142, 142),
+                                  fontSize: 12.0),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            key: const Key('routed_to_LoadingScreen'),
+                            onTap: () async {
+                              Navigator.pushNamed(
+                                  context, LoadingScreenMobile.routeName);
+                              // Navigate to privacy page
+                            },
+                            child: Text(
+                              "Terms",
+                              style: GoogleFonts.notoSans(
+                                  fontWeight: FontWeight.w400,
+                                  color:
+                                      const Color.fromARGB(255, 142, 142, 142),
+                                  fontSize: 13.0),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 50,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 40.0),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset("assets/images/contactmail.svg",
-                          semanticsLabel: 'Confirmation SVG'),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        'hello@tech387.com',
-                        style: GoogleFonts.notoSans(
-                            color: const Color(0xFFFFFFFF),
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 14,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 40.72, right: 19.28),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset("assets/images/contactpin.svg",
-                          semanticsLabel: 'Confirmation SVG'),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Put Mladih Muslimana 2, City Gardens Residence,  71 000 Sarajevo, Bosnia and Herzegovina',
-                              style: GoogleFonts.notoSans(
-                                  color: const Color(0xFFFFFFFF),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                            const SizedBox(height: 20),
-                            Text(
-                              '14425 Falconhead Blvd, Bee Cave, TX 78738, United States',
-                              style: GoogleFonts.notoSans(
-                                  color: const Color(0xFFFFFFFF),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 98,
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    height: 55,
-                    color: Colors.white,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          left: (30 / 360) * width,
-                          right: (30 / 360) * width,
-                          bottom: 8),
-                      child: Row(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: InkWell(
-                              key: const Key('routed_to_loadingScreen'),
-                              onTap: () async {
-                                Navigator.pushNamed(
-                                    context, LoadingScreenMobile.routeName);
-                                // Navigate to privacy page
-                              },
-                              child: Text(
-                                "Privacy",
-                                style: GoogleFonts.notoSans(
-                                  fontWeight: FontWeight.w400,
-                                  color:
-                                      const Color.fromARGB(255, 142, 142, 142),
-                                  fontSize: 13.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                "© Credits, 2023, Product Arena",
-                                style: GoogleFonts.notoSans(
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color.fromARGB(
-                                        255, 142, 142, 142),
-                                    fontSize: 12.0),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: InkWell(
-                              key: const Key('routed_to_LoadingScreen'),
-                              onTap: () async {
-                                Navigator.pushNamed(
-                                    context, LoadingScreenMobile.routeName);
-                                // Navigate to privacy page
-                              },
-                              child: Text(
-                                "Terms",
-                                style: GoogleFonts.notoSans(
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color.fromARGB(
-                                        255, 142, 142, 142),
-                                    fontSize: 13.0),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),
