@@ -116,9 +116,11 @@ Widget createWebSignupScreen() => MultiProvider(
               OnboardingWeb(role: listaRola.first),
           '/confirmationWeb': (context) => const SignupVerificationScreen(),
           '/confirmationMessageWeb': (context) => const EmailVerifiedScreen(),
-          '/loadingPage': (context) => const LoadingPage(),
-          LoadingPageOnboarding.routeName: (context) =>
-              const LoadingPageOnboarding(),
+          // '/loadingPage': (context) => const LoadingPage(),
+          // LoadingPageOnboarding.routeName: (context) =>
+          //     const LoadingPageOnboarding(),
+          '/loadingPageSignup': (context) => const LoadingPage(),
+          '/loadingOnboarding': (context) => const LoadingPageOnboarding(),
 
           // '/loadingtoOnboard': (context) => const LoadingPage()
         },

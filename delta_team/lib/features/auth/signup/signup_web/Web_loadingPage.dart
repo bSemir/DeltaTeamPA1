@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../onboarding_web/onboardingScreen.dart';
 
 class LoadingPage extends StatefulWidget {
-  static const routeName = '/loadingtoOnboard';
   const LoadingPage({super.key});
 
   @override
