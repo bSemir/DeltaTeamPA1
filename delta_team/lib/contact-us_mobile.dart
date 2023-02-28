@@ -224,6 +224,7 @@ class _ContactMobileState extends State<ContactMobile> {
                               side: const BorderSide(
                                   color: Color(0xFFFFFFFF), width: 2),
                             ),
+                            key: const Key('Submit_Button'),
                             onPressed: () async {
                               if (messageKey.currentState!.validate()) {
                                 _submitForm(context);
