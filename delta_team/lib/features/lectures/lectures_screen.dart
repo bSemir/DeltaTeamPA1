@@ -2,9 +2,9 @@ import "package:amplify_api/amplify_api.dart";
 import "package:amplify_auth_cognito/amplify_auth_cognito.dart";
 import "package:amplify_flutter/amplify_flutter.dart";
 import "package:delta_team/amplifyconfiguration.dart";
-import "package:delta_team/features/auth/lectures/providers/lectures_provider_mobile.dart";
-import "package:delta_team/features/auth/lectures/single_lecture_screen.dart";
-import "package:delta_team/features/auth/lectures/widgets/lecture_card.dart";
+import 'package:delta_team/features/lectures/providers/lectures_provider_mobile.dart';
+import 'package:delta_team/features/lectures/single_lecture_screen.dart';
+import 'package:delta_team/features/lectures/widgets/lecture_card.dart';
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 

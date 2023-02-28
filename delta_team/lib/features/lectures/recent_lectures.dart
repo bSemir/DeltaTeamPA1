@@ -1,4 +1,4 @@
-import 'package:delta_team/features/auth/lectures/providers/lectures_provider_mobile.dart';
+import 'package:delta_team/features/lectures/providers/lectures_provider_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';

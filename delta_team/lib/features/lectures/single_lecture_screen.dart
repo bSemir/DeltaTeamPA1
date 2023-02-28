@@ -1,7 +1,7 @@
 import 'package:delta_team/common/colors.dart';
-import 'package:delta_team/features/auth/lectures/providers/lectures_provider_mobile.dart';
-import 'package:delta_team/features/auth/lectures/widgets/lecture_indicator.dart';
-import 'package:delta_team/features/auth/lectures/widgets/lecture_video.dart';
+import 'package:delta_team/features/lectures/providers/lectures_provider_mobile.dart';
+import 'package:delta_team/features/lectures/widgets/lecture_indicator.dart';
+import 'package:delta_team/features/lectures/widgets/lecture_video.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/form_buttons_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

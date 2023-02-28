@@ -1,7 +1,9 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
-import 'package:delta_team/features/auth/lectures/providers/lectures_provider_mobile.dart';
+import 'package:delta_team/features/auth/home_welcome_mobile/menu_navigation_screen.dart';
+import 'package:delta_team/features/auth/home_welcome_mobile/welcoming_screen.dart';
+import 'package:delta_team/features/lectures/providers/lectures_provider_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
@@ -24,7 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'features/auth/lectures/lectures_screen.dart';
+import 'features/lectures/lectures_screen.dart';
 import 'features/auth/signup_mobile/screens/confirmation_message_mobile.dart';
 import 'features/auth/signup_mobile/screens/confirmation_screen_mobile.dart';
 import 'features/auth/signup_mobile/screens/redirecting_screen_mobile.dart';
