@@ -1,6 +1,6 @@
 import 'package:delta_team/common/colors.dart';
 
-import 'package:delta_team/features/onboarding/mobile_providers/role_provider_mobile.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/role_provider_mobile.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
