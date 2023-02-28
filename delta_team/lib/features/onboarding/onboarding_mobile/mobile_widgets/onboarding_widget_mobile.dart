@@ -1,6 +1,7 @@
 import 'package:delta_team/common/colors.dart';
 
 import 'package:delta_team/features/onboarding/mobile_widgets/role_card_mobile.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/role_provider_mobile.dart';
 
 import 'package:delta_team/home_mobile.dart';
 import 'package:flutter/material.dart';
@@ -476,9 +477,16 @@ class _PositionPageFormState extends State<PositionPageForm> {
               textColor: AppColors.secondaryColor3,
               text: 'Submit',
               onPressed: () {
-                Navigator.pushReplacementNamed(
-                    context, HomeScreenMobile.routeName);
-                print('Onboarding submitted');
+                if (Provider.of<MyItem>(context).myItems.length == 1 ||
+                    Provider.of<MyItem>(context).myItems.length == 2) {
+                  Navigator.pushReplacementNamed(
+                      context, HomeScreenMobile.routeName);
+                  print('Onboarding submitted');
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Izababeri odgovarajucu poziciju!"),
+                  ));
+                }
               },
               buttonWidth: double.infinity,
               buttonHeight: 42),

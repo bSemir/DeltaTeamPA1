@@ -25,10 +25,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'features/lectures/lectures_screen.dart';
 import 'features/auth/signup_mobile/screens/confirmation_message_mobile.dart';
 import 'features/auth/signup_mobile/screens/confirmation_screen_mobile.dart';
 import 'features/auth/signup_mobile/screens/redirecting_screen_mobile.dart';
 import 'features/auth/signup_mobile/screens/signupScreen_mobile.dart';
+import 'features/lectures/providers/lectures_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/answer_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/error_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
@@ -76,6 +78,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) => LectureListProvider()),
           ChangeNotifierProvider(create: (_) => MyEmailWeb()),
           ChangeNotifierProvider(create: (_) => MyEmail()),
           ChangeNotifierProvider<MyProvider>(
@@ -96,7 +99,7 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              primarySwatch: Colors.blue,
+              primarySwatch: Colors.amber,
               inputDecorationTheme: InputDecorationTheme(
                 errorStyle: GoogleFonts.notoSans(
                   fontSize: 10,

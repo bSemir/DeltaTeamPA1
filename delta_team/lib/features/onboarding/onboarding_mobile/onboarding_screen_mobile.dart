@@ -88,7 +88,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             "roles": ["fullstack", "backend"],
             "answers": {
               // answers are in the same order as questions, null if not answered
-              "0": "False",
+              "0": Provider.of<AnswerProvider>(context).answ[0],
               "1": controllers[0].text,
               "2": controllers[1].text,
               "3": controllers[2].text,
