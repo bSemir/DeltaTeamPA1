@@ -1,8 +1,8 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
+import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_mobile.dart';
+import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 
@@ -18,7 +18,7 @@ import 'package:delta_team/features/homepage/provider/titleProvider.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/congratulations_card_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/loading_Oboading%20mobile.dart';
 
-import 'package:delta_team/features/onboarding_web/onboardingScreen.dart';
+import 'package:delta_team/features/onboarding/onboarding_web/onboardingScreen.dart';
 import 'package:delta_team/home_mobile.dart';
 import 'package:delta_team/home_web.dart';
 
@@ -30,23 +30,22 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'features/auth/signup_mobile/screens/confirmation_message_mobile.dart';
-import 'features/auth/signup_mobile/screens/confirmation_screen_mobile.dart';
-import 'features/auth/signup_mobile/screens/redirecting_screen_mobile.dart';
-import 'features/auth/signup_mobile/screens/signupScreen_mobile.dart';
-import 'features/homepage/homepage.dart';
-import 'features/homepage/homepage_video_screen.dart';
+import 'features/auth/signup/signup_mobile/screens/confirmation_message_mobile.dart';
+import 'features/auth/signup/signup_mobile/screens/confirmation_screen_mobile.dart';
+import 'features/auth/signup/signup_mobile/screens/redirecting_screen_mobile.dart';
+import 'features/auth/signup/signup_mobile/screens/signupScreen_mobile.dart';
 import 'features/homepage/provider/youtube_link_provider.dart';
-import 'features/homepage/recentLectures.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/answer_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/error_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/role_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/onboarding_screen_mobile.dart';
 import 'features/onboarding/onboarding_mobile/welcome_page_mobile.dart';
-import 'features/onboarding_web/errorMsg-web.dart';
-import 'features/onboarding_web/modelRole.dart';
-import 'features/onboarding_web/modelmyItem.dart';
+import 'features/onboarding/onboarding_web/congratulation_web.dart';
+import 'features/onboarding/onboarding_web/errorMsg-web.dart';
+import 'features/onboarding/onboarding_web/loadingpageOnboarding_web.dart';
+import 'features/onboarding/onboarding_web/modelRole.dart';
+import 'features/onboarding/onboarding_web/modelmyItem.dart';
 import 'features/onboarding_web/provider/emailPasswProvider.dart';
 
 void main() {
@@ -145,7 +144,7 @@ class _MyAppState extends State<MyApp> {
               HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
               LoadingScreenMobile.routeName: (context) =>
                   const LoadingScreenMobile(),
-              LoadingScreenWeb.routeName: (context) => const LoadingScreenWeb(),
+              '/loadingScreenWeb': (context) => const LoadingScreenWeb(),
               '/signup': (context) => const SignupScreenMobile(),
               '/confirmation': (context) => const ConfirmationScreen(),
               '/confirmationMessage': (context) => const ConfirmationMessage(),
@@ -155,20 +154,16 @@ class _MyAppState extends State<MyApp> {
               WelcomePage.routeName: (context) => const WelcomePage(),
               OnboardingScreen.routeName: (context) => const OnboardingScreen(),
               CongratsCard.routeName: (context) => const CongratsCard(),
-              OnboardingWeb.routeName: (context) => OnboardingWeb(
+              CongratsCardWeb.routeName: (context) => const CongratsCardWeb(),
+              '/onboardingweb': (context) => OnboardingWeb(
                     role: listaRola.first,
                   ),
+              '/loadingOnboarding': (context) => const LoadingPageOnboarding(),
               '/signupWeb': (context) => const SignUpScreenWeb(),
               '/confirmationWeb': (context) => const SignupVerificationScreen(),
               '/confirmationMessageWeb': (context) =>
                   const EmailVerifiedScreen(),
-              '/loadingPage': (context) => const LoadingPage(),
-              '/homepage': (context) => const HomePage(),
-              '/lecturesPage': (context) => const LecturesPage(),
-              '/homepagevideo': (context) => const HomePageVideoScreen(),
-              '/contactUs': (context) => const ContactMeScreen(),
-              '/recentLectures': (context) => const RecentLectures(),
-              '/homescreen': (context) => const HomeScreen(),
+              '/loadingPageSignup': (context) => const LoadingPage()
             }));
   }
 }

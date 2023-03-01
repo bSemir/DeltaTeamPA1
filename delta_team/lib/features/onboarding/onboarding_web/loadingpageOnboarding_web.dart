@@ -1,17 +1,18 @@
 import 'dart:async';
 
+import 'package:delta_team/home_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoadingPage extends StatefulWidget {
-  const LoadingPage({super.key});
+class LoadingPageOnboarding extends StatefulWidget {
+  const LoadingPageOnboarding({super.key});
 
   @override
-  State<LoadingPage> createState() => _LoadingPageState();
+  State<LoadingPageOnboarding> createState() => _LoadingPageOnboardingState();
 }
 
-class _LoadingPageState extends State<LoadingPage> {
+class _LoadingPageOnboardingState extends State<LoadingPageOnboarding> {
   @override
   void initState() {
     super.initState();
@@ -19,12 +20,12 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   startTimeout() async {
-    var duration = const Duration(seconds: 5);
-    return Timer(duration, navigateToOnboardingWeb);
+    var duration = const Duration(seconds: 10);
+    return Timer(duration, navigateToHome);
   }
 
-  navigateToOnboardingWeb() {
-    Navigator.pushNamed(context, '/onboardingweb');
+  navigateToHome() {
+    Navigator.pushNamed(context, "/homeweb");
   }
 
   @override

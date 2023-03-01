@@ -1,10 +1,10 @@
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
-import 'package:delta_team/features/auth/signup/widgets/textfields_signup_mobile.dart';
-import 'package:delta_team/features/auth/signup/widgets/title_signup_mobile.dart';
+import 'package:delta_team/features/auth/signup/signup_mobile/widgets/textfields_signup_mobile.dart';
+import 'package:delta_team/features/auth/signup/signup_mobile/widgets/title_signup_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../signup/widgets/footer.dart';
+import '../widgets/footer.dart';
 
 class SignupScreenMobile extends StatelessWidget {
   const SignupScreenMobile({super.key});

@@ -1,17 +1,21 @@
+<<<<<<< HEAD:delta_team/lib/features/onboarding_web/onboardingScreen.dart
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/features/onboarding_web/provider/emailPasswProvider.dart';
+=======
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/congratulations_card_mobile.dart';
+>>>>>>> 7840f5c4bbd14efe98612f62e9abeaeeaeda6fff:delta_team/lib/features/onboarding/onboarding_web/onboardingScreen.dart
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-import '../../home_web.dart';
+import '../../../home_web.dart';
 
-import '../onboarding/footer/footer.dart';
+import '../footer/footer.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../common/global_variables.dart';
+import '../../../common/global_variables.dart';
 
 import 'dart:convert';
 
@@ -20,6 +24,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
 
+import 'congratulation_web.dart';
 import 'errorMsg-web.dart';
 import 'modelRole.dart';
 import 'modelRoleWhite.dart';
@@ -258,6 +263,10 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                           Column(
                             children: [
                               ListTile(
+<<<<<<< HEAD:delta_team/lib/features/onboarding_web/onboardingScreen.dart
+=======
+                                //key: const Key('KeyDa'),
+>>>>>>> 7840f5c4bbd14efe98612f62e9abeaeeaeda6fff:delta_team/lib/features/onboarding/onboarding_web/onboardingScreen.dart
                                 title: const Text('Da'),
                                 leading: Radio<String>(
                                   key: const Key('KeyDa'),
@@ -677,11 +686,11 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                             videoWithoutTitle
                                 ? Padding(
                                     padding: const EdgeInsets.all(70),
-                                    // child: YoutubePlayer(
-                                    //   key: const Key('ytplayer'),
-                                    //   controller: _controller,
-                                    //   aspectRatio: 16 / 9,
-                                    // ),
+                                    child: YoutubePlayer(
+                                      key: const Key('ytplayer'),
+                                      controller: _controller,
+                                      aspectRatio: 16 / 9,
+                                    ),
                                   )
                                 : Container(
                                     decoration: BoxDecoration(
@@ -924,12 +933,22 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                           }
                           // myItem.add(widget.role);
 
+<<<<<<< HEAD:delta_team/lib/features/onboarding_web/onboardingScreen.dart
                           submitOnboarding();
 
                           print(myItem.length);
 
                           Navigator.pushNamed(
                               context, LoginScreenWeb.routeName);
+=======
+                          myItem.remove(widget.role);
+                          // clearFields();
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const CongratsCardWeb(),
+                            ),
+                          );
+>>>>>>> 7840f5c4bbd14efe98612f62e9abeaeeaeda6fff:delta_team/lib/features/onboarding/onboarding_web/onboardingScreen.dart
                         } else if (_character == null) {
                           context.read<ErrorMessageWeb>().change();
                           // ignore: unnecessary_null_comparison

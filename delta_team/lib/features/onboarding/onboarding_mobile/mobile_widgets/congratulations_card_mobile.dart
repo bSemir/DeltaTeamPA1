@@ -25,7 +25,7 @@
 
 import 'dart:async';
 
-import 'package:delta_team/features/auth/signup/widgets/footer.dart';
+import 'package:delta_team/features/auth/signup/signup_mobile/widgets/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,7 +36,7 @@ class CongratsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 7),
+    Timer(const Duration(seconds: 10),
         () => Navigator.pushNamed(context, "/OnboardingredirectingScreen"));
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -63,6 +63,7 @@ class CongratsCard extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 30.0, bottom: 30),
                       child: Column(
+                        key: const Key('routed_to_homepage_from_onboarding'),
                         children: [
                           SvgPicture.asset(
                               "assets/images/check_circle_Onboard.svg",

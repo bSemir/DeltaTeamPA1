@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
+import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/login/amplify_auth.dart';
-import 'package:delta_team/features/auth/login/login_form.dart';
-import 'package:delta_team/features/auth/login/loginform_mobile.dart';
+import 'package:delta_team/features/auth/login/login_web/loginform_web.dart';
+import 'package:delta_team/features/auth/login/login_mobile/loginform_mobile.dart';
 
 import 'package:delta_team/home_mobile.dart';
 import 'package:flutter/material.dart';

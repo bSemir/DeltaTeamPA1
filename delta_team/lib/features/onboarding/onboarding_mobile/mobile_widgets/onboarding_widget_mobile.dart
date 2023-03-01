@@ -1,6 +1,6 @@
 import 'package:delta_team/common/colors.dart';
 
-import 'package:delta_team/features/onboarding/mobile_widgets/role_card_mobile.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/role_card_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/congratulations_card_mobile.dart';
 
 import 'package:delta_team/home_mobile.dart';
@@ -9,12 +9,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../onboarding_mobile/mobile_models/role_mobile.dart';
-import '../onboarding_mobile/mobile_models/role_white_items_mobile.dart';
-import '../onboarding_mobile/mobile_providers/answer_mobile.dart';
-import '../onboarding_mobile/mobile_providers/error_provider_mobile.dart';
-import '../onboarding_mobile/mobile_widgets/form_buttons_mobile.dart';
-import '../onboarding_mobile/mobile_widgets/video_player_mobile.dart';
+import '../mobile_models/role_mobile.dart';
+import '../mobile_models/role_white_items_mobile.dart';
+import '../mobile_providers/answer_mobile.dart';
+import '../mobile_providers/error_provider_mobile.dart';
+import 'form_buttons_mobile.dart';
+import 'video_player_mobile.dart';
 
 class OnboardingForm extends StatefulWidget {
   final String questionText;
@@ -58,6 +58,7 @@ class _OnboardingFormState extends State<OnboardingForm> {
             Form(
               key: widget.globalKey,
               child: TextFormField(
+                key: const Key('inputKey'),
                 controller: widget.controller,
                 onChanged: (value) {},
                 decoration: const InputDecoration(

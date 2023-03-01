@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/homepage/Navbar_homepage.dart';
 import 'package:delta_team/features/homepage/homepage_sidebar.dart';
 import 'package:delta_team/features/homepage/homescreen.dart';
 import 'package:flutter/material.dart';
+
+import '../auth/login/loadingScreens/loadingscreen_web.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

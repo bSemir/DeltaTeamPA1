@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../onboarding/onboarding_mobile/welcome_page_mobile.dart';
-import 'package:delta_team/features/auth/signup/widgets/footer.dart';
+import 'package:delta_team/features/auth/signup/signup_mobile/widgets/footer.dart';
 
 class Onboardingredirecting extends StatefulWidget {
   const Onboardingredirecting({super.key});

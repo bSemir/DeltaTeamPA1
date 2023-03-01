@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
+import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_web.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -219,7 +219,7 @@ class _LoginFieldState extends State<LoginField> {
               ),
               filled: true,
               focusedBorder: const OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFF000000)),
+                borderSide: BorderSide(color: Color(0xFF22E974)),
               ),
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: labelEmailColor),
@@ -313,19 +313,12 @@ class _LoginFieldState extends State<LoginField> {
               return null;
             },
             decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: labelPasswordColor)),
+                focusedBorder: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Color(0xFF22E974))),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),
                 filled: true,
-                floatingLabelBehavior: FloatingLabelBehavior.auto,
-                floatingLabelStyle: TextStyle(
-                  color: labelPasswordColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: GoogleFonts.notoSans().fontFamily,
-                ),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: labelEmailColor),
                 ),

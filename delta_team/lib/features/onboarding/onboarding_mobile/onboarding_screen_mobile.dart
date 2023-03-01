@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:delta_team/features/onboarding/mobile_widgets/onboarding_widget_mobile.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/onboarding_widget_mobile.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
 import 'package:delta_team/common/colors.dart';
 
@@ -42,23 +42,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
+<<<<<<< HEAD
+=======
+    // _configureAmplify();
+>>>>>>> 7840f5c4bbd14efe98612f62e9abeaeeaeda6fff
   }
 
-  Future<void> _configureAmplify() async {
-    // Add any Amplify plugins you want to use
-    final authPlugin = AmplifyAuthCognito();
-    final api = AmplifyAPI();
-    await Amplify.addPlugins([authPlugin, api]);
-    try {
-      await Amplify.configure(amplifyconfig);
-    } on AmplifyAlreadyConfiguredException {
-      safePrint(
-          'Tried to reconfigure Amplify; this can occur when your app restarts on Android.');
-    }
-  }
+  // Future<void> _configureAmplify() async {
+  //   // Add any Amplify plugins you want to use
+  //   final authPlugin = AmplifyAuthCognito();
+  //   final api = AmplifyAPI();
+  //   await Amplify.addPlugins([authPlugin, api]);
+  //   try {
+  //     await Amplify.configure(amplifyconfig);
+  //   } on AmplifyAlreadyConfiguredException {
+  //     safePrint(
+  //         'Tried to reconfigure Amplify; this can occur when your app restarts on Android.');
+  //   }
+  // }
 
   Future<void> signInUser() async {
-    await _configureAmplify();
+    // await _configureAmplify();
     try {
       final result = await Amplify.Auth.signIn(
         username: 'sblekic@pa.tech387.com', // email of user,
