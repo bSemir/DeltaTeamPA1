@@ -3,6 +3,7 @@ import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
 import 'package:delta_team/features/Home_welcome_mobile/home_second_screen.dart';
+import 'package:delta_team/features/Home_welcome_mobile/role_provider_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
@@ -94,7 +95,10 @@ class _MyAppState extends State<MyApp> {
             create: (_) => MyItem(),
           ),
           ChangeNotifierProvider(create: (_) => ErrorMessageWeb()),
-          ChangeNotifierProvider(create: (_) => MyItemWeb())
+          ChangeNotifierProvider(create: (_) => MyItemWeb()),
+
+          //added
+          // ChangeNotifierProvider(create: (_) => RoleProviderMobile())
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,

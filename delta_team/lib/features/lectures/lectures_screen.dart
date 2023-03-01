@@ -5,11 +5,13 @@ import "package:delta_team/amplifyconfiguration.dart";
 import 'package:delta_team/features/lectures/providers/lectures_provider_mobile.dart';
 import 'package:delta_team/features/lectures/single_lecture_screen.dart';
 import 'package:delta_team/features/lectures/widgets/lecture_card.dart';
+import "package:delta_team/features/onboarding/onboarding_mobile/mobile_models/role_mobile.dart";
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 
 class LecturesScreen extends StatefulWidget {
-  const LecturesScreen({super.key});
+  final String role;
+  const LecturesScreen({super.key, required this.role});
 
   @override
   State<LecturesScreen> createState() => _LecturesScreenState();

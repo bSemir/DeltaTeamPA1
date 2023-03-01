@@ -6,6 +6,7 @@ import 'package:delta_team/amplifyconfiguration.dart';
 import 'package:amplify_api/amplify_api.dart';
 import 'package:delta_team/features/Home_welcome_mobile/recentLessonTest.dart';
 import 'package:delta_team/features/Home_welcome_mobile/roleScreentest.dart';
+import 'package:delta_team/features/lectures/lectures_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -67,8 +68,8 @@ class _MyDrawerState extends State<MyDrawer> {
 
       // Modify the role names in mergedArr
       Map<String, String> roleNamesMap = {
-        'fullstack': 'Fullstack Development',
-        'backend': 'Backend Development',
+        'fullstack': 'fullstack',
+        'backend': 'backend',
         'uiux': 'UI/UX Design',
         'qa': 'Quality Assurance',
         'productManager': 'Project Management',
@@ -177,8 +178,8 @@ class _MyDrawerState extends State<MyDrawer> {
 
   final Map<String, String> roleIcons = {
     'UI/UX Design': "assets/images/uiuxDesigner.svg",
-    'Fullstack Development': "assets/images/fullstackIcon.svg",
-    'Backend Development': "assets/images/backendIcon.svg",
+    'fullstack': "assets/images/fullstackIcon.svg",
+    'backend': "assets/images/backendIcon.svg",
     "Project Management": "assets/images/projMengIcon.svg",
     "Quality Assurance": "assets/images/qaIcon.svg",
     // add more mappings as needed
@@ -269,72 +270,20 @@ class _MyDrawerState extends State<MyDrawer> {
                         selectedRole = role;
                       });
 
-                      switch (role) {
-                        case 'Fullstack Development':
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FullstackWidget()),
-                          ).then((value) {
-                            setState(() {
-                              isSelected = false;
-                              selectedRole = null;
-                            });
-                          });
-                          break;
-                        case 'Backend Development':
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BackendWidget()),
-                          ).then((value) {
-                            setState(() {
-                              isSelected = false;
-                              selectedRole = null;
-                            });
-                          });
-                          break;
-                        case 'UI/UX Design':
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BackendWidget()),
-                          ).then((value) {
-                            setState(() {
-                              isSelected = false;
-                              selectedRole = null;
-                            });
-                          });
-                          break;
-                        case 'Project Management':
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BackendWidget()),
-                          ).then((value) {
-                            setState(() {
-                              isSelected = false;
-                              selectedRole = null;
-                            });
-                          });
-                          break;
-                        case 'Quality Assurance':
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BackendWidget()),
-                          ).then((value) {
-                            setState(() {
-                              isSelected = false;
-                              selectedRole = null;
-                            });
-                          });
-                          break;
-                        // add more cases for other roles if needed
-                        default:
-                          // handle invalid role
-                          break;
-                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LecturesScreen(
+                                  role: role,
+                                )),
+                      ).then((value) {
+                        setState(() {
+                          isSelected = false;
+                          selectedRole = null;
+                        });
+                      });
+
+                      print(role);
                     },
                     child: Row(
                       children: [
@@ -419,7 +368,7 @@ class _MyDrawerState extends State<MyDrawer> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ContactUsScreen()),
+                              builder: (context) => const ContactUsScreen()),
                         ).then((value) {
                           setState(() {
                             isSelectedContactUs = false;
