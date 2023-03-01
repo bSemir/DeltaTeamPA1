@@ -11,6 +11,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../onboarding_web/provider/emailPasswProvider.dart';
+
 class SignupVerificationScreen extends StatefulWidget {
   const SignupVerificationScreen({super.key});
 
@@ -86,6 +88,8 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
     screenWidth ??= MediaQuery.of(context).size.width;
     screenHeight ??= MediaQuery.of(context).size.height;
     final emailProvider = Provider.of<MyEmailWeb>(context, listen: false);
+    final emailPasswordProvider =
+        Provider.of<EmailPasswordProvider>(context, listen: false);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -660,12 +664,12 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                         setState(() {
                                           codeError = !result.isSignUpComplete;
                                         });
-                                        if (!codeError) {
-                                          FocusManager.instance.primaryFocus
-                                              ?.unfocus();
-                                          Navigator.pushNamed(context,
-                                              "/confirmationMessageWeb");
-                                        }
+
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+
+                                        Navigator.pushNamed(
+                                            context, "/confirmationMessageWeb");
                                       } on AuthException catch (e) {
                                         setState(() {
                                           codeError = true;

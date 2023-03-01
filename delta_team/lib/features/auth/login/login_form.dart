@@ -1,14 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:riverpod_extension/riverpod_extension.dart';
+
+import '../../../amplifyconfiguration.dart';
 
 class LoginField extends StatefulWidget {
   // final IconData suffixIcon;
@@ -48,7 +51,6 @@ class _LoginFieldState extends State<LoginField> {
 
   @override
   void dispose() {
-    // Dispose the focus node when the widget is removed from the widget tree
     _passwordFocusNode.dispose();
     _emailFocusNode.dispose();
     super.dispose();
@@ -69,13 +71,56 @@ class _LoginFieldState extends State<LoginField> {
       });
     });
     super.initState();
+    _configureAmplify();
+  }
+
+  Future<void> _configureAmplify() async {
+    try {
+      // amplify plugins
+      final apiPlugin = AmplifyAPI();
+      final authPlugin = AmplifyAuthCognito();
+      // add Amplify plugins
+      await Amplify.addPlugins([apiPlugin, authPlugin]);
+      await Amplify.configure(amplifyconfig);
+    } catch (e) {
+      safePrint('An error occurred configuring Amplify: $e');
+    }
+  }
+
+  Map<String, dynamic> lectures = {};
+  bool _loading = false;
+
+  Future<Map<String, dynamic>> getUserLectures() async {
+    try {
+      final restOperation = Amplify.API.get('/api/user/lectures',
+          apiName: 'getUserLectures',
+          queryParameters: {
+            'paDate': 'Jan2023'
+            // , 'name': 'Flutter widgets'
+          });
+      final response = await restOperation.response;
+
+      Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
+      setState(() {
+        lectures = responseMap;
+      });
+      return responseMap;
+    } on ApiException catch (e) {
+      throw Exception('Failed to load lectures: $e');
+    }
   }
 
   Future<bool> logUserIn(String email, String password) async {
     try {
+      setState(() {
+        _loading = true;
+      });
       final user =
           await Amplify.Auth.signIn(username: email, password: password);
-      print('successful');
+
+      setState(() {
+        _loading = false;
+      });
       setState(() {
         canLogIn = user.isSignedIn;
       });
@@ -90,6 +135,9 @@ class _LoginFieldState extends State<LoginField> {
           emailNotExist = false;
         });
       }
+      setState(() {
+        _loading = false;
+      });
     }
     return false;
   }
@@ -314,28 +362,37 @@ class _LoginFieldState extends State<LoginField> {
           SizedBox(
             height: 56,
             width: (452 / 1440) * width,
-            child: ElevatedButton(
-              key: const Key('Login_Button'),
-              onPressed: () async {
-                await logUserIn(emailController.text, passwordController.text);
-                if (_signInKey.currentState!.validate()) {
-                  if (canLogIn) {
-                    print('successful');
-                    Navigator.pushNamed(context, LoadingScreenWeb.routeName);
-                  }
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF000000)),
-              child: Text(
-                "Login",
-                style: GoogleFonts.notoSans(
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                  fontSize: (16 / 1440) * width,
-                ),
-              ),
-            ),
+            child: _loading
+                ? const Center(
+                    child: SpinKitRing(
+                      color: Colors.black,
+                      size: 36,
+                      lineWidth: 6,
+                    ),
+                  )
+                : ElevatedButton(
+                    key: const Key('Login_Button'),
+                    onPressed: () async {
+                      await logUserIn(
+                          emailController.text, passwordController.text);
+                      if (_signInKey.currentState!.validate()) {
+                        if (canLogIn) {
+                          Navigator.pushNamed(context, '/homepage');
+                        }
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            _loading ? Colors.grey : const Color(0xFF000000)),
+                    child: Text(
+                      "Login",
+                      style: GoogleFonts.notoSans(
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        fontSize: (16 / 1440) * width,
+                      ),
+                    ),
+                  ),
           ),
         ],
       ),

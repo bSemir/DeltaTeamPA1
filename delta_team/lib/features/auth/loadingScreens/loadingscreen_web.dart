@@ -26,18 +26,16 @@ class _LoadingScreenWebState extends State<LoadingScreenWeb> {
   }
 
   startTimeout() async {
-    var duration = const Duration(seconds: 20);
+    var duration = const Duration(seconds: 3);
     return Timer(duration, navigateToHomeScreen);
   }
 
   navigateToHomeScreen() {
-    Navigator.pushReplacementNamed(context, HomeScreenWeb.routeName);
+    Navigator.pushNamed(context, '/homepage');
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Center(
         child: Column(

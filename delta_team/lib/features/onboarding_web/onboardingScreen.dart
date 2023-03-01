@@ -1,3 +1,5 @@
+import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
+import 'package:delta_team/features/onboarding_web/provider/emailPasswProvider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -57,8 +59,9 @@ class _OnboardingWebState extends State<OnboardingWeb> {
   @override
   void initState() {
     super.initState();
-
-    _configureAmplify();
+    final emailPasswordProvider =
+        Provider.of<EmailPasswordProvider>(context, listen: false);
+    signInUser(emailPasswordProvider.email, emailPasswordProvider.password);
   }
 
   Future<void> _configureAmplify() async {
@@ -74,12 +77,12 @@ class _OnboardingWebState extends State<OnboardingWeb> {
     }
   }
 
-  Future<void> signInUser() async {
+  Future<void> signInUser(String email, String password) async {
     await _configureAmplify();
     try {
       final result = await Amplify.Auth.signIn(
-        username: "sblekic@pa.tech387.com", // email of user
-        password: "Password123!",
+        username: email, // email of user
+        password: password,
       );
       print('LOGINOVO SE KRALJ AMAR');
     } on AuthException catch (e) {
@@ -101,6 +104,8 @@ class _OnboardingWebState extends State<OnboardingWeb> {
     var myItem = Provider.of<MyItemWeb>(context);
     var nizSaRolama = Provider.of<MyItemWeb>(context).myItems;
     var isSelected = myItem.hasRole(role);
+    final emailPasswordProvider =
+        Provider.of<EmailPasswordProvider>(context, listen: false);
 
     bool inColumn = false;
     bool videoWithoutTitle = false;
@@ -118,8 +123,6 @@ class _OnboardingWebState extends State<OnboardingWeb> {
     }
 
     Future<void> submitOnboarding() async {
-      await signInUser();
-
       try {
         final restOperation = Amplify.API.post("/api/onboarding/submit",
             body: HttpPayload.json({
@@ -255,9 +258,9 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                           Column(
                             children: [
                               ListTile(
-                                key: const Key('KeyDa'),
                                 title: const Text('Da'),
                                 leading: Radio<String>(
+                                  key: const Key('KeyDa'),
                                   value: "False",
                                   groupValue: _character,
                                   onChanged: (value) {
@@ -269,9 +272,9 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                                 ),
                               ),
                               ListTile(
-                                key: const Key('KeyNe'),
                                 title: const Text('Ne'),
                                 leading: Radio<String>(
+                                  key: const Key('KeyNe'),
                                   value: "True",
                                   groupValue: _character,
                                   onChanged: (value) {
@@ -916,38 +919,23 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                             _character != null &&
                             (isSelected ||
                                 myItem.length <= 2 && myItem.length >= 1)) {
-                          // clearFields();
-                          submitOnboarding();
-                          // myItem.remove(role);
+                          if (nizSaRolama.first == null) {
+                            myItem.add(widget.role);
+                          }
+                          // myItem.add(widget.role);
 
-                          myItem.remove(widget.role);
-                          // clearFields();
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const HomeScreenWeb(),
-                            ),
-                          );
+                          submitOnboarding();
+
+                          print(myItem.length);
+
+                          Navigator.pushNamed(
+                              context, LoginScreenWeb.routeName);
                         } else if (_character == null) {
                           context.read<ErrorMessageWeb>().change();
-                          // myItem.add(widget.role);
-                        }
-                        // else if (nizSaRolama.first.isEmpty && isSelected) {
-                        //   myItem.add(widget.role);
-
-                        //   print(myItem.length);
-                        // else if (nizSaRolama.first.isNotEmpty &&
-                        // //     !isSelected) {
-                        // //   myItem.remove(widget.role);
-                        // // }
-                        // else if (nizSaRolama.first != null || isSelected) {
-                        //   myItem.add(widget.role);
-                        //   print(myItem.length);
-
-                        // else if (nizSaRolama.first.isNotEmpty) {
-                        //   myItem.remove(role);
-                        // }
-                        else if (nizSaRolama.first != null) {
+                          // ignore: unnecessary_null_comparison
+                        } else if (nizSaRolama.first != null) {
                           myItem.remove(widget.role);
+                          // ignore: unnecessary_null_comparison
                         } else {
                           myItem.add(widget.role);
                           print(myItem.length);

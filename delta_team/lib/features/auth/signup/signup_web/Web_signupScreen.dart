@@ -3,6 +3,7 @@ import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
 import 'package:delta_team/common/customfooter_web.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
+import 'package:delta_team/features/onboarding_web/provider/emailPasswProvider.dart';
 import 'package:flutter/material.dart';
 
 // ignore: unused_import
@@ -112,6 +113,8 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
       fontSize = 26;
     }
     final emailProvider = Provider.of<MyEmailWeb>(context, listen: false);
+    final emailPasswordProvider =
+        Provider.of<EmailPasswordProvider>(context, listen: false);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -500,16 +503,17 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                           options: CognitoSignUpOptions(
                                               userAttributes: userAttributes),
                                         );
-                                        print(result.isSignUpComplete);
-                                        if (!result.isSignUpComplete) {
-                                          // ignore: use_build_context_synchronously
-                                          Navigator.pushNamed(
-                                              context, "/confirmationWeb");
-                                          setState(() {
-                                            emailProvider.email =
-                                                emailController.text;
-                                          });
-                                        }
+                                        setState(() {
+                                          emailProvider.email =
+                                              emailController.text;
+                                          emailPasswordProvider
+                                              .setEmail(emailController.text);
+                                          emailPasswordProvider.setPassword(
+                                              passwordController.text);
+                                        });
+
+                                        Navigator.pushNamed(
+                                            context, "/confirmationWeb");
                                       } on AuthException catch (e) {
                                         safePrint(e.message);
                                       }

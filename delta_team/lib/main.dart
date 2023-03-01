@@ -10,6 +10,11 @@ import 'package:delta_team/features/auth/signup/signup_web/Web_emailVerified_scr
 import 'package:delta_team/features/auth/signup/signup_web/Web_loadingPage.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupVerification_Screen.dart';
+import 'package:delta_team/features/homepage/contact_me_screen.dart';
+import 'package:delta_team/features/homepage/homescreen.dart';
+import 'package:delta_team/features/homepage/lectures.dart';
+import 'package:delta_team/features/homepage/provider/authProvider.dart';
+import 'package:delta_team/features/homepage/provider/titleProvider.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/congratulations_card_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/loading_Oboading%20mobile.dart';
 
@@ -29,6 +34,10 @@ import 'features/auth/signup_mobile/screens/confirmation_message_mobile.dart';
 import 'features/auth/signup_mobile/screens/confirmation_screen_mobile.dart';
 import 'features/auth/signup_mobile/screens/redirecting_screen_mobile.dart';
 import 'features/auth/signup_mobile/screens/signupScreen_mobile.dart';
+import 'features/homepage/homepage.dart';
+import 'features/homepage/homepage_video_screen.dart';
+import 'features/homepage/provider/youtube_link_provider.dart';
+import 'features/homepage/recentLectures.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/answer_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/error_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
@@ -38,6 +47,7 @@ import 'features/onboarding/onboarding_mobile/welcome_page_mobile.dart';
 import 'features/onboarding_web/errorMsg-web.dart';
 import 'features/onboarding_web/modelRole.dart';
 import 'features/onboarding_web/modelmyItem.dart';
+import 'features/onboarding_web/provider/emailPasswProvider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,7 +77,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _configureAmplify();
+    // _configureAmplify();
   }
 
   // This widget is the root of your application.
@@ -90,7 +100,21 @@ class _MyAppState extends State<MyApp> {
             create: (_) => MyItem(),
           ),
           ChangeNotifierProvider(create: (_) => ErrorMessageWeb()),
-          ChangeNotifierProvider(create: (_) => MyItemWeb())
+          ChangeNotifierProvider(
+            create: (_) => MyItemWeb(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => YoutubeLinkProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => TitleProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => ContactWeb(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => EmailPasswordProvider(),
+          ),
         ],
         child: MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -112,7 +136,7 @@ class _MyAppState extends State<MyApp> {
             home: defaultTargetPlatform == TargetPlatform.iOS ||
                     defaultTargetPlatform == TargetPlatform.android
                 ? const SignupScreenMobile()
-                : const SignUpScreenWeb(),
+                : const LoginScreenWeb(),
             routes: {
               LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
               LoginScreenMobile.routeName: (context) =>
@@ -138,7 +162,13 @@ class _MyAppState extends State<MyApp> {
               '/confirmationWeb': (context) => const SignupVerificationScreen(),
               '/confirmationMessageWeb': (context) =>
                   const EmailVerifiedScreen(),
-              '/loadingPage': (context) => const LoadingPage()
+              '/loadingPage': (context) => const LoadingPage(),
+              '/homepage': (context) => const HomePage(),
+              '/lecturesPage': (context) => const LecturesPage(),
+              '/homepagevideo': (context) => const HomePageVideoScreen(),
+              '/contactUs': (context) => const ContactMeScreen(),
+              '/recentLectures': (context) => const RecentLectures(),
+              '/homescreen': (context) => const HomeScreen(),
             }));
   }
 }

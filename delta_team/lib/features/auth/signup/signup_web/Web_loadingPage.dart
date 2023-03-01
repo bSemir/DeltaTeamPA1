@@ -22,7 +22,7 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   startTimeout() async {
-    var duration = const Duration(seconds: 20);
+    var duration = const Duration(seconds: 2);
     return Timer(duration, navigateToOnboardingWeb);
   }
 
