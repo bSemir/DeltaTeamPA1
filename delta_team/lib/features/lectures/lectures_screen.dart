@@ -35,6 +35,7 @@ class _LecturesScreenState extends State<LecturesScreen> {
   void initState() {
     super.initState();
     _configureAmplify();
+    print(widget.role);
   }
 
   @override

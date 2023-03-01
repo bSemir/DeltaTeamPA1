@@ -16,7 +16,8 @@ class MyDrawer extends StatefulWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  bool isLoading = true;
+  bool isLoadingEmail = true;
+  bool isLoadingRoles = true;
   List<String> roles = [];
   @override
   void initState() {
@@ -25,6 +26,7 @@ class _MyDrawerState extends State<MyDrawer> {
     getUserRoles().then((value) {
       setState(() {
         roles = value;
+        isLoadingRoles = false;
       });
 
       //Lecture count
@@ -78,7 +80,7 @@ class _MyDrawerState extends State<MyDrawer> {
       setState(() {
         _userEmail = email;
         _userName = '$givenName $familyName';
-        isLoading = false;
+        isLoadingEmail = false;
       });
     } on AuthException catch (e) {
       print('Failed to fetch user attributes: ${e.message}');
@@ -107,7 +109,7 @@ class _MyDrawerState extends State<MyDrawer> {
         shadowColor: Colors.black,
         child: Container(
           color: Colors.black,
-          child: isLoading == false
+          child: isLoadingEmail == false && isLoadingRoles == false
               ? ListView(
                   children: <Widget>[
                     const SizedBox(
@@ -138,7 +140,7 @@ class _MyDrawerState extends State<MyDrawer> {
                               Text(
                                 key: const Key('user_email'),
                                 _userEmail,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),
                             ],
