@@ -1,6 +1,6 @@
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/signup/provider/auth_provider_mobile.dart';
-import 'package:delta_team/features/auth/signup_mobile/screens/signupScreen_mobile.dart';
+import 'package:delta_team/features/auth/signup/signup_mobile/screens/signupScreen_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';

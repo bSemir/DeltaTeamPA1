@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../common/custom_signlog_button.dart';
+import '../../../../../common/custom_signlog_button.dart';
 
 class TextFieldSignUp extends StatefulWidget {
   const TextFieldSignUp({super.key});
@@ -47,6 +47,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
   Color _cityLabelColor = const Color.fromRGBO(96, 93, 102, 1);
   Color _isEmailLabelColor = const Color.fromRGBO(96, 93, 102, 1);
   Color _isPasswordLabelColor = const Color.fromRGBO(96, 93, 102, 1);
+  Color passwordeyelid = const Color(0xFF000000);
 
   TextEditingController nameController = TextEditingController();
   TextEditingController surnameController = TextEditingController();
@@ -671,16 +672,19 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
               if (value!.isEmpty) {
                 setState(() {
                   passwordErrored = true;
+                  passwordeyelid = const Color(0xFFB3261E);
                 });
                 return 'Please fill the required field.';
               } else if (!regExp.hasMatch(value)) {
                 setState(() {
                   passwordErrored = true;
+                  passwordeyelid = const Color(0xFFB3261E);
                 });
                 return 'Password must contain a minimum of 8 characters, \nuppercase, lower case, number and special character.';
               } else {
                 setState(() {
                   passwordErrored = false;
+                  passwordeyelid = const Color(0xFF000000);
                 });
               }
               return null;
@@ -691,11 +695,11 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                 child: InkWell(
                     key: const Key("passwordVisible"),
                     child: Icon(
-                      viewPassword ? Icons.visibility : Icons.visibility_off,
-                      color: viewPassword
-                          ? Colors.black
-                          : const Color.fromRGBO(96, 93, 102, 1),
-                    ),
+                        viewPassword ? Icons.visibility : Icons.visibility_off,
+                        color: passwordeyelid
+                        // ? Colors.black
+                        // : const Color.fromRGBO(96, 93, 102, 1),
+                        ),
                     onTap: () {
                       setState(() {
                         viewPassword = !viewPassword;

@@ -25,7 +25,7 @@
 
 import 'dart:async';
 
-import 'package:delta_team/features/auth/signup/widgets/footer.dart';
+import 'package:delta_team/features/auth/signup/signup_mobile/widgets/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';

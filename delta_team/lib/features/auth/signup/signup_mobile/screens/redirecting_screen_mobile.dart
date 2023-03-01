@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../onboarding/onboarding_mobile/welcome_page_mobile.dart';
+import '../../../../onboarding/onboarding_mobile/welcome_page_mobile.dart';
 
 class RedirectingScreen extends StatefulWidget {
   const RedirectingScreen({super.key});

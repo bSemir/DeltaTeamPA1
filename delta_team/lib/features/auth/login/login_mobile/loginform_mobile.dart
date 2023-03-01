@@ -1,32 +1,24 @@
 import 'dart:async';
-import 'dart:math';
-
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
+import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_mobile.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:riverpod_extension/riverpod_extension.dart';
 
-class LoginField extends StatefulWidget {
+class LoginFieldMobile extends StatefulWidget {
   // final IconData suffixIcon;
 
-  const LoginField({
+  const LoginFieldMobile({
     super.key,
 
     // required this.suffixIcon
   });
 
   @override
-  State<LoginField> createState() => _LoginFieldState();
+  State<LoginFieldMobile> createState() => _LoginFieldMobileState();
 }
 
-class _LoginFieldState extends State<LoginField> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
+class _LoginFieldMobileState extends State<LoginFieldMobile> {
   bool _showPasswordSuffixIcon = false;
   bool viewPassword = false;
   bool showErrorIcon = false;
@@ -35,11 +27,11 @@ class _LoginFieldState extends State<LoginField> {
   bool canLogIn = false;
   bool _isFocusedPassword = false;
   bool _isFocusedEmail = false;
-
   final _passwordFocusNode = FocusNode();
   final _emailFocusNode = FocusNode();
   final _signInKey = GlobalKey<FormState>();
-
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   Color labelEmailColor = const Color(0xFF605D66);
   Color labelPasswordColor = const Color(0xFF605D66);
   Color eyelid = const Color(0xFF000000);
@@ -75,7 +67,7 @@ class _LoginFieldState extends State<LoginField> {
     try {
       final user =
           await Amplify.Auth.signIn(username: email, password: password);
-      print('successful');
+      safePrint('successful');
       setState(() {
         canLogIn = user.isSignedIn;
       });
@@ -109,9 +101,10 @@ class _LoginFieldState extends State<LoginField> {
             focusNode: _emailFocusNode,
             controller: emailController,
             style: GoogleFonts.notoSans(
-              color: labelEmailColor,
+              color: const Color(0xFF000000),
               fontWeight: FontWeight.w700,
             ),
+            // focusNode: _emailFocusNode,
             validator: (value) {
               if (value!.isEmpty) {
                 setState(() {
@@ -205,7 +198,7 @@ class _LoginFieldState extends State<LoginField> {
             controller: passwordController,
             obscureText: !viewPassword,
             style: GoogleFonts.notoSans(
-              color: labelPasswordColor,
+              color: const Color(0xFF000000),
               fontWeight: FontWeight.w700,
             ),
             onChanged: (value) {
@@ -231,9 +224,9 @@ class _LoginFieldState extends State<LoginField> {
                       !canLogIn) &&
                   emailController.text.isNotEmpty) {
                 setState(() {
-                  labelPasswordFocusColor = const Color(0xFFB3261E);
                   labelPasswordColor = const Color(0xFFB3261E);
                   eyelid = const Color(0xFFB3261E);
+                  labelPasswordFocusColor = const Color(0xFFB3261E);
                   labelEmailColor = const Color(0xFFB3261E);
                   emailErrored = true;
                   passwordErrored = true;
@@ -253,7 +246,7 @@ class _LoginFieldState extends State<LoginField> {
                 });
               }
               if (canLogIn || emailController.text.isNotEmpty) {
-                print("LOGIN");
+                safePrint("LOGIN");
                 setState(() {
                   passwordErrored = false;
                   emailErrored = false;
@@ -265,10 +258,11 @@ class _LoginFieldState extends State<LoginField> {
               return null;
             },
             decoration: InputDecoration(
-                focusedBorder: const OutlineInputBorder(
-                    borderSide: BorderSide(color: Color(0xFF22E974))),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(4),
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF22E974)),
                 ),
                 filled: true,
                 enabledBorder: OutlineInputBorder(
@@ -302,19 +296,19 @@ class _LoginFieldState extends State<LoginField> {
                     : null),
           ),
           const SizedBox(
-            height: 40,
+            height: 24,
           ),
           SizedBox(
-            height: 56,
-            width: (452 / 1440) * width,
+            height: 40,
+            width: (296 / 360) * width,
             child: ElevatedButton(
               key: const Key('Login_Button'),
               onPressed: () async {
                 await logUserIn(emailController.text, passwordController.text);
                 if (_signInKey.currentState!.validate()) {
                   if (canLogIn) {
-                    print('successful');
-                    Navigator.pushNamed(context, LoadingScreenWeb.routeName);
+                    safePrint('successful');
+                    Navigator.pushNamed(context, LoadingScreenMobile.routeName);
                   }
                 }
               },
@@ -325,7 +319,7 @@ class _LoginFieldState extends State<LoginField> {
                 style: GoogleFonts.notoSans(
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
-                  fontSize: (16 / 1440) * width,
+                  fontSize: (14 / 360) * width,
                 ),
               ),
             ),

@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-import '../../home_web.dart';
+import '../../../home_web.dart';
 
-import '../onboarding/footer/footer.dart';
+import '../footer/footer.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../common/global_variables.dart';
+import '../../../common/global_variables.dart';
 
 import 'dart:convert';
 

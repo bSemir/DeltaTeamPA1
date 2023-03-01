@@ -1,8 +1,8 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
+import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_mobile.dart';
+import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 
@@ -13,7 +13,7 @@ import 'package:delta_team/features/auth/signup/signup_web/Web_signupVerificatio
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/congratulations_card_mobile.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/loading_Oboading%20mobile.dart';
 
-import 'package:delta_team/features/onboarding_web/onboardingScreen.dart';
+import 'package:delta_team/features/onboarding/onboarding_web/onboardingScreen.dart';
 import 'package:delta_team/home_mobile.dart';
 import 'package:delta_team/home_web.dart';
 
@@ -25,21 +25,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'features/auth/signup_mobile/screens/confirmation_message_mobile.dart';
-import 'features/auth/signup_mobile/screens/confirmation_screen_mobile.dart';
-import 'features/auth/signup_mobile/screens/redirecting_screen_mobile.dart';
-import 'features/auth/signup_mobile/screens/signupScreen_mobile.dart';
+import 'features/auth/signup/signup_mobile/screens/confirmation_message_mobile.dart';
+import 'features/auth/signup/signup_mobile/screens/confirmation_screen_mobile.dart';
+import 'features/auth/signup/signup_mobile/screens/redirecting_screen_mobile.dart';
+import 'features/auth/signup/signup_mobile/screens/signupScreen_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/answer_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/error_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/role_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/onboarding_screen_mobile.dart';
 import 'features/onboarding/onboarding_mobile/welcome_page_mobile.dart';
-import 'features/onboarding_web/congratulation_web.dart';
-import 'features/onboarding_web/errorMsg-web.dart';
-import 'features/onboarding_web/loadingpageOnboarding_web.dart';
-import 'features/onboarding_web/modelRole.dart';
-import 'features/onboarding_web/modelmyItem.dart';
+import 'features/onboarding/onboarding_web/congratulation_web.dart';
+import 'features/onboarding/onboarding_web/errorMsg-web.dart';
+import 'features/onboarding/onboarding_web/loadingpageOnboarding_web.dart';
+import 'features/onboarding/onboarding_web/modelRole.dart';
+import 'features/onboarding/onboarding_web/modelmyItem.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

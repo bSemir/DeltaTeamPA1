@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,13 +15,13 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
     super.initState();
-    // startTimeout();
+    startTimeout();
   }
 
-  // startTimeout() async {
-  //   var duration = const Duration(seconds: 3);
-  //   return Timer(duration, navigateToOnboardingWeb);
-  // }
+  startTimeout() async {
+    var duration = const Duration(seconds: 5);
+    return Timer(duration, navigateToOnboardingWeb);
+  }
 
   navigateToOnboardingWeb() {
     Navigator.pushNamed(context, '/onboardingweb');

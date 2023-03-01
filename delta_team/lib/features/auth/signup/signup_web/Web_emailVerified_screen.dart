@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_web.dart';
+import 'package:delta_team/common/customfooter_web.dart';
+import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
-import 'package:delta_team/features/onboarding_web/onboardingScreen.dart';
+import 'package:delta_team/features/onboarding/onboarding_web/onboardingScreen.dart';
 import 'package:delta_team/home_web.dart';
 
 import 'Web_loadingPage.dart';
@@ -22,6 +23,16 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
   @override
   void initState() {
     super.initState();
+    startTimeout();
+  }
+
+  startTimeout() async {
+    var duration = const Duration(seconds: 5);
+    return Timer(duration, navigateToloading);
+  }
+
+  navigateToloading() {
+    Navigator.pushNamed(context, '/loadingPageSignup');
   }
 
   double? screenWidth;
@@ -30,10 +41,11 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
   Widget build(BuildContext context) {
     screenWidth ??= MediaQuery.of(context).size.width;
     screenHeight ??= MediaQuery.of(context).size.height;
-    Timer(
-        const Duration(seconds: 5),
-        () => //Navigator.pushNamed(context, HomeScreenWeb.routeName));
-            Navigator.pushNamed(context, '/loadingPageSignup'));
+    // Timer(
+    //   const Duration(seconds: 5),
+    //   () => //Navigator.pushNamed(context, HomeScreenWeb.routeName));
+    //       Navigator.pushNamed(context, '/loadingPageSignup'),
+    // );
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -50,71 +62,71 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
             borderColor: Colors.black,
             borderSide: const BorderSide(width: 1, color: Color(0xFF000000)),
           )),
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/paBackground.png'),
-                fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/paBackground.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-          ),
-          Center(
-            child: Container(
-              height: 464,
-              width: 740,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(2),
-              ),
-              child: SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                child: Padding(
-                  padding: MediaQuery.of(context).size.width > 630
-                      ? const EdgeInsets.symmetric(
-                          horizontal: 80.0, vertical: 80.0)
-                      : const EdgeInsets.symmetric(
-                          horizontal: 1, vertical: 20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 16),
-                      SvgPicture.asset("assets/images/check_circle.svg"),
-                      const SizedBox(height: 16),
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(
-                          'Email verified',
-                          style: MediaQuery.of(context).size.width > 630
-                              ? const TextStyle(
-                                  fontSize: 60, fontWeight: FontWeight.bold)
-                              : const TextStyle(
-                                  fontSize: 32, fontWeight: FontWeight.bold),
+              child: Center(
+                child: Container(
+                  height: 464,
+                  width: 740,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                  child: Padding(
+                    padding: MediaQuery.of(context).size.width > 630
+                        ? const EdgeInsets.symmetric(
+                            horizontal: 80.0, vertical: 80.0)
+                        : const EdgeInsets.symmetric(
+                            horizontal: 1, vertical: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(height: 16),
+                        SvgPicture.asset("assets/images/check_circle.svg"),
+                        const SizedBox(height: 16),
+                        Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Text(
+                            'Email verified',
+                            style: MediaQuery.of(context).size.width > 630
+                                ? const TextStyle(
+                                    fontSize: 60, fontWeight: FontWeight.bold)
+                                : const TextStyle(
+                                    fontSize: 32, fontWeight: FontWeight.bold),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 8),
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Text(
-                          'Your email is successfully verified',
-                          style: MediaQuery.of(context).size.width > 630
-                              ? const TextStyle(
-                                  fontSize: 32,
-                                )
-                              : const TextStyle(
-                                  fontSize: 16,
-                                ),
+                        const SizedBox(height: 8),
+                        Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: Text(
+                            'Your email is successfully verified',
+                            style: MediaQuery.of(context).size.width > 630
+                                ? const TextStyle(
+                                    fontSize: 32,
+                                  )
+                                : const TextStyle(
+                                    fontSize: 16,
+                                  ),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+            const FooterWidget()
+          ],
+        ),
       ),
     );
   }
