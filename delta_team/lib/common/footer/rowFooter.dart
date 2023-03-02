@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RowFooter extends StatelessWidget {
   final double widthLocation;
@@ -12,14 +13,6 @@ class RowFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isPrivacyRow = false;
-    if (MediaQuery.of(context).size.width < 1080) {
-      isPrivacyRow = false;
-    }
-    if (MediaQuery.of(context).size.width > 1080) {
-      isPrivacyRow = true;
-    }
-
     return Row(
       children: [
         Column(
@@ -74,34 +67,60 @@ class RowFooter extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Image.asset(
-                    'assets/images/facebook.png',
-                    width: 37.5,
-                    height: 37.37,
+                  GestureDetector(
+                    key: const Key('fbKey'),
+                    onTap: () {
+                      print("FACEBOOK");
+                      launchUrl(Uri.parse('https://www.facebook.com/tech387'));
+                    },
+                    child: Image.asset(
+                      "assets/images/facebook.png",
+                      width: 37.5,
+                      height: 37.37,
+                    ),
                   ),
                   const SizedBox(
                     width: 18.5,
                   ),
-                  Image.asset(
-                    'assets/images/instagram.png',
-                    width: 37.5,
-                    height: 37.37,
+                  GestureDetector(
+                    key: const Key('instagramkey'),
+                    onTap: () {
+                      launch('https://www.instagram.com/tech387/?hl=en');
+                    },
+                    child: Image.asset(
+                      "assets/images/instagram.png",
+                      width: 37.5,
+                      height: 37.37,
+                    ),
                   ),
                   const SizedBox(
                     width: 18.5,
                   ),
-                  Image.asset(
-                    'assets/images/linkedin.png',
-                    width: 37.5,
-                    height: 37.37,
+                  GestureDetector(
+                    key: const Key('linkedinkey'),
+                    onTap: () {
+                      launch(
+                          'https://www.linkedin.com/company/tech-387/mycompany/');
+                    },
+                    child: Image.asset(
+                      "assets/images/linkedin.png",
+                      width: 37.5,
+                      height: 37.37,
+                    ),
                   ),
                   const SizedBox(
                     width: 18.5,
                   ),
-                  Image.asset(
-                    'assets/images/tech387.png',
-                    width: 37.5,
-                    height: 37.37,
+                  GestureDetector(
+                    key: const Key('keytech'),
+                    onTap: () {
+                      launch('https://www.tech387.com/');
+                    },
+                    child: Image.asset(
+                      "assets/images/tech387.png",
+                      width: 37.5,
+                      height: 37.37,
+                    ),
                   ),
                 ],
               ),
