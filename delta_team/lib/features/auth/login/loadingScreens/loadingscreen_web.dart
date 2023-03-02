@@ -1,5 +1,4 @@
 import 'package:delta_team/home_mobile.dart';
-import 'package:delta_team/home_web.dart';
 
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -54,9 +53,9 @@ class _LoadingScreenWebState extends State<LoadingScreenWeb> {
               width: 150,
               height: 150,
               child: CircularProgressIndicator(
-                backgroundColor: Color(0xFFFF4086),
+                backgroundColor: Color(0xFFFFFFFF),
                 valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF22E974)),
-                strokeWidth: 25.0,
+                strokeWidth: 15.0,
               ),
             ),
             const SizedBox(height: 25),

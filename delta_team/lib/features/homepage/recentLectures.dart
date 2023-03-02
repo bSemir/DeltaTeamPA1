@@ -26,6 +26,7 @@ class _RecentLecturesState extends State<RecentLectures> {
   void initState() {
     super.initState();
     _loadPrefs();
+    getUserLectures();
   }
 
   bool showModal = false;
@@ -128,6 +129,7 @@ class _RecentLecturesState extends State<RecentLectures> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
+                            key: const Key("user_icon_key"),
                             onTap: () {
                               setState(() {
                                 showModal = !showModal;
@@ -269,6 +271,8 @@ class _RecentLecturesState extends State<RecentLectures> {
                                               ),
                                             ),
                                             InkWell(
+                                              key:
+                                                  const Key("lectureVideo_key"),
                                               onTap: () async {
                                                 final prefs =
                                                     await SharedPreferences
@@ -352,6 +356,8 @@ class _RecentLecturesState extends State<RecentLectures> {
                                                     height: 27,
                                                   ),
                                                   InkWell(
+                                                    key: const Key(
+                                                        "lectureVideo_key"),
                                                     onTap: () async {
                                                       final prefs =
                                                           await SharedPreferences

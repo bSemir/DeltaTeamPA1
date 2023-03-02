@@ -3,8 +3,7 @@ import 'dart:async';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
-import 'package:delta_team/common/customfooter_web.dart';
-import 'package:delta_team/common/footer/footer.dart';
+
 import 'package:delta_team/features/auth/login/login_web/loginform_web.dart';
 import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
 import 'package:flutter/foundation.dart';
@@ -15,6 +14,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:riverpod_extension/riverpod_extension.dart';
 
+import '../../../../common/footer/footer.dart';
 import '../loadingScreens/loadingscreen_web.dart';
 
 class LoginScreenWeb extends StatefulWidget {
@@ -212,7 +212,7 @@ class LoginScreenWebState extends State<LoginScreenWeb> {
               const SizedBox(
                 height: 198,
               ),
-              const FooterWidget()
+              const Footer()
             ],
           ),
         ),

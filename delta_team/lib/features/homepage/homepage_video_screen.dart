@@ -125,6 +125,7 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 GestureDetector(
+                                  key: const Key("user_icon_key"),
                                   onTap: () {
                                     setState(() {
                                       showModal = !showModal;
@@ -238,6 +239,8 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
                                                           ),
                                                         ),
                                                         InkWell(
+                                                          key: const Key(
+                                                              "show_more-less_key"),
                                                           onTap: () {
                                                             setState(() {
                                                               showMore =

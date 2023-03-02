@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:amplify_core/amplify_core.dart';
 import 'package:delta_team/features/homepage/account_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'homepage_sidebar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,11 +19,56 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _loadPrefs();
+  }
+
+  String selectedRole = "";
+
+  Future<void> _loadPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString('myMap');
+    final role = prefs.getString('role');
+
+    setState(() {
+      lectures = jsonDecode(jsonString!);
+      selectedRole = role!;
+    });
+  }
+
+  Future<Map<String, dynamic>> getUserLectures() async {
+    // signInUser();
+    try {
+      final restOperation = Amplify.API.get('/api/user/lectures',
+          apiName: 'getUserLectures',
+          queryParameters: {
+            'paDate': 'Jan2023'
+            // , 'name': 'Flutter widgets'
+          });
+      final response = await restOperation.response;
+
+      Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
+      setState(() {
+        lectures = responseMap;
+      });
+      // responseMap.forEach((key, value) {
+      //   print("$key: $value");
+      // });
+
+      // print(responseMap.values);
+      return responseMap;
+    } on ApiException catch (e) {
+      throw Exception('Failed to load lectures: $e');
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     bool increaseSizebar = false;
+    bool removeHomescreen = false;
+
+    if (MediaQuery.of(context).size.width < 800) {
+      return Container();
+    }
     if (MediaQuery.of(context).size.width < 970) {
       increaseSizebar = true;
     }
@@ -49,6 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
+                            key: const Key("user_icon_key"),
                             onTap: () {
                               setState(() {
                                 showModal = !showModal;

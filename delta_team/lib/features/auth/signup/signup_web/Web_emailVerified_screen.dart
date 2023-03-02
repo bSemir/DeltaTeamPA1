@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
-import 'package:delta_team/common/customfooter_web.dart';
+
 import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/features/onboarding/onboarding_web/onboardingScreen.dart';
-import 'package:delta_team/home_web.dart';
 
+import '../../../../common/footer/footer.dart';
 import 'Web_loadingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -52,7 +52,7 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
           title: 'Tech387',
           leading: SvgPicture.asset('assets/images/logo.svg'),
           action: RoundedButton(
-            key: const Key('SignUpPage_homepage'),
+            key: const Key('LoginPage'),
             text: 'Login',
             press: () async {
               Navigator.pushNamed(context, LoginScreenWeb.routeName);
@@ -124,7 +124,7 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
                 ),
               ),
             ),
-            const FooterWidget()
+            const Footer(),
           ],
         ),
       ),

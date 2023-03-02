@@ -62,6 +62,9 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (MediaQuery.of(context).size.width < 970) {
+      return Container();
+    }
     double maxwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Row(
@@ -85,6 +88,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               GestureDetector(
+                                key: const Key("user_icon_key"),
                                 onTap: () {
                                   setState(() {
                                     showModal = !showModal;
@@ -228,6 +232,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                     height: 10,
                                   ),
                                   ElevatedButton(
+                                    key: const Key("submit_key"),
                                     onPressed: () async {
                                       if (_contactFormKey.currentState!
                                           .validate()) {
@@ -276,6 +281,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                       ),
                                       Flexible(
                                         child: InkWell(
+                                          key: const Key("facebook_icon"),
                                           child: Image.asset(
                                             'assets/images/facebook.png',
                                           ),
@@ -288,6 +294,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                       ),
                                       Flexible(
                                         child: InkWell(
+                                          key: const Key("instagram_icon"),
                                           child: Image.asset(
                                             'assets/images/instagram.png',
                                           ),
@@ -300,6 +307,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                       ),
                                       Flexible(
                                         child: InkWell(
+                                          key: const Key("linkedin_icon"),
                                           child: Image.asset(
                                             'assets/images/linkedin.png',
                                           ),
@@ -312,6 +320,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                       ),
                                       Flexible(
                                         child: InkWell(
+                                          key: const Key("tech_icon"),
                                           child: Image.asset(
                                             'assets/images/tech387.png',
                                           ),
@@ -329,6 +338,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             InkWell(
+                                              key: const Key("location_icon"),
                                               onTap: () async {
                                                 await launchUrl(Uri.parse(
                                                     'https://www.google.ba/maps/place/Tech387/@43.8538483,18.4205947,17z/data=!3m1!4b1!4m6!3m5!1s0x4758c903ae6b4fe1:0xa4116c0159094813!8m2!3d43.8538483!4d18.4227834!16s%2Fg%2F11h_6q3_47'));
@@ -392,6 +402,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                     child: Column(
                     children: [
                       GestureDetector(
+                        key: const Key("user_icon_key"),
                         onTap: () {
                           setState(() {
                             showModal = !showModal;
@@ -527,6 +538,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                             height: 10,
                           ),
                           ElevatedButton(
+                            key: const Key("submit_key"),
                             onPressed: () async {
                               if (_contactFormKey.currentState!.validate()) {
                                 final authProvider = Provider.of<ContactWeb>(
@@ -578,6 +590,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                               ),
                               Flexible(
                                 child: InkWell(
+                                  key: const Key("facebook_key"),
                                   child: Image.asset(
                                     'assets/images/facebook.png',
                                   ),
@@ -590,6 +603,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                               ),
                               Flexible(
                                 child: InkWell(
+                                  key: const Key("instagram_key"),
                                   child: Image.asset(
                                     'assets/images/instagram.png',
                                   ),
@@ -602,6 +616,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                               ),
                               Flexible(
                                 child: InkWell(
+                                  key: const Key("linkedin_key"),
                                   child: Image.asset(
                                     'assets/images/linked.png',
                                   ),
@@ -614,6 +629,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                               ),
                               Flexible(
                                 child: InkWell(
+                                  key: const Key("tech_key"),
                                   child: Image.asset(
                                     'assets/images/tech.png',
                                   ),
@@ -630,6 +646,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     InkWell(
+                                      key: const Key("location_key"),
                                       onTap: () async {
                                         await launchUrl(Uri.parse(
                                             'https://www.google.ba/maps/place/Tech387/@43.8538483,18.4205947,17z/data=!3m1!4b1!4m6!3m5!1s0x4758c903ae6b4fe1:0xa4116c0159094813!8m2!3d43.8538483!4d18.4227834!16s%2Fg%2F11h_6q3_47'));

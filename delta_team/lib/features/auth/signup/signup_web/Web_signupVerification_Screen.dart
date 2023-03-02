@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
-import 'package:delta_team/common/customfooter_web.dart';
+
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/features/auth/signup/provider/Web_auth_provider.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../common/footer/footer.dart';
 import '../../../onboarding_web/provider/emailPasswProvider.dart';
 
 class SignupVerificationScreen extends StatefulWidget {
@@ -99,7 +100,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
           title: 'Tech387',
           leading: SvgPicture.asset('assets/images/logo.svg'),
           action: RoundedButton(
-            key: const Key('SignUpPage_homepage'),
+            key: const Key('LoginPage'),
             text: 'Login',
             press: () async {
               Navigator.pushNamed(context, LoginScreenWeb.routeName);
@@ -182,6 +183,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                     children: [
                                       Flexible(
                                         child: TextFormField(
+                                          key: const Key("code1Key"),
                                           onChanged: (value) {
                                             setState(() {
                                               code1Str = value;
@@ -193,7 +195,6 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                             }
                                           },
                                           controller: _code1,
-                                          key: const Key("code1Key"),
                                           decoration: InputDecoration(
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
@@ -257,6 +258,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                       ),
                                       Flexible(
                                         child: TextFormField(
+                                          key: const Key("code2Key"),
                                           onChanged: (value) {
                                             setState(() {
                                               code2Str = value;
@@ -268,7 +270,6 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                             }
                                           },
                                           controller: _code2,
-                                          key: const Key("code2Key"),
                                           decoration: InputDecoration(
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
@@ -332,6 +333,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                       ),
                                       Flexible(
                                         child: TextFormField(
+                                          key: const Key("code3Key"),
                                           onChanged: (value) {
                                             setState(() {
                                               code3Str = value;
@@ -343,7 +345,6 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                             }
                                           },
                                           controller: _code3,
-                                          key: const Key("code3Key"),
                                           decoration: InputDecoration(
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
@@ -407,6 +408,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                       ),
                                       Flexible(
                                         child: TextFormField(
+                                          key: const Key("code4Key"),
                                           onChanged: (value) {
                                             setState(() {
                                               code4Str = value;
@@ -418,7 +420,6 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                             }
                                           },
                                           controller: _code4,
-                                          key: const Key("code4Key"),
                                           decoration: InputDecoration(
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
@@ -482,8 +483,8 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                       ),
                                       Flexible(
                                         child: TextFormField(
-                                          controller: _code5,
                                           key: const Key("code5Key"),
+                                          controller: _code5,
                                           onChanged: (value) {
                                             setState(() {
                                               code5Str = value;
@@ -557,6 +558,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                       ),
                                       Flexible(
                                         child: TextFormField(
+                                          key: const Key("code6Key"),
                                           onChanged: (value) {
                                             setState(() {
                                               code6Str = value;
@@ -568,7 +570,6 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                             }
                                           },
                                           controller: _code6,
-                                          key: const Key("code6Key"),
                                           decoration: InputDecoration(
                                             contentPadding:
                                                 const EdgeInsets.symmetric(
@@ -867,7 +868,7 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                 ),
               ),
             ),
-            const FooterWidget(),
+            const Footer(),
           ],
         ),
       ),

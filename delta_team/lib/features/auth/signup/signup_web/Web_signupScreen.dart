@@ -1,7 +1,7 @@
 // ignore: file_names
 import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
-import 'package:delta_team/common/customfooter_web.dart';
+
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/features/onboarding_web/provider/emailPasswProvider.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ import 'package:validators/validators.dart';
 // ignore: unnecessary_import
 import 'package:flutter/services.dart';
 
-import '../../../onboarding/footer/footer.dart';
+import '../../../../common/footer/footer.dart';
 
 // import 'package:amplify_api/amplify_api.dart';
 // import 'package:masked_text_input_formatter/masked_text_input_formatter.dart';
@@ -126,7 +126,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
           title: 'Tech387',
           leading: SvgPicture.asset('assets/images/logo.svg'),
           action: RoundedButton(
-            key: const Key('SignUpPage_homepage'),
+            key: const Key('LoginPage'),
             text: 'Login',
             press: () async {
               Navigator.pushNamed(context, LoginScreenWeb.routeName);
@@ -463,6 +463,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                       label: const Text("Password"),
                                       suffixIcon: IconButton(
                                         icon: Icon(
+                                          key: const Key("PasswordVisibility"),
                                           // Based on passwordVisible state choose the icon
                                           _passwordVisible
                                               ? Icons.visibility
@@ -590,7 +591,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                 ),
               ),
             ),
-            const FooterWidget()
+            const Footer(),
           ],
         ),
       ),

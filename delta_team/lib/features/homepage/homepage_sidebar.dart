@@ -76,6 +76,7 @@ class _SidebarState extends State<Sidebar> {
             height: 80,
           ),
           GestureDetector(
+            key: const Key("homescreen_key"),
             onTap: () {
               Navigator.pushNamed(context, '/homescreen');
               setState(() {
@@ -143,6 +144,7 @@ class _SidebarState extends State<Sidebar> {
                 }
 
                 return GestureDetector(
+                  key: const Key("getlectures_key"),
                   onTap: () async {
                     Map<String, dynamic> lecturesList = lectures;
                     if (lectures.isNotEmpty) {
@@ -208,6 +210,7 @@ class _SidebarState extends State<Sidebar> {
             height: 20,
           ),
           GestureDetector(
+            key: const Key("recentlectures_key"),
             onTap: () {
               Navigator.pushNamed(context, '/recentLectures');
               setState(() {
@@ -241,6 +244,7 @@ class _SidebarState extends State<Sidebar> {
             height: 20,
           ),
           GestureDetector(
+            key: const Key("contact_key"),
             onTap: () {
               Navigator.pushNamed(context, '/contactUs');
               setState(() {

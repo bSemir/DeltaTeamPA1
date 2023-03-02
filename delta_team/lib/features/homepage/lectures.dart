@@ -144,6 +144,7 @@ class _LecturesPageState extends State<LecturesPage> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
+                            key: const Key("user_icon_key"),
                             onTap: () {
                               setState(() {
                                 showModal = !showModal;
@@ -285,6 +286,8 @@ class _LecturesPageState extends State<LecturesPage> {
                                               ),
                                             ),
                                             InkWell(
+                                              key:
+                                                  const Key("lectureVideo_key"),
                                               onTap: () async {
                                                 final prefs =
                                                     await SharedPreferences
@@ -368,6 +371,8 @@ class _LecturesPageState extends State<LecturesPage> {
                                                     height: 27,
                                                   ),
                                                   InkWell(
+                                                    key: const Key(
+                                                        "lectureVideo_key"),
                                                     onTap: () async {
                                                       final prefs =
                                                           await SharedPreferences

@@ -12,7 +12,6 @@ import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/
 
 import 'package:delta_team/features/onboarding/onboarding_web/onboardingScreen.dart';
 import 'package:delta_team/home_mobile.dart';
-import 'package:delta_team/home_web.dart';
 
 import 'package:flutter/foundation.dart';
 
@@ -142,10 +141,11 @@ class _MyAppState extends State<MyApp> {
                 defaultTargetPlatform == TargetPlatform.android
             ? const SignupScreenMobile()
             : const LoginScreenWeb(),
+
+        // LoginScreenWeb(),
         routes: {
           LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
           LoginScreenMobile.routeName: (context) => const LoginScreenMobile(),
-          HomeScreenWeb.routeName: (context) => const HomeScreenWeb(),
           HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
           LoadingScreenMobile.routeName: (context) =>
               const LoadingScreenMobile(),

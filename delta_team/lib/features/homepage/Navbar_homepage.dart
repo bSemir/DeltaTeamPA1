@@ -17,6 +17,7 @@ class _NavbarHomePageState extends State<NavbarHomePage> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         GestureDetector(
+          key: const Key("user_icon_key"),
           onTap: () {
             setState(() {
               showModalProvider.toggleModal();

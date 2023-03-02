@@ -38,6 +38,9 @@ class Footer extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          const SizedBox(
+            height: 18,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -51,7 +54,7 @@ class Footer extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 44.26,
+            height: 30.26,
           ),
           const Divider(color: Color.fromRGBO(0, 0, 0, 0.5)),
           const SizedBox(
