@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "delta_team",
+            "cwd": "delta_team",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "delta_team (profile mode)",
+            "cwd": "delta_team",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "delta_team (release mode)",
+            "cwd": "delta_team",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

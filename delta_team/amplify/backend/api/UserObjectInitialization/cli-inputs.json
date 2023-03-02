@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "paths": {
+    "/api/onboarding/submit": {
+      "name": "/api/onboarding/submit",
+      "lambdaFunction": "initializeUserObject",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}

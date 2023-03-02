@@ -1,0 +1,42 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pa1-dev-131313-authRole",
+      "UnauthRoleArn": "arn:aws:iam::856847078618:role/amplify-pa1-dev-131313-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::856847078618:role/amplify-pa1-dev-131313-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-pa1-dev-131313-deployment",
+      "UnauthRoleName": "amplify-pa1-dev-131313-unauthRole",
+      "StackName": "amplify-pa1-dev-131313",
+      "StackId": "arn:aws:cloudformation:us-east-1:856847078618:stack/amplify-pa1-dev-131313/ce0ff1f0-a6e0-11ed-8480-0a2c266a4f63",
+      "AmplifyAppId": "d1eeyqfw1cmvnu",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-pa1-dev-131313-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "auth": {
+        "pa113c12a32": {}
+      },
+      "function": {
+<<<<<<< HEAD
+=======
+        "getUserLecturesLambda": {
+          "deploymentBucketName": "amplify-pa1-dev-131313-deployment",
+          "s3Key": "amplify-builds/getUserLecturesLambda-2b5836466e4f62486873-build.zip"
+        },
+>>>>>>> b251eee011e22980675c33fdb8caaf27e0612827
+        "initializeUserObject": {
+          "deploymentBucketName": "amplify-pa1-dev-131313-deployment",
+          "s3Key": "amplify-builds/initializeUserObject-43537973366a2b666936-build.zip"
+        },
+        "testLecturesRoles": {
+          "deploymentBucketName": "amplify-pa1-dev-131313-deployment",
+          "s3Key": "amplify-builds/testLecturesRoles-7253386e715a73484863-build.zip"
+        },
+        "testonboarding": {
+          "deploymentBucketName": "amplify-pa1-dev-131313-deployment",
+          "s3Key": "amplify-builds/testonboarding-694f6258657348612f68-build.zip"
+        }
+      }
+    }
+  }
+}
