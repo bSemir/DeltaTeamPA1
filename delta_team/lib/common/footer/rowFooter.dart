@@ -13,14 +13,6 @@ class RowFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isPrivacyRow = false;
-    if (MediaQuery.of(context).size.width < 1080) {
-      isPrivacyRow = false;
-    }
-    if (MediaQuery.of(context).size.width > 1080) {
-      isPrivacyRow = true;
-    }
-
     return Row(
       children: [
         Column(
@@ -75,9 +67,10 @@ class RowFooter extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  InkWell(
+                  GestureDetector(
                     key: const Key('fbKey'),
                     onTap: () {
+                      print("FACEBOOK");
                       launchUrl(Uri.parse('https://www.facebook.com/tech387'));
                     },
                     child: Image.asset(
