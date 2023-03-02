@@ -6,12 +6,14 @@ import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_web.dart';
+import 'package:delta_team/features/homepage/provider/loginProviderAuth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-import '../../../amplifyconfiguration.dart';
+import '../../../../amplifyconfiguration.dart';
 
 class LoginField extends StatefulWidget {
   // final IconData suffixIcon;
@@ -110,6 +112,10 @@ class _LoginFieldState extends State<LoginField> {
     }
   }
 
+  String name = '';
+
+  String surname = '';
+
   Future<bool> logUserIn(String email, String password) async {
     try {
       setState(() {
@@ -117,8 +123,9 @@ class _LoginFieldState extends State<LoginField> {
       });
       final user =
           await Amplify.Auth.signIn(username: email, password: password);
-
       setState(() {
+        // name = CognitoUserAttributeKey.givenName as String;
+        // surname = CognitoUserAttributeKey.familyName as String;
         _loading = false;
       });
       setState(() {

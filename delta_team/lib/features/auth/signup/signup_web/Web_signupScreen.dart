@@ -14,6 +14,7 @@ import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:delta_team/features/auth/signup/provider/Web_auth_provider.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 // ignore: unused_import
@@ -38,6 +39,7 @@ class SignUpScreenWeb extends StatefulWidget {
 class _SignUpScreenWebState extends State<SignUpScreenWeb> {
   double fontSize = 48;
   bool isButtonPressed = false;
+  bool _loading = false;
 
   Future<bool> userExist(String email) async {
     try {
@@ -483,63 +485,100 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                     style: TextStyle(fontSize: 10),
                                   ),
                                   const SizedBox(height: 32),
-                                  ElevatedButton(
-                                    key: const Key("createAccountKey"),
-                                    onPressed: () async {
-                                      setState(() {
-                                        isButtonPressed = true;
-                                      });
+                                  _loading
+                                      ? const Center(
+                                          child: SpinKitRing(
+                                            color: Colors.black,
+                                            size: 36,
+                                            lineWidth: 6,
+                                          ),
+                                        )
+                                      : ElevatedButton(
+                                          key: const Key("createAccountKey"),
+                                          onPressed: () async {
+                                            setState(() {
+                                              isButtonPressed = true;
+                                            });
 
-                                      if (_signupFormKey.currentState!
-                                          .validate()) {
-                                        try {
-                                          final userAttributes =
-                                              <CognitoUserAttributeKey, String>{
-                                            CognitoUserAttributeKey.email:
-                                                emailController.text,
-                                            CognitoUserAttributeKey.phoneNumber:
-                                                phoneNumberController.text,
-                                            CognitoUserAttributeKey.givenName:
-                                                nameController.text,
-                                            CognitoUserAttributeKey.address:
-                                                cityController.text,
-                                            CognitoUserAttributeKey.familyName:
-                                                surnameController.text,
-                                            CognitoUserAttributeKey.birthdate:
-                                                birthDateController.text,
-                                            // const CognitoUserAttributeKey.custom(
-                                            //     "Student"): _statusValue!,
-                                          };
+                                            if (_signupFormKey.currentState!
+                                                .validate()) {
+                                              try {
+                                                setState(() {
+                                                  _loading = true;
+                                                });
+                                                final userAttributes = <
+                                                    CognitoUserAttributeKey,
+                                                    String>{
+                                                  CognitoUserAttributeKey.email:
+                                                      emailController.text,
+                                                  CognitoUserAttributeKey
+                                                          .phoneNumber:
+                                                      phoneNumberController
+                                                          .text,
+                                                  CognitoUserAttributeKey
+                                                          .givenName:
+                                                      nameController.text,
+                                                  CognitoUserAttributeKey
+                                                          .address:
+                                                      cityController.text,
+                                                  CognitoUserAttributeKey
+                                                          .familyName:
+                                                      surnameController.text,
+                                                  CognitoUserAttributeKey
+                                                          .birthdate:
+                                                      birthDateController.text,
+                                                  // const CognitoUserAttributeKey.custom(
+                                                  //     "Student"): _statusValue!,
+                                                };
 
-                                          final result =
-                                              await Amplify.Auth.signUp(
-                                            username: emailController.text,
-                                            password: passwordController.text,
-                                            options: CognitoSignUpOptions(
-                                                userAttributes: userAttributes),
-                                          );
-                                          // ignore: use_build_context_synchronously
-                                          Navigator.pushNamed(
-                                              context, "/confirmationWeb");
-                                          setState(() {
-                                            emailProvider.email =
-                                                emailController.text;
-                                          });
-                                        } on AuthException catch (e) {
-                                          safePrint(e.message);
-                                        }
-                                      }
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.black,
-                                      minimumSize:
-                                          const Size(double.infinity, 56),
-                                    ),
-                                    child: const Text(
-                                      "Create your account",
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                  ),
+                                                final result =
+                                                    await Amplify.Auth.signUp(
+                                                  username:
+                                                      emailController.text,
+                                                  password:
+                                                      passwordController.text,
+                                                  options: CognitoSignUpOptions(
+                                                      userAttributes:
+                                                          userAttributes),
+                                                );
+                                                // ignore: use_build_context_synchronously
+                                                Navigator.pushNamed(context,
+                                                    "/confirmationWeb");
+                                                setState(() {
+                                                  _loading = false;
+                                                });
+                                                setState(() {
+                                                  emailProvider.email =
+                                                      emailController.text;
+                                                  emailPasswordProvider
+                                                      .setEmail(
+                                                          emailController.text);
+                                                  emailPasswordProvider
+                                                      .setPassword(
+                                                          passwordController
+                                                              .text);
+                                                });
+                                              } on AuthException catch (e) {
+                                                setState(() {
+                                                  _loading = false;
+                                                });
+                                                safePrint(e.message);
+                                              }
+                                              setState(() {
+                                                _loading = false;
+                                              });
+                                            }
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.black,
+                                            minimumSize:
+                                                const Size(double.infinity, 56),
+                                          ),
+                                          child: const Text(
+                                            "Create your account",
+                                            style: TextStyle(fontSize: 16),
+                                          ),
+                                        ),
                                 ],
                               ),
                             ),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../amplifyconfiguration.dart';
 import '../../../../../common/custom_signlog_button.dart';
 
 class TextFieldSignUp extends StatefulWidget {
@@ -16,6 +17,24 @@ class TextFieldSignUp extends StatefulWidget {
 }
 
 class _TextFieldSignUpState extends State<TextFieldSignUp> {
+  @override
+  void initState() {
+    super.initState();
+    _configureAmplify();
+  }
+
+  Future<void> _configureAmplify() async {
+    try {
+      final auth = AmplifyAuthCognito();
+      await Amplify.addPlugin(auth);
+      await Amplify.configure(amplifyconfig);
+    } on AmplifyAlreadyConfiguredException catch (e) {
+      safePrint('Amplify was already configured: $e');
+    } catch (e) {
+      safePrint('An error occurred while configuring Amplify: $e');
+    }
+  }
+
   bool viewPassword = false;
   bool isButtonPressed = false;
   bool isPasswordEmpty = true;

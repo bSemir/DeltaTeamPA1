@@ -15,7 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:riverpod_extension/riverpod_extension.dart';
 
-import '../../signup_mobile/footer/develop/DeltaTeamPA1/delta_team/lib/features/auth/loadingScreens/loadingscreen_web.dart';
+import '../loadingScreens/loadingscreen_web.dart';
 
 class LoginScreenWeb extends StatefulWidget {
   static const routeName = '/loginmobileWeb';

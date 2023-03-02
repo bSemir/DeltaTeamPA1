@@ -42,10 +42,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-<<<<<<< HEAD
-=======
     // _configureAmplify();
->>>>>>> 7840f5c4bbd14efe98612f62e9abeaeeaeda6fff
   }
 
   // Future<void> _configureAmplify() async {

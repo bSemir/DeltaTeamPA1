@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:amplify_core/amplify_core.dart';
 import 'package:auth/auth.dart';
 import 'package:delta_team/features/homepage/Navbar_homepage.dart';
+import 'package:delta_team/features/homepage/account_modal.dart';
 import 'package:delta_team/features/homepage/homepage_sidebar.dart';
 import 'package:delta_team/features/homepage/provider/youtube_link_provider.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
   int numeration = -1;
   String description = '';
   bool showMore = false;
+  bool showModal = false;
 
   Map<String, dynamic> lectures = {};
   Future<Map<String, dynamic>> getUserLectures() async {
@@ -111,89 +113,105 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
                     : MediaQuery.of(context).size.width * 0.75,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 50, right: 50),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const NavbarHomePage(),
-                        Column(
+                  child: Stack(
+                    children: [
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 10, left: 70, right: 70),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      showModal = !showModal;
+                                    });
+                                  },
+                                  child: const Icon(
+                                    Icons.account_circle_rounded,
+                                    color: Colors.green,
+                                    size: 50,
                                   ),
-                                  Text(
-                                    "${numeration + 1}. $title",
-                                    style: GoogleFonts.notoSans(
-                                        fontSize: titleFont,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  const SizedBox(
-                                    height: 12,
-                                  ),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.75,
-                                    height: showMore
-                                        ? MediaQuery.of(context).size.height *
-                                            0.65
-                                        : MediaQuery.of(context).size.height *
-                                            0.555,
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xFFF3F3F9),
-                                      borderRadius: BorderRadius.circular(6),
-                                      border: Border.all(
-                                        color: const Color(0xFFF3F3F9),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10, left: 70, right: 70),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(
+                                        height: 10,
                                       ),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                            color: Color.fromARGB(
-                                                200, 180, 180, 180),
-                                            blurRadius: 1,
-                                            spreadRadius: 1.5,
-                                            offset: Offset(0, 2)),
-                                      ],
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Column(
-                                        children: [
-                                          Expanded(
-                                            child: YoutubePlayer(
-                                              key: const Key('ytPlayerManji'),
-                                              controller: controller,
-                                              aspectRatio: 16 / 9,
-                                            ),
+                                      Text(
+                                        "${numeration + 1}. $title",
+                                        style: GoogleFonts.notoSans(
+                                            fontSize: titleFont,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      const SizedBox(
+                                        height: 12,
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.75,
+                                        height: showMore
+                                            ? MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.65
+                                            : MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.555,
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFF3F3F9),
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          border: Border.all(
+                                            color: const Color(0xFFF3F3F9),
                                           ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          isShowMoreVisible
-                                              ? Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    RichText(
-                                                      text: TextSpan(
-                                                        text: 'Status: ',
-                                                        style: GoogleFonts
-                                                            .notoSans(
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          color: Colors.black,
-                                                        ),
-                                                        children: [
-                                                          TextSpan(
-                                                            text: 'Ongoing',
+                                          boxShadow: const [
+                                            BoxShadow(
+                                                color: Color.fromARGB(
+                                                    200, 180, 180, 180),
+                                                blurRadius: 1,
+                                                spreadRadius: 1.5,
+                                                offset: Offset(0, 2)),
+                                          ],
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                child: YoutubePlayer(
+                                                  key: const Key(
+                                                      'ytPlayerManji'),
+                                                  controller: controller,
+                                                  aspectRatio: 16 / 9,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              isShowMoreVisible
+                                                  ? Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        RichText(
+                                                          text: TextSpan(
+                                                            text: 'Status: ',
                                                             style: GoogleFonts
                                                                 .notoSans(
                                                               fontSize: 16,
@@ -203,65 +221,81 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
                                                               color:
                                                                   Colors.black,
                                                             ),
+                                                            children: [
+                                                              TextSpan(
+                                                                text: 'Ongoing',
+                                                                style: GoogleFonts
+                                                                    .notoSans(
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    InkWell(
-                                                      onTap: () {
-                                                        setState(() {
-                                                          showMore = !showMore;
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          Text(
-                                                            !showMore
-                                                                ? 'Show More'
-                                                                : 'Show Less',
-                                                            style: GoogleFonts
-                                                                .notoSans(
-                                                              fontSize: 16,
-                                                              color:
-                                                                  Colors.black,
-                                                            ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              showMore =
+                                                                  !showMore;
+                                                            });
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              Text(
+                                                                !showMore
+                                                                    ? 'Show More'
+                                                                    : 'Show Less',
+                                                                style: GoogleFonts
+                                                                    .notoSans(
+                                                                  fontSize: 16,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                              Icon(
+                                                                showMore
+                                                                    ? Icons
+                                                                        .keyboard_arrow_up
+                                                                    : Icons
+                                                                        .keyboard_arrow_down,
+                                                              )
+                                                            ],
                                                           ),
-                                                          Icon(
-                                                            showMore
-                                                                ? Icons
-                                                                    .keyboard_arrow_up
-                                                                : Icons
-                                                                    .keyboard_arrow_down,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )
-                                              : Container(),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                          Visibility(
-                                            visible: showMore,
-                                            child: Text(
-                                              description,
-                                              style: GoogleFonts.notoSans(
-                                                fontSize: 16,
-                                                color: Colors.black,
+                                                        ),
+                                                      ],
+                                                    )
+                                                  : Container(),
+                                              const SizedBox(
+                                                height: 10,
                                               ),
-                                            ),
+                                              Visibility(
+                                                visible: showMore,
+                                                child: Text(
+                                                  description,
+                                                  style: GoogleFonts.notoSans(
+                                                    fontSize: 16,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ]),
+                          ]),
+                      !showModal ? Container() : const AccountModal(),
+                    ],
+                  ),
                 )),
           )
         ],

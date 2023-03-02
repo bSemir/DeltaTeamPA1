@@ -8,6 +8,7 @@ import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/features/auth/signup/provider/Web_auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +40,8 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
   bool codeError = false;
   bool canSendCode = true;
   bool notSendCodeAgainPressed = false;
+
+  bool _loading = false;
 
   String code1Str = "";
   String code2Str = "";
@@ -90,8 +93,6 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
     screenWidth ??= MediaQuery.of(context).size.width;
     screenHeight ??= MediaQuery.of(context).size.height;
     final emailProvider = Provider.of<MyEmailWeb>(context, listen: false);
-    final emailPasswordProvider =
-        Provider.of<EmailPasswordProvider>(context, listen: false);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -645,81 +646,105 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                   const SizedBox(
                                     height: 25,
                                   ),
-                                  ElevatedButton(
-                                    key: const Key("verifyConfirmationKey"),
-                                    onPressed: () async {
-                                      if (clickCounter == 0) {
-                                        _startTimer();
-                                      }
-                                      setState(() {
-                                        notSendCodeAgainPressed = true;
-                                      });
-                                      setState(() {
-                                        clickCounter++;
-                                        isPressed = true;
-                                        code = "";
-                                        code += code1Str +
-                                            code2Str +
-                                            code3Str +
-                                            code4Str +
-                                            code5Str +
-                                            code6Str;
-                                      });
-                                      if (code.length < 6) {
-                                        setState(() {
-                                          codeError = true;
-                                        });
-                                      }
+                                  _loading
+                                      ? const Center(
+                                          child: SpinKitRing(
+                                            color: Colors.black,
+                                            size: 36,
+                                            lineWidth: 6,
+                                          ),
+                                        )
+                                      : ElevatedButton(
+                                          key: const Key(
+                                              "verifyConfirmationKey"),
+                                          onPressed: () async {
+                                            if (clickCounter == 0) {
+                                              _startTimer();
+                                            }
+                                            setState(() {
+                                              notSendCodeAgainPressed = true;
+                                            });
+                                            setState(() {
+                                              clickCounter++;
+                                              isPressed = true;
+                                              code = "";
+                                              code += code1Str +
+                                                  code2Str +
+                                                  code3Str +
+                                                  code4Str +
+                                                  code5Str +
+                                                  code6Str;
+                                            });
+                                            if (code.length < 6) {
+                                              setState(() {
+                                                codeError = true;
+                                              });
+                                            }
 
-                                      if (_emailVerificationKey.currentState!
-                                          .validate()) {
-                                        try {
-                                          final result =
-                                              await Amplify.Auth.confirmSignUp(
-                                                  username: emailProvider.email,
-                                                  confirmationCode: code);
-                                          setState(() {
-                                            codeError =
-                                                !result.isSignUpComplete;
-                                          });
-                                          if (!codeError) {
-                                            FocusManager.instance.primaryFocus
-                                                ?.unfocus();
-                                            Navigator.pushNamed(context,
-                                                '/confirmationMessageWeb');
-                                          }
-                                        } on AuthException catch (e) {
-                                          setState(() {
-                                            codeError = true;
-                                          });
-                                          // if (e.message.toString().contains(
-                                          //         "Confirmation code entered is not correct.") ||
-                                          //     e.message.toString().contains(
-                                          //         "One or more parameters are incorrect.")) {
-                                          //   setState(() {
-                                          //     codeError = true;
-                                          //   });
-                                          // } else {
-                                          //   setState(() {
-                                          //     codeError = false;
-                                          //   });
-                                          // }
-                                        }
-                                      }
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.black,
-                                      minimumSize:
-                                          const Size(double.infinity, 56),
-                                    ),
-                                    child: Text(
-                                      "Verify",
-                                      style: GoogleFonts.notoSans(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ),
+                                            if (_emailVerificationKey
+                                                .currentState!
+                                                .validate()) {
+                                              try {
+                                                setState(() {
+                                                  _loading = true;
+                                                });
+                                                final result = await Amplify
+                                                        .Auth
+                                                    .confirmSignUp(
+                                                        username:
+                                                            emailProvider.email,
+                                                        confirmationCode: code);
+
+                                                setState(() {
+                                                  codeError =
+                                                      !result.isSignUpComplete;
+                                                  _loading = false;
+                                                });
+
+                                                if (!codeError) {
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+
+                                                  Navigator.pushNamed(context,
+                                                      '/confirmationMessageWeb');
+                                                }
+                                              } on AuthException catch (e) {
+                                                setState(() {
+                                                  codeError = true;
+                                                  _loading = false;
+                                                });
+                                                // if (e.message.toString().contains(
+                                                //         "Confirmation code entered is not correct.") ||
+                                                //     e.message.toString().contains(
+                                                //         "One or more parameters are incorrect.")) {
+                                                //   setState(() {
+                                                //     codeError = true;
+                                                //   });
+                                                // } else {
+                                                //   setState(() {
+                                                //     codeError = false;
+                                                //   });
+                                                // }
+                                              }
+                                              setState(() {
+                                                _loading = false;
+                                              });
+                                            }
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.black,
+                                            minimumSize:
+                                                const Size(double.infinity, 56),
+                                          ),
+                                          child: Text(
+                                            "Verify",
+                                            style: GoogleFonts.notoSans(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        ),
                                   const SizedBox(
                                     height: 20,
                                   ),

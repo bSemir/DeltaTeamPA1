@@ -1,4 +1,5 @@
 import 'package:delta_team/common/colors.dart';
+import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -77,12 +78,12 @@ class _WelcomePageState extends State<WelcomePage> {
                     textAlign: TextAlign.center,
                   ),
                   MaterialButton(
-                    key: const Key('NavigateToOnboardingButtonKey'),
+                    key: const Key('NavigateToLoginButtonKey'),
                     child: SvgPicture.asset(
                         'assets/images/arrow_forward_24px.svg'),
                     // Image.asset('assets/images/arrow_forward_24px.svg'),
                     onPressed: () {
-                      Navigator.pushNamed(context, OnboardingScreen.routeName);
+                      Navigator.pushNamed(context, LoginScreenMobile.routeName);
                     },
                   )
                 ],

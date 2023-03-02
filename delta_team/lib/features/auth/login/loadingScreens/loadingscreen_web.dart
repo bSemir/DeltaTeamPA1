@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class LoadingScreenWeb extends StatefulWidget {
   static const routeName = '/loadingweb';
@@ -26,7 +27,7 @@ class _LoadingScreenWebState extends State<LoadingScreenWeb> {
   }
 
   startTimeout() async {
-    var duration = const Duration(seconds: 10);
+    var duration = const Duration(seconds: 3);
     return Timer(duration, navigateToHomeScreen);
   }
 

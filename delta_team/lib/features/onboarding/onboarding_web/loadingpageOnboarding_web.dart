@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../auth/login/login_web/loginweb_body.dart';
+
 class LoadingPageOnboarding extends StatefulWidget {
   const LoadingPageOnboarding({super.key});
 
@@ -21,11 +23,11 @@ class _LoadingPageOnboardingState extends State<LoadingPageOnboarding> {
 
   startTimeout() async {
     var duration = const Duration(seconds: 10);
-    return Timer(duration, navigateToHome);
+    return Timer(duration, navigateToLogin);
   }
 
-  navigateToHome() {
-    Navigator.pushNamed(context, "/homeweb");
+  navigateToLogin() {
+    Navigator.pushNamed(context, LoginScreenWeb.routeName);
   }
 
   @override

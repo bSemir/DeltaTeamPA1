@@ -1,4 +1,6 @@
+import 'package:delta_team/features/homepage/provider/showModalProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NavbarHomePage extends StatefulWidget {
   const NavbarHomePage({super.key});
@@ -10,13 +12,21 @@ class NavbarHomePage extends StatefulWidget {
 class _NavbarHomePageState extends State<NavbarHomePage> {
   @override
   Widget build(BuildContext context) {
+    final showModalProvider = Provider.of<ShowModal>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
-      children: const [
-        Icon(
-          Icons.account_circle_rounded,
-          color: Colors.green,
-          size: 50,
+      children: [
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              showModalProvider.toggleModal();
+            });
+          },
+          child: const Icon(
+            Icons.account_circle_rounded,
+            color: Colors.green,
+            size: 50,
+          ),
         ),
       ],
     );
