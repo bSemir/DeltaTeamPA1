@@ -1,6 +1,5 @@
 import 'package:delta_team/common/footer/rowFooter.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'columnFooter.dart';
 

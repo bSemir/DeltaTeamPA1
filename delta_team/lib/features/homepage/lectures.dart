@@ -4,6 +4,7 @@ import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/homepage/homepage_sidebar.dart';
+import 'package:delta_team/features/homepage/provider/selectedRoleProvider.dart';
 import 'package:delta_team/features/homepage/provider/youtube_link_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../amplifyconfiguration.dart';
+import '../auth/login/providers/userLecturesProvider.dart';
 import 'account_modal.dart';
 
 class LecturesPage extends StatefulWidget {
@@ -25,8 +27,9 @@ class _LecturesPageState extends State<LecturesPage> {
   @override
   void initState() {
     super.initState();
-    _loadPrefs();
-    getUserLectures();
+
+    // _loadPrefs();
+    // getUserLectures();
   }
 
   bool showModal = false;
@@ -83,7 +86,10 @@ class _LecturesPageState extends State<LecturesPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(selectedRole);
+    final userLecturesProvider =
+        Provider.of<LecturesProvider>(context, listen: false);
+    final selectedRoleProvider =
+        Provider.of<SelectedRoleProvider>(context, listen: false);
 
     bool removeDescription = false;
     if (MediaQuery.of(context).size.width < 970) {
@@ -92,27 +98,31 @@ class _LecturesPageState extends State<LecturesPage> {
     final youtubeProvider =
         Provider.of<YoutubeLinkProvider>(context, listen: false);
     List<Map<String, dynamic>> lecs = [];
-    if (lectures.isNotEmpty) {
-      List<dynamic> lecturesList = lectures["lectures"];
+    if (userLecturesProvider.lectures.isNotEmpty) {
+      List<dynamic> lecturesList = userLecturesProvider.lectures["lectures"];
 
       for (int i = 0; i < lecturesList.length; i++) {
         Map<String, dynamic> lecture = lecturesList[i];
         dynamic role = lecture['roles'];
-        if (role.toString().contains("backend") && selectedRole == "backend") {
+
+        if (role.toString().contains("backend") &&
+            selectedRoleProvider.getRole == "backend") {
           lecs.add(lecture);
         }
         if (role.toString().contains("productManager") &&
-            selectedRole == "productManager") {
+            selectedRoleProvider.getRole == "productManager") {
           lecs.add(lecture);
         }
         if (role.toString().contains("fullstack") &&
-            selectedRole == "fullstack") {
+            selectedRoleProvider.getRole == "fullstack") {
           lecs.add(lecture);
         }
-        if (role.toString().contains("uiux") && selectedRole == "uiux") {
+        if (role.toString().contains("uiux") &&
+            selectedRoleProvider.getRole == "uiux") {
           lecs.add(lecture);
         }
-        if (role.toString().contains("qa") && selectedRole == "qa") {
+        if (role.toString().contains("qa") &&
+            selectedRoleProvider.getRole == "qa") {
           lecs.add(lecture);
         }
       }
@@ -169,6 +179,8 @@ class _LecturesPageState extends State<LecturesPage> {
                                   shrinkWrap: true,
                                   itemCount: lecs.length,
                                   itemBuilder: ((context, index) {
+                                    print("User lectures");
+                                    print(userLecturesProvider.lectures);
                                     return Column(
                                       children: [
                                         Row(

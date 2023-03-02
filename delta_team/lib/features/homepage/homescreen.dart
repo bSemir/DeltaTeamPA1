@@ -19,18 +19,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _loadPrefs();
+    // _loadPrefs();
   }
 
   String selectedRole = "";
 
   Future<void> _loadPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final jsonString = prefs.getString('myMap');
     final role = prefs.getString('role');
 
     setState(() {
-      lectures = jsonDecode(jsonString!);
       selectedRole = role!;
     });
   }
@@ -47,9 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
       final response = await restOperation.response;
 
       Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
-      setState(() {
-        lectures = responseMap;
-      });
       // responseMap.forEach((key, value) {
       //   print("$key: $value");
       // });
@@ -63,14 +58,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool removePhoto = false;
     bool increaseSizebar = false;
-    bool removeHomescreen = false;
 
-    if (MediaQuery.of(context).size.width < 800) {
-      return Container();
-    }
     if (MediaQuery.of(context).size.width < 970) {
       increaseSizebar = true;
+      removePhoto = true;
     }
 
     return Scaffold(
@@ -125,50 +118,49 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
 
                     //container za sliku koja trci
-                    Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 60),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.252,
-                            height: MediaQuery.of(context).size.height * 0.235,
-                            child: Image.asset('assets/images/homepageui.png'),
+                    removePhoto
+                        ? Column(
+                            children: const [
+                              Text(
+                                'Welcome to',
+                                style: TextStyle(fontSize: 45),
+                              ),
+                              Text(
+                                'Product Arena',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 50),
+                              )
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 60),
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.252,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.235,
+                                  child: Image.asset(
+                                      'assets/images/homepageui.png'),
+                                ),
+                              ),
+                              Column(
+                                children: const [
+                                  Text(
+                                    'Welcome to',
+                                    style: TextStyle(fontSize: 45),
+                                  ),
+                                  Text(
+                                    'Product Arena',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 50),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: (30 / 1440) *
-                                      MediaQuery.of(context).size.width),
-                              child: Container(
-                                width: increaseSizebar
-                                    ? MediaQuery.of(context).size.width * 0.25
-                                    : MediaQuery.of(context).size.width * 0.30,
-                                child: Text(
-                                  'Welcome to',
-                                  style: TextStyle(fontSize: 45),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: (30 / 1440) *
-                                      MediaQuery.of(context).size.width),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.30,
-                                child: Text(
-                                  'Product Arena',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 50),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),

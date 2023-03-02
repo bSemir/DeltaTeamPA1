@@ -2,9 +2,13 @@ import 'dart:convert';
 
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_core/amplify_core.dart';
+import 'package:delta_team/features/homepage/provider/selectedRoleProvider.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_models/role_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../auth/login/providers/userLecturesProvider.dart';
 
 class Sidebar extends StatefulWidget {
   const Sidebar({super.key});
@@ -13,7 +17,6 @@ class Sidebar extends StatefulWidget {
   State<Sidebar> createState() => _SidebarState();
 }
 
-Map<String, dynamic> lectures = {};
 List varijablaRola = [];
 
 bool isSelectedHome = true;
@@ -24,54 +27,51 @@ bool isSelectedSecondRole = false;
 int selectedIndex = -1;
 
 class _SidebarState extends State<Sidebar> {
-  Future<Map<String, dynamic>> getUserLectures() async {
-    // signInUser();
-    try {
-      final restOperation = Amplify.API.get('/api/user/lectures',
-          apiName: 'getUserLectures',
-          queryParameters: {
-            'paDate': 'Jan2023'
-            // , 'name': 'Flutter widgets'
-          });
-      final response = await restOperation.response;
-
-      Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
-
-      setState(() {
-        lectures = responseMap;
-      });
-
-      List temp = [];
-      responseMap['lectures'].forEach((lecture) {
-        temp.addAll(lecture['roles']);
-      });
-
-      Set<String> set = Set<String>.from(temp);
-      List<String> roles = set.toList();
-
-      setState(() {
-        varijablaRola = roles;
-      });
-      return responseMap;
-    } on ApiException catch (e) {
-      throw Exception('Failed to load lectures: $e');
-    }
-  }
-
   @override
   void initState() {
     super.initState();
-    getUserLectures();
+    // getUserLectures();
   }
 
   @override
   Widget build(BuildContext context) {
+    bool removeText = false;
+    if (MediaQuery.of(context).size.width > 750) {
+      setState(() {
+        removeText = true;
+      });
+    }
+    Set<String> uniqueRoles = {};
+    List<String> roleTemp = [];
+    final userLecturesProvider =
+        Provider.of<LecturesProvider>(context, listen: false);
+    final selectedRoleProvider =
+        Provider.of<SelectedRoleProvider>(context, listen: false);
+    if (userLecturesProvider.lectures.isNotEmpty) {
+      List<dynamic> lecturesList = userLecturesProvider.lectures["lectures"];
+      for (int i = 0; i < lecturesList.length; i++) {
+        Map<String, dynamic> lecture = lecturesList[i];
+        List<String> roles = lecture['roles'].cast<String>();
+
+        for (String role in roles) {
+          roleTemp.add(role);
+        }
+      }
+      for (String role in roleTemp) {
+        uniqueRoles.add(role);
+      }
+      for (String role in uniqueRoles) {
+        if (!varijablaRola.contains(role)) {
+          varijablaRola.add(role);
+        }
+      }
+    }
+
     return Padding(
       padding: const EdgeInsets.only(top: 62, right: 24, left: 24),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset("assets/images/sidebar_logo.png"),
+          Center(child: Image.asset("assets/images/sidebar_logo.png")),
           const SizedBox(
             height: 80,
           ),
@@ -89,22 +89,27 @@ class _SidebarState extends State<Sidebar> {
               });
             },
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: removeText
+                  ? MainAxisAlignment.start
+                  : MainAxisAlignment.center,
               children: [
-                Center(
-                  child: Image.asset(
-                    'assets/images/Homescreen.png',
-                    color: isSelectedHome ? Colors.green : Colors.white,
-                  ),
+                Image.asset(
+                  'assets/images/Homescreen.png',
+                  color: isSelectedHome ? Colors.green : Colors.white,
                 ),
                 const SizedBox(
                   width: 5,
                 ),
-                Text(
-                  'Homescreen',
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: isSelectedHome ? Colors.green : Colors.white),
-                ),
+                removeText
+                    ? Text(
+                        'Homescreen',
+                        style: TextStyle(
+                            fontSize: 16,
+                            color:
+                                isSelectedHome ? Colors.green : Colors.white),
+                      )
+                    : Container(),
               ],
             ),
           ),
@@ -146,10 +151,11 @@ class _SidebarState extends State<Sidebar> {
                 return GestureDetector(
                   key: const Key("getlectures_key"),
                   onTap: () async {
-                    Map<String, dynamic> lecturesList = lectures;
-                    if (lectures.isNotEmpty) {
-                      final prefs = await SharedPreferences.getInstance();
-                      await prefs.setString('myMap', jsonEncode(lecturesList));
+                    Map<String, dynamic> lecturesList =
+                        userLecturesProvider.lectures;
+                    if (userLecturesProvider.lectures.isNotEmpty) {
+                      // final prefs = await SharedPreferences.getInstance();
+                      // await prefs.setString('myMap', jsonEncode(lecturesList));
                       setState(() {
                         selectedIndex = index;
                       });
@@ -171,12 +177,16 @@ class _SidebarState extends State<Sidebar> {
                         });
                       }
 
-                      await prefs.setString("role", res);
+                      selectedRoleProvider.setRole(res);
+                      // await prefs.setString("role", res);
                     }
 
                     Navigator.pushNamed(context, '/lecturesPage');
                   },
                   child: Row(
+                    mainAxisAlignment: removeText
+                        ? MainAxisAlignment.start
+                        : MainAxisAlignment.center,
                     children: [
                       Image.asset(image,
                           width: 24,
@@ -187,14 +197,16 @@ class _SidebarState extends State<Sidebar> {
                       const SizedBox(
                         width: 5,
                       ),
-                      Text(
-                        str,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: selectedIndex == index
-                                ? Colors.green
-                                : Colors.white),
-                      ),
+                      removeText
+                          ? Text(
+                              str,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: selectedIndex == index
+                                      ? Colors.green
+                                      : Colors.white),
+                            )
+                          : Container(),
                     ],
                   ),
                 );
@@ -223,6 +235,9 @@ class _SidebarState extends State<Sidebar> {
               });
             },
             child: Row(
+              mainAxisAlignment: removeText
+                  ? MainAxisAlignment.start
+                  : MainAxisAlignment.center,
               children: [
                 Image.asset(
                   'assets/images/recent_icon.png',
@@ -231,12 +246,15 @@ class _SidebarState extends State<Sidebar> {
                 const SizedBox(
                   width: 5,
                 ),
-                Text(
-                  'Recent Lectures',
-                  style: TextStyle(
-                      color: isSelectedRecent ? Colors.green : Colors.white,
-                      fontSize: 16),
-                ),
+                removeText
+                    ? Text(
+                        'Recent Lectures',
+                        style: TextStyle(
+                            color:
+                                isSelectedRecent ? Colors.green : Colors.white,
+                            fontSize: 16),
+                      )
+                    : Container(),
               ],
             ),
           ),
@@ -257,6 +275,9 @@ class _SidebarState extends State<Sidebar> {
               });
             },
             child: Row(
+              mainAxisAlignment: removeText
+                  ? MainAxisAlignment.start
+                  : MainAxisAlignment.center,
               children: [
                 Image.asset(
                   'assets/images/contact_icon.png',
@@ -265,12 +286,15 @@ class _SidebarState extends State<Sidebar> {
                 const SizedBox(
                   width: 5,
                 ),
-                Text(
-                  'Contact us!',
-                  style: TextStyle(
-                      color: isSelectedContact ? Colors.green : Colors.white,
-                      fontSize: 16),
-                ),
+                removeText
+                    ? Text(
+                        'Contact us!',
+                        style: TextStyle(
+                            color:
+                                isSelectedContact ? Colors.green : Colors.white,
+                            fontSize: 16),
+                      )
+                    : Container(),
               ],
             ),
           ),

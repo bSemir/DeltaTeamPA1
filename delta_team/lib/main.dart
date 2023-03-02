@@ -1,10 +1,12 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
+import 'package:delta_team/features/auth/login/providers/userAttributesProvider.dart';
 import 'package:delta_team/features/homepage/contact_me_screen.dart';
 import 'package:delta_team/features/homepage/homescreen.dart';
 import 'package:delta_team/features/homepage/lectures.dart';
 import 'package:delta_team/features/homepage/provider/authProvider.dart';
+import 'package:delta_team/features/homepage/provider/selectedRoleProvider.dart';
 import 'package:delta_team/features/homepage/provider/showModalProvider.dart';
 import 'package:delta_team/features/homepage/provider/titleProvider.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/congratulations_card_mobile.dart';
@@ -23,6 +25,7 @@ import 'features/auth/login/loadingScreens/loadingscreen_mobile.dart';
 import 'features/auth/login/loadingScreens/loadingscreen_web.dart';
 import 'features/auth/login/login_mobile/loginmobile_body.dart';
 import 'features/auth/login/login_web/loginweb_body.dart';
+import 'features/auth/login/providers/userLecturesProvider.dart';
 import 'features/auth/signup/provider/Web_auth_provider.dart';
 import 'features/auth/signup/provider/auth_provider_mobile.dart';
 import 'features/auth/signup/signup_mobile/screens/confirmation_message_mobile.dart';
@@ -118,6 +121,15 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (_) => ShowModal(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => LecturesProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SelectedRoleProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserAttributesProvider(),
         ),
       ],
       child: MaterialApp(

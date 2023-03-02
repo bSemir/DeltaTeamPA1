@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../amplifyconfiguration.dart';
+import '../auth/login/providers/userLecturesProvider.dart';
 import 'account_modal.dart';
 
 class RecentLectures extends StatefulWidget {
@@ -25,8 +26,8 @@ class _RecentLecturesState extends State<RecentLectures> {
   @override
   void initState() {
     super.initState();
-    _loadPrefs();
-    getUserLectures();
+    // _loadPrefs();
+    // getUserLectures();
   }
 
   bool showModal = false;
@@ -85,6 +86,8 @@ class _RecentLecturesState extends State<RecentLectures> {
 
   @override
   Widget build(BuildContext context) {
+    final userLecturesProvider =
+        Provider.of<LecturesProvider>(context, listen: false);
     bool removeDescription = false;
     if (MediaQuery.of(context).size.width < 970) {
       removeDescription = true;
@@ -93,8 +96,8 @@ class _RecentLecturesState extends State<RecentLectures> {
         Provider.of<YoutubeLinkProvider>(context, listen: false);
     String role = "";
     List<Map<String, dynamic>> lecs = [];
-    if (lectures.isNotEmpty) {
-      List<dynamic> lecturesList = lectures["lectures"];
+    if (userLecturesProvider.lectures.isNotEmpty) {
+      List<dynamic> lecturesList = userLecturesProvider.lectures["lectures"];
 
       for (int i = 0; i < 3; i++) {
         Map<String, dynamic> lecture = lecturesList[i];

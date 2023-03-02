@@ -2,7 +2,9 @@ import 'package:amplify_core/amplify_core.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
+import '../auth/login/providers/userAttributesProvider.dart';
 import 'homepage_sidebar.dart';
 
 class AccountModal extends StatefulWidget {
@@ -16,12 +18,8 @@ class _AccountModalState extends State<AccountModal> {
   @override
   void initState() {
     super.initState();
-    fetchCurrentUserAttributes();
   }
 
-  String name = '';
-  String surname = '';
-  String email = '';
   Future<void> signOutUser() async {
     try {
       final res = await Amplify.Auth.signOut();
@@ -30,36 +28,11 @@ class _AccountModalState extends State<AccountModal> {
     }
   }
 
-  Future<void> fetchCurrentUserAttributes() async {
-    try {
-      final result = await Amplify.Auth.fetchUserAttributes();
-      for (final element in result) {
-        // print('key: ${element.userAttributeKey}; value: ${element.value}');
-        if (element.userAttributeKey.key == "email") {
-          setState(() {
-            email = element.value;
-          });
-        }
-        if (element.userAttributeKey.key == "given_name") {
-          setState(() {
-            name = element.value;
-          });
-        }
-        if (element.userAttributeKey.key == "family_name") {
-          setState(() {
-            surname = element.value;
-          });
-        }
-      }
-    } on AuthException catch (e) {
-      print(e.message);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    final userAttributesProvider =
+        Provider.of<UserAttributesProvider>(context, listen: false);
+
     return Positioned(
       top: 64,
       right: 106,
@@ -97,13 +70,14 @@ class _AccountModalState extends State<AccountModal> {
               ),
               Center(
                 child: Text(
-                  "$name $surname",
-                  style: GoogleFonts.outfit(fontSize: 32),
+                  "${userAttributesProvider.name} ${userAttributesProvider.surname}",
+                  style: GoogleFonts.outfit(
+                      fontSize: 32, fontWeight: FontWeight.bold),
                 ),
               ),
               Center(
                 child: Text(
-                  email,
+                  userAttributesProvider.email,
                   style: GoogleFonts.notoSans(fontSize: 16),
                 ),
               ),

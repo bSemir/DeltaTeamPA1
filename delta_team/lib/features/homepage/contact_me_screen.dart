@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:delta_team/features/auth/login/providers/userAttributesProvider.dart';
 import 'package:delta_team/features/homepage/Navbar_homepage.dart';
 import 'package:delta_team/features/homepage/homepage_sidebar.dart';
 import 'package:delta_team/features/homepage/provider/authProvider.dart';
@@ -62,9 +63,6 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width < 970) {
-      return Container();
-    }
     double maxwidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Row(
@@ -234,6 +232,10 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                   ElevatedButton(
                                     key: const Key("submit_key"),
                                     onPressed: () async {
+                                      final authProvider =
+                                          Provider.of<UserAttributesProvider>(
+                                              context,
+                                              listen: false);
                                       if (_contactFormKey.currentState!
                                           .validate()) {
                                         try {
@@ -246,6 +248,8 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                                 'question': contactController
                                                     .text
                                                     .toString(),
+                                                'name': authProvider.name,
+                                                'email': authProvider.email
                                               },
                                             ),
                                           );

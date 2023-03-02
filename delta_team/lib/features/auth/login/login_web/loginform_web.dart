@@ -6,6 +6,8 @@ import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_web.dart';
+import 'package:delta_team/features/auth/login/providers/userAttributesProvider.dart';
+import 'package:delta_team/features/auth/login/providers/userLecturesProvider.dart';
 import 'package:delta_team/features/homepage/provider/loginProviderAuth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -93,13 +95,10 @@ class _LoginFieldState extends State<LoginField> {
   bool _loading = false;
 
   Future<Map<String, dynamic>> getUserLectures() async {
+    // signInUser();
     try {
       final restOperation = Amplify.API.get('/api/user/lectures',
-          apiName: 'getUserLectures',
-          queryParameters: {
-            'paDate': 'Jan2023'
-            // , 'name': 'Flutter widgets'
-          });
+          apiName: 'getUserLectures', queryParameters: {'paDate': 'Jan2023'});
       final response = await restOperation.response;
 
       Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
@@ -112,7 +111,8 @@ class _LoginFieldState extends State<LoginField> {
     }
   }
 
-  String name = '';
+  String nameUser = '';
+  String email = '';
 
   String surname = '';
 
@@ -149,10 +149,42 @@ class _LoginFieldState extends State<LoginField> {
     return false;
   }
 
+  Future<void> fetchCurrentUserAttributes() async {
+    try {
+      final result = await Amplify.Auth.fetchUserAttributes();
+      for (final element in result) {
+        // print('key: ${element.userAttributeKey}; value: ${element.value}');
+        if (element.userAttributeKey.key == "email") {
+          setState(() {
+            email = element.value;
+          });
+        }
+        if (element.userAttributeKey.key == "given_name") {
+          setState(() {
+            nameUser = element.value;
+          });
+        }
+        if (element.userAttributeKey.key == "family_name") {
+          setState(() {
+            surname = element.value;
+          });
+        }
+      }
+    } on AuthException catch (e) {
+      print(e.message);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final userAttributesProvider =
+        Provider.of<UserAttributesProvider>(context, listen: false);
+
     bool emailErrored = false;
     bool passwordErrored = false;
+
+    final userLecturesProvider =
+        Provider.of<LecturesProvider>(context, listen: false);
 
     double width = MediaQuery.of(context).size.width;
     return Form(
@@ -377,6 +409,13 @@ class _LoginFieldState extends State<LoginField> {
                           emailController.text, passwordController.text);
                       if (_signInKey.currentState!.validate()) {
                         if (canLogIn) {
+                          await getUserLectures();
+                          await fetchCurrentUserAttributes();
+                          userLecturesProvider.setLectures(lectures);
+                          userAttributesProvider.setEmail(email);
+                          userAttributesProvider.setName(nameUser);
+                          userAttributesProvider.setSurname(surname);
+
                           Navigator.pushNamed(context, '/homepage');
                         }
                       }
