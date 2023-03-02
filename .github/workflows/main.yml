@@ -18,13 +18,13 @@ jobs:
           channel: "stable"
 
       - name: 🌍 Enable Web
-        run: flutter config --enable-web
+        run: cd delta_team && flutter config --enable-web
 
       - name: 📦 Get packages
-        run: flutter pub get
+        run: cd delta_team && flutter pub get
 
       - name: 🏭 Build Web Application
-        run: flutter build web --release
+        run: cd delta_team && flutter build web --release
 
       # (3)
       - name: Make copy of artifacts
