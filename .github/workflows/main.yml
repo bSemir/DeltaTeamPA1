@@ -4,7 +4,7 @@ name: On Website Deploy
   push:
     # (1)
     branches:
-      - "develop"
+      - "main"
 jobs:
   build_and_deploy_web:
     name: Build & Deploy Flutter to Web
