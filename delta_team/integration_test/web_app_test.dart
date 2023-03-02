@@ -29,7 +29,7 @@ class MockCC extends Mock implements AuthCategory {
       required String password,
       SignUpOptions? options}) async {
     var result = MockSignUpResult();
-    when(result.isSignUpComplete).thenReturn(true);
+    when(result.isSignUpComplete).thenAnswer((realInvocation) => true);
     return result;
   }
 
