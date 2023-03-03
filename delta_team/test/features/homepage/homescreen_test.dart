@@ -27,18 +27,18 @@ Widget createLoginScreenWeb() => MultiProvider(
           userAttributesProvider = UserAttributesProvider();
           return userAttributesProvider;
         }),
-        // ChangeNotifierProvider<LecturesProvider>(create: (contex) {
-        //   lecturesProvider = LecturesProvider();
-        //   return lecturesProvider;
-        // }),
+        ChangeNotifierProvider<LecturesProvider>(create: (contex) {
+          lecturesProvider = LecturesProvider();
+          return lecturesProvider;
+        }),
         ChangeNotifierProvider<MyEmailWeb>(create: (contex) {
           myEmailWeb = MyEmailWeb();
           return myEmailWeb;
         }),
-        // ChangeNotifierProvider<SelectedRoleProvider>(create: (contex) {
-        //   selectedRoleProvider = SelectedRoleProvider();
-        //   return selectedRoleProvider;
-        // }),
+        ChangeNotifierProvider<SelectedRoleProvider>(create: (contex) {
+          selectedRoleProvider = SelectedRoleProvider();
+          return selectedRoleProvider;
+        }),
       ],
       child: MaterialApp(
         routes: {
