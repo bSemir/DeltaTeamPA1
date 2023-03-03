@@ -1,32 +1,45 @@
 import 'package:delta_team/features/auth/login/login_web/loginform_web.dart';
+import 'package:delta_team/features/auth/login/providers/userAttributesProvider.dart';
+import 'package:delta_team/features/auth/login/providers/userLecturesProvider.dart';
 import 'package:delta_team/features/auth/signup/provider/Web_auth_provider.dart';
 import 'package:delta_team/features/homepage/contact_me_screen.dart';
 import 'package:delta_team/features/homepage/homepage.dart';
+import 'package:delta_team/features/homepage/homepage_sidebar.dart';
 import 'package:delta_team/features/homepage/homepage_video_screen.dart';
 import 'package:delta_team/features/homepage/homescreen.dart';
 import 'package:delta_team/features/homepage/lectures.dart';
+import 'package:delta_team/features/homepage/provider/selectedRoleProvider.dart';
 import 'package:delta_team/features/homepage/recentLectures.dart';
+import 'package:delta_team/features/onboarding_web/provider/emailPasswProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
 late MyEmailWeb myEmailWeb;
+late UserAttributesProvider userAttributesProvider;
+late EmailPasswordProvider emailPasswordProvider;
+late LecturesProvider lecturesProvider;
+late SelectedRoleProvider selectedRoleProvider;
 
-Widget createLoginScreenWeb() => ChangeNotifierProvider<MyEmailWeb>(
-      create: (context) {
-        myEmailWeb = MyEmailWeb();
-        return myEmailWeb;
-      },
-      child: const MaterialApp(
-        home: LoginField(),
-      ),
-    );
-
-Widget createHomeScreenWeb() => ChangeNotifierProvider<MyEmailWeb>(
-      create: (context) {
-        myEmailWeb = MyEmailWeb();
-        return myEmailWeb;
-      },
+Widget createLoginScreenWeb() => MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserAttributesProvider>(create: (contex) {
+          userAttributesProvider = UserAttributesProvider();
+          return userAttributesProvider;
+        }),
+        ChangeNotifierProvider<LecturesProvider>(create: (contex) {
+          lecturesProvider = LecturesProvider();
+          return lecturesProvider;
+        }),
+        ChangeNotifierProvider<MyEmailWeb>(create: (contex) {
+          myEmailWeb = MyEmailWeb();
+          return myEmailWeb;
+        }),
+        ChangeNotifierProvider<SelectedRoleProvider>(create: (contex) {
+          selectedRoleProvider = SelectedRoleProvider();
+          return selectedRoleProvider;
+        }),
+      ],
       child: MaterialApp(
         routes: {
           '/homepage': (context) => const HomePage(),
@@ -35,6 +48,39 @@ Widget createHomeScreenWeb() => ChangeNotifierProvider<MyEmailWeb>(
           '/contactUs': (context) => const ContactMeScreen(),
           '/recentLectures': (context) => const RecentLectures(),
           '/homescreen': (context) => const HomeScreen(),
+        },
+        home: const HomeScreen(),
+      ),
+    );
+
+Widget createHomeScreenWeb() => MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserAttributesProvider>(create: (contex) {
+          userAttributesProvider = UserAttributesProvider();
+          return userAttributesProvider;
+        }),
+        ChangeNotifierProvider<LecturesProvider>(create: (contex) {
+          lecturesProvider = LecturesProvider();
+          return lecturesProvider;
+        }),
+        ChangeNotifierProvider<MyEmailWeb>(create: (contex) {
+          myEmailWeb = MyEmailWeb();
+          return myEmailWeb;
+        }),
+        ChangeNotifierProvider<SelectedRoleProvider>(create: (contex) {
+          selectedRoleProvider = SelectedRoleProvider();
+          return selectedRoleProvider;
+        }),
+      ],
+      child: MaterialApp(
+        routes: {
+          '/homepage': (context) => const HomePage(),
+          '/lecturesPage': (context) => const LecturesPage(),
+          '/homepagevideo': (context) => const HomePageVideoScreen(),
+          '/contactUs': (context) => const ContactMeScreen(),
+          '/recentLectures': (context) => const RecentLectures(),
+          '/homescreen': (context) => const HomeScreen(),
+          '/homepage_sidebar': (context) => const Sidebar(),
         },
         home: const HomeScreen(),
       ),
