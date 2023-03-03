@@ -18,31 +18,19 @@ class Sidebar extends StatefulWidget {
   State<Sidebar> createState() => _SidebarState();
 }
 
-List varijablaRola = [];
-
-bool isSelectedHome = true;
-bool isSelectedRecent = false;
-bool isSelectedContact = false;
-bool isSelectedFirstRole = false;
-bool isSelectedSecondRole = false;
-int selectedIndex = -1;
-
 class _SidebarState extends State<Sidebar> {
+  List varijablaRola = [];
+
+  bool isSelectedHome = true;
+  bool isSelectedRecent = false;
+  bool isSelectedContact = false;
+  bool isSelectedFirstRole = false;
+  bool isSelectedSecondRole = false;
+  int selectedIndex = -1;
+
   @override
   Widget build(BuildContext context) {
-    // LayoutBuilder(
-    //   builder: (BuildContext context, BoxConstraints constraints) {
-    //     if (MediaQuery.of(context).size.width > 650) {
-    //       return HomeScreen();
-    //     } else {
-    //       return Sidebar();
-    //     }
-    //   },
-    // );
-
     bool removeText = false;
-    bool isScreenBig = false;
-    bool closeSidebar = false;
 
     if (MediaQuery.of(context).size.width > 750) {
       removeText = true;
