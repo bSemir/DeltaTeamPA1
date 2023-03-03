@@ -85,7 +85,8 @@ class RowFooter extends StatelessWidget {
                   GestureDetector(
                     key: const Key('instagramkey'),
                     onTap: () {
-                      launch('https://www.instagram.com/tech387/?hl=en');
+                      launchUrl(Uri.parse(
+                          'https://www.instagram.com/tech387/?hl=en'));
                     },
                     child: Image.asset(
                       "assets/images/instagram.png",
@@ -99,8 +100,8 @@ class RowFooter extends StatelessWidget {
                   GestureDetector(
                     key: const Key('linkedinkey'),
                     onTap: () {
-                      launch(
-                          'https://www.linkedin.com/company/tech-387/mycompany/');
+                      launchUrl(Uri.parse(
+                          'https://www.linkedin.com/company/tech-387/mycompany/'));
                     },
                     child: Image.asset(
                       "assets/images/linkedin.png",
@@ -114,7 +115,7 @@ class RowFooter extends StatelessWidget {
                   GestureDetector(
                     key: const Key('keytech'),
                     onTap: () {
-                      launch('https://www.tech387.com/');
+                      launchUrl(Uri.parse('https://www.tech387.com/'));
                     },
                     child: Image.asset(
                       "assets/images/tech387.png",

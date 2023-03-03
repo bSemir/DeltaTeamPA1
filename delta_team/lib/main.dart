@@ -1,10 +1,16 @@
+import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/amplifyconfiguration.dart';
+import 'package:delta_team/features/auth/login/providers/userAttributesProvider.dart';
 import 'package:delta_team/features/homepage/contact_me_screen.dart';
+import 'package:delta_team/features/homepage/homepage_sidebar.dart';
+import 'package:delta_team/features/homepage/homepage_sidebar_responsive.dart';
 import 'package:delta_team/features/homepage/homescreen.dart';
 import 'package:delta_team/features/homepage/lectures.dart';
 import 'package:delta_team/features/homepage/provider/authProvider.dart';
+import 'package:delta_team/features/homepage/provider/isNavbarOpenedProvider.dart';
+import 'package:delta_team/features/homepage/provider/selectedRoleProvider.dart';
 import 'package:delta_team/features/homepage/provider/showModalProvider.dart';
 import 'package:delta_team/features/homepage/provider/titleProvider.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_widgets/congratulations_card_mobile.dart';
@@ -23,6 +29,7 @@ import 'features/auth/login/loadingScreens/loadingscreen_mobile.dart';
 import 'features/auth/login/loadingScreens/loadingscreen_web.dart';
 import 'features/auth/login/login_mobile/loginmobile_body.dart';
 import 'features/auth/login/login_web/loginweb_body.dart';
+import 'features/auth/login/providers/userLecturesProvider.dart';
 import 'features/auth/signup/provider/Web_auth_provider.dart';
 import 'features/auth/signup/provider/auth_provider_mobile.dart';
 import 'features/auth/signup/signup_mobile/screens/confirmation_message_mobile.dart';
@@ -57,13 +64,13 @@ void main() {
 
 Future<void> _configureAmplify() async {
   try {
-    final auth = AmplifyAuthCognito();
-    await Amplify.addPlugin(auth);
+    final authPlugin = AmplifyAuthCognito();
+    final api = AmplifyAPI();
+    await Amplify.addPlugins([authPlugin, api]);
+    // call Amplify.configure to use the initialized categories in your app
     await Amplify.configure(amplifyconfig);
-  } on AmplifyAlreadyConfiguredException catch (e) {
-    safePrint('Amplify was already configured: $e');
-  } catch (e) {
-    safePrint('An error occurred while configuring Amplify: $e');
+  } on Exception catch (e) {
+    safePrint('An error occurred configuring Amplify: $e');
   }
 }
 
@@ -78,7 +85,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    // _configureAmplify();
+    _configureAmplify();
   }
 
   // This widget is the root of your application.
@@ -118,6 +125,18 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (_) => ShowModal(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => LecturesProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SelectedRoleProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserAttributesProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => NavbarOpened(),
         ),
       ],
       child: MaterialApp(
@@ -174,6 +193,7 @@ class _MyAppState extends State<MyApp> {
           '/contactUs': (context) => const ContactMeScreen(),
           '/recentLectures': (context) => const RecentLectures(),
           '/homescreen': (context) => const HomeScreen(),
+          '/homepage_sidebar': (context) => const Sidebar(),
         },
       ),
     );

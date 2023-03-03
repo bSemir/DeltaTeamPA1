@@ -19,18 +19,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _loadPrefs();
+    // _loadPrefs();
   }
 
   String selectedRole = "";
 
   Future<void> _loadPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final jsonString = prefs.getString('myMap');
     final role = prefs.getString('role');
 
     setState(() {
-      lectures = jsonDecode(jsonString!);
       selectedRole = role!;
     });
   }
@@ -47,9 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
       final response = await restOperation.response;
 
       Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
-      setState(() {
-        lectures = responseMap;
-      });
       // responseMap.forEach((key, value) {
       //   print("$key: $value");
       // });
@@ -63,54 +58,95 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool increaseSizebar = false;
-    bool removeHomescreen = false;
+    bool removePhoto = false;
 
-    if (MediaQuery.of(context).size.width < 800) {
-      return Container();
+    double sizebarWidthBlack = MediaQuery.of(context).size.width * 0.25;
+    double sizebarWidthWhite = MediaQuery.of(context).size.width * 0.75;
+
+    bool smallScreensSidebar = false;
+
+    if (MediaQuery.of(context).size.width < 650) {
+      setState(() {
+        smallScreensSidebar = true;
+      });
     }
+
     if (MediaQuery.of(context).size.width < 970) {
-      increaseSizebar = true;
+      sizebarWidthBlack = MediaQuery.of(context).size.width * 0.35;
+      sizebarWidthWhite = MediaQuery.of(context).size.width * 0.65;
+      removePhoto = true;
     }
 
     return Scaffold(
       body: Row(
         children: [
-          Container(
-              color: Colors.black,
-              width: increaseSizebar
-                  ? MediaQuery.of(context).size.width * 0.35
-                  : MediaQuery.of(context).size.width * 0.25,
-              child: const Sidebar()),
+          !smallScreensSidebar
+              ? Container(
+                  color: Colors.black,
+                  width: sizebarWidthBlack,
+                  child: const Sidebar())
+              : Container(),
           SingleChildScrollView(
             child: Container(
-              width: increaseSizebar
-                  ? MediaQuery.of(context).size.width * 0.65
-                  : MediaQuery.of(context).size.width * 0.75,
+              width: smallScreensSidebar
+                  ? MediaQuery.of(context).size.width
+                  : sizebarWidthWhite,
               color: Colors.white,
               child: Stack(
                 children: [
                   Column(children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, right: 50),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          GestureDetector(
-                            key: const Key("user_icon_key"),
-                            onTap: () {
-                              setState(() {
-                                showModal = !showModal;
-                              });
-                            },
-                            child: const Icon(
-                              Icons.account_circle_rounded,
-                              color: Colors.green,
-                              size: 50,
+                      padding:
+                          const EdgeInsets.only(top: 10, right: 50, left: 50),
+                      child: smallScreensSidebar
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  key: const Key("user_menu_key"),
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, '/homepage_sidebar');
+                                  },
+                                  child: const Icon(
+                                    Icons.menu,
+                                    size: 50,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  key: const Key("user_icon_key"),
+                                  onTap: () {
+                                    setState(() {
+                                      showModal = !showModal;
+                                    });
+                                  },
+                                  child: const Icon(
+                                    Icons.account_circle_rounded,
+                                    color: Colors.green,
+                                    size: 50,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  key: const Key("user_icon_key"),
+                                  onTap: () {
+                                    setState(() {
+                                      showModal = !showModal;
+                                    });
+                                  },
+                                  child: const Icon(
+                                    Icons.account_circle_rounded,
+                                    color: Colors.green,
+                                    size: 50,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
                     ),
                     //container za sliku profile
                     Padding(
@@ -125,50 +161,49 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
 
                     //container za sliku koja trci
-                    Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 60),
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.252,
-                            height: MediaQuery.of(context).size.height * 0.235,
-                            child: Image.asset('assets/images/homepageui.png'),
+                    removePhoto
+                        ? Column(
+                            children: const [
+                              Text(
+                                'Welcome to',
+                                style: TextStyle(fontSize: 45),
+                              ),
+                              Text(
+                                'Product Arena',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 50),
+                              )
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 60),
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.252,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.235,
+                                  child: Image.asset(
+                                      'assets/images/homepageui.png'),
+                                ),
+                              ),
+                              Column(
+                                children: const [
+                                  Text(
+                                    'Welcome to',
+                                    style: TextStyle(fontSize: 45),
+                                  ),
+                                  Text(
+                                    'Product Arena',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 50),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: (30 / 1440) *
-                                      MediaQuery.of(context).size.width),
-                              child: Container(
-                                width: increaseSizebar
-                                    ? MediaQuery.of(context).size.width * 0.25
-                                    : MediaQuery.of(context).size.width * 0.30,
-                                child: Text(
-                                  'Welcome to',
-                                  style: TextStyle(fontSize: 45),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: (30 / 1440) *
-                                      MediaQuery.of(context).size.width),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.30,
-                                child: Text(
-                                  'Product Arena',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 50),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.04,
                     ),
