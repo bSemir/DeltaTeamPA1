@@ -448,6 +448,23 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                                   ),
                                                 ),
                                                 const SizedBox(height: 10),
+                                                Visibility(
+                                                  visible: isMessageSent,
+                                                  child: Column(
+                                                    children: const [
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Text(
+                                                        'Your message has been sent.',
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xFF22E974),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                             SizedBox(

@@ -69,9 +69,9 @@ class _SidebarState extends State<Sidebar> {
       });
     }
 
-    // if (MediaQuery.of(context).size.width > 650) {
-    //   Navigator.pushNamed(context, '/homescreen');
-    // }
+    if (MediaQuery.of(context).size.width > 650) {
+      Navigator.pushNamed(context, '/homescreen');
+    }
 
     Set<String> uniqueRoles = {};
     List<String> roleTemp = [];
