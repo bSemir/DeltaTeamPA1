@@ -59,51 +59,94 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     bool removePhoto = false;
-    bool increaseSizebar = false;
+
+    double sizebarWidthBlack = MediaQuery.of(context).size.width * 0.25;
+    double sizebarWidthWhite = MediaQuery.of(context).size.width * 0.75;
+
+    bool smallScreensSidebar = false;
+
+    if (MediaQuery.of(context).size.width < 650) {
+      setState(() {
+        smallScreensSidebar = true;
+      });
+    }
 
     if (MediaQuery.of(context).size.width < 970) {
-      increaseSizebar = true;
+      sizebarWidthBlack = MediaQuery.of(context).size.width * 0.35;
+      sizebarWidthWhite = MediaQuery.of(context).size.width * 0.65;
       removePhoto = true;
     }
 
     return Scaffold(
       body: Row(
         children: [
-          Container(
-              color: Colors.black,
-              width: increaseSizebar
-                  ? MediaQuery.of(context).size.width * 0.35
-                  : MediaQuery.of(context).size.width * 0.25,
-              child: const Sidebar()),
+          !smallScreensSidebar
+              ? Container(
+                  color: Colors.black,
+                  width: sizebarWidthBlack,
+                  child: const Sidebar())
+              : Container(),
           SingleChildScrollView(
             child: Container(
-              width: increaseSizebar
-                  ? MediaQuery.of(context).size.width * 0.65
-                  : MediaQuery.of(context).size.width * 0.75,
+              width: smallScreensSidebar
+                  ? MediaQuery.of(context).size.width
+                  : sizebarWidthWhite,
               color: Colors.white,
               child: Stack(
                 children: [
                   Column(children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 10, right: 50),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          GestureDetector(
-                            key: const Key("user_icon_key"),
-                            onTap: () {
-                              setState(() {
-                                showModal = !showModal;
-                              });
-                            },
-                            child: const Icon(
-                              Icons.account_circle_rounded,
-                              color: Colors.green,
-                              size: 50,
+                      padding:
+                          const EdgeInsets.only(top: 10, right: 50, left: 50),
+                      child: smallScreensSidebar
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  key: const Key("user_menu_key"),
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, '/homepage_sidebar');
+                                  },
+                                  child: const Icon(
+                                    Icons.menu,
+                                    size: 50,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  key: const Key("user_icon_key"),
+                                  onTap: () {
+                                    setState(() {
+                                      showModal = !showModal;
+                                    });
+                                  },
+                                  child: const Icon(
+                                    Icons.account_circle_rounded,
+                                    color: Colors.green,
+                                    size: 50,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  key: const Key("user_icon_key"),
+                                  onTap: () {
+                                    setState(() {
+                                      showModal = !showModal;
+                                    });
+                                  },
+                                  child: const Icon(
+                                    Icons.account_circle_rounded,
+                                    color: Colors.green,
+                                    size: 50,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
                     ),
                     //container za sliku profile
                     Padding(

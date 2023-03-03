@@ -75,7 +75,7 @@ class _LoginFieldState extends State<LoginField> {
       });
     });
     super.initState();
-    _configureAmplify();
+    // _configureAmplify();
   }
 
   Future<void> _configureAmplify() async {

@@ -106,19 +106,35 @@ class _RecentLecturesState extends State<RecentLectures> {
       }
     }
 
+    double sizebarWidthBlack = MediaQuery.of(context).size.width * 0.25;
+    double sizebarWidthWhite = MediaQuery.of(context).size.width * 0.75;
+
+    bool smallScreensSidebar = false;
+
+    if (MediaQuery.of(context).size.width < 650) {
+      setState(() {
+        smallScreensSidebar = true;
+      });
+    }
+
+    if (MediaQuery.of(context).size.width < 970) {
+      sizebarWidthBlack = MediaQuery.of(context).size.width * 0.35;
+      sizebarWidthWhite = MediaQuery.of(context).size.width * 0.65;
+    }
+
     return Scaffold(
       body: Row(
         children: [
-          Container(
-              color: Colors.black,
-              width: removeDescription
-                  ? MediaQuery.of(context).size.width * 0.40
-                  : MediaQuery.of(context).size.width * 0.25,
-              child: const Sidebar()),
+          !smallScreensSidebar
+              ? Container(
+                  color: Colors.black,
+                  width: sizebarWidthBlack,
+                  child: const Sidebar())
+              : Container(),
           SizedBox(
-            width: removeDescription
-                ? MediaQuery.of(context).size.width * 0.60
-                : MediaQuery.of(context).size.width * 0.75,
+            width: smallScreensSidebar
+                ? MediaQuery.of(context).size.width
+                : sizebarWidthWhite,
             child: Padding(
               padding: const EdgeInsets.only(left: 50, right: 50),
               child: Stack(
@@ -128,24 +144,55 @@ class _RecentLecturesState extends State<RecentLectures> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          GestureDetector(
-                            key: const Key("user_icon_key"),
-                            onTap: () {
-                              setState(() {
-                                showModal = !showModal;
-                              });
-                            },
-                            child: const Icon(
-                              Icons.account_circle_rounded,
-                              color: Colors.green,
-                              size: 50,
+                      smallScreensSidebar
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  key: const Key("user_menu_key"),
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, '/homepage_sidebar');
+                                  },
+                                  child: const Icon(
+                                    Icons.menu,
+                                    size: 50,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  key: const Key("user_icon_key"),
+                                  onTap: () {
+                                    setState(() {
+                                      showModal = !showModal;
+                                    });
+                                  },
+                                  child: const Icon(
+                                    Icons.account_circle_rounded,
+                                    color: Colors.green,
+                                    size: 50,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  key: const Key("user_icon_key"),
+                                  onTap: () {
+                                    setState(() {
+                                      showModal = !showModal;
+                                    });
+                                  },
+                                  child: const Icon(
+                                    Icons.account_circle_rounded,
+                                    color: Colors.green,
+                                    size: 50,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
                       Flexible(
                         child: Padding(
                           padding: const EdgeInsets.only(

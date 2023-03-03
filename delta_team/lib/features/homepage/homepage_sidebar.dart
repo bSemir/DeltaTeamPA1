@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:amplify_api/amplify_api.dart';
 import 'package:amplify_core/amplify_core.dart';
+import 'package:delta_team/features/homepage/homescreen.dart';
 import 'package:delta_team/features/homepage/provider/selectedRoleProvider.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_models/role_mobile.dart';
 import 'package:flutter/material.dart';
@@ -33,16 +34,48 @@ class _SidebarState extends State<Sidebar> {
     // getUserLectures();
   }
 
+  bool isDesktop(BuildContext context) =>
+      MediaQuery.of(context).size.width >= 650;
+
+  bool isMobile(BuildContext context) =>
+      MediaQuery.of(context).size.width < 650;
+
   @override
   Widget build(BuildContext context) {
+    // LayoutBuilder(
+    //   builder: (BuildContext context, BoxConstraints constraints) {
+    //     if (MediaQuery.of(context).size.width > 650) {
+    //       return HomeScreen();
+    //     } else {
+    //       return Sidebar();
+    //     }
+    //   },
+    // );
+
     bool removeText = false;
+    bool isScreenBig = false;
+    bool closeSidebar = false;
+
     if (MediaQuery.of(context).size.width > 750) {
       setState(() {
         removeText = true;
       });
     }
+
+    bool isScreenSmall = false;
+    if (MediaQuery.of(context).size.width < 650) {
+      setState(() {
+        isScreenSmall = true;
+      });
+    }
+
+    // if (MediaQuery.of(context).size.width > 650) {
+    //   Navigator.pushNamed(context, '/homescreen');
+    // }
+
     Set<String> uniqueRoles = {};
     List<String> roleTemp = [];
+
     final userLecturesProvider =
         Provider.of<LecturesProvider>(context, listen: false);
     final selectedRoleProvider =
@@ -67,239 +100,444 @@ class _SidebarState extends State<Sidebar> {
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(top: 62, right: 24, left: 24),
-      child: Column(
-        children: [
-          Center(child: Image.asset("assets/images/sidebar_logo.png")),
-          const SizedBox(
-            height: 80,
-          ),
-          GestureDetector(
-            key: const Key("homescreen_key"),
-            onTap: () {
-              Navigator.pushNamed(context, '/homescreen');
-              setState(() {
-                isSelectedHome = true;
-                isSelectedContact = false;
-                isSelectedRecent = false;
-                isSelectedFirstRole = false;
-                isSelectedSecondRole = false;
-                selectedIndex = -1;
-              });
-            },
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: removeText
-                  ? MainAxisAlignment.start
-                  : MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/Homescreen.png',
-                  color: isSelectedHome ? Colors.green : Colors.white,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                removeText
-                    ? Text(
-                        'Homescreen',
-                        style: TextStyle(
-                            fontSize: 16,
-                            color:
-                                isSelectedHome ? Colors.green : Colors.white),
-                      )
-                    : Container(),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          SizedBox(
-            child: ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: varijablaRola.length,
-              itemBuilder: (context, index) {
-                var res = varijablaRola[index];
-                String image = "assets/images/backendBijela.png";
-
-                String str = "";
-
-                if (res == "backend") {
-                  str = "Backend Development";
-                  image = "assets/images/backendBijela.png";
-                }
-                if (res == "fullstack") {
-                  str = "Fullstack Development";
-                  image = "assets/images/fullstackBijela.png";
-                }
-                if (res == "productManager") {
-                  str = "Project Manager";
-                  image = "assets/images/homepage_manager.png";
-                }
-                if (res == "uiux") {
-                  str = "UI/UX Design";
-                  image = "assets/images/homepageui.png";
-                }
-                if (res == "qa") {
-                  str = "QA";
-                  image = "assets/images/homepageqa.png";
-                }
-
-                return GestureDetector(
-                  key: const Key("getlectures_key"),
-                  onTap: () async {
-                    Map<String, dynamic> lecturesList =
-                        userLecturesProvider.lectures;
-                    if (userLecturesProvider.lectures.isNotEmpty) {
-                      // final prefs = await SharedPreferences.getInstance();
-                      // await prefs.setString('myMap', jsonEncode(lecturesList));
+    return isScreenSmall
+        ? Scaffold(
+            backgroundColor: Colors.black,
+            body: Padding(
+              padding: const EdgeInsets.only(top: 62, right: 24, left: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(child: Image.asset("assets/images/sidebar_logo.png")),
+                  const SizedBox(
+                    height: 80,
+                  ),
+                  GestureDetector(
+                    key: const Key("homescreen_key"),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/homescreen');
                       setState(() {
-                        selectedIndex = index;
+                        isSelectedHome = true;
+                        isSelectedContact = false;
+                        isSelectedRecent = false;
+                        isSelectedFirstRole = false;
+                        isSelectedSecondRole = false;
+                        selectedIndex = -1;
                       });
-                      if (index == 0) {
-                        setState(() {
-                          isSelectedRecent = false;
-                          isSelectedHome = false;
-                          isSelectedContact = false;
-                          isSelectedFirstRole = true;
-                          isSelectedSecondRole = false;
-                        });
-                      } else if (index == 1) {
-                        setState(() {
-                          isSelectedRecent = false;
-                          isSelectedHome = false;
-                          isSelectedContact = false;
-                          isSelectedFirstRole = false;
-                          isSelectedSecondRole = true;
-                        });
-                      }
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/Homescreen.png',
+                          color: Colors.white,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        const Text(
+                          'Homescreen',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: varijablaRola.length,
+                      itemBuilder: (context, index) {
+                        var res = varijablaRola[index];
+                        String image = "assets/images/backendBijela.png";
 
-                      selectedRoleProvider.setRole(res);
-                      // await prefs.setString("role", res);
-                    }
+                        String str = "";
 
-                    Navigator.pushNamed(context, '/lecturesPage');
+                        if (res == "backend") {
+                          str = "Backend Development";
+                          image = "assets/images/backendBijela.png";
+                        }
+                        if (res == "fullstack") {
+                          str = "Fullstack Development";
+                          image = "assets/images/fullstackBijela.png";
+                        }
+                        if (res == "productManager") {
+                          str = "Project Manager";
+                          image = "assets/images/homepage_manager.png";
+                        }
+                        if (res == "uiux") {
+                          str = "UI/UX Design";
+                          image = "assets/images/homepageui.png";
+                        }
+                        if (res == "qa") {
+                          str = "QA";
+                          image = "assets/images/homepageqa.png";
+                        }
+
+                        return GestureDetector(
+                          key: const Key("getlectures_key"),
+                          onTap: () async {
+                            Map<String, dynamic> lecturesList =
+                                userLecturesProvider.lectures;
+                            if (userLecturesProvider.lectures.isNotEmpty) {
+                              // final prefs = await SharedPreferences.getInstance();
+                              // await prefs.setString('myMap', jsonEncode(lecturesList));
+                              setState(() {
+                                selectedIndex = index;
+                              });
+                              if (index == 0) {
+                                setState(() {
+                                  isSelectedRecent = false;
+                                  isSelectedHome = false;
+                                  isSelectedContact = false;
+                                  isSelectedFirstRole = true;
+                                  isSelectedSecondRole = false;
+                                });
+                              } else if (index == 1) {
+                                setState(() {
+                                  isSelectedRecent = false;
+                                  isSelectedHome = false;
+                                  isSelectedContact = false;
+                                  isSelectedFirstRole = false;
+                                  isSelectedSecondRole = true;
+                                });
+                              }
+
+                              selectedRoleProvider.setRole(res);
+                              // await prefs.setString("role", res);
+                            }
+
+                            Navigator.pushNamed(context, '/lecturesPage');
+                          },
+                          child: Row(
+                            children: [
+                              Image.asset(image,
+                                  width: 24, height: 24, color: Colors.white),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                str,
+                                style: TextStyle(
+                                    fontSize: 16, color: Colors.white),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(
+                          height: 20,
+                        );
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    key: const Key("recentlectures_key"),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/recentLectures');
+                      setState(() {
+                        isSelectedRecent = true;
+                        isSelectedHome = false;
+                        isSelectedContact = false;
+                        isSelectedFirstRole = false;
+                        isSelectedSecondRole = false;
+                        selectedIndex = -1;
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/recent_icon.png',
+                          color: Colors.white,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          'Recent Lectures',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    key: const Key("contact_key"),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/contactUs');
+                      setState(() {
+                        isSelectedRecent = false;
+                        isSelectedHome = false;
+                        isSelectedContact = true;
+                        isSelectedFirstRole = false;
+                        isSelectedSecondRole = false;
+                        selectedIndex = -1;
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/images/contact_icon.png',
+                          color: Colors.white,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          'Contact us!',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : Padding(
+            padding: const EdgeInsets.only(top: 62, right: 24, left: 24),
+            child: Column(
+              children: [
+                Center(child: Image.asset("assets/images/sidebar_logo.png")),
+                const SizedBox(
+                  height: 80,
+                ),
+                GestureDetector(
+                  key: const Key("homescreen_key"),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/homescreen');
+                    setState(() {
+                      isSelectedHome = true;
+                      isSelectedContact = false;
+                      isSelectedRecent = false;
+                      isSelectedFirstRole = false;
+                      isSelectedSecondRole = false;
+                      selectedIndex = -1;
+                    });
                   },
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: removeText
                         ? MainAxisAlignment.start
                         : MainAxisAlignment.center,
                     children: [
-                      Image.asset(image,
-                          width: 24,
-                          height: 24,
-                          color: selectedIndex == index
-                              ? Colors.green
-                              : Colors.white),
+                      Image.asset(
+                        'assets/images/Homescreen.png',
+                        color: isSelectedHome ? Colors.green : Colors.white,
+                      ),
                       const SizedBox(
                         width: 5,
                       ),
                       removeText
                           ? Text(
-                              str,
+                              'Homescreen',
                               style: TextStyle(
                                   fontSize: 16,
-                                  color: selectedIndex == index
+                                  color: isSelectedHome
                                       ? Colors.green
                                       : Colors.white),
                             )
                           : Container(),
                     ],
                   ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(
+                ),
+                const SizedBox(
                   height: 20,
-                );
-              },
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          GestureDetector(
-            key: const Key("recentlectures_key"),
-            onTap: () {
-              Navigator.pushNamed(context, '/recentLectures');
-              setState(() {
-                isSelectedRecent = true;
-                isSelectedHome = false;
-                isSelectedContact = false;
-                isSelectedFirstRole = false;
-                isSelectedSecondRole = false;
-                selectedIndex = -1;
-              });
-            },
-            child: Row(
-              mainAxisAlignment: removeText
-                  ? MainAxisAlignment.start
-                  : MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/recent_icon.png',
-                  color: isSelectedRecent ? Colors.green : Colors.white,
+                ),
+                SizedBox(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: varijablaRola.length,
+                    itemBuilder: (context, index) {
+                      var res = varijablaRola[index];
+                      String image = "assets/images/backendBijela.png";
+
+                      String str = "";
+
+                      if (res == "backend") {
+                        str = "Backend Development";
+                        image = "assets/images/backendBijela.png";
+                      }
+                      if (res == "fullstack") {
+                        str = "Fullstack Development";
+                        image = "assets/images/fullstackBijela.png";
+                      }
+                      if (res == "productManager") {
+                        str = "Project Manager";
+                        image = "assets/images/homepage_manager.png";
+                      }
+                      if (res == "uiux") {
+                        str = "UI/UX Design";
+                        image = "assets/images/homepageui.png";
+                      }
+                      if (res == "qa") {
+                        str = "QA";
+                        image = "assets/images/homepageqa.png";
+                      }
+
+                      return GestureDetector(
+                        key: const Key("getlectures_key"),
+                        onTap: () async {
+                          Map<String, dynamic> lecturesList =
+                              userLecturesProvider.lectures;
+                          if (userLecturesProvider.lectures.isNotEmpty) {
+                            // final prefs = await SharedPreferences.getInstance();
+                            // await prefs.setString('myMap', jsonEncode(lecturesList));
+                            setState(() {
+                              selectedIndex = index;
+                            });
+                            if (index == 0) {
+                              setState(() {
+                                isSelectedRecent = false;
+                                isSelectedHome = false;
+                                isSelectedContact = false;
+                                isSelectedFirstRole = true;
+                                isSelectedSecondRole = false;
+                              });
+                            } else if (index == 1) {
+                              setState(() {
+                                isSelectedRecent = false;
+                                isSelectedHome = false;
+                                isSelectedContact = false;
+                                isSelectedFirstRole = false;
+                                isSelectedSecondRole = true;
+                              });
+                            }
+
+                            selectedRoleProvider.setRole(res);
+                            // await prefs.setString("role", res);
+                          }
+
+                          Navigator.pushNamed(context, '/lecturesPage');
+                        },
+                        child: Row(
+                          mainAxisAlignment: removeText
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.center,
+                          children: [
+                            Image.asset(image,
+                                width: 24,
+                                height: 24,
+                                color: selectedIndex == index
+                                    ? Colors.green
+                                    : Colors.white),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            removeText
+                                ? Text(
+                                    str,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: selectedIndex == index
+                                            ? Colors.green
+                                            : Colors.white),
+                                  )
+                                : Container(),
+                          ],
+                        ),
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        height: 20,
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(
-                  width: 5,
+                  height: 20,
                 ),
-                removeText
-                    ? Text(
-                        'Recent Lectures',
-                        style: TextStyle(
-                            color:
-                                isSelectedRecent ? Colors.green : Colors.white,
-                            fontSize: 16),
-                      )
-                    : Container(),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          GestureDetector(
-            key: const Key("contact_key"),
-            onTap: () {
-              Navigator.pushNamed(context, '/contactUs');
-              setState(() {
-                isSelectedRecent = false;
-                isSelectedHome = false;
-                isSelectedContact = true;
-                isSelectedFirstRole = false;
-                isSelectedSecondRole = false;
-                selectedIndex = -1;
-              });
-            },
-            child: Row(
-              mainAxisAlignment: removeText
-                  ? MainAxisAlignment.start
-                  : MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/images/contact_icon.png',
-                  color: isSelectedContact ? Colors.green : Colors.white,
+                GestureDetector(
+                  key: const Key("recentlectures_key"),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/recentLectures');
+                    setState(() {
+                      isSelectedRecent = true;
+                      isSelectedHome = false;
+                      isSelectedContact = false;
+                      isSelectedFirstRole = false;
+                      isSelectedSecondRole = false;
+                      selectedIndex = -1;
+                    });
+                  },
+                  child: Row(
+                    mainAxisAlignment: removeText
+                        ? MainAxisAlignment.start
+                        : MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/recent_icon.png',
+                        color: isSelectedRecent ? Colors.green : Colors.white,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      removeText
+                          ? Text(
+                              'Recent Lectures',
+                              style: TextStyle(
+                                  color: isSelectedRecent
+                                      ? Colors.green
+                                      : Colors.white,
+                                  fontSize: 16),
+                            )
+                          : Container(),
+                    ],
+                  ),
                 ),
                 const SizedBox(
-                  width: 5,
+                  height: 20,
                 ),
-                removeText
-                    ? Text(
-                        'Contact us!',
-                        style: TextStyle(
-                            color:
-                                isSelectedContact ? Colors.green : Colors.white,
-                            fontSize: 16),
-                      )
-                    : Container(),
+                GestureDetector(
+                  key: const Key("contact_key"),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/contactUs');
+                    setState(() {
+                      isSelectedRecent = false;
+                      isSelectedHome = false;
+                      isSelectedContact = true;
+                      isSelectedFirstRole = false;
+                      isSelectedSecondRole = false;
+                      selectedIndex = -1;
+                    });
+                  },
+                  child: Row(
+                    mainAxisAlignment: removeText
+                        ? MainAxisAlignment.start
+                        : MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/contact_icon.png',
+                        color: isSelectedContact ? Colors.green : Colors.white,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      removeText
+                          ? Text(
+                              'Contact us!',
+                              style: TextStyle(
+                                  color: isSelectedContact
+                                      ? Colors.green
+                                      : Colors.white,
+                                  fontSize: 16),
+                            )
+                          : Container(),
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ],
-      ),
-    );
+          );
   }
 }
