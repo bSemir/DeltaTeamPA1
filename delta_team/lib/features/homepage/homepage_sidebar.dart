@@ -18,16 +18,15 @@ class Sidebar extends StatefulWidget {
   State<Sidebar> createState() => _SidebarState();
 }
 
-class _SidebarState extends State<Sidebar> {
-  List varijablaRola = [];
+List varijablaRola = [];
 
+class _SidebarState extends State<Sidebar> {
   bool isSelectedHome = true;
   bool isSelectedRecent = false;
   bool isSelectedContact = false;
   bool isSelectedFirstRole = false;
   bool isSelectedSecondRole = false;
   int selectedIndex = -1;
-
   @override
   Widget build(BuildContext context) {
     bool removeText = false;
