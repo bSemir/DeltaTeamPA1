@@ -153,7 +153,7 @@ class LoginScreenWebState extends State<LoginScreenWeb> {
                       ),
                       SvgPicture.asset(
                         'assets/images/logotop.svg',
-                        width: (99.7 / 1440) * width,
+                        width: ((99.7 / 1440) * width).clamp(50, 100),
                       ),
                       const SizedBox(
                         height: 17,

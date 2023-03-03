@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 GestureDetector(
-                                  key: const Key("user_icon_key"),
+                                  key: const Key("user_icon_key1"),
                                   onTap: () {
                                     setState(() {
                                       showModal = !showModal;
