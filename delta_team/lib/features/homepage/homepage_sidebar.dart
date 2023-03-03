@@ -34,12 +34,6 @@ class _SidebarState extends State<Sidebar> {
     // getUserLectures();
   }
 
-  bool isDesktop(BuildContext context) =>
-      MediaQuery.of(context).size.width >= 650;
-
-  bool isMobile(BuildContext context) =>
-      MediaQuery.of(context).size.width < 650;
-
   @override
   Widget build(BuildContext context) {
     // LayoutBuilder(
@@ -62,6 +56,10 @@ class _SidebarState extends State<Sidebar> {
       });
     }
 
+    if (MediaQuery.of(context).size.height < 500) {
+      return Container();
+    }
+
     bool isScreenSmall = false;
     if (MediaQuery.of(context).size.width < 650) {
       setState(() {
@@ -69,8 +67,7 @@ class _SidebarState extends State<Sidebar> {
       });
     }
 
-    // if (MediaQuery.of(context).size.width > 650) {
-    //   Navigator.pushNamed(context, '/homescreen');
+    //   return HomeScreen();
     // }
 
     Set<String> uniqueRoles = {};
@@ -307,7 +304,7 @@ class _SidebarState extends State<Sidebar> {
           )
         : SingleChildScrollView(
             child: SizedBox(
-              height: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
               child: Padding(
                 padding: const EdgeInsets.only(top: 62, right: 24, left: 24),
                 child: Column(
