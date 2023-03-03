@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getUserLectures();
+    // getUserLectures();
   }
 
   Map<String, dynamic> lectures = {};

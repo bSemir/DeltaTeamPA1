@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../amplifyconfiguration.dart';
+import '../auth/login/providers/userLecturesProvider.dart';
 import 'account_modal.dart';
 
 class RecentLectures extends StatefulWidget {
@@ -25,8 +26,8 @@ class _RecentLecturesState extends State<RecentLectures> {
   @override
   void initState() {
     super.initState();
-    _loadPrefs();
-    getUserLectures();
+    // _loadPrefs();
+    // getUserLectures();
   }
 
   bool showModal = false;
@@ -85,6 +86,8 @@ class _RecentLecturesState extends State<RecentLectures> {
 
   @override
   Widget build(BuildContext context) {
+    final userLecturesProvider =
+        Provider.of<LecturesProvider>(context, listen: false);
     bool removeDescription = false;
     if (MediaQuery.of(context).size.width < 970) {
       removeDescription = true;
@@ -93,8 +96,8 @@ class _RecentLecturesState extends State<RecentLectures> {
         Provider.of<YoutubeLinkProvider>(context, listen: false);
     String role = "";
     List<Map<String, dynamic>> lecs = [];
-    if (lectures.isNotEmpty) {
-      List<dynamic> lecturesList = lectures["lectures"];
+    if (userLecturesProvider.lectures.isNotEmpty) {
+      List<dynamic> lecturesList = userLecturesProvider.lectures["lectures"];
 
       for (int i = 0; i < 3; i++) {
         Map<String, dynamic> lecture = lecturesList[i];
@@ -103,19 +106,35 @@ class _RecentLecturesState extends State<RecentLectures> {
       }
     }
 
+    double sizebarWidthBlack = MediaQuery.of(context).size.width * 0.25;
+    double sizebarWidthWhite = MediaQuery.of(context).size.width * 0.75;
+
+    bool smallScreensSidebar = false;
+
+    if (MediaQuery.of(context).size.width < 650) {
+      setState(() {
+        smallScreensSidebar = true;
+      });
+    }
+
+    if (MediaQuery.of(context).size.width < 970) {
+      sizebarWidthBlack = MediaQuery.of(context).size.width * 0.35;
+      sizebarWidthWhite = MediaQuery.of(context).size.width * 0.65;
+    }
+
     return Scaffold(
       body: Row(
         children: [
-          Container(
-              color: Colors.black,
-              width: removeDescription
-                  ? MediaQuery.of(context).size.width * 0.40
-                  : MediaQuery.of(context).size.width * 0.25,
-              child: const Sidebar()),
+          !smallScreensSidebar
+              ? Container(
+                  color: Colors.black,
+                  width: sizebarWidthBlack,
+                  child: const Sidebar())
+              : Container(),
           SizedBox(
-            width: removeDescription
-                ? MediaQuery.of(context).size.width * 0.60
-                : MediaQuery.of(context).size.width * 0.75,
+            width: smallScreensSidebar
+                ? MediaQuery.of(context).size.width
+                : sizebarWidthWhite,
             child: Padding(
               padding: const EdgeInsets.only(left: 50, right: 50),
               child: Stack(
@@ -125,24 +144,55 @@ class _RecentLecturesState extends State<RecentLectures> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          GestureDetector(
-                            key: const Key("user_icon_key"),
-                            onTap: () {
-                              setState(() {
-                                showModal = !showModal;
-                              });
-                            },
-                            child: const Icon(
-                              Icons.account_circle_rounded,
-                              color: Colors.green,
-                              size: 50,
+                      smallScreensSidebar
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GestureDetector(
+                                  key: const Key("user_menu_key"),
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, '/homepage_sidebar');
+                                  },
+                                  child: const Icon(
+                                    Icons.menu,
+                                    size: 50,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  key: const Key("user_icon_key"),
+                                  onTap: () {
+                                    setState(() {
+                                      showModal = !showModal;
+                                    });
+                                  },
+                                  child: const Icon(
+                                    Icons.account_circle_rounded,
+                                    color: Colors.green,
+                                    size: 50,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  key: const Key("user_icon_key"),
+                                  onTap: () {
+                                    setState(() {
+                                      showModal = !showModal;
+                                    });
+                                  },
+                                  child: const Icon(
+                                    Icons.account_circle_rounded,
+                                    color: Colors.green,
+                                    size: 50,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
                       Flexible(
                         child: Padding(
                           padding: const EdgeInsets.only(
