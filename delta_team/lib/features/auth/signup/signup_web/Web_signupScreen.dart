@@ -503,6 +503,10 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
 
                                             if (_signupFormKey.currentState!
                                                 .validate()) {
+                                              userExist(emailController.text);
+                                              setState(() {
+                                                isEmailTaken = true;
+                                              });
                                               try {
                                                 setState(() {
                                                   _loading = true;
