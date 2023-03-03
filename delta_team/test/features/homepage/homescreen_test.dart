@@ -1,4 +1,6 @@
+import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_web/loginform_web.dart';
+import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/features/auth/login/providers/userAttributesProvider.dart';
 import 'package:delta_team/features/auth/login/providers/userLecturesProvider.dart';
 import 'package:delta_team/features/auth/signup/provider/Web_auth_provider.dart';
@@ -42,14 +44,17 @@ Widget createLoginScreenWeb() => MultiProvider(
       ],
       child: MaterialApp(
         routes: {
+          LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
+          '/loadingScreenWeb': (context) => const LoadingScreenWeb(),
           '/homepage': (context) => const HomePage(),
           '/lecturesPage': (context) => const LecturesPage(),
           '/homepagevideo': (context) => const HomePageVideoScreen(),
           '/contactUs': (context) => const ContactMeScreen(),
           '/recentLectures': (context) => const RecentLectures(),
           '/homescreen': (context) => const HomeScreen(),
+          '/homepage_sidebar': (context) => const Sidebar(),
         },
-        home: const LoginField(),
+        home: const LoginScreenWeb(),
       ),
     );
 
@@ -74,6 +79,8 @@ Widget createHomeScreenWeb() => MultiProvider(
       ],
       child: MaterialApp(
         routes: {
+          LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
+          '/loadingScreenWeb': (context) => const LoadingScreenWeb(),
           '/homepage': (context) => const HomePage(),
           '/lecturesPage': (context) => const LecturesPage(),
           '/homepagevideo': (context) => const HomePageVideoScreen(),
@@ -102,6 +109,10 @@ void main() {
       await tester.enterText(passwordField, 'Password123!');
       await tester.pumpAndSettle();
 
+      final loginButton = find.byKey(const ValueKey('Login_Button'));
+      await tester.tap(loginButton);
+      await tester.pumpAndSettle();
+
       expect(
           find.text(
               'Our goal is to recognise persistence, motivation and adaptability, thats why we encourage you to dive into these materials and wish you the best of luck in your studies.'),
@@ -124,6 +135,10 @@ void main() {
       await tester.enterText(passwordField, '');
       await tester.pumpAndSettle();
 
+      final loginButton = find.byKey(const ValueKey('Login_Button'));
+      await tester.tap(loginButton);
+      await tester.pumpAndSettle();
+
       expect(find.text('Please fill the required field.'), findsNWidgets(2));
     });
 
@@ -141,6 +156,10 @@ void main() {
       final passwordField = find.byKey(const ValueKey('passwordKey'));
       await tester.tap(passwordField);
       await tester.enterText(passwordField, 'testPassword');
+      await tester.pumpAndSettle();
+
+      final loginButton = find.byKey(const ValueKey('Login_Button'));
+      await tester.tap(loginButton);
       await tester.pumpAndSettle();
 
       expect(find.text('Please fill the required field.'), findsNWidgets(1));

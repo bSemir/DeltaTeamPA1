@@ -32,9 +32,10 @@ class _SidebarState extends State<Sidebar> {
     bool removeText = false;
 
     if (MediaQuery.of(context).size.width > 750) {
-      setState(() {
-        removeText = true;
-      });
+      // setState(() {
+      //   removeText = true;
+      // });
+      removeText = true;
     }
 
     if (MediaQuery.of(context).size.height < 500) {
