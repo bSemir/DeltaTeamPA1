@@ -341,13 +341,15 @@ class _SidebarState extends State<Sidebar> {
                             width: 5,
                           ),
                           removeText
-                              ? Text(
-                                  'Homescreen',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      color: isSelectedHome
-                                          ? Colors.green
-                                          : Colors.white),
+                              ? Flexible(
+                                  child: Text(
+                                    'Homescreen',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: isSelectedHome
+                                            ? Colors.green
+                                            : Colors.white),
+                                  ),
                                 )
                               : Container(),
                         ],
@@ -368,7 +370,7 @@ class _SidebarState extends State<Sidebar> {
                           String str = "";
 
                           if (res == "backend") {
-                            str = "Backend Development";
+                            str = "Backend Developmenttttttttttttttt";
                             image = "assets/images/backendBijela.png";
                           }
                           if (res == "fullstack") {
@@ -438,13 +440,15 @@ class _SidebarState extends State<Sidebar> {
                                   width: 5,
                                 ),
                                 removeText
-                                    ? Text(
-                                        str,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: selectedIndex == index
-                                                ? Colors.green
-                                                : Colors.white),
+                                    ? Flexible(
+                                        child: Text(
+                                          str,
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: selectedIndex == index
+                                                  ? Colors.green
+                                                  : Colors.white),
+                                        ),
                                       )
                                     : Container(),
                               ],
@@ -488,13 +492,15 @@ class _SidebarState extends State<Sidebar> {
                             width: 5,
                           ),
                           removeText
-                              ? Text(
-                                  'Recent Lectures',
-                                  style: TextStyle(
-                                      color: isSelectedRecent
-                                          ? Colors.green
-                                          : Colors.white,
-                                      fontSize: 16),
+                              ? Flexible(
+                                  child: Text(
+                                    'Recent Lectures',
+                                    style: TextStyle(
+                                        color: isSelectedRecent
+                                            ? Colors.green
+                                            : Colors.white,
+                                        fontSize: 16),
+                                  ),
                                 )
                               : Container(),
                         ],
@@ -530,13 +536,15 @@ class _SidebarState extends State<Sidebar> {
                             width: 5,
                           ),
                           removeText
-                              ? Text(
-                                  'Contact us!',
-                                  style: TextStyle(
-                                      color: isSelectedContact
-                                          ? Colors.green
-                                          : Colors.white,
-                                      fontSize: 16),
+                              ? Flexible(
+                                  child: Text(
+                                    'Contact us!',
+                                    style: TextStyle(
+                                        color: isSelectedContact
+                                            ? Colors.green
+                                            : Colors.white,
+                                        fontSize: 16),
+                                  ),
                                 )
                               : Container(),
                         ],
