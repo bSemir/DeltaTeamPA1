@@ -1,7 +1,6 @@
-import 'package:delta_team/common/footer/rowFooter.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import '../../../common/footer/rowFooter.dart';
 import 'columnFooter.dart';
 
 class Footer extends StatelessWidget {
@@ -38,15 +37,12 @@ class Footer extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 18,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(),
               Image.asset(
-                'assets/images/footer_logo.png',
+                "assets/images/footer_logo.png",
                 width: 51.9,
                 height: 39.74,
               ),
@@ -54,7 +50,7 @@ class Footer extends StatelessWidget {
             ],
           ),
           const SizedBox(
-            height: 30.26,
+            height: 44.26,
           ),
           const Divider(color: Color.fromRGBO(0, 0, 0, 0.5)),
           const SizedBox(
