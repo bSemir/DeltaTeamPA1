@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'features/Home_welcome_mobile/contact us/auth_provider.dart';
 import 'features/Home_welcome_mobile/contact us/contact-us_mobile.dart';
 import 'features/Home_welcome_mobile/home_second_screen.dart';
 import 'features/Home_welcome_mobile/lectures/providers/lectures_provider_mobile.dart';
@@ -122,6 +123,9 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (_) => ContactWeb(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => AuthProviderContact(),
         ),
         ChangeNotifierProvider(
           create: (_) => EmailPasswordProvider(),
