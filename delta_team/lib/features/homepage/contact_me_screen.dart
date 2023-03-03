@@ -209,6 +209,126 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                           SizedBox(
                                             width: maxwidth * (30 / 1440),
                                           ),
+                                          SizedBox(
+                                            width: maxwidth * (350 / 1440),
+                                            child: Form(
+                                              key: _contactFormKey,
+                                              child: TextFormField(
+                                                key: const Key('contactField'),
+                                                controller: contactController,
+                                                validator: (value) {
+                                                  if (value == "" ||
+                                                      value == null) {
+                                                    setState(() {
+                                                      isMessageSent = false;
+                                                    });
+                                                    return "Please type your message before sending";
+                                                  } else if (value.length <
+                                                      10) {
+                                                    setState(() {
+                                                      isMessageSent = false;
+                                                    });
+                                                    return "Your message has to contain at least 10 characters";
+                                                  }
+                                                  safePrint('MessageSent');
+                                                  setState(() {
+                                                    isMessageSent = true;
+                                                  });
+                                                  return null;
+                                                },
+                                                maxLines: 8,
+                                                decoration: InputDecoration(
+                                                  hintText: 'Your Message',
+                                                  hintStyle:
+                                                      GoogleFonts.notoSans(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w700,
+                                                  ),
+                                                  focusedBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0xFF22E974),
+                                                    ),
+                                                  ),
+                                                  border:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                ),
+                                                style: GoogleFonts.notoSans(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          ElevatedButton(
+                                            key: const Key("submit_key"),
+                                            onPressed: () async {
+                                              final authProvider = Provider.of<
+                                                      UserAttributesProvider>(
+                                                  context,
+                                                  listen: false);
+                                              if (_contactFormKey.currentState!
+                                                  .validate()) {
+                                                try {
+                                                  final restOperation =
+                                                      Amplify.API.post(
+                                                    'api/user/contact',
+                                                    apiName:
+                                                        'contactEmailDelta',
+                                                    body: HttpPayload.json(
+                                                      {
+                                                        'name':
+                                                            authProvider.name,
+                                                        'email':
+                                                            authProvider.email,
+                                                        'question':
+                                                            contactController
+                                                                .text
+                                                                .toString(),
+                                                      },
+                                                    ),
+                                                    // headers: {
+                                                    //   "Access-control-allow-headers":
+                                                    //       "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token"
+                                                    // },
+                                                  );
+                                                  final response =
+                                                      await restOperation
+                                                          .response;
+                                                  safePrint(
+                                                      'POST call succeeded');
+                                                  safePrint(
+                                                      response.decodeBody());
+                                                } on ApiException catch (e) {
+                                                  safePrint(
+                                                      'POST call failed: ${e.message}');
+                                                }
+                                              }
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.black,
+                                                foregroundColor: Colors.white,
+                                                minimumSize:
+                                                    const Size(141, 55)),
+                                            child: const Text(
+                                              'Submit',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            ),
+                                          ),
                                         ])
                                   : Column(
                                       children: [
@@ -325,6 +445,24 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                                         fontSize: 14,
                                                       ),
                                                     ),
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 10),
+                                                Visibility(
+                                                  visible: isMessageSent,
+                                                  child: Column(
+                                                    children: const [
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Text(
+                                                        'Your message has been sent.',
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xFF22E974),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ],
@@ -448,18 +586,22 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                               try {
                                                 final restOperation =
                                                     Amplify.API.post(
-                                                  'api/user/form',
+                                                  'api/user/contact',
                                                   apiName: 'contactEmailDelta',
                                                   body: HttpPayload.json(
                                                     {
+                                                      'name': authProvider.name,
+                                                      'email':
+                                                          authProvider.email,
                                                       'question':
                                                           contactController.text
                                                               .toString(),
-                                                      'name': authProvider.name,
-                                                      'email':
-                                                          authProvider.email
                                                     },
                                                   ),
+                                                  // headers: {
+                                                  //   "Access-control-allow-headers":
+                                                  //       "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token"
+                                                  // },
                                                 );
                                                 final response =
                                                     await restOperation

@@ -30,6 +30,22 @@ class _AccountModalState extends State<AccountModal> {
 
   @override
   Widget build(BuildContext context) {
+    double widthPositioned = MediaQuery.of(context).size.width * 0.15;
+    if (MediaQuery.of(context).size.width < 1301) {
+      widthPositioned = MediaQuery.of(context).size.width * 0.20;
+    }
+    if (MediaQuery.of(context).size.width < 1000) {
+      widthPositioned = MediaQuery.of(context).size.width * 0.25;
+    }
+    if (MediaQuery.of(context).size.width < 800) {
+      widthPositioned = MediaQuery.of(context).size.width * 0.30;
+    }
+    if (MediaQuery.of(context).size.width < 660) {
+      widthPositioned = MediaQuery.of(context).size.width * 0.40;
+    }
+    if (MediaQuery.of(context).size.width < 500) {
+      widthPositioned = MediaQuery.of(context).size.width * 0.50;
+    }
     final userAttributesProvider =
         Provider.of<UserAttributesProvider>(context, listen: false);
 
@@ -37,7 +53,7 @@ class _AccountModalState extends State<AccountModal> {
       top: 64,
       right: 106,
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.15,
+        width: widthPositioned,
         height: MediaQuery.of(context).size.height * 0.46,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
