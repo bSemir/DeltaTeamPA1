@@ -29,7 +29,7 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
   }
 
   navigateToHomeScreen() {
-    Navigator.pushReplacementNamed(context, HomeSecondScreen.routeName);
+    Navigator.pushReplacementNamed(context, WelcomingScreen.routeName2);
   }
 
   @override

@@ -106,7 +106,11 @@ class _ContactMobileState extends State<ContactMobile> {
           backgroundColor: Colors.white,
           title: Padding(
             padding: const EdgeInsets.only(left: 10),
-            child: SvgPicture.asset("assets/images/appbar_logo.svg"),
+            child: GestureDetector(
+                onTap: () async {
+                  Navigator.pushNamed(context, WelcomingScreen.routeName2);
+                },
+                child: SvgPicture.asset("assets/images/appbar_logo.svg")),
           ),
           actions: [
             Padding(
@@ -224,13 +228,15 @@ class _ContactMobileState extends State<ContactMobile> {
                               height: 25,
                             ),
                             SizedBox(
-                              width: 90,
+                              width: (90 / 360) * width,
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     elevation: 10,
                                     backgroundColor: const Color(0xFF000000),
-                                    side: const BorderSide(
-                                        color: Color(0xFFFFFFFF), width: 2),
+                                    side: BorderSide(
+                                      color: const Color(0xFFFFFFFF),
+                                      width: (2 / 360) * width,
+                                    ),
                                   ),
                                   key: const Key('Submit_Button'),
                                   onPressed: () async {
@@ -239,8 +245,8 @@ class _ContactMobileState extends State<ContactMobile> {
                                     }
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 7.5),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: (7.5 / 360) * width),
                                     child: Center(
                                         child: Text(
                                       'Submit',

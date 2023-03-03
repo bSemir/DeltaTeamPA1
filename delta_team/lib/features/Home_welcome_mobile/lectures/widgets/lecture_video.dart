@@ -60,6 +60,7 @@ class _LectureVideoState extends State<LectureVideo> {
       height: 200.0,
       width: double.infinity,
       child: YoutubePlayer(
+        key: const Key('lecturesVideoPlayerKey'),
         aspectRatio: 16 / 9,
         controller: _controller,
       ),

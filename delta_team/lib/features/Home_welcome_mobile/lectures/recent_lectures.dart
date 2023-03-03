@@ -8,14 +8,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class RecentLectures extends StatefulWidget {
-  const RecentLectures({super.key});
+import '../../auth/login/loadingScreens/loadingscreen_mobile.dart';
+import '../menu_navigation_screen.dart';
+import '../welcoming_message_screen.dart';
+
+class RecentLecturesMobile extends StatefulWidget {
+  const RecentLecturesMobile({super.key});
 
   @override
-  State<RecentLectures> createState() => _RecentLecturesState();
+  State<RecentLecturesMobile> createState() => _RecentLecturesMobileState();
 }
 
-class _RecentLecturesState extends State<RecentLectures> {
+class _RecentLecturesMobileState extends State<RecentLecturesMobile> {
+  bool _isBurgerIcon = true;
   @override
   void initState() {
     super.initState();
@@ -54,6 +59,7 @@ class _RecentLecturesState extends State<RecentLectures> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     final mediaQuery = MediaQuery.of(context).size;
     String role = "";
     List<Map<String, dynamic>> lecs = [];
@@ -69,82 +75,197 @@ class _RecentLecturesState extends State<RecentLectures> {
     print(lecs.toString());
     var provider = Provider.of<LectureListProvider>(context);
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 32.0, right: 32.0, top: 12.0),
-          child: Column(
-            children: [
-              Text(
-                'Recent Lessons',
-                style: GoogleFonts.notoSans(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: const Color(0xFF000000),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: GestureDetector(
+              onTap: () async {
+                Navigator.pushNamed(context, WelcomingScreen.routeName2);
+              },
+              child: SvgPicture.asset("assets/images/appbar_logo.svg")),
+        ),
+        actions: [
+          Padding(
+            key: const Key('open_menu_burger_icon'),
+            padding: const EdgeInsets.only(right: 15),
+            child: IconButton(
+              icon: _isBurgerIcon
+                  ? const Icon(Icons.menu)
+                  : const Icon(Icons.close),
+              color: Colors.black,
+              onPressed: () {
+                setState(() {
+                  _isBurgerIcon = !_isBurgerIcon;
+                });
+              },
+            ),
+          ),
+        ],
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
+      body: _isBurgerIcon
+          ? SingleChildScrollView(
+              child: SafeArea(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 32.0, right: 32.0, top: 12.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Recent Lessons',
+                        style: GoogleFonts.notoSans(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xFF000000),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      lectures.isEmpty
+                          ? const Center(child: CircularProgressIndicator())
+                          : ListView.separated(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              itemCount: lecs.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                // final lectures = lecs[index];
+                                // final name = lectures['name'];
+                                // final image = lectures['imageSrc'];
+                                return Card(
+                                  elevation: 3,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(4.0),
+                                        border: Border.all(width: 0.5)),
+                                    child: Column(
+                                      children: [
+                                        //Video Player
+
+                                        SizedBox(
+                                          width: mediaQuery.width * 0.8,
+                                          height: mediaQuery.height * 0.2,
+                                          child: Image.network(
+                                            lecs[index]['imageSrc'],
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: mediaQuery.width * 0.4,
+                                          alignment: Alignment.topLeft,
+                                          padding: const EdgeInsets.only(
+                                            left: 7,
+                                            top: 5,
+                                          ),
+                                          child: Text(
+                                            lecs[index]['name'],
+                                            maxLines: 2,
+                                            overflow: TextOverflow.clip,
+                                            style: GoogleFonts.notoSans(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                              color: const Color(0xFF000000),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          width: mediaQuery.width * 0.1,
+                                          alignment: Alignment.topRight,
+                                          padding: const EdgeInsets.only(
+                                            left: 7,
+                                            top: 5,
+                                          ),
+                                          child: SvgPicture.asset(
+                                              'assets/images/arrow_lecture.svg'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return Container(
+                                  height: 15,
+                                );
+                              },
+                            ),
+                    ],
+                  ),
                 ),
               ),
-              lectures.isEmpty
-                  ? const Center(child: CircularProgressIndicator())
-                  : ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: lecs.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // final lectures = lecs[index];
-                        // final name = lectures['name'];
-                        // final image = lectures['imageSrc'];
-                        return Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(4.0),
-                              border:
-                                  Border.all(color: Colors.black, width: 0.5)),
-                          child: Column(
-                            children: [
-                              //Video Player
-                              SizedBox(
-                                width: mediaQuery.width * 0.8,
-                                height: mediaQuery.height * 0.2,
-                                child: Image.network(
-                                  lecs[index]['imageSrc'],
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Container(
-                                width: mediaQuery.width * 0.4,
-                                alignment: Alignment.topLeft,
-                                padding: const EdgeInsets.only(
-                                  left: 7,
-                                  top: 5,
-                                ),
-                                child: Text(
-                                  lecs[index]['name'],
-                                  maxLines: 2,
-                                  overflow: TextOverflow.clip,
-                                  style: GoogleFonts.notoSans(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                    color: const Color(0xFF000000),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: mediaQuery.width * 0.1,
-                                alignment: Alignment.topRight,
-                                padding: const EdgeInsets.only(
-                                  left: 7,
-                                  top: 5,
-                                ),
-                                child: SvgPicture.asset(
-                                    'assets/images/arrow_lecture.svg'),
-                              ),
-                            ],
+            )
+          : const MyDrawer(),
+      bottomNavigationBar: _isBurgerIcon
+          ? Container(
+              height: 55,
+              color: Colors.white,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    left: (30 / 360) * width,
+                    right: (30 / 360) * width,
+                    bottom: 8),
+                child: Row(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: InkWell(
+                        key: const Key('routed_to_loadingScreen'),
+                        onTap: () async {
+                          Navigator.pushNamed(
+                              context, LoadingScreenMobile.routeName);
+                          // Navigate to privacy page
+                        },
+                        child: Text(
+                          "Privacy",
+                          style: GoogleFonts.notoSans(
+                            fontWeight: FontWeight.w400,
+                            color: const Color.fromARGB(255, 142, 142, 142),
+                            fontSize: 13.0,
                           ),
-                        );
-                      },
+                        ),
+                      ),
                     ),
-            ],
-          ),
-        ),
-      ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Text(
+                          "© Credits, 2023, Product Arena",
+                          style: GoogleFonts.notoSans(
+                              fontWeight: FontWeight.w400,
+                              color: const Color.fromARGB(255, 142, 142, 142),
+                              fontSize: 12.0),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: InkWell(
+                        key: const Key('routed_to_LoadingScreen'),
+                        onTap: () async {
+                          Navigator.pushNamed(
+                              context, LoadingScreenMobile.routeName);
+                          // Navigate to privacy page
+                        },
+                        child: Text(
+                          "Terms",
+                          style: GoogleFonts.notoSans(
+                              fontWeight: FontWeight.w400,
+                              color: const Color.fromARGB(255, 142, 142, 142),
+                              fontSize: 13.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : null,
     );
   }
 }

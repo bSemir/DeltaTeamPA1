@@ -83,7 +83,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         'assets/images/arrow_forward_24px.svg'),
                     // Image.asset('assets/images/arrow_forward_24px.svg'),
                     onPressed: () {
-                      Navigator.pushNamed(context, LoginScreenMobile.routeName);
+                      Navigator.pushNamed(context, OnboardingScreen.routeName);
                     },
                   )
                 ],

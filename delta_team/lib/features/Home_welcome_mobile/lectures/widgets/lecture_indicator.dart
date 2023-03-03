@@ -20,7 +20,7 @@ class LectureIndicator extends StatelessWidget {
           height: 3.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: index < currentPage
+            color: index == currentPage
                 ? const Color(0xFF938F99)
                 : const Color(0xFFCAC4D0),
           ),

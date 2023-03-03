@@ -1,19 +1,21 @@
 import 'dart:convert';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:delta_team/common/custom_signlog_button.dart';
 import 'package:delta_team/features/Home_welcome_mobile/contact%20us/contact-us_mobile.dart';
+import 'package:delta_team/features/Home_welcome_mobile/home_second_screen.dart';
 import 'package:delta_team/features/Home_welcome_mobile/lectures/lectures_screen.dart';
-import 'package:delta_team/features/Home_welcome_mobile/lectures/recent_lectures.dart';
 import 'package:delta_team/features/Home_welcome_mobile/recentLessonTest.dart';
+import 'package:delta_team/features/homepage/recentLectures.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../auth/login/amplify_auth.dart';
 import '../auth/login/login_mobile/loginmobile_body.dart';
 import 'contactUsTest.dart';
+import 'lectures/recent_lectures.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
-
   @override
   State<MyDrawer> createState() => _MyDrawerState();
 }
@@ -31,14 +33,12 @@ class _MyDrawerState extends State<MyDrawer> {
         roles = value;
         isLoadingRoles = false;
       });
-
       //Lecture count
       // getLectureCounts();
     });
   }
 
   Map<String, dynamic> lectures = {};
-
   Future<List<String>> getUserRoles() async {
     try {
       final restOperation = Amplify.API.get('/api/user/lectures',
@@ -67,17 +67,14 @@ class _MyDrawerState extends State<MyDrawer> {
     try {
       List<AuthUserAttribute> userAttributes =
           await Amplify.Auth.fetchUserAttributes();
-
       Map<String, String> attributeMap = {};
       userAttributes.forEach((attribute) {
         attributeMap[attribute.userAttributeKey.toJson()] = attribute.value;
         // print("this is atribute value : $attribute");
       });
-
       String email = attributeMap['email'] ?? '';
       String givenName = attributeMap['given_name'] ?? '';
       String familyName = attributeMap['family_name'] ?? '';
-
       // print(" this is atribute map$attributeMap");
       // print('attributeMap: $attributeMap');
       setState(() {
@@ -98,12 +95,10 @@ class _MyDrawerState extends State<MyDrawer> {
     "qa": "assets/images/qaIcon.svg",
     // add more mappings as needed
   };
-
   bool isSelected = false;
   String? selectedRole;
   bool isSelectedRecentLessons = false;
   bool isSelectedContactUs = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -187,7 +182,6 @@ class _MyDrawerState extends State<MyDrawer> {
                               isSelected = true;
                               selectedRole = role;
                             });
-
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -200,7 +194,6 @@ class _MyDrawerState extends State<MyDrawer> {
                                 selectedRole = null;
                               });
                             });
-
                             print(role);
                           },
                           child: Row(
@@ -260,7 +253,7 @@ class _MyDrawerState extends State<MyDrawer> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const RecentLectures()),
+                                        const RecentLecturesMobile()),
                               ).then((value) {
                                 setState(() {
                                   isSelectedRecentLessons = false;
@@ -347,7 +340,7 @@ class _MyDrawerState extends State<MyDrawer> {
                           backgroundColor: Colors.black,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(2.0),
-                            side: BorderSide(color: Colors.white),
+                            side: const BorderSide(color: Colors.white),
                           ),
                         ),
                         child: const Text(

@@ -189,7 +189,7 @@ class _MyAppState extends State<MyApp> {
           '/contactUs': (context) => const ContactMeScreen(),
           '/recentLectures': (context) => const RecentLectures(),
           '/homescreen': (context) => const HomeScreen(),
-          HomeSecondScreen.routeName: (context) => const HomeSecondScreen(),
+          WelcomingScreen.routeName2: (context) => const WelcomingScreen(),
           // ContactMobile.routeName: (context) => const ContactMobile(),
         },
       ),

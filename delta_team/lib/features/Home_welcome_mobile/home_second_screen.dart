@@ -1,12 +1,14 @@
+import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:delta_team/features/Home_welcome_mobile/menu_navigation_screen.dart';
 import 'package:delta_team/features/Home_welcome_mobile/welcoming_message_screen.dart';
+import '../auth/login/amplify_auth.dart';
+import '../auth/login/login_mobile/loginmobile_body.dart';
 
 class HomeSecondScreen extends StatefulWidget {
   static const routeName = '/home_welcome';
   const HomeSecondScreen({super.key});
-
   @override
   State<HomeSecondScreen> createState() => _HomeScreenState();
 }
@@ -18,7 +20,6 @@ class _HomeScreenState extends State<HomeSecondScreen> {
   @override
   Widget build(BuildContext context) {
     Widget bodyWidget;
-
     if (_isMenuOpen) {
       bodyWidget = const MyDrawer();
     } else {
