@@ -27,7 +27,6 @@ class _SidebarState extends State<Sidebar> {
   bool isSelectedFirstRole = false;
   bool isSelectedSecondRole = false;
   int selectedIndex = -1;
-
   @override
   Widget build(BuildContext context) {
     bool removeText = false;
@@ -95,7 +94,9 @@ class _SidebarState extends State<Sidebar> {
                     GestureDetector(
                       key: const Key("homescreen_key"),
                       onTap: () {
-                        Navigator.pushNamed(context, '/homescreen');
+                        Future.delayed(Duration.zero, () {
+                          Navigator.pushNamed(context, '/homescreen');
+                        });
                         setState(() {
                           isSelectedHome = true;
                           isSelectedContact = false;
@@ -189,7 +190,9 @@ class _SidebarState extends State<Sidebar> {
                                 // await prefs.setString("role", res);
                               }
 
-                              Navigator.pushNamed(context, '/lecturesPage');
+                              Future.delayed(Duration.zero, () {
+                                Navigator.pushNamed(context, '/lecturesPage');
+                              });
                             },
                             child: Row(
                               children: [
@@ -220,7 +223,9 @@ class _SidebarState extends State<Sidebar> {
                     GestureDetector(
                       key: const Key("recentlectures_key"),
                       onTap: () {
-                        Navigator.pushNamed(context, '/recentLectures');
+                        Future.delayed(Duration.zero, () {
+                          Navigator.pushNamed(context, '/recentLectures');
+                        });
                         setState(() {
                           isSelectedRecent = true;
                           isSelectedHome = false;
@@ -252,7 +257,9 @@ class _SidebarState extends State<Sidebar> {
                     GestureDetector(
                       key: const Key("contact_key"),
                       onTap: () {
-                        Navigator.pushNamed(context, '/contactUs');
+                        Future.delayed(Duration.zero, () {
+                          Navigator.pushNamed(context, '/contactUs');
+                        });
                         setState(() {
                           isSelectedRecent = false;
                           isSelectedHome = false;
@@ -298,7 +305,9 @@ class _SidebarState extends State<Sidebar> {
                     GestureDetector(
                       key: const Key("homescreen_key"),
                       onTap: () {
-                        Navigator.pushNamed(context, '/homescreen');
+                        Future.delayed(Duration.zero, () {
+                          Navigator.pushNamed(context, '/homescreen');
+                        });
                         setState(() {
                           isSelectedHome = true;
                           isSelectedContact = false;
@@ -403,8 +412,9 @@ class _SidebarState extends State<Sidebar> {
                                 selectedRoleProvider.setRole(res);
                                 // await prefs.setString("role", res);
                               }
-
-                              Navigator.pushNamed(context, '/lecturesPage');
+                              Future.delayed(Duration.zero, () {
+                                Navigator.pushNamed(context, '/lecturesPage');
+                              });
                             },
                             child: Row(
                               mainAxisAlignment: removeText
@@ -449,7 +459,9 @@ class _SidebarState extends State<Sidebar> {
                     GestureDetector(
                       key: const Key("recentlectures_key"),
                       onTap: () {
-                        Navigator.pushNamed(context, '/recentLectures');
+                        Future.delayed(Duration.zero, () {
+                          Navigator.pushNamed(context, '/recentLectures');
+                        });
                         setState(() {
                           isSelectedRecent = true;
                           isSelectedHome = false;
@@ -493,7 +505,9 @@ class _SidebarState extends State<Sidebar> {
                     GestureDetector(
                       key: const Key("contact_key"),
                       onTap: () {
-                        Navigator.pushNamed(context, '/contactUs');
+                        Future.delayed(Duration.zero, () {
+                          Navigator.pushNamed(context, '/contactUs');
+                        });
                         setState(() {
                           isSelectedRecent = false;
                           isSelectedHome = false;
