@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:delta_team/features/auth/loadingScreens/loadingscreen_mobile.dart';
+import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/login/amplify_auth.dart';
-import 'package:delta_team/features/auth/login/login_form.dart';
-import 'package:delta_team/features/auth/login/loginform_mobile.dart';
+import 'package:delta_team/features/auth/login/login_web/loginform_web.dart';
+import 'package:delta_team/features/auth/login/login_mobile/loginform_mobile.dart';
 
 import 'package:delta_team/home_mobile.dart';
 import 'package:flutter/material.dart';
@@ -129,7 +129,6 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
                             height: 10,
                           ),
                           SizedBox(
-                            height: 14,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -167,12 +166,10 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
                   height: 185,
                 ),
                 SizedBox(
-                  height: 70,
-                  width: 70,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [Image.asset("assets/images/tech387.png")],
+                    children: [SvgPicture.asset("assets/images/tech387.svg")],
                   ),
                 ),
                 const SizedBox(
