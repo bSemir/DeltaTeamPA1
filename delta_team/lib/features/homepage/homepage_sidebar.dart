@@ -29,12 +29,6 @@ int selectedIndex = -1;
 
 class _SidebarState extends State<Sidebar> {
   @override
-  void initState() {
-    super.initState();
-    // getUserLectures();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // LayoutBuilder(
     //   builder: (BuildContext context, BoxConstraints constraints) {
@@ -51,9 +45,7 @@ class _SidebarState extends State<Sidebar> {
     bool closeSidebar = false;
 
     if (MediaQuery.of(context).size.width > 750) {
-      setState(() {
-        removeText = true;
-      });
+      removeText = true;
     }
 
     if (MediaQuery.of(context).size.height < 500) {
@@ -62,9 +54,7 @@ class _SidebarState extends State<Sidebar> {
 
     bool isScreenSmall = false;
     if (MediaQuery.of(context).size.width < 650) {
-      setState(() {
-        isScreenSmall = true;
-      });
+      isScreenSmall = true;
     }
 
     //   return HomeScreen();
@@ -370,7 +360,7 @@ class _SidebarState extends State<Sidebar> {
                           String str = "";
 
                           if (res == "backend") {
-                            str = "Backend Developmenttttttttttttttt";
+                            str = "Backend Development";
                             image = "assets/images/backendBijela.png";
                           }
                           if (res == "fullstack") {
