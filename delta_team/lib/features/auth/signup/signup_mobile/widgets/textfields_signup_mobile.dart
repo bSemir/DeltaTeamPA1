@@ -4,6 +4,7 @@ import 'package:delta_team/features/auth/signup/provider/auth_provider_mobile.da
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../amplifyconfiguration.dart';
@@ -106,6 +107,8 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
     // }
   }
 
+  final phoneMaskFormatter = MaskTextInputFormatter(mask: "+############");
+  final dateMaskFormatter = MaskTextInputFormatter(mask: "##/##/####");
   @override
   Widget build(BuildContext context) {
     bool isPasswordEmpty = passwordController.text.isEmpty;
@@ -269,6 +272,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             height: 24,
           ),
           TextFormField(
+            inputFormatters: [dateMaskFormatter],
             key: const Key("birthDateKey"),
             controller: birthDateController,
             onChanged: (value) {
@@ -496,6 +500,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             height: 24,
           ),
           TextFormField(
+            inputFormatters: [phoneMaskFormatter],
             key: const Key("phoneNumberKey"),
             controller: phoneNumberController,
             onChanged: (value) {
