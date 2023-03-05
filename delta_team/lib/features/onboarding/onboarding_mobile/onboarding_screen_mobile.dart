@@ -16,6 +16,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
 
+import 'mobile_providers/emailpasswordproviders_mobile.dart';
+import 'mobile_providers/role_provider_mobile.dart';
+import 'mobile_widgets/congratulations_card_mobile.dart';
+
 class OnboardingScreen extends StatefulWidget {
   static const routeName = 'onboarding-screen';
   const OnboardingScreen({super.key});
@@ -39,12 +43,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<TextEditingController> controllers =
       List.generate(6, (_) => TextEditingController());
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // _configureAmplify();
+  // }
   @override
   void initState() {
     super.initState();
-    // _configureAmplify();
-  }
+    final emailPasswordProvider =
+        Provider.of<EmailPasswordProviderMobile>(context, listen: false);
 
+    signInUser(emailPasswordProvider.email, emailPasswordProvider.password);
+  }
   // Future<void> _configureAmplify() async {
   //   // Add any Amplify plugins you want to use
   //   final authPlugin = AmplifyAuthCognito();
@@ -58,12 +69,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   //   }
   // }
 
-  Future<void> signInUser() async {
+  Future<void> signInUser(String email, String password) async {
     // await _configureAmplify();
     try {
       final result = await Amplify.Auth.signIn(
-        username: 'sblekic@pa.tech387.com', // email of user,
-        password: 'Password123!',
+        username: email, // email of user
+        password: password,
       );
       print('Logged In');
     } on AuthException catch (e) {
@@ -85,10 +96,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       final restOperation = Amplify.API.post("/api/onboarding/submit",
           body: HttpPayload.json({
             "date": "Jan2023",
-            "roles": ["fullstack", "backend"],
+            "roles": Provider.of<MyItem>(context, listen: false).myItems,
             "answers": {
               // answers are in the same order as questions, null if not answered
-              "0": "False",
+              "0": Provider.of<AnswerProvider>(context, listen: false).answ[0],
               "1": controllers[0].text,
               "2": controllers[1].text,
               "3": controllers[2].text,
@@ -98,13 +109,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             },
             "introductionVideoUrl": "https://www.youtube.com"
           }),
-          apiName: "userDataInitialization");
+          // apiName: "userDataInitialization"
+          apiName: "UserObjectInitialization");
+
       final response = await restOperation.response;
 
       Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
+
       print('POST call succeeded');
       print(responseMap['lectures']);
     } on ApiException catch (e) {
+      print(e.message);
       print('POST call failed: $e');
     }
   }
@@ -131,6 +146,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final emailPasswordProvider =
+        Provider.of<EmailPasswordProviderMobile>(context, listen: false);
     final provider = Provider.of<AnswerProvider>(context, listen: false);
 
     final List<Widget> pages = [
@@ -187,6 +204,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         questionText: questions[7],
         submitButton: () {
           submitOnboarding();
+          Navigator.pushNamed(context, CongratsCard.routeName);
+          print('Onboarding submitted');
         },
       )
     ];

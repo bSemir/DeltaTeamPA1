@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../../common/footer/bottomnavigation_mobile.dart';
+
 class ConfirmationScreen extends StatefulWidget {
   const ConfirmationScreen({super.key});
 
@@ -15,6 +17,7 @@ class ConfirmationScreen extends StatefulWidget {
 class _ConfirmationScreenState extends State<ConfirmationScreen> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -32,22 +35,25 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                 height: 40,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 32, right: 32),
+                padding: EdgeInsets.only(
+                    left: (32.0 / 360) * width, right: (32.0 / 360) * width),
                 child: Center(
                   child: Text("Just to be sure...",
-                      style: GoogleFonts.outfit(fontSize: 32)),
+                      style:
+                          GoogleFonts.outfit(fontSize: (32.0 / 360) * width)),
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 32, right: 32),
+                padding: EdgeInsets.only(
+                    left: (32.0 / 360) * width, right: (32.0 / 360) * width),
                 child: Center(
                   child: Text(
                     "We’ve sent a 6-digit code to your e-mail",
                     style: GoogleFonts.notoSans(
-                      fontSize: 16,
+                      fontSize: (16.0 / 360) * width,
                       color: const Color.fromRGBO(96, 93, 102, 1),
                     ),
                     // style: TextStyle(
@@ -57,22 +63,25 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
               const SizedBox(
                 height: 70,
               ),
-              const Padding(
-                padding: EdgeInsets.only(left: 32, right: 32),
-                child: ConfirmationContainers(),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: (32.0 / 360) * width, right: (32.0 / 360) * width),
+                child: const ConfirmationContainers(),
               ),
               const SizedBox(
                 height: 10,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 32, right: 32),
+                padding: EdgeInsets.only(
+                    left: (32.0 / 360) * width, right: (32.0 / 360) * width),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Already have an account? ",
                       style: GoogleFonts.notoSans(
-                          fontSize: 10, fontWeight: FontWeight.w400),
+                          fontSize: (10.0 / 360) * width,
+                          fontWeight: FontWeight.w400),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -83,7 +92,8 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
                       child: Text(
                         'Log in',
                         style: GoogleFonts.notoSans(
-                            fontSize: 10, fontWeight: FontWeight.w700),
+                            fontSize: (10.0 / 360) * width,
+                            fontWeight: FontWeight.w700),
                       ),
                     ),
                   ],
@@ -97,11 +107,11 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
               const SizedBox(
                 height: 38,
               ),
-              const Footer(),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: const BottomNavigation(),
     );
   }
 }

@@ -29,6 +29,8 @@ import 'features/Home_welcome_mobile/welcoming_message_screen.dart';
 import 'features/auth/login/loadingScreens/loadingscreen_mobile.dart';
 import 'features/auth/login/loadingScreens/loadingscreen_web.dart';
 import 'features/auth/login/login_mobile/loginmobile_body.dart';
+import 'features/auth/login/login_mobile/providers/userAttributesProviderMobile.dart';
+import 'features/auth/login/login_mobile/providers/userLecturesProviderMobile.dart';
 import 'features/auth/login/login_web/loginweb_body.dart';
 import 'features/auth/signup/provider/Web_auth_provider.dart';
 import 'features/auth/signup/provider/auth_provider_mobile.dart';
@@ -45,6 +47,7 @@ import 'features/homepage/homepage_video_screen.dart';
 import 'features/homepage/provider/youtube_link_provider.dart';
 import 'features/homepage/recentLectures.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/answer_mobile.dart';
+import 'features/onboarding/onboarding_mobile/mobile_providers/emailpasswordproviders_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/error_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/role_provider_mobile.dart';
@@ -131,9 +134,19 @@ class _MyAppState extends State<MyApp> {
           create: (_) => EmailPasswordProvider(),
         ),
         ChangeNotifierProvider(
+          create: (_) => EmailPasswordProviderMobile(),
+        ),
+        ChangeNotifierProvider(
           create: (_) => ShowModal(),
         ),
-        ChangeNotifierProvider(create: (_) => LectureListProvider()),
+        ChangeNotifierProvider(
+          create: (_) => LecturesProviderMobile(),
+        ),
+
+        ChangeNotifierProvider(
+          create: (_) => UserAttributesProviderMobile(),
+        ),
+        // ChangeNotifierProvider(create: (_) => LectureListProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

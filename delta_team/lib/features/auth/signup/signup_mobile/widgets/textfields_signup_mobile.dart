@@ -1,9 +1,11 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/signup/provider/auth_provider_mobile.dart';
+import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_providers/emailpasswordproviders_mobile.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../amplifyconfiguration.dart';
@@ -106,11 +108,16 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
     // }
   }
 
+  final phoneMaskFormatter = MaskTextInputFormatter(mask: "+############");
+  final dateMaskFormatter = MaskTextInputFormatter(mask: "##/##/####");
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     bool isPasswordEmpty = passwordController.text.isEmpty;
 
     final emailProvider = Provider.of<MyEmail>(context, listen: false);
+    final emailPasswordProvider =
+        Provider.of<EmailPasswordProviderMobile>(context, listen: false);
     return Form(
       key: _signUpKey,
       child: Column(
@@ -269,6 +276,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             height: 24,
           ),
           TextFormField(
+            inputFormatters: [dateMaskFormatter],
             key: const Key("birthDateKey"),
             controller: birthDateController,
             onChanged: (value) {
@@ -496,6 +504,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             height: 24,
           ),
           TextFormField(
+            inputFormatters: [phoneMaskFormatter],
             key: const Key("phoneNumberKey"),
             controller: phoneNumberController,
             onChanged: (value) {
@@ -752,7 +761,8 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
           Text(
               "By creating an account, you agree to our Terms and have read and acknowledge the Global Privacy Statement.",
               style: GoogleFonts.notoSans(
-                  fontSize: 10, color: const Color.fromRGBO(96, 93, 102, 1))),
+                  fontSize: (10.0 / 360) * width,
+                  color: const Color.fromRGBO(96, 93, 102, 1))),
           const SizedBox(
             height: 33,
           ),
@@ -761,7 +771,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
             content: Text(
               "Create Your account",
               style: GoogleFonts.notoSans(
-                fontSize: 14,
+                fontSize: (14.0 / 360) * width,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -791,6 +801,8 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
                         CognitoSignUpOptions(userAttributes: userAttributes),
                   );
                   emailProvider.email = emailController.text;
+                  emailPasswordProvider.setEmail(emailController.text);
+                  emailPasswordProvider.setPassword(passwordController.text);
                   isSignUpCompleted = true;
                 } catch (e) {
                   safePrint(e.toString());

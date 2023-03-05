@@ -44,6 +44,7 @@ class _RoleWidgetState extends State<RoleWidget> {
       child: Column(
         children: [
           Container(
+            key: const Key('colorkey'),
             padding: const EdgeInsets.all(4.0),
             width: double.infinity,
             height: 50,
@@ -55,6 +56,7 @@ class _RoleWidgetState extends State<RoleWidget> {
             child: Row(
               children: [
                 Container(
+                  key: const Key('slikakey'),
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   child: isSelected
                       ? SvgPicture.asset(
@@ -71,6 +73,7 @@ class _RoleWidgetState extends State<RoleWidget> {
                         ),
                 ),
                 Text(
+                  key: const Key('textkey'),
                   widget.role.id,
                   style: GoogleFonts.notoSans(
                     fontSize: 14,

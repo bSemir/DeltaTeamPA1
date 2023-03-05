@@ -14,13 +14,19 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-          backgroundColor: color, minimumSize: const Size(double.infinity, 40)),
-      onPressed: () {
-        buttonFunction();
-      },
-      child: content,
+    double width = MediaQuery.of(context).size.width;
+    return SizedBox(
+      height: 60,
+      width: (296 / 360) * width,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+        ),
+        onPressed: () {
+          buttonFunction();
+        },
+        child: content,
+      ),
     );
   }
 }

@@ -73,7 +73,7 @@ class _RecentLecturesMobileState extends State<RecentLecturesMobile> {
     print(lectures.toString());
     print(recentLectures.toString());
     print(lecs.toString());
-    var provider = Provider.of<LectureListProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

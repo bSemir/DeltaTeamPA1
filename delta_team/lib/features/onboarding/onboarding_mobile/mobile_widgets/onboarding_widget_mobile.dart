@@ -215,7 +215,7 @@ class _FormWithRadioButtonsState extends State<FormWithRadioButtons> {
               onChanged: ((Opcija? value) => setState(() {
                     da = !ne;
                     _daNe = value!;
-                    context.read<AnswerProvider>().addItem('True');
+                    context.read<AnswerProvider>().addItem("True");
                   })),
             ),
             RadioListTile(
@@ -230,7 +230,7 @@ class _FormWithRadioButtonsState extends State<FormWithRadioButtons> {
               onChanged: ((Opcija? value) => setState(() {
                     ne = !da;
                     _daNe = value!;
-                    context.read<AnswerProvider>().addItem('False');
+                    context.read<AnswerProvider>().addItem("False");
                   })),
             ),
           ],
@@ -477,10 +477,7 @@ class _PositionPageFormState extends State<PositionPageForm> {
               backgroundColor: AppColors.primaryColor,
               textColor: AppColors.secondaryColor3,
               text: 'Submit',
-              onPressed: () {
-                Navigator.pushNamed(context, CongratsCard.routeName);
-                print('Onboarding submitted');
-              },
+              onPressed: widget.submitButton,
               buttonWidth: double.infinity,
               buttonHeight: 42),
           const SizedBox(height: 10)

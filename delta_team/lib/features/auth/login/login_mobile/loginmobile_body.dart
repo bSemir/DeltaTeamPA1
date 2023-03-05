@@ -14,6 +14,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../common/footer/bottomnavigation_mobile.dart';
+
 class LoginScreenMobile extends StatefulWidget {
   static const routeName = '/loginmobile';
   const LoginScreenMobile({super.key});
@@ -38,37 +40,37 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
   //   setState(() {
   // }
 
-  Future<void> usersignIn(
-      BuildContext context, String email, String password) async {
-    if (email.isEmpty || password.isEmpty) {
-      setState(() {
-        errorMessage = 'Incorrect email or password';
-      });
-    } else {
-      try {
-        final result =
-            await Amplify.Auth.signIn(username: email, password: password);
-        if (result.isSignedIn) {
-          Navigator.pushNamed(context, LoadingScreenMobile.routeName);
-        }
-      } on AuthException catch (error) {
-        setState(() {
-          errorMessage = error.message;
-        });
-      } on HttpException catch (e) {
-        final response = e.response;
-        if (response.statusCode == 400) {
-          setState(() {
-            errorMessage = 'Please enter a valid email or password';
-          });
-        } else {
-          setState(() {
-            errorMessage = 'Sign in failed';
-          });
-        }
-      }
-    }
-  }
+  // Future<void> usersignIn(
+  //     BuildContext context, String email, String password) async {
+  //   if (email.isEmpty || password.isEmpty) {
+  //     setState(() {
+  //       errorMessage = 'Incorrect email or password';
+  //     });
+  //   } else {
+  //     try {
+  //       final result =
+  //           await Amplify.Auth.signIn(username: email, password: password);
+  //       if (result.isSignedIn) {
+  //         Navigator.pushNamed(context, LoadingScreenMobile.routeName);
+  //       }
+  //     } on AuthException catch (error) {
+  //       setState(() {
+  //         errorMessage = error.message;
+  //       });
+  //     } on HttpException catch (e) {
+  //       final response = e.response;
+  //       if (response.statusCode == 400) {
+  //         setState(() {
+  //           errorMessage = 'Please enter a valid email or password';
+  //         });
+  //       } else {
+  //         setState(() {
+  //           errorMessage = 'Sign in failed';
+  //         });
+  //       }
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -84,168 +86,105 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
       ),
       backgroundColor: const Color(0xFFE9E9E9),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(height: 40),
-                Column(
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                              text: 'Welcome to',
-                              style: GoogleFonts.notoSans(
-                                fontSize: 32.0,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                              )),
-                        ],
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: 'Product Arena',
-                        style: GoogleFonts.notoSans(
-                            fontWeight: FontWeight.w700,
-                            color: const Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 32.0),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 128.0),
-                Form(
-                    key: _formKey,
-                    child: SizedBox(
-                      width: (296 / 360) * width,
-                      child: Column(
-                        children: [
-                          const LoginFieldMobile(),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          SizedBox(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(children: [
-                                  Text(
-                                    'Don’t you have an account?',
-                                    style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w400,
-                                      color: const Color(0xFF000000),
-                                      fontSize: 10.0,
-                                    ),
-                                  )
-                                ]),
-                                GestureDetector(
-                                  key: const Key('SignUp'),
-                                  onTap: () async {
-                                    Navigator.pushNamed(context, "/signup");
-                                  },
-                                  child: Text(
-                                    ' Sign up',
-                                    style: GoogleFonts.montserrat(
-                                      fontWeight: FontWeight.w700,
-                                      color: const Color(0xFF000000),
-                                      fontSize: 10.0,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    )),
-                const SizedBox(
-                  height: 185,
-                ),
-                SizedBox(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [SvgPicture.asset("assets/images/tech387.svg")],
-                  ),
-                ),
-                const SizedBox(
-                  height: 18,
-                ),
-              ],
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: 55,
-                color: Colors.white,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      left: (30 / 360) * width,
-                      right: (30 / 360) * width,
-                      bottom: 8),
-                  child: Row(
+        child: Center(
+          child: Column(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 40),
+                  Column(
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: InkWell(
-                          key: const Key('routed_to_loadingScreen'),
-                          onTap: () async {
-                            Navigator.pushNamed(
-                                context, LoadingScreenMobile.routeName);
-                            // Navigate to privacy page
-                          },
-                          child: Text(
-                            "Privacy",
-                            style: GoogleFonts.notoSans(
-                              fontWeight: FontWeight.w400,
-                              color: const Color.fromARGB(255, 142, 142, 142),
-                              fontSize: 13.0,
-                            ),
-                          ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text: 'Welcome to',
+                                style: GoogleFonts.notoSans(
+                                  fontSize: (32.0 / 360) * width,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                )),
+                          ],
                         ),
                       ),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Text(
-                            "© Credits, 2023, Product Arena",
-                            style: GoogleFonts.notoSans(
-                                fontWeight: FontWeight.w400,
-                                color: const Color.fromARGB(255, 142, 142, 142),
-                                fontSize: 12.0),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: InkWell(
-                          key: const Key('routed_to_LoadingScreen'),
-                          onTap: () async {
-                            Navigator.pushNamed(
-                                context, LoadingScreenMobile.routeName);
-                            // Navigate to privacy page
-                          },
-                          child: Text(
-                            "Terms",
-                            style: GoogleFonts.notoSans(
-                                fontWeight: FontWeight.w400,
-                                color: const Color.fromARGB(255, 142, 142, 142),
-                                fontSize: 13.0),
-                          ),
+                      RichText(
+                        text: TextSpan(
+                          text: 'Product Arena',
+                          style: GoogleFonts.notoSans(
+                              fontWeight: FontWeight.w700,
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                              fontSize: (32.0 / 360) * width),
                         ),
                       ),
                     ],
                   ),
-                ),
+                  const SizedBox(height: 128.0),
+                  Form(
+                      key: _formKey,
+                      child: SizedBox(
+                        width: (296 / 360) * width,
+                        child: Column(
+                          children: [
+                            const LoginFieldMobile(),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            SizedBox(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Column(children: [
+                                    Text(
+                                      'Don’t you have an account?',
+                                      style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w400,
+                                        color: const Color(0xFF000000),
+                                        fontSize: (10.0 / 360) * width,
+                                      ),
+                                    )
+                                  ]),
+                                  GestureDetector(
+                                    key: const Key('SignUp'),
+                                    onTap: () async {
+                                      Navigator.pushNamed(context, "/signup");
+                                    },
+                                    child: Text(
+                                      ' Sign up',
+                                      style: GoogleFonts.montserrat(
+                                        fontWeight: FontWeight.w700,
+                                        color: const Color(0xFF000000),
+                                        fontSize: (10.0 / 360) * width,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 185,
+                  ),
+                  SizedBox(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [SvgPicture.asset("assets/images/tech387.svg")],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                ],
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
+      bottomNavigationBar: const BottomNavigation(),
     );
   }
 }

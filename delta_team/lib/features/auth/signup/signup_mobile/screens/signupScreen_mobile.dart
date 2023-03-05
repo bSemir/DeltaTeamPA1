@@ -4,6 +4,7 @@ import 'package:delta_team/features/auth/signup/signup_mobile/widgets/title_sign
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../../common/footer/bottomnavigation_mobile.dart';
 import '../widgets/footer.dart';
 
 class SignupScreenMobile extends StatelessWidget {
@@ -11,6 +12,7 @@ class SignupScreenMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -25,9 +27,10 @@ class SignupScreenMobile extends StatelessWidget {
           child: Column(
             children: [
               const Center(child: TitleSignUpMobile()),
-              const Padding(
-                padding: EdgeInsets.only(left: 32, right: 32),
-                child: TextFieldSignUp(),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: (32.0 / 360) * width, right: (32.0 / 360) * width),
+                child: const TextFieldSignUp(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -35,7 +38,8 @@ class SignupScreenMobile extends StatelessWidget {
                   Text(
                     "Already have an account? ",
                     style: GoogleFonts.notoSans(
-                        fontSize: 10, fontWeight: FontWeight.w400),
+                        fontSize: (10.0 / 360) * width,
+                        fontWeight: FontWeight.w400),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -45,7 +49,8 @@ class SignupScreenMobile extends StatelessWidget {
                     child: Text(
                       'Log in',
                       style: GoogleFonts.notoSans(
-                          fontSize: 10, fontWeight: FontWeight.w700),
+                          fontSize: (10.0 / 360) * width,
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                 ],
@@ -63,11 +68,11 @@ class SignupScreenMobile extends StatelessWidget {
               const SizedBox(
                 height: 23.1,
               ),
-              const Footer(),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: const BottomNavigation(),
     );
   }
 }

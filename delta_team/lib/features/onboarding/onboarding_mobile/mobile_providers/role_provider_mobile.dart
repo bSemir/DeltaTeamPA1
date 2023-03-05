@@ -1,5 +1,6 @@
 import "package:delta_team/features/onboarding/onboarding_mobile/mobile_models/role_mobile.dart";
 import "package:flutter/material.dart";
+import 'package:flutter/cupertino.dart';
 
 class MyItem with ChangeNotifier {
   List<String> myItems = [];
@@ -9,6 +10,7 @@ class MyItem with ChangeNotifier {
 //dodaj u niz rolu
   void add(Role role) {
     myItems.add(role.id);
+    print(myItems);
     notifyListeners();
   }
 
