@@ -19,14 +19,30 @@ class Sidebar extends StatefulWidget {
 }
 
 List varijablaRola = [];
+bool isSelectedHome = true;
+bool isSelectedRecent = false;
+bool isSelectedContact = false;
+bool isSelectedFirstRole = false;
+bool isSelectedSecondRole = false;
+int selectedIndex = -1;
 
 class _SidebarState extends State<Sidebar> {
-  bool isSelectedHome = true;
-  bool isSelectedRecent = false;
-  bool isSelectedContact = false;
-  bool isSelectedFirstRole = false;
-  bool isSelectedSecondRole = false;
-  int selectedIndex = -1;
+  @override
+  void initState() {
+    super.initState();
+    _loadPrefs();
+  }
+
+  Map<String, dynamic> lectures = {};
+
+  Future<void> _loadPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final lecturesString = prefs.getString('lecturesPrefs');
+    setState(() {
+      lectures = json.decode(lecturesString!);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     bool removeText = false;
@@ -44,18 +60,11 @@ class _SidebarState extends State<Sidebar> {
       isScreenSmall = true;
     }
 
-    //   return HomeScreen();
-    // }
-
     Set<String> uniqueRoles = {};
     List<String> roleTemp = [];
 
-    final userLecturesProvider =
-        Provider.of<LecturesProvider>(context, listen: false);
-    final selectedRoleProvider =
-        Provider.of<SelectedRoleProvider>(context, listen: false);
-    if (userLecturesProvider.lectures.isNotEmpty) {
-      List<dynamic> lecturesList = userLecturesProvider.lectures["lectures"];
+    if (lectures.isNotEmpty) {
+      List<dynamic> lecturesList = lectures["lectures"];
       for (int i = 0; i < lecturesList.length; i++) {
         Map<String, dynamic> lecture = lecturesList[i];
         List<String> roles = lecture['roles'].cast<String>();
@@ -91,9 +100,7 @@ class _SidebarState extends State<Sidebar> {
                     GestureDetector(
                       key: const Key("homescreen_key"),
                       onTap: () {
-                        Future.delayed(Duration.zero, () {
-                          Navigator.pushNamed(context, '/homescreen');
-                        });
+                        Navigator.pushNamed(context, '/homescreen');
                         setState(() {
                           isSelectedHome = true;
                           isSelectedContact = false;
@@ -157,11 +164,9 @@ class _SidebarState extends State<Sidebar> {
                           return GestureDetector(
                             key: const Key("getlectures_key"),
                             onTap: () async {
-                              Map<String, dynamic> lecturesList =
-                                  userLecturesProvider.lectures;
-                              if (userLecturesProvider.lectures.isNotEmpty) {
-                                // final prefs = await SharedPreferences.getInstance();
-                                // await prefs.setString('myMap', jsonEncode(lecturesList));
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              if (lectures.isNotEmpty) {
                                 setState(() {
                                   selectedIndex = index;
                                 });
@@ -183,13 +188,10 @@ class _SidebarState extends State<Sidebar> {
                                   });
                                 }
 
-                                selectedRoleProvider.setRole(res);
-                                // await prefs.setString("role", res);
+                                await prefs.setString("role", res);
                               }
 
-                              Future.delayed(Duration.zero, () {
-                                Navigator.pushNamed(context, '/lecturesPage');
-                              });
+                              Navigator.pushNamed(context, '/lecturesPage');
                             },
                             child: Row(
                               children: [
@@ -220,9 +222,7 @@ class _SidebarState extends State<Sidebar> {
                     GestureDetector(
                       key: const Key("recentlectures_key"),
                       onTap: () {
-                        Future.delayed(Duration.zero, () {
-                          Navigator.pushNamed(context, '/recentLectures');
-                        });
+                        Navigator.pushNamed(context, '/recentLectures');
                         setState(() {
                           isSelectedRecent = true;
                           isSelectedHome = false;
@@ -254,9 +254,7 @@ class _SidebarState extends State<Sidebar> {
                     GestureDetector(
                       key: const Key("contact_key"),
                       onTap: () {
-                        Future.delayed(Duration.zero, () {
-                          Navigator.pushNamed(context, '/contactUs');
-                        });
+                        // Navigator.pushNamed(context, '/contactUs');
                         setState(() {
                           isSelectedRecent = false;
                           isSelectedHome = false;
@@ -288,8 +286,9 @@ class _SidebarState extends State<Sidebar> {
             ),
           )
         : SingleChildScrollView(
-            child: SizedBox(
+            child: Container(
               height: MediaQuery.of(context).size.height,
+              color: Colors.black,
               child: Padding(
                 padding: const EdgeInsets.only(top: 62, right: 24, left: 24),
                 child: Column(
@@ -300,11 +299,9 @@ class _SidebarState extends State<Sidebar> {
                       height: 80,
                     ),
                     GestureDetector(
-                      key: const Key("homescreen_key"),
+                      key: const Key("homescreen_key2"),
                       onTap: () {
-                        Future.delayed(Duration.zero, () {
-                          Navigator.pushNamed(context, '/homescreen');
-                        });
+                        Navigator.pushNamed(context, '/homescreen');
                         setState(() {
                           isSelectedHome = true;
                           isSelectedContact = false;
@@ -332,6 +329,7 @@ class _SidebarState extends State<Sidebar> {
                                   child: Text(
                                     'Homescreen',
                                     style: TextStyle(
+                                        decoration: TextDecoration.none,
                                         fontSize: 16,
                                         color: isSelectedHome
                                             ? Colors.green
@@ -378,13 +376,12 @@ class _SidebarState extends State<Sidebar> {
                           }
 
                           return GestureDetector(
-                            key: const Key("getlectures_key"),
+                            key: const Key("getlectures_key2"),
                             onTap: () async {
-                              Map<String, dynamic> lecturesList =
-                                  userLecturesProvider.lectures;
-                              if (userLecturesProvider.lectures.isNotEmpty) {
-                                // final prefs = await SharedPreferences.getInstance();
-                                // await prefs.setString('myMap', jsonEncode(lecturesList));
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+
+                              if (lectures.isNotEmpty) {
                                 setState(() {
                                   selectedIndex = index;
                                 });
@@ -406,12 +403,9 @@ class _SidebarState extends State<Sidebar> {
                                   });
                                 }
 
-                                selectedRoleProvider.setRole(res);
-                                // await prefs.setString("role", res);
+                                await prefs.setString("role", res);
                               }
-                              Future.delayed(Duration.zero, () {
-                                Navigator.pushNamed(context, '/lecturesPage');
-                              });
+                              Navigator.pushNamed(context, '/lecturesPage');
                             },
                             child: Row(
                               mainAxisAlignment: removeText
@@ -432,6 +426,7 @@ class _SidebarState extends State<Sidebar> {
                                         child: Text(
                                           str,
                                           style: TextStyle(
+                                              decoration: TextDecoration.none,
                                               fontSize: 16,
                                               color: selectedIndex == index
                                                   ? Colors.green
@@ -454,11 +449,9 @@ class _SidebarState extends State<Sidebar> {
                       height: 20,
                     ),
                     GestureDetector(
-                      key: const Key("recentlectures_key"),
+                      key: const Key("recentlectures_key2"),
                       onTap: () {
-                        Future.delayed(Duration.zero, () {
-                          Navigator.pushNamed(context, '/recentLectures');
-                        });
+                        Navigator.pushNamed(context, '/recentLectures');
                         setState(() {
                           isSelectedRecent = true;
                           isSelectedHome = false;
@@ -486,6 +479,7 @@ class _SidebarState extends State<Sidebar> {
                                   child: Text(
                                     'Recent Lectures',
                                     style: TextStyle(
+                                        decoration: TextDecoration.none,
                                         color: isSelectedRecent
                                             ? Colors.green
                                             : Colors.white,
@@ -500,11 +494,8 @@ class _SidebarState extends State<Sidebar> {
                       height: 20,
                     ),
                     GestureDetector(
-                      key: const Key("contact_key"),
+                      key: const Key("contact_key2"),
                       onTap: () {
-                        Future.delayed(Duration.zero, () {
-                          Navigator.pushNamed(context, '/contactUs');
-                        });
                         setState(() {
                           isSelectedRecent = false;
                           isSelectedHome = false;
@@ -513,6 +504,7 @@ class _SidebarState extends State<Sidebar> {
                           isSelectedSecondRole = false;
                           selectedIndex = -1;
                         });
+                        Navigator.pushNamed(context, '/contactUs');
                       },
                       child: Row(
                         mainAxisAlignment: removeText
@@ -532,6 +524,7 @@ class _SidebarState extends State<Sidebar> {
                                   child: Text(
                                     'Contact us!',
                                     style: TextStyle(
+                                        decoration: TextDecoration.none,
                                         color: isSelectedContact
                                             ? Colors.green
                                             : Colors.white,

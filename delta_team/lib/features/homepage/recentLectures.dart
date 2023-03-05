@@ -1,8 +1,5 @@
 import 'dart:convert';
 
-import 'package:amplify_api/amplify_api.dart';
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/homepage/homepage_sidebar.dart';
 import 'package:delta_team/features/homepage/provider/youtube_link_provider.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../amplifyconfiguration.dart';
-import '../auth/login/providers/userLecturesProvider.dart';
 import 'account_modal.dart';
 
 class RecentLectures extends StatefulWidget {
@@ -26,8 +21,7 @@ class _RecentLecturesState extends State<RecentLectures> {
   @override
   void initState() {
     super.initState();
-    // _loadPrefs();
-    // getUserLectures();
+    _loadPrefs();
   }
 
   bool showModal = false;
@@ -36,68 +30,25 @@ class _RecentLecturesState extends State<RecentLectures> {
 
   Future<void> _loadPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final jsonString = prefs.getString('myMap');
-    final role = prefs.getString('role');
-
+    final lecturesString = prefs.getString('lecturesPrefs');
+    final role = prefs.getString("role");
     setState(() {
-      lectures = jsonDecode(jsonString!);
+      lectures = json.decode(lecturesString!);
       selectedRole = role!;
     });
   }
 
-  Future<void> _configureAmplify() async {
-    // Add any Amplify plugins you want to use
-    final authPlugin = AmplifyAuthCognito();
-    final api = AmplifyAPI();
-    await Amplify.addPlugins([authPlugin, api]);
-    try {
-      await Amplify.configure(amplifyconfig);
-    } on AmplifyAlreadyConfiguredException {
-      safePrint(
-          'Tried to reconfigure Amplify; this can occur when your app restarts on Android.');
-    }
-  }
-
-  Future<Map<String, dynamic>> getUserLectures() async {
-    // signInUser();
-    try {
-      final restOperation = Amplify.API.get('/api/user/lectures',
-          apiName: 'getUserLectures',
-          queryParameters: {
-            'paDate': 'Jan2023'
-            // , 'name': 'Flutter widgets'
-          });
-      final response = await restOperation.response;
-
-      Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
-      setState(() {
-        lectures = responseMap;
-      });
-      // responseMap.forEach((key, value) {
-      //   print("$key: $value");
-      // });
-
-      // print(responseMap.values);
-      return responseMap;
-    } on ApiException catch (e) {
-      throw Exception('Failed to load lectures: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final userLecturesProvider =
-        Provider.of<LecturesProvider>(context, listen: false);
     bool removeDescription = false;
     if (MediaQuery.of(context).size.width < 970) {
       removeDescription = true;
     }
     final youtubeProvider =
         Provider.of<YoutubeLinkProvider>(context, listen: false);
-    String role = "";
     List<Map<String, dynamic>> lecs = [];
-    if (userLecturesProvider.lectures.isNotEmpty) {
-      List<dynamic> lecturesList = userLecturesProvider.lectures["lectures"];
+    if (lectures.isNotEmpty) {
+      List<dynamic> lecturesList = lectures["lectures"];
 
       for (int i = 0; i < 3; i++) {
         Map<String, dynamic> lecture = lecturesList[i];
@@ -179,7 +130,7 @@ class _RecentLecturesState extends State<RecentLectures> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 GestureDetector(
-                                  key: const Key("user_icon_key"),
+                                  key: const Key("user_icon_key2"),
                                   onTap: () {
                                     setState(() {
                                       showModal = !showModal;
@@ -407,7 +358,7 @@ class _RecentLecturesState extends State<RecentLectures> {
                                                   ),
                                                   InkWell(
                                                     key: const Key(
-                                                        "lectureVideo_key"),
+                                                        "lectureVideo_key2"),
                                                     onTap: () async {
                                                       final prefs =
                                                           await SharedPreferences

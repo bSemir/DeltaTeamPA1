@@ -1,8 +1,11 @@
 import 'package:amplify_core/amplify_core.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
+import 'package:delta_team/features/homepage/contact_me_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../auth/login/providers/userAttributesProvider.dart';
 import 'homepage_sidebar.dart';
@@ -18,7 +21,24 @@ class _AccountModalState extends State<AccountModal> {
   @override
   void initState() {
     super.initState();
+    _loadPrefs();
   }
+
+  Future<void> _loadPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final nameUser = prefs.getString('nameUser');
+    final emailUser = prefs.getString('email');
+    final surnameUser = prefs.getString('surname');
+    setState(() {
+      email = emailUser!;
+      surname = surnameUser!;
+      name = nameUser!;
+    });
+  }
+
+  String name = '';
+  String surname = '';
+  String email = '';
 
   Future<void> signOutUser() async {
     try {
@@ -46,8 +66,6 @@ class _AccountModalState extends State<AccountModal> {
     if (MediaQuery.of(context).size.width < 500) {
       widthPositioned = MediaQuery.of(context).size.width * 0.50;
     }
-    final userAttributesProvider =
-        Provider.of<UserAttributesProvider>(context, listen: false);
 
     return Positioned(
       top: 64,
@@ -86,14 +104,14 @@ class _AccountModalState extends State<AccountModal> {
               ),
               Center(
                 child: Text(
-                  "${userAttributesProvider.name} ${userAttributesProvider.surname}",
+                  "$name $surname",
                   style: GoogleFonts.outfit(
                       fontSize: 32, fontWeight: FontWeight.bold),
                 ),
               ),
               Center(
                 child: Text(
-                  userAttributesProvider.email,
+                  email,
                   style: GoogleFonts.notoSans(fontSize: 16),
                 ),
               ),
@@ -169,7 +187,12 @@ class _AccountModalState extends State<AccountModal> {
               Center(
                 child: ElevatedButton(
                   key: const Key("signout_key"),
-                  onPressed: () {
+                  onPressed: () async {
+                    setState(() {
+                      showModal = false;
+                      varijablaRola = [];
+                    });
+                    await FlutterSession().set("token", "");
                     signOutUser();
                     Navigator.pushNamed(context, LoginScreenWeb.routeName);
                   },

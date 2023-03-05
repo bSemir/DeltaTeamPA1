@@ -595,6 +595,9 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 30,
+            ),
             const Footer(),
           ],
         ),
