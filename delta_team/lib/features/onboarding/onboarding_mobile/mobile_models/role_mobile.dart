@@ -22,7 +22,7 @@ class Role {
   Role(this.id, this.image);
 }
 
-List<Role> listaRola = [
+List<Role> listaRole = [
   Role('qa', 'assets/images/qa_icon.svg'),
   Role('productManager', 'assets/images/manager_icon.svg'),
   Role('backend', 'assets/images/backend_icon.svg'),

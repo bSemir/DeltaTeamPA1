@@ -17,17 +17,19 @@ class _RedirectingScreenState extends State<RedirectingScreen> {
   @override
   void initState() {
     super.initState();
-    startTimeout();
+    // startTimeout();
   }
 
-  startTimeout() async {
-    var duration = const Duration(seconds: 3);
-    return Timer(duration, navigateToHomeScreen);
-  }
+  // startTimeout() async {
+  //   var duration = const Duration(seconds: 3);
+  //   return Timer(duration, navigateToHomeScreen);
+  // }
 
-  navigateToHomeScreen() {
-    Navigator.pushReplacementNamed(context, WelcomePage.routeName);
-  }
+  // navigateToHomeScreen() {
+  //   Navigator.pushNamed(context, WelcomePage.routeName);
+
+  //   // Navigator.pushReplacementNamed(context, WelcomePage.routeName);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -80,16 +82,16 @@ class _RedirectingScreenState extends State<RedirectingScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 150,
-                  height: 150,
-                  child: CircularProgressIndicator(
-                    backgroundColor: Color(0xffffffff),
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        Color.fromARGB(255, 44, 250, 51)),
-                    strokeWidth: 13.0,
-                  ),
-                ),
+                // const SizedBox(
+                //   width: 150,
+                //   height: 150,
+                //   child: CircularProgressIndicator(
+                //     backgroundColor: Color(0xffffffff),
+                //     valueColor: AlwaysStoppedAnimation<Color>(
+                //         Color.fromARGB(255, 44, 250, 51)),
+                //     strokeWidth: 13.0,
+                //   ),
+                // ),
               ]),
             ])),
       ),

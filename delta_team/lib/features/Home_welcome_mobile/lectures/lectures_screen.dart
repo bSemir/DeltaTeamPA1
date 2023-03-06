@@ -166,8 +166,8 @@ class _LecturesScreenState extends State<LecturesScreen> {
                       child: InkWell(
                         key: const Key('routed_to_loadingScreen'),
                         onTap: () async {
-                          Navigator.pushNamed(
-                              context, LoadingScreenMobile.routeName);
+                          // Navigator.pushNamed(
+                          //     context, LoadingScreenMobile.routeName);
                           // Navigate to privacy page
                         },
                         child: Text(
@@ -197,8 +197,8 @@ class _LecturesScreenState extends State<LecturesScreen> {
                       child: InkWell(
                         key: const Key('routed_to_LoadingScreen'),
                         onTap: () async {
-                          Navigator.pushNamed(
-                              context, LoadingScreenMobile.routeName);
+                          // Navigator.pushNamed(
+                          //     context, LoadingScreenMobile.routeName);
                           // Navigate to privacy page
                         },
                         child: Text(

@@ -417,8 +417,8 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
                           userAttributesProvider.setName(nameUser);
                           userAttributesProvider.setSurname(surname);
                           safePrint('successful');
-                          Navigator.pushNamed(
-                              context, LoadingScreenMobile.routeName);
+                          // Navigator.pushNamed(
+                          //     context, LoadingScreenMobile.routeName);
                         }
                       }
                     },

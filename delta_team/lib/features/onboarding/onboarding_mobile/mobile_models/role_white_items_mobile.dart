@@ -22,7 +22,7 @@ class RoleWhite {
   RoleWhite(this.idWhite, this.imageWhite);
 }
 
-List<RoleWhite> listaRolaWhite = [
+List<RoleWhite> listaRoleWhite = [
   RoleWhite('qa', 'assets/images/qa_white.svg'),
   RoleWhite('productManager', 'assets/images/manager_white.svg'),
   RoleWhite('backend', 'assets/images/backend_white.svg'),

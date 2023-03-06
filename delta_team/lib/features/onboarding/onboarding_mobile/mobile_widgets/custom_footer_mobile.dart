@@ -2,77 +2,83 @@ import 'package:delta_team/common/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../welcome_page_mobile.dart';
+
 class CustomFooter extends StatelessWidget {
   const CustomFooter({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
+    final width = MediaQuery.of(context).size.width;
 
     return Container(
-      padding: const EdgeInsets.all(2.0),
-      width: double.infinity,
-      height: mediaQuery.size.height * 0.08,
-      color: AppColors.secondaryColor3,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Container(
-              padding: const EdgeInsets.only(top: 10.0),
-              alignment: Alignment.topCenter,
-              height: mediaQuery.size.height * 0.20,
-              width: mediaQuery.size.width * 0.18,
-              child: Text(
-                key: const Key('PrivacyTextKey'),
-                "Privacy",
-                style: GoogleFonts.notoSans(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.footerColor),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 6,
-            child: Container(
-              padding: const EdgeInsets.all(10.0),
-              alignment: Alignment.bottomCenter,
-              height: mediaQuery.size.height * 0.13,
-              width: mediaQuery.size.width * 0.50,
-              child: Text(
-                key: const Key('CreditsTextKey'),
-                "© Credits, 2023, Product Arena",
-                style: GoogleFonts.notoSans(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.footerColor),
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Container(
-                alignment: Alignment.topCenter,
-                height: mediaQuery.size.height * 0.10,
-                width: mediaQuery.size.width * 0.18,
+      height: 55,
+      color: Colors.white,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: (30 / 360) * width,
+          right: (30 / 360) * width,
+          bottom: 8,
+        ),
+        child: Row(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: InkWell(
+                key: const Key('routed_to_onboardingscreen'),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const WelcomePage()));
+                  // Navigate to privacy page
+                },
                 child: Text(
-                  key: const Key('TermsTextKey'),
-                  "Terms",
+                  "Privacy",
                   style: GoogleFonts.notoSans(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.footerColor),
+                    fontWeight: FontWeight.w400,
+                    color: const Color.fromARGB(255, 142, 142, 142),
+                    fontSize: 13.0,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  "© Credits, 2023, Product Arena",
+                  style: GoogleFonts.notoSans(
+                    fontWeight: FontWeight.w400,
+                    color: const Color.fromARGB(255, 142, 142, 142),
+                    fontSize: 12.0,
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: InkWell(
+                key: const Key('routed_to_onboardingscreen'),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const WelcomePage()));
+                  // Navigate to privacy page
+                },
+                child: Text(
+                  "Terms",
+                  style: GoogleFonts.notoSans(
+                    fontWeight: FontWeight.w400,
+                    color: const Color.fromARGB(255, 142, 142, 142),
+                    fontSize: 13.0,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

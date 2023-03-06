@@ -46,6 +46,7 @@ import 'features/homepage/homepage.dart';
 import 'features/homepage/homepage_video_screen.dart';
 import 'features/homepage/provider/youtube_link_provider.dart';
 import 'features/homepage/recentLectures.dart';
+import 'features/onboarding/onboarding_mobile/mobile_models/role_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/answer_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/emailpasswordproviders_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/error_provider_mobile.dart';
@@ -167,7 +168,10 @@ class _MyAppState extends State<MyApp> {
         ),
         home: defaultTargetPlatform == TargetPlatform.iOS ||
                 defaultTargetPlatform == TargetPlatform.android
-            ? const SignupScreenMobile()
+            ? const
+                // WelcomePage()
+
+                SignupScreenMobile()
             : const LoginScreenWeb(),
 
         // LoginScreenWeb(),
@@ -175,8 +179,8 @@ class _MyAppState extends State<MyApp> {
           LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
           LoginScreenMobile.routeName: (context) => const LoginScreenMobile(),
           HomeScreenMobile.routeName: (context) => const HomeScreenMobile(),
-          LoadingScreenMobile.routeName: (context) =>
-              const LoadingScreenMobile(),
+          // LoadingScreenMobile.routeName: (context) =>
+          //     const LoadingScreenMobile(),
           '/loadingScreenWeb': (context) => const LoadingScreenWeb(),
           '/signup': (context) => const SignupScreenMobile(),
           '/confirmation': (context) => const ConfirmationScreen(),
@@ -186,6 +190,7 @@ class _MyAppState extends State<MyApp> {
               const Onboardingredirecting(),
           WelcomePage.routeName: (context) => const WelcomePage(),
           OnboardingScreen.routeName: (context) => const OnboardingScreen(),
+          // role: listaRole.first,
           CongratsCard.routeName: (context) => const CongratsCard(),
           CongratsCardWeb.routeName: (context) => const CongratsCardWeb(),
           '/onboardingweb': (context) => OnboardingWeb(
