@@ -12,8 +12,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../amplifyconfiguration.dart';
-import '../auth/login/providers/userLecturesProvider.dart';
 import 'account_modal.dart';
 
 class LecturesPage extends StatefulWidget {
@@ -29,6 +27,26 @@ class _LecturesPageState extends State<LecturesPage> {
     super.initState();
 
     _loadPrefs();
+  }
+
+  Future<void> patchLectureData(String title) async {
+    try {
+      var body = jsonEncode({
+        'date': 'Jan2023',
+        'lectureName': title,
+        'lastStoppedInSeconds': 100
+      });
+      var headers = {'Content-Type': 'application/json'};
+      Amplify.API.patch(
+        "/api/lecture/lastStopped",
+        apiName: "updateLastStoppedDelta",
+        headers: headers,
+        body: HttpPayload(body),
+      );
+      print("POST SENT");
+    } catch (error) {
+      print('Error calling API - PATCH user lectures: $error');
+    }
   }
 
   bool showModal = false;
@@ -47,8 +65,8 @@ class _LecturesPageState extends State<LecturesPage> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedRoleProvider =
-        Provider.of<SelectedRoleProvider>(context, listen: false);
+    // final selectedRoleProvider =
+    //     Provider.of<SelectedRoleProvider>(context, listen: false);
 
     bool removeDescription = false;
     if (MediaQuery.of(context).size.width < 970) {
@@ -302,6 +320,8 @@ class _LecturesPageState extends State<LecturesPage> {
                                               key:
                                                   const Key("lectureVideo_key"),
                                               onTap: () async {
+                                                await patchLectureData(
+                                                    lecs[index]['name']);
                                                 final prefs =
                                                     await SharedPreferences
                                                         .getInstance();
@@ -316,10 +336,10 @@ class _LecturesPageState extends State<LecturesPage> {
                                                 if (lecs[index]
                                                         ['contentLink'] !=
                                                     null) {
-                                                  int milliseconds = DateTime
-                                                          .now()
-                                                      .millisecondsSinceEpoch;
-                                                  print(milliseconds);
+                                                  // int milliseconds = DateTime
+                                                  //         .now()
+                                                  //     .millisecondsSinceEpoch;
+                                                  // print(milliseconds);
                                                   await prefs.setString(
                                                       'ytLink',
                                                       YoutubePlayer
@@ -390,6 +410,8 @@ class _LecturesPageState extends State<LecturesPage> {
                                                     key: const Key(
                                                         "lectureVideo_key2"),
                                                     onTap: () async {
+                                                      await patchLectureData(
+                                                          lecs[index]['name']);
                                                       final prefs =
                                                           await SharedPreferences
                                                               .getInstance();
