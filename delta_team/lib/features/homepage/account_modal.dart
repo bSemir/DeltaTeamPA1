@@ -43,6 +43,8 @@ class _AccountModalState extends State<AccountModal> {
   Future<void> signOutUser() async {
     try {
       final res = await Amplify.Auth.signOut();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool("loggedIn", false);
     } on AuthException catch (e) {
       safePrint(e.message);
     }
@@ -192,9 +194,8 @@ class _AccountModalState extends State<AccountModal> {
                     setState(() {
                       showModal = false;
                     });
-                    print(varijablaRola);
 
-                    await FlutterSession().set("token", "");
+                    // await FlutterSession().set("token", "");
                     signOutUser();
                     Navigator.pushNamed(context, LoginScreenWeb.routeName);
                   },

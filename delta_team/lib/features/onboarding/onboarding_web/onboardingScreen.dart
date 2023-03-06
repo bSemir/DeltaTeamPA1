@@ -1046,22 +1046,34 @@ class _ItemState extends State<Item> {
                       : Image.asset(
                           widget.roleWhite.imageWhite,
                         )),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              Container(
+              SizedBox(
                   width: 135,
                   child: Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      key: const Key('textkey'),
-                      widget.role.id,
-                      style: TextStyle(
-                          color: isSelected ? Colors.black : Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 11),
+                    child: SizedBox(
+                      child: Text(
+                        key: const Key('textkey'),
+                        widget.role.id == 'fullstack'
+                            ? widget.role.id = 'Full Stack Developer'
+                            : widget.role.id == 'backend'
+                                ? widget.role.id = 'Backend'
+                                : widget.role.id == 'uiux'
+                                    ? widget.role.id = 'UI/UX Design'
+                                    : widget.role.id == 'productManager'
+                                        ? widget.role.id = 'Project Management'
+                                        : widget.role.id == 'qa'
+                                            ? widget.role.id = 'QA Engineering'
+                                            : widget.role.id,
+                        style: TextStyle(
+                            color: isSelected ? Colors.black : Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 9),
+                      ),
                     ),
-                  )),
+                  ))
             ]),
           ),
           SizedBox(

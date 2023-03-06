@@ -9,6 +9,7 @@ import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_web.
 import 'package:delta_team/features/auth/login/providers/userAttributesProvider.dart';
 import 'package:delta_team/features/auth/login/providers/userLecturesProvider.dart';
 import 'package:delta_team/features/homepage/provider/loginProviderAuth.dart';
+import 'package:delta_team/main.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
@@ -17,7 +18,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../amplifyconfiguration.dart';
 import '../../../homepage/homepage_sidebar.dart';
 
 class LoginField extends StatefulWidget {
@@ -67,9 +67,9 @@ class _LoginFieldState extends State<LoginField> {
 
   @override
   void initState() {
+    _loading = false;
     varijablaRola.clear();
     _loadPrefs();
-    // Add a listener to the focus node to update the _isFocused variable
     _passwordFocusNode.addListener(() {
       setState(() {
         _isFocusedPassword = _passwordFocusNode.hasFocus;
@@ -127,7 +127,6 @@ class _LoginFieldState extends State<LoginField> {
 
       setState(() {
         canLogIn = user.isSignedIn;
-        _loading = false;
       });
     } catch (error) {
       if (!error.toString().contains("UserNotFoundException") &&
@@ -417,6 +416,11 @@ class _LoginFieldState extends State<LoginField> {
                             emailController.text, passwordController.text);
                         if (_signInKey.currentState!.validate()) {
                           if (canLogIn) {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+
+                            // prefs.setBool("loggedIn", false);
+
                             await getUserLectures();
                             await fetchCurrentUserAttributes();
                             setState(() {
@@ -427,8 +431,7 @@ class _LoginFieldState extends State<LoginField> {
                               isSelectedSecondRole = false;
                               selectedIndex = -1;
                             });
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
+
                             String jsonLectures = json.encode(lectures);
                             await prefs.setString(
                                 'lecturesPrefs', jsonLectures);
@@ -436,6 +439,9 @@ class _LoginFieldState extends State<LoginField> {
                             await prefs.setString('nameUser', nameUser);
                             await prefs.setString('surname', surname);
                             await FlutterSession().set("token", email);
+                            setState(() {
+                              isLoggedInWeb = true;
+                            });
                             Navigator.pushReplacementNamed(
                                 context, '/homepage');
                           }

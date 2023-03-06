@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'features/auth/login/loadingScreens/loadingscreen_mobile.dart';
 import 'features/auth/login/loadingScreens/loadingscreen_web.dart';
@@ -57,8 +58,11 @@ import 'features/onboarding/onboarding_web/modelRole.dart';
 import 'features/onboarding/onboarding_web/modelmyItem.dart';
 import 'features/onboarding_web/provider/emailPasswProvider.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SharedPreferences prefs = await SharedPreferences.getInstance();
+  // loggedIn = prefs.getBool("loggedIn")!;
+  // print(loggedIn);
   runApp(const MyApp());
 }
 
@@ -81,21 +85,27 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
+bool isLoggedInWeb = false;
+
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+
     _configureAmplify();
   }
 
   dynamic token = '';
 
   Future<void> _loadPrefs() async {
-    dynamic tokenStr = await FlutterSession().get("token");
+    // dynamic tokenStr = await FlutterSession().get("token");
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // bool? isLoggedIn = prefs.getBool("loggedIn");
 
-    setState(() {
-      token = tokenStr;
-    });
+    // setState(() {
+    // loggedIn = isLoggedIn!;
+    // token = tokenStr;
+    // });
   }
 
   // This widget is the root of your application.
@@ -169,7 +179,9 @@ class _MyAppState extends State<MyApp> {
         home: defaultTargetPlatform == TargetPlatform.iOS ||
                 defaultTargetPlatform == TargetPlatform.android
             ? const SignupScreenMobile()
-            : const LoginScreenWeb(),
+            : isLoggedInWeb
+                ? const HomeScreen()
+                : const LoginScreenWeb(),
 
         // LoginScreenWeb(),
         routes: {
