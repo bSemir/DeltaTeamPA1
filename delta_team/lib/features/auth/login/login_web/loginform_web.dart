@@ -67,6 +67,7 @@ class _LoginFieldState extends State<LoginField> {
 
   @override
   void initState() {
+    varijablaRola.clear();
     _loadPrefs();
     // Add a listener to the focus node to update the _isFocused variable
     _passwordFocusNode.addListener(() {

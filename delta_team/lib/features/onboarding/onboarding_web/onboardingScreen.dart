@@ -1,4 +1,5 @@
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
+import 'package:delta_team/features/homepage/homepage_sidebar.dart';
 import 'package:delta_team/features/onboarding_web/provider/emailPasswProvider.dart';
 import 'package:flutter/material.dart';
 
@@ -939,6 +940,7 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                           await submitOnboarding();
 
                           await signOutUser();
+                          varijablaRola.clear();
                           nizSaRolama.clear();
 
                           Navigator.pushNamed(

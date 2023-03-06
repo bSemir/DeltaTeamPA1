@@ -188,10 +188,11 @@ class _AccountModalState extends State<AccountModal> {
                 child: ElevatedButton(
                   key: const Key("signout_key"),
                   onPressed: () async {
+                    varijablaRola.clear();
                     setState(() {
                       showModal = false;
-                      varijablaRola.clear();
                     });
+                    print(varijablaRola);
 
                     await FlutterSession().set("token", "");
                     signOutUser();
