@@ -29,67 +29,74 @@ class _WelcomePageState extends State<WelcomePage> {
         title: SvgPicture.asset("assets/images/navbar_logo.svg",
             semanticsLabel: 'Confirmation SVG'),
       ),
-      body: Container(
-        height: mediaQuery.size.height * 0.82,
-        width: double.infinity,
-        color: AppColors.primaryColor,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            SizedBox(
-              height: mediaQuery.size.height * 0.16,
-            ),
-            RichText(
-              textDirection: TextDirection.ltr,
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: 'Dobrodošli!\n',
-                style: GoogleFonts.notoSans(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.backgroundColor),
-                children: <TextSpan>[
-                  TextSpan(
-                    text:
-                        'Pred Vama je mali upitnik, koji je\nneophodno popuniti kako bi\n nastavili dalje.',
+      backgroundColor: AppColors.primaryColor,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            // height: mediaQuery.size.height * 0.82,
+            width: double.infinity,
+            color: AppColors.primaryColor,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 200,
+                  // height: mediaQuery.size.height * 0.16,
+                ),
+                RichText(
+                  textDirection: TextDirection.ltr,
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    text: 'Dobrodošli!\n',
                     style: GoogleFonts.notoSans(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w700,
                         color: AppColors.backgroundColor),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text:
+                            'Pred Vama je mali upitnik, koji je\nneophodno popuniti kako bi\n nastavili dalje.',
+                        style: GoogleFonts.notoSans(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.backgroundColor),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: mediaQuery.size.height * 0.16,
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 70),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Ne zaboravite da odvojite vrijeme i pažljivo\npročitajte svako pitanje. Sretno!',
-                    style: GoogleFonts.notoSans(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.backgroundColor),
-                    textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 232,
+                  // height: mediaQuery.size.height * 0.16,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 70),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Ne zaboravite da odvojite vrijeme i pažljivo\npročitajte svako pitanje. Sretno!',
+                        style: GoogleFonts.notoSans(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.backgroundColor),
+                        textAlign: TextAlign.center,
+                      ),
+                      MaterialButton(
+                        key: const Key('NavigateToLoginButtonKey'),
+                        child: SvgPicture.asset(
+                            'assets/images/arrow_forward_24px.svg'),
+                        // Image.asset('assets/images/arrow_forward_24px.svg'),
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, OnboardingScreen.routeName);
+                        },
+                      )
+                    ],
                   ),
-                  MaterialButton(
-                    key: const Key('NavigateToLoginButtonKey'),
-                    child: SvgPicture.asset(
-                        'assets/images/arrow_forward_24px.svg'),
-                    // Image.asset('assets/images/arrow_forward_24px.svg'),
-                    onPressed: () {
-                      Navigator.pushNamed(context, LoginScreenMobile.routeName);
-                    },
-                  )
-                ],
-              ),
-            )
-          ],
+                )
+              ],
+            ),
+          ),
         ),
       ),
       bottomNavigationBar: const CustomFooter(),

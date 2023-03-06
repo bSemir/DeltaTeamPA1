@@ -16,9 +16,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
 
+import 'mobile_models/role_mobile.dart';
+import 'mobile_providers/emailpasswordproviders_mobile.dart';
+import 'mobile_providers/role_provider_mobile.dart';
+import 'mobile_widgets/congratulations_card_mobile.dart';
+
 class OnboardingScreen extends StatefulWidget {
   static const routeName = 'onboarding-screen';
-  const OnboardingScreen({super.key});
+  final Role role;
+  const OnboardingScreen({super.key, required this.role});
 
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
@@ -42,6 +48,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
+    final emailPasswordProvider =
+        Provider.of<EmailPasswordProviderMobile>(context, listen: false);
+
+    signInUser(emailPasswordProvider.email, emailPasswordProvider.password);
     // _configureAmplify();
   }
 
@@ -58,12 +68,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   //   }
   // }
 
-  Future<void> signInUser() async {
+  Future<void> signInUser(String email, String password) async {
     // await _configureAmplify();
     try {
       final result = await Amplify.Auth.signIn(
-        username: 'sblekic@pa.tech387.com', // email of user,
-        password: 'Password123!',
+        username: email, // email of user,
+        password: password,
       );
       print('Logged In');
     } on AuthException catch (e) {
@@ -85,10 +95,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       final restOperation = Amplify.API.post("/api/onboarding/submit",
           body: HttpPayload.json({
             "date": "Jan2023",
-            "roles": ["fullstack", "backend"],
+            "roles": Provider.of<MyItem>(context, listen: false).myItems,
             "answers": {
               // answers are in the same order as questions, null if not answered
-              "0": "False",
+              "0": Provider.of<AnswerProvider>(context, listen: false).answ[0],
               "1": controllers[0].text,
               "2": controllers[1].text,
               "3": controllers[2].text,
@@ -98,13 +108,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             },
             "introductionVideoUrl": "https://www.youtube.com"
           }),
-          apiName: "userDataInitialization");
+          apiName: "UserObjectInitialization");
       final response = await restOperation.response;
 
       Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
       print('POST call succeeded');
       print(responseMap['lectures']);
     } on ApiException catch (e) {
+      print(e.message);
       print('POST call failed: $e');
     }
   }
@@ -131,6 +142,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final emailPasswordProvider =
+        Provider.of<EmailPasswordProviderMobile>(context, listen: false);
     final provider = Provider.of<AnswerProvider>(context, listen: false);
 
     final List<Widget> pages = [
@@ -185,8 +198,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       PositionPageForm(
         questionText: questions[7],
+        role: widget.role,
         submitButton: () {
-          submitOnboarding();
+          final provider = Provider.of<MyItem>(context, listen: false);
+
+          if (provider.hasRole(widget.role) ||
+              provider.length <= 2 && provider.length >= 1) {
+            if (provider.myItems.first == null) {
+              provider.add(widget.role);
+            }
+            submitOnboarding();
+            Navigator.pushNamed(context, CongratsCard.routeName);
+            print('Onboarding submitted');
+          } else if (provider.myItems.first != null) {
+            provider.remove(widget.role);
+            // ignore: unnecessary_null_comparison
+          } else {
+            provider.add(widget.role);
+            print(provider.length);
+          }
+
+          Navigator.pushNamed(context, CongratsCard.routeName);
+          print('Onboarding submitted');
         },
       )
     ];
@@ -202,15 +235,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       backgroundColor: AppColors.secondaryColor3,
       body: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          child: Container(
-            color: AppColors.backgroundColor,
-            child: Column(
-              children: [
-                Expanded(
-                  flex: 0,
-                  child: Padding(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            width: double.infinity,
+            child: Container(
+              color: AppColors.backgroundColor,
+              child: Column(
+                children: [
+                  Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
                       'Onboarding Form',
@@ -221,42 +253,36 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 0,
-                  child: Padding(
+                  Padding(
                     padding: const EdgeInsets.only(left: 31, right: 31),
                     child: PageIndicator(
                         currentPage: currentPage + 1, totalPages: 8),
                   ),
-                ),
-                Expanded(
-                  flex: 9,
-                  child: Padding(
+                  Padding(
                     padding:
                         const EdgeInsets.only(left: 31, right: 31, top: 20),
-                    child: PageView.builder(
-                      controller: _pageController,
-                      onPageChanged: (index) {
-                        setState(
-                          () {
-                            currentPage = index;
-                          },
-                        );
-                      },
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: pages.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return pages[index % pages.length];
-                      },
+                    child: SizedBox(
+                      height: 600,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        onPageChanged: (index) {
+                          setState(
+                            () {
+                              currentPage = index;
+                            },
+                          );
+                        },
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: pages.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return pages[index % pages.length];
+                        },
+                      ),
                     ),
                   ),
-                ),
-                const Expanded(
-                  flex: 0,
-                  child: CustomFooter(),
-                )
-              ],
+                  const CustomFooter()
+                ],
+              ),
             ),
           ),
         ),

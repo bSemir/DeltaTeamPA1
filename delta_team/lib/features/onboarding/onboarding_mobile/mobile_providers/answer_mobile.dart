@@ -8,6 +8,7 @@ class AnswerProvider with ChangeNotifier {
 
   void addItem(String item) {
     _answers.add(item);
+    print(answ);
     notifyListeners();
   }
 }

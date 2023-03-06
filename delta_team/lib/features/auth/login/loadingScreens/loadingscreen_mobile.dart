@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../Home_welcome_mobile/welcoming_message_screen.dart';
+
 class LoadingScreenMobile extends StatefulWidget {
   static const routeName = '/loadingscreen';
   const LoadingScreenMobile({super.key});
@@ -20,12 +22,12 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
   }
 
   startTimeout() async {
-    var duration = const Duration(seconds: 10);
+    var duration = const Duration(seconds: 5);
     return Timer(duration, navigateToHomeScreen);
   }
 
   navigateToHomeScreen() {
-    Navigator.pushReplacementNamed(context, HomeScreenMobile.routeName);
+    Navigator.pushReplacementNamed(context, WelcomingScreen.routeName2);
   }
 
   @override

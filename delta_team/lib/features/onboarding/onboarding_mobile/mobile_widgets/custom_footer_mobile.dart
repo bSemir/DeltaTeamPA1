@@ -12,7 +12,7 @@ class CustomFooter extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(2.0),
       width: double.infinity,
-      height: mediaQuery.size.height * 0.08,
+      height: 55,
       color: AppColors.secondaryColor3,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

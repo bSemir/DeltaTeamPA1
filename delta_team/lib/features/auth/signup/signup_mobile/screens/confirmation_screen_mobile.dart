@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../login/loadingScreens/loadingscreen_mobile.dart';
+
 class ConfirmationScreen extends StatefulWidget {
   const ConfirmationScreen({super.key});
 
@@ -15,6 +17,7 @@ class ConfirmationScreen extends StatefulWidget {
 class _ConfirmationScreenState extends State<ConfirmationScreen> {
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -97,7 +100,74 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
               const SizedBox(
                 height: 38,
               ),
-              const Footer(),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 55,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: (30 / 360) * width,
+                        right: (30 / 360) * width,
+                        bottom: 8),
+                    child: Row(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            key: const Key('routed_to_loadingScreen'),
+                            onTap: () async {
+                              Navigator.pushNamed(
+                                  context, LoadingScreenMobile.routeName);
+                              // Navigate to privacy page
+                            },
+                            child: Text(
+                              "Privacy",
+                              style: GoogleFonts.notoSans(
+                                fontWeight: FontWeight.w400,
+                                color: const Color.fromARGB(255, 142, 142, 142),
+                                fontSize: 13.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(
+                              "© Credits, 2023, Product Arena",
+                              style: GoogleFonts.notoSans(
+                                  fontWeight: FontWeight.w400,
+                                  color:
+                                      const Color.fromARGB(255, 142, 142, 142),
+                                  fontSize: 12.0),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            key: const Key('routed_to_LoadingScreen'),
+                            onTap: () async {
+                              Navigator.pushNamed(
+                                  context, LoadingScreenMobile.routeName);
+                              // Navigate to privacy page
+                            },
+                            child: Text(
+                              "Terms",
+                              style: GoogleFonts.notoSans(
+                                  fontWeight: FontWeight.w400,
+                                  color:
+                                      const Color.fromARGB(255, 142, 142, 142),
+                                  fontSize: 13.0),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),

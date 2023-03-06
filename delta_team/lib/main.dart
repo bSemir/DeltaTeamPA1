@@ -25,9 +25,12 @@ import 'package:flutter_session/flutter_session.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'features/Home_welcome_mobile/welcoming_message_screen.dart';
 import 'features/auth/login/loadingScreens/loadingscreen_mobile.dart';
 import 'features/auth/login/loadingScreens/loadingscreen_web.dart';
 import 'features/auth/login/login_mobile/loginmobile_body.dart';
+import 'features/auth/login/login_mobile/providers/userAttributesProviderMobile.dart';
+import 'features/auth/login/login_mobile/providers/userLecturesProviderMobile.dart';
 import 'features/auth/login/login_web/loginweb_body.dart';
 import 'features/auth/login/providers/userLecturesProvider.dart';
 import 'features/auth/signup/provider/Web_auth_provider.dart';
@@ -44,7 +47,9 @@ import 'features/homepage/homepage.dart';
 import 'features/homepage/homepage_video_screen.dart';
 import 'features/homepage/provider/youtube_link_provider.dart';
 import 'features/homepage/recentLectures.dart';
+import 'features/onboarding/onboarding_mobile/mobile_models/role_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/answer_mobile.dart';
+import 'features/onboarding/onboarding_mobile/mobile_providers/emailpasswordproviders_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/error_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/role_provider_mobile.dart';
@@ -148,6 +153,15 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (_) => NavbarOpened(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => LecturesProviderMobile(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserAttributesProviderMobile(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => EmailPasswordProviderMobile(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -168,7 +182,9 @@ class _MyAppState extends State<MyApp> {
         ),
         home: defaultTargetPlatform == TargetPlatform.iOS ||
                 defaultTargetPlatform == TargetPlatform.android
-            ? const SignupScreenMobile()
+            ? const WelcomePage()
+
+            // const SignupScreenMobile()
             : const LoginScreenWeb(),
 
         // LoginScreenWeb(),
@@ -186,7 +202,8 @@ class _MyAppState extends State<MyApp> {
           '/OnboardingredirectingScreen': (context) =>
               const Onboardingredirecting(),
           WelcomePage.routeName: (context) => const WelcomePage(),
-          OnboardingScreen.routeName: (context) => const OnboardingScreen(),
+          OnboardingScreen.routeName: (context) =>
+              OnboardingScreen(role: listaRole.first),
           CongratsCard.routeName: (context) => const CongratsCard(),
           CongratsCardWeb.routeName: (context) => const CongratsCardWeb(),
           '/onboardingweb': (context) => OnboardingWeb(
@@ -204,6 +221,7 @@ class _MyAppState extends State<MyApp> {
           '/recentLectures': (context) => const RecentLectures(),
           '/homescreen': (context) => const HomeScreen(),
           '/homepage_sidebar': (context) => const Sidebar(),
+          WelcomingScreen.routeName2: (context) => const WelcomingScreen(),
         },
       ),
     );

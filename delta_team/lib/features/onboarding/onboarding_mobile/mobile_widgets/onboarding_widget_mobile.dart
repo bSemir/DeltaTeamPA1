@@ -13,6 +13,7 @@ import '../mobile_models/role_mobile.dart';
 import '../mobile_models/role_white_items_mobile.dart';
 import '../mobile_providers/answer_mobile.dart';
 import '../mobile_providers/error_provider_mobile.dart';
+import '../mobile_providers/role_provider_mobile.dart';
 import 'form_buttons_mobile.dart';
 import 'video_player_mobile.dart';
 
@@ -414,12 +415,14 @@ class VideoPageForm extends StatelessWidget {
 }
 
 class PositionPageForm extends StatefulWidget {
+  final Role role;
   final String questionText;
   final VoidCallback submitButton;
 
   const PositionPageForm({
     super.key,
     required this.questionText,
+    required this.role,
     required this.submitButton,
   });
 
@@ -430,6 +433,7 @@ class PositionPageForm extends StatefulWidget {
 class _PositionPageFormState extends State<PositionPageForm> {
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MyItem>(context, listen: false);
     return Container(
       alignment: Alignment.center,
       width: double.infinity,
@@ -464,10 +468,10 @@ class _PositionPageFormState extends State<PositionPageForm> {
             height: 400,
             child: ListView(
               children: List.generate(
-                listaRola.length,
+                listaRole.length,
                 (index) => RoleWidget(
-                  role: listaRola[index],
-                  roleWhite: listaRolaWhite[index],
+                  role: listaRole[index],
+                  roleWhite: listaRoleWhite[index],
                 ),
               ),
             ),
@@ -477,10 +481,24 @@ class _PositionPageFormState extends State<PositionPageForm> {
               backgroundColor: AppColors.primaryColor,
               textColor: AppColors.secondaryColor3,
               text: 'Submit',
-              onPressed: () {
-                Navigator.pushNamed(context, CongratsCard.routeName);
-                print('Onboarding submitted');
-              },
+              onPressed: widget.submitButton,
+              //     () {
+              //   if (provider.hasRole(widget.role) ||
+              //       provider.length <= 2 && provider.length >= 1) {
+              //     if (provider.myItems.first == null) {
+              //       provider.add(widget.role);
+              //     }
+
+              //     Navigator.pushNamed(context, CongratsCard.routeName);
+              //     print('Onboarding submitted');
+              //   } else if (provider.myItems.first != null) {
+              //     provider.remove(widget.role);
+              //     // ignore: unnecessary_null_comparison
+              //   } else {
+              //     provider.add(widget.role);
+              //     print(provider.length);
+              //   }
+              // },
               buttonWidth: double.infinity,
               buttonHeight: 42),
           const SizedBox(height: 10)

@@ -6,6 +6,8 @@ import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../common/footer/footer.dart';
+import '../../../auth/login/loadingScreens/loadingscreen_mobile.dart';
+import '../../../auth/login/login_mobile/loginmobile_body.dart';
 import '../../../onboarding/onboarding_mobile/welcome_page_mobile.dart';
 
 class Onboardingredirecting extends StatefulWidget {
@@ -23,12 +25,12 @@ class _OnboardingredirectingState extends State<Onboardingredirecting> {
   }
 
   startTimeout() async {
-    var duration = const Duration(seconds: 10);
+    var duration = const Duration(seconds: 5);
     return Timer(duration, navigateToHomeScreen);
   }
 
   navigateToHomeScreen() {
-    Navigator.pushReplacementNamed(context, HomeScreenMobile.routeName);
+    Navigator.pushReplacementNamed(context, LoginScreenMobile.routeName);
   }
 
   @override
@@ -101,7 +103,74 @@ class _OnboardingredirectingState extends State<Onboardingredirecting> {
               const SizedBox(
                 height: 245,
               ),
-              const Footer(),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 55,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        left: (30 / 360) * width,
+                        right: (30 / 360) * width,
+                        bottom: 8),
+                    child: Row(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: InkWell(
+                            key: const Key('routed_to_loadingScreen'),
+                            onTap: () async {
+                              Navigator.pushNamed(
+                                  context, LoadingScreenMobile.routeName);
+                              // Navigate to privacy page
+                            },
+                            child: Text(
+                              "Privacy",
+                              style: GoogleFonts.notoSans(
+                                fontWeight: FontWeight.w400,
+                                color: const Color.fromARGB(255, 142, 142, 142),
+                                fontSize: 13.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(
+                              "© Credits, 2023, Product Arena",
+                              style: GoogleFonts.notoSans(
+                                  fontWeight: FontWeight.w400,
+                                  color:
+                                      const Color.fromARGB(255, 142, 142, 142),
+                                  fontSize: 12.0),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            key: const Key('routed_to_LoadingScreen'),
+                            onTap: () async {
+                              Navigator.pushNamed(
+                                  context, LoadingScreenMobile.routeName);
+                              // Navigate to privacy page
+                            },
+                            child: Text(
+                              "Terms",
+                              style: GoogleFonts.notoSans(
+                                  fontWeight: FontWeight.w400,
+                                  color:
+                                      const Color.fromARGB(255, 142, 142, 142),
+                                  fontSize: 13.0),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
             ])),
       ),
     );

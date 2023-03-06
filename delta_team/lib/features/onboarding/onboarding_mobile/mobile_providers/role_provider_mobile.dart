@@ -9,6 +9,7 @@ class MyItem with ChangeNotifier {
 //dodaj u niz rolu
   void add(Role role) {
     myItems.add(role.id);
+    print(myItems);
     notifyListeners();
   }
 
