@@ -19,6 +19,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double photoWidth = 170;
+
+    if (MediaQuery.of(context).size.width < 1000) {
+      photoWidth = 150;
+    }
+    if (MediaQuery.of(context).size.width < 700) {
+      photoWidth = 120;
+    }
     return Container(
       width: width,
       height: MediaQuery.of(context).size.height / 11.428,
@@ -33,7 +41,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           leading == null
               ? SizedBox(width: (170 / 1440) * width, height: 34.0)
               : SizedBox(
-                  width: (170 / 1440) * width,
+                  width: photoWidth,
                   height: 34.0,
                   child: leading,
                 ),
@@ -46,7 +54,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               title,
               style: GoogleFonts.notoSans(
                 fontWeight: FontWeight.w400,
-                fontSize: (16 / 1440) * width,
+                fontSize: 16,
                 color: const Color(0xFF000000),
               ),
             ),
@@ -61,7 +69,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           action == null
               ? SizedBox(width: (92 / 1440) * width, height: 34.0)
               : SizedBox(
-                  width: (92 / 1440) * width,
+                  width: 92,
                   height: 34.0,
                   child: action,
                 ),

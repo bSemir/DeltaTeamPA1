@@ -67,7 +67,7 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
       autoPlay: false,
       params: const YoutubePlayerParams(showFullscreenButton: true),
     );
-    // _loadData();
+    _loadData();
   }
 
   Future<void> _loadData() async {
@@ -173,7 +173,7 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       GestureDetector(
-                                        key: const Key("user_icon_key"),
+                                        key: const Key("user_icon_key1"),
                                         onTap: () {
                                           setState(() {
                                             showModal = !showModal;

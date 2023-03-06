@@ -28,8 +28,7 @@ class _LecturesPageState extends State<LecturesPage> {
   void initState() {
     super.initState();
 
-    // _loadPrefs();
-    // getUserLectures();
+    _loadPrefs();
   }
 
   bool showModal = false;
@@ -38,56 +37,16 @@ class _LecturesPageState extends State<LecturesPage> {
 
   Future<void> _loadPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final role = prefs.getString('role');
-
+    final lecturesString = prefs.getString('lecturesPrefs');
+    final role = prefs.getString("role");
     setState(() {
+      lectures = json.decode(lecturesString!);
       selectedRole = role!;
     });
   }
 
-  Future<void> _configureAmplify() async {
-    // Add any Amplify plugins you want to use
-    final authPlugin = AmplifyAuthCognito();
-    final api = AmplifyAPI();
-    await Amplify.addPlugins([authPlugin, api]);
-    try {
-      await Amplify.configure(amplifyconfig);
-    } on AmplifyAlreadyConfiguredException {
-      safePrint(
-          'Tried to reconfigure Amplify; this can occur when your app restarts on Android.');
-    }
-  }
-
-  Future<Map<String, dynamic>> getUserLectures() async {
-    // signInUser();
-    try {
-      final restOperation = Amplify.API.get('/api/user/lectures',
-          apiName: 'getUserLectures',
-          queryParameters: {
-            'paDate': 'Jan2023'
-            // , 'name': 'Flutter widgets'
-          });
-      final response = await restOperation.response;
-
-      Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
-      setState(() {
-        lectures = responseMap;
-      });
-      // responseMap.forEach((key, value) {
-      //   print("$key: $value");
-      // });
-
-      // prin(responseMap.values);
-      return responseMap;
-    } on ApiException catch (e) {
-      throw Exception('Failed to load lectures: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final userLecturesProvider =
-        Provider.of<LecturesProvider>(context, listen: false);
     final selectedRoleProvider =
         Provider.of<SelectedRoleProvider>(context, listen: false);
 
@@ -98,31 +57,28 @@ class _LecturesPageState extends State<LecturesPage> {
     final youtubeProvider =
         Provider.of<YoutubeLinkProvider>(context, listen: false);
     List<Map<String, dynamic>> lecs = [];
-    if (userLecturesProvider.lectures.isNotEmpty) {
-      List<dynamic> lecturesList = userLecturesProvider.lectures["lectures"];
+    if (lectures.isNotEmpty) {
+      List<dynamic> lecturesList = lectures["lectures"];
 
       for (int i = 0; i < lecturesList.length; i++) {
         Map<String, dynamic> lecture = lecturesList[i];
         dynamic role = lecture['roles'];
 
-        if (role.toString().contains("backend") &&
-            selectedRoleProvider.getRole == "backend") {
+        if (role.toString().contains("backend") && selectedRole == "backend") {
           lecs.add(lecture);
         }
         if (role.toString().contains("productManager") &&
-            selectedRoleProvider.getRole == "productManager") {
+            selectedRole == "productManager") {
           lecs.add(lecture);
         }
         if (role.toString().contains("fullstack") &&
-            selectedRoleProvider.getRole == "fullstack") {
+            selectedRole == "fullstack") {
           lecs.add(lecture);
         }
-        if (role.toString().contains("uiux") &&
-            selectedRoleProvider.getRole == "uiux") {
+        if (role.toString().contains("uiux") && selectedRole == "uiux") {
           lecs.add(lecture);
         }
-        if (role.toString().contains("qa") &&
-            selectedRoleProvider.getRole == "qa") {
+        if (role.toString().contains("qa") && selectedRole == "qa") {
           lecs.add(lecture);
         }
       }
@@ -201,7 +157,7 @@ class _LecturesPageState extends State<LecturesPage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 GestureDetector(
-                                  key: const Key("user_icon_key"),
+                                  key: const Key("user_icon_key1"),
                                   onTap: () {
                                     setState(() {
                                       showModal = !showModal;
@@ -226,8 +182,6 @@ class _LecturesPageState extends State<LecturesPage> {
                                   shrinkWrap: true,
                                   itemCount: lecs.length,
                                   itemBuilder: ((context, index) {
-                                    print("User lectures");
-                                    print(userLecturesProvider.lectures);
                                     return Column(
                                       children: [
                                         Row(
@@ -362,6 +316,10 @@ class _LecturesPageState extends State<LecturesPage> {
                                                 if (lecs[index]
                                                         ['contentLink'] !=
                                                     null) {
+                                                  int milliseconds = DateTime
+                                                          .now()
+                                                      .millisecondsSinceEpoch;
+                                                  print(milliseconds);
                                                   await prefs.setString(
                                                       'ytLink',
                                                       YoutubePlayer
@@ -374,7 +332,6 @@ class _LecturesPageState extends State<LecturesPage> {
                                                                   index][
                                                               'contentLink'])!);
                                                 }
-
                                                 Navigator.pushNamed(
                                                     context, '/homepagevideo');
                                               },
@@ -431,7 +388,7 @@ class _LecturesPageState extends State<LecturesPage> {
                                                   ),
                                                   InkWell(
                                                     key: const Key(
-                                                        "lectureVideo_key"),
+                                                        "lectureVideo_key2"),
                                                     onTap: () async {
                                                       final prefs =
                                                           await SharedPreferences
