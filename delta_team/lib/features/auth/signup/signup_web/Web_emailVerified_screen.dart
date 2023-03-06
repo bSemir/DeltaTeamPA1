@@ -124,6 +124,9 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 30,
+            ),
             const Footer(),
           ],
         ),

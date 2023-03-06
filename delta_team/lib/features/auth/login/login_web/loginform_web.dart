@@ -123,13 +123,10 @@ class _LoginFieldState extends State<LoginField> {
       });
       final user =
           await Amplify.Auth.signIn(username: email, password: password);
-      setState(() {
-        // name = CognitoUserAttributeKey.givenName as String;
-        // surname = CognitoUserAttributeKey.familyName as String;
-        _loading = false;
-      });
+
       setState(() {
         canLogIn = user.isSignedIn;
+        _loading = false;
       });
     } catch (error) {
       if (!error.toString().contains("UserNotFoundException") &&
@@ -438,7 +435,8 @@ class _LoginFieldState extends State<LoginField> {
                             await prefs.setString('nameUser', nameUser);
                             await prefs.setString('surname', surname);
                             await FlutterSession().set("token", email);
-                            Navigator.pushNamed(context, '/homepage');
+                            Navigator.pushReplacementNamed(
+                                context, '/homepage');
                           }
                         }
                       },

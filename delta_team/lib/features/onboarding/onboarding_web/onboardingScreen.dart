@@ -3,6 +3,7 @@ import 'package:delta_team/features/onboarding_web/provider/emailPasswProvider.d
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 import '../../../common/footer/footer.dart';
@@ -55,10 +56,27 @@ class _OnboardingWebState extends State<OnboardingWeb> {
   @override
   void initState() {
     super.initState();
-    final emailPasswordProvider =
-        Provider.of<EmailPasswordProvider>(context, listen: false);
+    // _loadPrefs();
+    // final emailPasswordProvider =
+    //     Provider.of<EmailPasswordProvider>(context, listen: false);
 
-    signInUser(emailPasswordProvider.email, emailPasswordProvider.password);
+    // signInUser(emailOnboarding, passwordOnboarding);
+  }
+
+  String emailOnboarding = '';
+  String passwordOnboarding = '';
+
+  Future<void> _loadPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final String? email = prefs.getString("email_pref");
+    final String? password = prefs.getString("password_pref");
+    print(email);
+    print(password);
+    setState(() {
+      emailOnboarding = email!;
+      passwordOnboarding = password!;
+    });
   }
 
   Future<void> _configureAmplify() async {
@@ -81,7 +99,7 @@ class _OnboardingWebState extends State<OnboardingWeb> {
         username: email, // email of user
         password: password,
       );
-      print('LOGINOVO SE KRALJ AMAR');
+      print('LOGGED IN');
     } on AuthException catch (e) {
       safePrint(e.message);
     }
@@ -101,9 +119,6 @@ class _OnboardingWebState extends State<OnboardingWeb> {
     var myItem = Provider.of<MyItemWeb>(context);
     var nizSaRolama = Provider.of<MyItemWeb>(context).myItems;
     var isSelected = myItem.hasRole(role);
-    final emailPasswordProvider =
-        Provider.of<EmailPasswordProvider>(context, listen: false);
-
     bool inColumn = false;
     bool videoWithoutTitle = false;
 
@@ -911,7 +926,7 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                 children: [
                   ElevatedButton(
                       key: const Key('posaljikey'),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate() &&
                             _character != null &&
                             (isSelected ||
@@ -923,7 +938,7 @@ class _OnboardingWebState extends State<OnboardingWeb> {
 
                           submitOnboarding();
 
-                          print(myItem.length);
+                          signOutUser();
 
                           Navigator.pushNamed(
                               context, LoginScreenWeb.routeName);

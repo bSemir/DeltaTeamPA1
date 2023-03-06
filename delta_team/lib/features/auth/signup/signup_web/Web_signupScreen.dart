@@ -20,6 +20,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 // ignore: unused_import
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:validators/validators.dart';
 // ignore: unnecessary_import
 import 'package:flutter/services.dart';
@@ -41,24 +42,26 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
   bool isButtonPressed = false;
   bool _loading = false;
 
-  Future<bool> userExist(String email) async {
-    try {
-      final user = await Amplify.Auth.signIn(
-        username: email,
-      );
-    } catch (error) {
-      if (!error.toString().contains("UserNotFoundException")) {
-        setState(() {
-          isEmailTaken = true;
-        });
-      } else {
-        setState(() {
-          isEmailTaken = false;
-        });
-      }
-    }
-    return false;
-  }
+  // Future<bool> userExist(String email) async {
+  //   try {
+  //     await Amplify.Auth.signIn(
+  //       username: email,
+  //       password: "12345678",
+  //     );
+  //   } catch (error) {
+  //     if (!error.toString().contains("NotAuthorizedException")) {
+  //       setState(() {
+  //         isEmailTaken = true;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         isEmailTaken = false;
+  //       });
+  //     }
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController surnameController = TextEditingController();
@@ -80,7 +83,6 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
   bool statusErrored = false;
 
   bool _isEmailCorrect = true;
-  bool _isPassCorrect = false;
 
   bool isSignUpCompleted = false;
   bool isEmailTaken = false;
@@ -88,7 +90,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
   void changeScreen() {
     if (isSignUpCompleted) {
       FocusManager.instance.primaryFocus?.unfocus();
-      Navigator.pushNamed(context as BuildContext, "/confirmation");
+      Navigator.pushNamed(context, "/confirmation");
     }
   }
 
@@ -282,7 +284,6 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                     onChanged: (value) {
                                       var year =
                                           int.tryParse(value.substring(6));
-                                      print(value.substring(5));
                                     },
                                     validator: (value) {
                                       if (value!.isEmpty) {
@@ -409,9 +410,10 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                         return 'Please fill the required field.';
                                       } else if (!isEmail(value)) {
                                         return "Email not valid";
-                                      } else if (isEmailTaken) {
+                                      }
+                                      if (isEmailTaken) {
                                         return "Email already exists";
-                                      } else if (isEmail(value)) {}
+                                      }
                                       return null;
                                     },
                                     decoration: InputDecoration(
@@ -419,7 +421,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: _isEmailCorrect == true
-                                              ? Colors.green
+                                              ? Colors.blue
                                               : Colors.red,
                                         ),
                                       ),
@@ -439,12 +441,6 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                   TextFormField(
                                     key: const Key("passwordKey"),
                                     controller: passwordController,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        _isPassCorrect =
-                                            validatePassword(value);
-                                      });
-                                    },
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         return "Please fill the required field.";
@@ -501,12 +497,34 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                               isButtonPressed = true;
                                             });
 
+                                            try {
+                                              setState(() {
+                                                _loading = true;
+                                              });
+                                              await Amplify.Auth.signIn(
+                                                username: emailController.text,
+                                                password: "12345678",
+                                              );
+                                              setState(() {
+                                                _loading = false;
+                                              });
+                                            } catch (error) {
+                                              setState(() {
+                                                _loading = false;
+                                              });
+                                              if (error.toString().contains(
+                                                  "NotAuthorizedException")) {
+                                                setState(() {
+                                                  isEmailTaken = true;
+                                                });
+                                              } else {
+                                                setState(() {
+                                                  isEmailTaken = false;
+                                                });
+                                              }
+                                            }
                                             if (_signupFormKey.currentState!
                                                 .validate()) {
-                                              userExist(emailController.text);
-                                              setState(() {
-                                                isEmailTaken = true;
-                                              });
                                               try {
                                                 setState(() {
                                                   _loading = true;
@@ -552,6 +570,17 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                                 setState(() {
                                                   _loading = false;
                                                 });
+                                                final prefs =
+                                                    await SharedPreferences
+                                                        .getInstance();
+
+                                                await prefs.setString(
+                                                    "email_pref",
+                                                    emailController.text);
+                                                await prefs.setString(
+                                                    "password_pref",
+                                                    passwordController.text);
+
                                                 setState(() {
                                                   emailProvider.email =
                                                       emailController.text;
@@ -567,11 +596,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                                 setState(() {
                                                   _loading = false;
                                                 });
-                                                safePrint(e.message);
                                               }
-                                              setState(() {
-                                                _loading = false;
-                                              });
                                             }
                                           },
                                           style: ElevatedButton.styleFrom(

@@ -5,13 +5,11 @@ import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
 
 import 'package:delta_team/features/auth/login/login_web/loginform_web.dart';
-import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:riverpod_extension/riverpod_extension.dart';
 
 import '../../../../common/footer/footer.dart';
