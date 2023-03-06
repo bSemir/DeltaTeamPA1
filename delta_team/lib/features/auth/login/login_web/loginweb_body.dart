@@ -5,13 +5,11 @@ import 'package:delta_team/common/appbar_web.dart';
 import 'package:delta_team/common/custom_button.dart';
 
 import 'package:delta_team/features/auth/login/login_web/loginform_web.dart';
-import 'package:delta_team/features/auth/signup/signup_web/Web_signupScreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:riverpod_extension/riverpod_extension.dart';
 
 import '../../../../common/footer/footer.dart';
@@ -115,7 +113,6 @@ class LoginScreenWebState extends State<LoginScreenWeb> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: CustomAppBar(
@@ -153,7 +150,7 @@ class LoginScreenWebState extends State<LoginScreenWeb> {
                       ),
                       SvgPicture.asset(
                         'assets/images/logotop.svg',
-                        width: (99.7 / 1440) * width,
+                        width: ((99.7 / 1440) * width).clamp(50, 100),
                       ),
                       const SizedBox(
                         height: 17,
@@ -164,7 +161,7 @@ class LoginScreenWebState extends State<LoginScreenWeb> {
                             TextSpan(
                                 text: 'Welcome to',
                                 style: GoogleFonts.notoSans(
-                                  fontSize: (48 / 1440) * width,
+                                  fontSize: ((48 / 1440) * width).clamp(38, 48),
                                   color: Colors.black,
                                   fontWeight: FontWeight.w400,
                                 )),
@@ -177,7 +174,7 @@ class LoginScreenWebState extends State<LoginScreenWeb> {
                             TextSpan(
                                 text: 'Product Arena',
                                 style: GoogleFonts.notoSans(
-                                  fontSize: (48 / 1440) * width,
+                                  fontSize: ((48 / 1440) * width).clamp(38, 48),
                                   color: Colors.black,
                                   fontWeight: FontWeight.w700,
                                 )),
@@ -190,7 +187,7 @@ class LoginScreenWebState extends State<LoginScreenWeb> {
                           style: GoogleFonts.notoSans(
                             fontWeight: FontWeight.w400,
                             color: const Color(0xFF605D66),
-                            fontSize: (32 / 1440) * width,
+                            fontSize: ((48 / 1440) * width).clamp(16, 32),
                           ),
                         ),
                       ),
@@ -210,7 +207,7 @@ class LoginScreenWebState extends State<LoginScreenWeb> {
                     ],
                   )),
               const SizedBox(
-                height: 198,
+                height: 38,
               ),
               const Footer()
             ],

@@ -5,7 +5,6 @@ import 'package:delta_team/amplifyconfiguration.dart';
 import 'package:delta_team/features/auth/login/providers/userAttributesProvider.dart';
 import 'package:delta_team/features/homepage/contact_me_screen.dart';
 import 'package:delta_team/features/homepage/homepage_sidebar.dart';
-import 'package:delta_team/features/homepage/homepage_sidebar_responsive.dart';
 import 'package:delta_team/features/homepage/homescreen.dart';
 import 'package:delta_team/features/homepage/lectures.dart';
 import 'package:delta_team/features/homepage/provider/authProvider.dart';
@@ -22,6 +21,7 @@ import 'package:delta_team/home_mobile.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -86,6 +86,16 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _configureAmplify();
+  }
+
+  dynamic token = '';
+
+  Future<void> _loadPrefs() async {
+    dynamic tokenStr = await FlutterSession().get("token");
+
+    setState(() {
+      token = tokenStr;
+    });
   }
 
   // This widget is the root of your application.

@@ -1,7 +1,6 @@
 import 'package:delta_team/features/homepage/provider/youtube_link_provider.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class VideoPlayer extends StatefulWidget {

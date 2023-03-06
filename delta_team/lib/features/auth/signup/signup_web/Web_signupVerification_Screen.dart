@@ -12,6 +12,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../common/footer/footer.dart';
 import '../../../onboarding_web/provider/emailPasswProvider.dart';
@@ -85,6 +86,18 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
         }
       });
     });
+  }
+
+  Future<void> signInUser(String email, String password) async {
+    try {
+      final result = await Amplify.Auth.signIn(
+        username: email, // email of user
+        password: password,
+      );
+      print('LOGGED IN');
+    } on AuthException catch (e) {
+      safePrint(e.message);
+    }
   }
 
   double? screenWidth;
@@ -689,11 +702,19 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                                 setState(() {
                                                   _loading = true;
                                                 });
+                                                final prefs =
+                                                    await SharedPreferences
+                                                        .getInstance();
+
+                                                final String? password = prefs
+                                                    .getString("password_pref");
+                                                final String? email = prefs
+                                                    .getString("email_pref");
+
                                                 final result = await Amplify
                                                         .Auth
                                                     .confirmSignUp(
-                                                        username:
-                                                            emailProvider.email,
+                                                        username: email!,
                                                         confirmationCode: code);
 
                                                 setState(() {
@@ -707,7 +728,11 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                                       .instance.primaryFocus
                                                       ?.unfocus();
 
-                                                  Navigator.pushNamed(context,
+                                                  await signInUser(
+                                                      email, password!);
+
+                                                  Navigator.pushReplacementNamed(
+                                                      context,
                                                       '/confirmationMessageWeb');
                                                 }
                                               } on AuthException catch (e) {
@@ -755,7 +780,13 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                           children: [
                                             InkWell(
                                               key: const Key('sendCodeAgain'),
-                                              onDoubleTap: () {
+                                              onDoubleTap: () async {
+                                                final prefs =
+                                                    await SharedPreferences
+                                                        .getInstance();
+
+                                                final String? email = prefs
+                                                    .getString("email_pref");
                                                 if (counter == 0 && codeError) {
                                                   setState(() {
                                                     counter = 20;
@@ -785,8 +816,9 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                                   _code4.clear();
                                                   _code5.clear();
                                                   _code6.clear();
-                                                  sendMessage(
-                                                      emailProvider.email);
+                                                  sendMessage(email);
+                                                  // sendMessage(
+                                                  //     emailProvider.email);
                                                 }
                                               },
                                               onTap: () async {
@@ -812,6 +844,12 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                                         true;
                                                   });
                                                 }
+                                                final prefs =
+                                                    await SharedPreferences
+                                                        .getInstance();
+
+                                                final String? email = prefs
+                                                    .getString("email_pref");
 
                                                 if (canSendCode) {
                                                   _code1.clear();
@@ -820,8 +858,10 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                                   _code4.clear();
                                                   _code5.clear();
                                                   _code6.clear();
-                                                  sendMessage(
-                                                      emailProvider.email);
+
+                                                  // sendMessage(
+                                                  //     emailProvider.email);
+                                                  sendMessage(email);
                                                 }
                                               },
                                               child: Text(

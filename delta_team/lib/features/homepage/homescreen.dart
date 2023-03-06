@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:amplify_core/amplify_core.dart';
 import 'package:delta_team/features/homepage/account_modal.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_session/flutter_session.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../auth/login/login_web/loginweb_body.dart';
 import 'homepage_sidebar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,16 +20,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // _loadPrefs();
+    _loadPrefs();
   }
 
   String selectedRole = "";
+  dynamic token = "";
 
   Future<void> _loadPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final role = prefs.getString('role');
+    dynamic strToken = await FlutterSession().get("token");
 
     setState(() {
+      token = strToken;
       selectedRole = role!;
     });
   }
@@ -133,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 GestureDetector(
-                                  key: const Key("user_icon_key"),
+                                  key: const Key("user_icon_key1"),
                                   onTap: () {
                                     setState(() {
                                       showModal = !showModal;

@@ -48,6 +48,10 @@ dependencies:
   # flutter_svg_provider: ^1.0.3
 
   dropdown_textfield: ^1.0.8
+  flutter_session:
+    git:
+      url: https://github.com/RomanIvn/flutter_session.git
+      ref: master
 
   provider: ^6.0.5
 
