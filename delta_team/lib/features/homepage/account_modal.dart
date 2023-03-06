@@ -190,8 +190,9 @@ class _AccountModalState extends State<AccountModal> {
                   onPressed: () async {
                     setState(() {
                       showModal = false;
-                      varijablaRola = [];
+                      varijablaRola.clear();
                     });
+
                     await FlutterSession().set("token", "");
                     signOutUser();
                     Navigator.pushNamed(context, LoginScreenWeb.routeName);

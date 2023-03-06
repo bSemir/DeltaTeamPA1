@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:amplify_core/amplify_core.dart';
 import 'package:delta_team/features/homepage/homepage_sidebar.dart';
 import 'package:delta_team/features/homepage/provider/youtube_link_provider.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,54 @@ class _RecentLecturesState extends State<RecentLectures> {
   @override
   void initState() {
     super.initState();
+    getUserLectures();
     _loadPrefs();
+  }
+
+  Future<void> patchLectureData(String title) async {
+    try {
+      var body = jsonEncode({
+        'date': 'Jan2023',
+        'lectureName': title,
+        'lastStoppedInSeconds': 100
+      });
+      var headers = {'Content-Type': 'application/json'};
+      Amplify.API.patch(
+        "/api/lecture/lastStopped",
+        apiName: "updateLastStoppedDelta",
+        headers: headers,
+        body: HttpPayload(body),
+      );
+      print("POST SENT");
+    } catch (error) {
+      print('Error calling API - PATCH user lectures: $error');
+    }
+  }
+
+  Future<Map<String, dynamic>> getUserLectures() async {
+    // signInUser();
+    try {
+      final restOperation = Amplify.API.get('/api/user/lectures',
+          apiName: 'getUserLectures',
+          queryParameters: {
+            'paDate': 'Jan2023'
+            // , 'name': 'Flutter widgets'
+          });
+      final response = await restOperation.response;
+
+      Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
+      setState(() {
+        lectures = responseMap;
+      });
+      // responseMap.forEach((key, value) {
+      //   print("$key: $value");
+      // });
+
+      // print(responseMap.values);
+      return responseMap;
+    } on ApiException catch (e) {
+      throw Exception('Failed to load lectures: $e');
+    }
   }
 
   bool showModal = false;
@@ -30,10 +78,10 @@ class _RecentLecturesState extends State<RecentLectures> {
 
   Future<void> _loadPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    final lecturesString = prefs.getString('lecturesPrefs');
+    // final lecturesString = prefs.getString('lecturesPrefs');
     final role = prefs.getString("role");
     setState(() {
-      lectures = json.decode(lecturesString!);
+      // lectures = json.decode(lecturesString!);
       selectedRole = role!;
     });
   }
@@ -275,6 +323,8 @@ class _RecentLecturesState extends State<RecentLectures> {
                                               key:
                                                   const Key("lectureVideo_key"),
                                               onTap: () async {
+                                                await patchLectureData(
+                                                    lecs[index]['name']);
                                                 final prefs =
                                                     await SharedPreferences
                                                         .getInstance();
@@ -360,6 +410,8 @@ class _RecentLecturesState extends State<RecentLectures> {
                                                     key: const Key(
                                                         "lectureVideo_key2"),
                                                     onTap: () async {
+                                                      await patchLectureData(
+                                                          lecs[index]['name']);
                                                       final prefs =
                                                           await SharedPreferences
                                                               .getInstance();

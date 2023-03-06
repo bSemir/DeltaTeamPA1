@@ -936,9 +936,10 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                           }
                           // myItem.add(widget.role);
 
-                          submitOnboarding();
+                          await submitOnboarding();
 
-                          signOutUser();
+                          await signOutUser();
+                          nizSaRolama.clear();
 
                           Navigator.pushNamed(
                               context, LoginScreenWeb.routeName);
@@ -952,8 +953,6 @@ class _OnboardingWebState extends State<OnboardingWeb> {
                           myItem.add(widget.role);
                           print(myItem.length);
                         }
-
-                        // clearFields();
                       },
                       // clearFields();
                       style: ElevatedButton.styleFrom(primary: Colors.black),
