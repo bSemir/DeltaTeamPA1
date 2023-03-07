@@ -21,13 +21,12 @@ import '../../../../amplifyconfiguration.dart';
 import '../../../homepage/homepage_sidebar.dart';
 
 class LoginField extends StatefulWidget {
+  static const routeName = '/loginField';
   // final IconData suffixIcon;
 
-  const LoginField({
-    super.key,
+  const LoginField({Key? key}) : super(key: key);
 
-    // required this.suffixIcon
-  });
+  // required this.suffixIcon
 
   @override
   State<LoginField> createState() => _LoginFieldState();

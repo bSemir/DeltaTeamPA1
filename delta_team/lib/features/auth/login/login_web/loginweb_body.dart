@@ -16,7 +16,7 @@ import '../../../../common/footer/footer.dart';
 import '../loadingScreens/loadingscreen_web.dart';
 
 class LoginScreenWeb extends StatefulWidget {
-  static const routeName = '/loginmobileWeb';
+  static const routeName = '/loginScreenWeb ';
   const LoginScreenWeb({Key? key}) : super(key: key);
 
   @override

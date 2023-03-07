@@ -19,9 +19,9 @@ Widget createMobileSignupScreen() => ChangeNotifierProvider<MyEmail>(
     );
 
 @GenerateMocks([
+  AmplifyClass,
   SignInResult,
   SignUpResult,
-  AmplifyClass,
   BuildContext,
   SignOutResult,
   RestOperation,

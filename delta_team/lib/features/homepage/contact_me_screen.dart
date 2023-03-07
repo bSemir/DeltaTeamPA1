@@ -129,7 +129,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     GestureDetector(
-                                      key: const Key("user_menu_key"),
+                                      key: const Key("user_menu_keyA"),
                                       onTap: () {
                                         Navigator.pushNamed(
                                             context, '/homepage_sidebar');

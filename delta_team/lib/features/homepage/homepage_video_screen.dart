@@ -143,7 +143,7 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       GestureDetector(
-                                        key: const Key("user_menu_key"),
+                                        key: const Key("user_menu_keyB"),
                                         onTap: () {
                                           Navigator.pushNamed(
                                               context, '/homepage_sidebar');

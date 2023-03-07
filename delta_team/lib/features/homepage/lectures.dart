@@ -127,7 +127,7 @@ class _LecturesPageState extends State<LecturesPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
-                                  key: const Key("user_menu_key"),
+                                  key: const Key("user_menu_keyD"),
                                   onTap: () {
                                     Navigator.pushNamed(
                                         context, '/homepage_sidebar');

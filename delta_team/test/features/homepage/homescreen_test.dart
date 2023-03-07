@@ -1,3 +1,5 @@
+import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:delta_team/features/auth/login/amplify_auth.dart';
 import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/login_web/loginform_web.dart';
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
@@ -11,10 +13,12 @@ import 'package:delta_team/features/homepage/homepage_video_screen.dart';
 import 'package:delta_team/features/homepage/homescreen.dart';
 import 'package:delta_team/features/homepage/lectures.dart';
 import 'package:delta_team/features/homepage/provider/selectedRoleProvider.dart';
+import 'package:delta_team/features/homepage/provider/youtube_link_provider.dart';
 import 'package:delta_team/features/homepage/recentLectures.dart';
 import 'package:delta_team/features/onboarding_web/provider/emailPasswProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
 import 'package:provider/provider.dart';
 
 late MyEmailWeb myEmailWeb;
@@ -22,6 +26,8 @@ late UserAttributesProvider userAttributesProvider;
 late EmailPasswordProvider emailPasswordProvider;
 late LecturesProvider lecturesProvider;
 late SelectedRoleProvider selectedRoleProvider;
+late YoutubeLinkProvider youtubeProvider;
+late AuthenticationProvider authenticationProvider;
 
 Widget createLoginScreenWeb() => MultiProvider(
       providers: [
@@ -41,10 +47,14 @@ Widget createLoginScreenWeb() => MultiProvider(
           selectedRoleProvider = SelectedRoleProvider();
           return selectedRoleProvider;
         }),
+        ChangeNotifierProvider<AuthenticationProvider>(create: (contex) {
+          authenticationProvider = AuthenticationProvider();
+          return authenticationProvider;
+        }),
       ],
       child: MaterialApp(
         routes: {
-          LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
+          // LoginScreenWeb.routeName: (context) => const LoginScreenWeb(),
           '/loadingScreenWeb': (context) => const LoadingScreenWeb(),
           '/homepage': (context) => const HomePage(),
           '/lecturesPage': (context) => const LecturesPage(),
@@ -53,6 +63,7 @@ Widget createLoginScreenWeb() => MultiProvider(
           '/recentLectures': (context) => const RecentLectures(),
           '/homescreen': (context) => const HomeScreen(),
           '/homepage_sidebar': (context) => const Sidebar(),
+          '/loginScreenWeb': (context) => const LoginScreenWeb(),
         },
         home: const LoginScreenWeb(),
       ),
@@ -76,6 +87,10 @@ Widget createHomeScreenWeb() => MultiProvider(
           selectedRoleProvider = SelectedRoleProvider();
           return selectedRoleProvider;
         }),
+        ChangeNotifierProvider<YoutubeLinkProvider>(create: (contex) {
+          youtubeProvider = YoutubeLinkProvider();
+          return youtubeProvider;
+        }),
       ],
       child: MaterialApp(
         routes: {
@@ -88,11 +103,19 @@ Widget createHomeScreenWeb() => MultiProvider(
           '/recentLectures': (context) => const RecentLectures(),
           '/homescreen': (context) => const HomeScreen(),
           '/homepage_sidebar': (context) => const Sidebar(),
+          '/loginField': (context) => const LoginField(),
         },
         home: const HomeScreen(),
       ),
     );
 
+@GenerateMocks([
+  AmplifyClass,
+  SignInResult,
+  SignUpResult,
+  SignOutResult,
+  RestOperation,
+])
 void main() {
   group('Login tests', () {
     testWidgets('Verify if a user can Login', (WidgetTester tester) async {
@@ -125,14 +148,18 @@ void main() {
       await tester.pumpWidget(createLoginScreenWeb());
       await tester.pumpAndSettle();
 
+      // final logPage = find.byKey(const ValueKey('logField'));
+      // await tester.tap(logPage);
+      // await tester.pumpAndSettle();
+
       final emailField = find.byKey(const ValueKey('emailKey'));
       await tester.tap(emailField);
-      await tester.enterText(emailField, '');
+      await tester.enterText(emailField, ' ');
       await tester.pumpAndSettle();
 
-      final passwordField = find.byKey(const ValueKey('passwordKey'));
+      final passwordField = find.byKey(const ValueKey('passwordKey11'));
       await tester.tap(passwordField);
-      await tester.enterText(passwordField, '');
+      await tester.enterText(passwordField, ' ');
       await tester.pumpAndSettle();
 
       final loginButton = find.byKey(const ValueKey('Login_Button'));
@@ -184,12 +211,12 @@ void main() {
           findsOneWidget);
     });
 
-    testWidgets('Verify if a user can go on Homepage',
+    testWidgets('Verify if a user can go on Homescreen',
         (WidgetTester tester) async {
       await tester.pumpWidget(createHomeScreenWeb());
       await tester.pumpAndSettle();
 
-      final homescreenButton = find.byKey(const ValueKey('homescreen_key'));
+      final homescreenButton = find.byKey(const ValueKey('homescreen_key2'));
       await tester.tap(homescreenButton);
       await tester.pumpAndSettle();
 
@@ -197,41 +224,37 @@ void main() {
       expect(find.text('Product Arena'), findsOneWidget);
     });
 
-    testWidgets('Verify if a user can go on Contact us! page',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(createHomeScreenWeb());
-      await tester.pumpAndSettle();
+    group('Contact us page tests', () {
+      testWidgets('Verify if a user can go on Contact us! page',
+          (WidgetTester tester) async {
+        await tester.pumpWidget(createHomeScreenWeb());
+        await tester.pumpAndSettle();
 
-      final backendButton = find.byKey(const ValueKey('contact_key'));
-      await tester.tap(backendButton);
-      await tester.pumpAndSettle();
+        final contactButton = find.byKey(const ValueKey('contact_key2'));
+        await tester.tap(contactButton);
+        await tester.pumpAndSettle();
 
-      expect(find.text('Submit'), findsOneWidget);
-    });
-  });
-
-  group('Contact us tests', () {
-    testWidgets('Verify if a user can go on Contact us! page',
-        (WidgetTester tester) async {
-      await tester.pumpWidget(createHomeScreenWeb());
-      await tester.pumpAndSettle();
-
-      final backendButton = find.byKey(const ValueKey('contact_key'));
-      await tester.tap(backendButton);
-      await tester.pumpAndSettle();
-
-      expect(find.text('Submit'), findsOneWidget);
+        expect(find.text('CONTACT US'), findsOneWidget);
+      });
     });
 
     testWidgets(
-        'Verify if a user can will recieve error messages if field is empty',
+        'Verify if a user can will recieve error messages if field is empty on contact us page',
         (WidgetTester tester) async {
       await tester.pumpWidget(createHomeScreenWeb());
+      await tester.pumpAndSettle();
+
+      final backendButton = find.byKey(const ValueKey('contact_key2'));
+      await tester.tap(backendButton);
+      await tester.pumpAndSettle();
+
+      final sideBar = find.byKey(const ValueKey('user_menu_key'));
+      await tester.tap(sideBar);
       await tester.pumpAndSettle();
 
       final textField = find.byKey(const ValueKey('contactField'));
       await tester.tap(textField);
-      await tester.enterText(textField, '');
+      await tester.enterText(textField, ' ');
       await tester.pumpAndSettle();
 
       expect(
@@ -244,6 +267,10 @@ void main() {
       await tester.pumpWidget(createHomeScreenWeb());
       await tester.pumpAndSettle();
 
+      final backendButton = find.byKey(const ValueKey('contact_key2'));
+      await tester.tap(backendButton);
+      await tester.pumpAndSettle();
+
       final textField = find.byKey(const ValueKey('contactField'));
       await tester.tap(textField);
       await tester.enterText(textField, 'test');
@@ -251,6 +278,39 @@ void main() {
 
       expect(find.text('Your message has to contain at least 10 characters'),
           findsOneWidget);
+    });
+  });
+
+  group('Recent Lectures tests', () {
+    testWidgets('Verify if a user can go on Recent lecture page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createHomeScreenWeb());
+      await tester.pumpAndSettle();
+
+      // final homescreenButton = find.byKey(const ValueKey('homescreen_key2'));
+      // await tester.tap(homescreenButton);
+      // await tester.pumpAndSettle();
+
+      final recentButton = find.byKey(const ValueKey('recentlectures_key2'));
+      await tester.tap(recentButton);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Total time: '), findsNWidgets(1));
+      expect(find.text('23:17'), findsNWidgets(1));
+    });
+  });
+
+  group('User tests', () {
+    testWidgets('Verify if a user can go on User popup page',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(createHomeScreenWeb());
+      await tester.pumpAndSettle();
+
+      final userBarButton = find.byKey(const ValueKey('user_icon_key1'));
+      await tester.tap(userBarButton);
+      await tester.pumpAndSettle();
+
+      expect(find.text('Log out'), findsOneWidget);
     });
   });
 }

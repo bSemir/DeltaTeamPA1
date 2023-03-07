@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 GestureDetector(
-                                  key: const Key("user_menu_key"),
+                                  key: const Key("user_menu_keyC"),
                                   onTap: () {
                                     Navigator.pushNamed(
                                         context, '/homepage_sidebar');
