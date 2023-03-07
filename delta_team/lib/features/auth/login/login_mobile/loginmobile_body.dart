@@ -180,11 +180,11 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
                   ),
                 ],
               ),
+              const CustomFooter(),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

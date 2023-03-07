@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,19 +19,18 @@ class _RedirectingScreenState extends State<RedirectingScreen> {
     startTimeout();
   }
 
-  startTimeout() async {
-    var duration = const Duration(seconds: 10);
-    return Timer(duration, navigateToHomeScreen);
+  startTimeout() {
+    var duration = const Duration(seconds: 5);
+    return Timer(duration, navigateToWelcomePage);
   }
 
-  navigateToHomeScreen() {
-    Navigator.pushReplacementNamed(context, WelcomePage.routeName);
+  navigateToWelcomePage() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const WelcomePage()));
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(

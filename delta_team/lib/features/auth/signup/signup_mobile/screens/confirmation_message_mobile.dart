@@ -65,12 +65,12 @@ class ConfirmationMessage extends StatelessWidget {
                 const SizedBox(
                   height: 36,
                 ),
+                const CustomFooter(),
               ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

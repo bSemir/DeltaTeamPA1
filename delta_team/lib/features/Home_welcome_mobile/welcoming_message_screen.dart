@@ -1,9 +1,7 @@
 import 'package:delta_team/features/Home_welcome_mobile/menu_navigation_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import '../auth/login/loadingScreens/loadingscreen_mobile.dart';
 import '../onboarding/onboarding_mobile/mobile_widgets/custom_footer_mobile.dart';
 
 class WelcomingScreen extends StatefulWidget {
@@ -99,11 +97,11 @@ class _WelcomingScreenState extends State<WelcomingScreen> {
                       ),
                     ),
                   ),
+                  const CustomFooter(),
                 ],
               ),
             )
           : const MyDrawer(),
-      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

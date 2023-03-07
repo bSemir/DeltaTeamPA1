@@ -65,7 +65,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 232,
+                  height: 240,
                   // height: mediaQuery.size.height * 0.16,
                 ),
                 Container(
@@ -93,13 +93,13 @@ class _WelcomePageState extends State<WelcomePage> {
                       )
                     ],
                   ),
-                )
+                ),
+                const CustomFooter(),
               ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

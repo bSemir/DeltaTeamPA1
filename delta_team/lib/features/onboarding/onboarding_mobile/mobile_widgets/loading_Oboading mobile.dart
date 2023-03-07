@@ -22,17 +22,18 @@ class _OnboardingredirectingState extends State<Onboardingredirecting> {
   @override
   void initState() {
     super.initState();
-    // startTimeout();
+    startTimeout();
   }
 
-  // startTimeout() async {
-  //   var duration = const Duration(seconds: 5);
-  //   return Timer(duration, navigateToHomeScreen);
-  // }
+  startTimeout() async {
+    var duration = const Duration(seconds: 5);
+    return Timer(duration, navigateToHomeScreen);
+  }
 
-  // navigateToHomeScreen() {
-  //   Navigator.pushReplacementNamed(context, LoginScreenMobile.routeName);
-  // }
+  navigateToHomeScreen() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const LoginScreenMobile()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,9 +105,9 @@ class _OnboardingredirectingState extends State<Onboardingredirecting> {
               const SizedBox(
                 height: 245,
               ),
+              const CustomFooter(),
             ])),
       ),
-      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

@@ -1,12 +1,10 @@
 import 'package:delta_team/features/auth/login/login_mobile/loginmobile_body.dart';
 import 'package:delta_team/features/auth/signup/signup_mobile/widgets/confirmationContainers.dart';
-import 'package:delta_team/features/auth/signup/signup_mobile/widgets/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../onboarding/onboarding_mobile/mobile_widgets/custom_footer_mobile.dart';
-import '../../../login/loadingScreens/loadingscreen_mobile.dart';
 
 class ConfirmationScreen extends StatefulWidget {
   const ConfirmationScreen({super.key});
@@ -101,11 +99,11 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
               const SizedBox(
                 height: 38,
               ),
+              const CustomFooter(),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

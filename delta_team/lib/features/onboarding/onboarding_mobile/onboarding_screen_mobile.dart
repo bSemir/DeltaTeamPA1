@@ -281,13 +281,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                   ),
+                  const CustomFooter(),
                 ],
               ),
             ),
           ),
         ),
       ),
-      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

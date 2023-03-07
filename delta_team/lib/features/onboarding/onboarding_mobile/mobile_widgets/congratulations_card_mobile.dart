@@ -102,10 +102,10 @@ class CongratsCard extends StatelessWidget {
             const SizedBox(
               height: 251,
             ),
+            const CustomFooter(),
           ],
         ),
       ),
-      bottomNavigationBar: const CustomFooter(),
     );
   }
 }
