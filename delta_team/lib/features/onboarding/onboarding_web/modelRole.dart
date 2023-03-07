@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 //KLASA ZA ROLE MODEL
 class Role {
-  final String id;
-  final String image;
+  late String id;
+  late String image;
 
   Role(this.id, this.image);
 }

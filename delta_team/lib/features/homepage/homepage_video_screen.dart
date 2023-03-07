@@ -74,6 +74,7 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
 
   Future<void> _loadData() async {
     final prefs = await SharedPreferences.getInstance();
+    // prefs.setString("route", '/homescreen');
 
     final emailExist = prefs.getString("email");
     prefs.setString("route", '/homepagevideo');

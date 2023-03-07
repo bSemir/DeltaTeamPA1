@@ -52,6 +52,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
 
   Future<void> _loadPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("route", '/contactUs');
 
     final emailExist = prefs.getString("email");
     prefs.setString("route", '/contactUs');
