@@ -3,6 +3,7 @@ import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/features/homepage/contact_me_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +23,7 @@ class _AccountModalState extends State<AccountModal> {
   void initState() {
     super.initState();
     _loadPrefs();
+    loader = false;
   }
 
   Future<void> _loadPrefs() async {
@@ -41,10 +43,18 @@ class _AccountModalState extends State<AccountModal> {
   String surname = '';
   String email = '';
 
+  bool loader = false;
+
   Future<void> signOutUser() async {
     try {
+      setState(() {
+        loader = true;
+      });
       await Amplify.Auth.signOut();
     } on AuthException catch (e) {
+      setState(() {
+        loader = false;
+      });
       safePrint(e.message);
     }
   }
@@ -98,13 +108,13 @@ class _AccountModalState extends State<AccountModal> {
                     width: double.infinity,
                   ),
                 ),
-                Center(
-                  child: Image.asset(
-                    "assets/images/profile_icon.png",
-                    height: 10,
-                    width: 10,
-                  ),
-                ),
+                // Center(
+                //   child: Image.asset(
+                //     "assets/images/profile_icon.png",
+                //     height: 10,
+                //     width: 10,
+                //   ),
+                // ),
                 Center(
                   child: Text(
                     "$name $surname",
@@ -188,32 +198,42 @@ class _AccountModalState extends State<AccountModal> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.10,
                 ),
-                Center(
-                  child: ElevatedButton(
-                    key: const Key("signout_key"),
-                    onPressed: () async {
-                      varijablaRola.clear();
-                      setState(() {
-                        showModal = false;
-                      });
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      await FlutterSession().set("token", "");
-                      prefs.setString("email", "logged_out");
-                      await signOutUser();
-                      Navigator.pushNamed(context, LoginScreenWeb.routeName);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      side: BorderSide(color: Colors.black, width: 2),
-                    ),
-                    child: const Text(
-                      "Log out",
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
+                loader
+                    ? const Center(
+                        child: SpinKitRing(
+                          color: Colors.black,
+                          size: 36,
+                          lineWidth: 6,
+                        ),
+                      )
+                    : Center(
+                        child: ElevatedButton(
+                          key: const Key("signout_key"),
+                          onPressed: () async {
+                            varijablaRola.clear();
+                            setState(() {
+                              showModal = false;
+                            });
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            // await FlutterSession().set("token", "");
+                            prefs.setString("email", "logged_out");
+                            await signOutUser();
+                            Navigator.pushNamed(
+                                context, LoginScreenWeb.routeName);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            side: BorderSide(color: Colors.black, width: 2),
+                          ),
+                          child: const Text(
+                            "Log out",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),

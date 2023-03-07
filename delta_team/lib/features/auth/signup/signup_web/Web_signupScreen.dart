@@ -95,7 +95,12 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
     }
   }
 
+  @override
   initState() {
+    super.initState();
+
+    _loading = false;
+
     _passwordVisible = false;
   }
 
@@ -131,8 +136,10 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
           action: RoundedButton(
             key: const Key('LoginPage'),
             text: 'Login',
-            press: () async {
-              Navigator.pushNamed(context, LoginScreenWeb.routeName);
+            press: () {
+              _loading
+                  ? null
+                  : Navigator.pushNamed(context, LoginScreenWeb.routeName);
             },
             color: const Color(0xFF000000),
             textColor: Colors.white,
@@ -507,13 +514,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                                 username: emailController.text,
                                                 password: "12345678",
                                               );
-                                              setState(() {
-                                                _loading = false;
-                                              });
                                             } catch (error) {
-                                              setState(() {
-                                                _loading = false;
-                                              });
                                               if (error.toString().contains(
                                                   "NotAuthorizedException")) {
                                                 setState(() {
@@ -528,9 +529,6 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                             if (_signupFormKey.currentState!
                                                 .validate()) {
                                               try {
-                                                setState(() {
-                                                  _loading = true;
-                                                });
                                                 final userAttributes = <
                                                     CognitoUserAttributeKey,
                                                     String>{
@@ -569,9 +567,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                                 // ignore: use_build_context_synchronously
                                                 Navigator.pushNamed(context,
                                                     "/confirmationWeb");
-                                                setState(() {
-                                                  _loading = false;
-                                                });
+
                                                 final prefs =
                                                     await SharedPreferences
                                                         .getInstance();
@@ -594,7 +590,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                                           passwordController
                                                               .text);
                                                 });
-                                              } on AuthException catch (e) {
+                                              } catch (e) {
                                                 setState(() {
                                                   _loading = false;
                                                 });

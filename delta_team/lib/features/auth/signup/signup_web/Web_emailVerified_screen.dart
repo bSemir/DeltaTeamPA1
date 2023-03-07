@@ -32,7 +32,7 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
   }
 
   navigateToloading() {
-    Navigator.pushNamed(context, '/loadingPageSignup');
+    Navigator.pushNamed(context, '/onboardingweb');
   }
 
   double? screenWidth;
@@ -54,9 +54,7 @@ class _EmailVerifiedScreenState extends State<EmailVerifiedScreen> {
           action: RoundedButton(
             key: const Key('LoginPage'),
             text: 'Login',
-            press: () async {
-              Navigator.pushNamed(context, LoginScreenWeb.routeName);
-            },
+            press: () {},
             color: const Color(0xFF000000),
             textColor: Colors.white,
             borderColor: Colors.black,

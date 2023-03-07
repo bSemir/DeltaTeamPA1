@@ -2,6 +2,7 @@ import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/features/homepage/homepage_sidebar.dart';
 import 'package:delta_team/features/onboarding_web/provider/emailPasswProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -54,16 +55,6 @@ class _OnboardingWebState extends State<OnboardingWeb> {
 
   _OnboardingWebState(this.role);
 
-  @override
-  void initState() {
-    super.initState();
-    // _loadPrefs();
-    // final emailPasswordProvider =
-    //     Provider.of<EmailPasswordProvider>(context, listen: false);
-
-    // signInUser(emailOnboarding, passwordOnboarding);
-  }
-
   String emailOnboarding = '';
   String passwordOnboarding = '';
 
@@ -106,16 +97,14 @@ class _OnboardingWebState extends State<OnboardingWeb> {
     }
   }
 
-  Future<void> signOutUser() async {
-    try {
-      final res = await Amplify.Auth.signOut();
-
-      print(res);
-    } on AuthException catch (e) {
-      safePrint(e.message);
-    }
+  bool loading = false;
+  @override
+  void initState() {
+    super.initState();
+    loading = false;
   }
 
+  @override
   Widget build(BuildContext context) {
     var myItem = Provider.of<MyItemWeb>(context);
     var nizSaRolama = Provider.of<MyItemWeb>(context).myItems;
@@ -135,32 +124,9 @@ class _OnboardingWebState extends State<OnboardingWeb> {
       videoWithoutTitle = false;
     }
 
-    Future<void> submitOnboarding() async {
-      try {
-        final restOperation = Amplify.API.post("/api/onboarding/submit",
-            body: HttpPayload.json({
-              "date": "Jan2023",
-              "roles": nizSaRolama,
-              "answers": {
-                // answers are in the same order as questions, null if not answered
-                "0": _character,
-                "1": _motivacija.text,
-                "2": _hobi.text,
-                "3": _interesovanja.text,
-                "4": _kucniLjubimac.text,
-                "5": _kapetan.text,
-                "6": _UnesiYtUrl.text,
-              },
-            }),
-            apiName: "UserObjectInitialization");
-        final response = await restOperation.response;
-        Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
-        print('POST call succeeded');
-        print(responseMap['lectures']);
-      } on ApiException catch (e) {
-        print('POST call failed: $e');
-      }
-    }
+    Future<void> signOutUser() async {}
+
+    Future<void> submitOnboarding() async {}
 
     void clearFields() {
       setState(() {
@@ -919,58 +885,105 @@ class _OnboardingWebState extends State<OnboardingWeb> {
 
             //BUTTONS
 
-            Container(
-              color: Colors.white,
-              width: MediaQuery.of(context).size.width * 0.60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                      key: const Key('posaljikey'),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate() &&
-                            _character != null &&
-                            (isSelected ||
-                                myItem.length <= 2 && myItem.length >= 1)) {
-                          if (nizSaRolama.first == null) {
-                            myItem.add(widget.role);
-                          }
-                          // myItem.add(widget.role);
+            loading
+                ? const SpinKitRing(
+                    color: Colors.black,
+                    size: 36,
+                    lineWidth: 6,
+                  )
+                : Container(
+                    color: Colors.white,
+                    width: MediaQuery.of(context).size.width * 0.60,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                            key: const Key('posaljikey'),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate() &&
+                                  _character != null &&
+                                  (isSelected ||
+                                      myItem.length <= 2 &&
+                                          myItem.length >= 1)) {
+                                // ignore: unnecessary_null_comparison
+                                if (nizSaRolama.first == null) {
+                                  myItem.add(widget.role);
+                                }
 
-                          await submitOnboarding();
+                                try {
+                                  setState(() {
+                                    loading = true;
+                                  });
+                                  final restOperation =
+                                      Amplify.API.post("/api/onboarding/submit",
+                                          body: HttpPayload.json({
+                                            "date": "Jan2023",
+                                            "roles": nizSaRolama,
+                                            "answers": {
+                                              // answers are in the same order as questions, null if not answered
+                                              "0": _character,
+                                              "1": _motivacija.text,
+                                              "2": _hobi.text,
+                                              "3": _interesovanja.text,
+                                              "4": _kucniLjubimac.text,
+                                              "5": _kapetan.text,
+                                              "6": _UnesiYtUrl.text,
+                                            },
+                                          }),
+                                          apiName: "UserObjectInitialization");
+                                  final response = await restOperation.response;
+                                  Map<String, dynamic> responseMap =
+                                      jsonDecode(response.decodeBody());
+                                  print('POST call succeeded');
+                                  print(responseMap['lectures']);
+                                } catch (e) {
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                }
+                                try {
+                                  final res = await Amplify.Auth.signOut();
+                                } on AuthException catch (e) {
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                }
 
-                          await signOutUser();
-                          varijablaRola.clear();
-                          nizSaRolama.clear();
+                                varijablaRola.clear();
+                                nizSaRolama.clear();
 
-                          Navigator.pushNamed(
-                              context, LoginScreenWeb.routeName);
-                        } else if (_character == null) {
-                          context.read<ErrorMessageWeb>().change();
-                          // ignore: unnecessary_null_comparison
-                        } else if (nizSaRolama.first != null) {
-                          myItem.remove(widget.role);
-                          // ignore: unnecessary_null_comparison
-                        } else {
-                          myItem.add(widget.role);
-                          print(myItem.length);
-                        }
-                      },
-                      // clearFields();
-                      style: ElevatedButton.styleFrom(primary: Colors.black),
-                      child: Text(
-                        'Posalji',
-                      )),
+                                Navigator.pushNamed(
+                                    context, LoginScreenWeb.routeName);
+                              } else if (_character == null) {
+                                context.read<ErrorMessageWeb>().change();
+                                // ignore: unnecessary_null_comparison
+                              } else if (nizSaRolama.first != null) {
+                                myItem.remove(widget.role);
+                                // ignore: unnecessary_null_comparison
+                              } else {
+                                myItem.add(widget.role);
+                                print(myItem.length);
+                              }
+                            },
+                            // clearFields();
+                            style:
+                                ElevatedButton.styleFrom(primary: Colors.black),
+                            child: Text(
+                              'Posalji',
+                            )),
 
-                  // GestureDetector(
+                        // GestureDetector(
 
-                  GestureDetector(
-                      key: const Key('ocistiKey'),
-                      onTap: clearFields,
-                      child: Text('Ocisti odabir'))
-                ],
-              ),
-            ),
+                        GestureDetector(
+                            key: const Key('ocistiKey'),
+                            onTap: clearFields,
+                            child: Text('Ocisti odabir'))
+                      ],
+                    ),
+                  ),
 
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.10,
@@ -1000,6 +1013,7 @@ class Item extends StatefulWidget {
 class _ItemState extends State<Item> {
   @override
   Widget build(BuildContext context) {
+    String displayRole = "";
     // use Provider
     var myItem = Provider.of<MyItemWeb>(context);
     var nizSaRolama = Provider.of<MyItemWeb>(context).myItems;
@@ -1055,11 +1069,21 @@ class _ItemState extends State<Item> {
                     alignment: Alignment.center,
                     child: Text(
                       key: const Key('textkey'),
-                      widget.role.id,
+                      widget.role.id == 'fullstack'
+                          ? displayRole = 'Full Stack Developer'
+                          : widget.role.id == 'backend'
+                              ? displayRole = 'Backend'
+                              : widget.role.id == 'uiux'
+                                  ? displayRole = 'UI/UX Design'
+                                  : widget.role.id == 'productManager'
+                                      ? displayRole = 'Project Management'
+                                      : widget.role.id == 'qa'
+                                          ? displayRole = 'QA Engineering'
+                                          : displayRole,
                       style: TextStyle(
                           color: isSelected ? Colors.black : Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 11),
+                          fontSize: 9),
                     ),
                   )),
             ]),

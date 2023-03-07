@@ -4,6 +4,7 @@ import 'package:amplify_core/amplify_core.dart';
 import 'package:delta_team/features/homepage/homepage_sidebar.dart';
 import 'package:delta_team/features/homepage/provider/youtube_link_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -40,7 +41,6 @@ class _RecentLecturesState extends State<RecentLectures> {
         headers: headers,
         body: HttpPayload(body),
       );
-      print("POST SENT");
     } catch (error) {
       print('Error calling API - PATCH user lectures: $error');
     }
@@ -49,6 +49,9 @@ class _RecentLecturesState extends State<RecentLectures> {
   Future<Map<String, dynamic>> getUserLectures() async {
     // signInUser();
     try {
+      setState(() {
+        _loading = true;
+      });
       final restOperation = Amplify.API.get('/api/user/lectures',
           apiName: 'getUserLectures',
           queryParameters: {
@@ -61,13 +64,19 @@ class _RecentLecturesState extends State<RecentLectures> {
       setState(() {
         lectures = responseMap;
       });
+      setState(() {
+        _loading = false;
+      });
       // responseMap.forEach((key, value) {
       //   print("$key: $value");
       // });
 
       // print(responseMap.values);
       return responseMap;
-    } on ApiException catch (e) {
+    } catch (e) {
+      setState(() {
+        _loading = false;
+      });
       throw Exception('Failed to load lectures: $e');
     }
   }
@@ -78,6 +87,7 @@ class _RecentLecturesState extends State<RecentLectures> {
 
   Future<void> _loadPrefs() async {
     final prefs = await SharedPreferences.getInstance();
+    prefs.setString("route", '/recentLectures');
 
     final emailExist = prefs.getString("email");
     if (emailExist!.isEmpty || emailExist == "logged_out") {
@@ -91,6 +101,8 @@ class _RecentLecturesState extends State<RecentLectures> {
       selectedRole = role!;
     });
   }
+
+  bool _loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -206,357 +218,359 @@ class _RecentLecturesState extends State<RecentLectures> {
                               top: 30,
                               bottom: 30,
                             ),
-                            child: !removeDescription
-                                ? ListView.separated(
-                                    shrinkWrap: true,
-                                    itemCount: lecs.length,
-                                    itemBuilder: ((context, index) {
-                                      return Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SizedBox(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.30,
-                                                      child: Text(
-                                                        "${index + 1}. ${lecs[index]['name']}",
-                                                        style:
-                                                            GoogleFonts.outfit(
-                                                                fontSize: 32),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 27,
-                                                    ),
-                                                    SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.32,
-                                                      child: Text(
-                                                        lecs[index]
-                                                            ['description'],
-                                                        style: GoogleFonts
-                                                            .notoSans(
-                                                                fontSize: 16),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 100,
-                                                    ),
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Row(
-                                                          children: [
-                                                            Text(
-                                                              "Total time: ",
-                                                              style: GoogleFonts
-                                                                  .notoSans(
-                                                                      fontSize:
-                                                                          16),
-                                                            ),
-                                                            Text(
-                                                              "23:17",
-                                                              style: GoogleFonts
-                                                                  .notoSans(
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            Text(
-                                                              "Remaining time: ",
-                                                              style: GoogleFonts
-                                                                  .notoSans(
-                                                                      fontSize:
-                                                                          16),
-                                                            ),
-                                                            Text(
-                                                              "12:14",
-                                                              style: GoogleFonts
-                                                                  .notoSans(
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            Text(
-                                                              "Status: ",
-                                                              style: GoogleFonts
-                                                                  .notoSans(
-                                                                      fontSize:
-                                                                          16),
-                                                            ),
-                                                            Text(
-                                                              "Ongoing",
-                                                              style: GoogleFonts
-                                                                  .notoSans(
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                            ),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                              InkWell(
-                                                key: const Key(
-                                                    "lectureVideo_key"),
-                                                onTap: () async {
-                                                  await patchLectureData(
-                                                      lecs[index]['name']);
-                                                  final prefs =
-                                                      await SharedPreferences
-                                                          .getInstance();
-
-                                                  await prefs.setString('title',
-                                                      lecs[index]['name']);
-                                                  await prefs.setInt(
-                                                      'index', index);
-                                                  await prefs.setString(
-                                                      'description',
-                                                      lecs[index]
-                                                          ['description']);
-                                                  if (lecs[index]
-                                                          ['contentLink'] !=
-                                                      null) {
-                                                    await prefs.setString(
-                                                        'ytLink',
-                                                        YoutubePlayer
-                                                            .convertUrlToId(lecs[
-                                                                    index][
-                                                                'contentLink'])!);
-                                                    youtubeProvider.setLink(
-                                                        YoutubePlayer
-                                                            .convertUrlToId(lecs[
-                                                                    index][
-                                                                'contentLink'])!);
-                                                  }
-
-                                                  Navigator.pushNamed(context,
-                                                      '/homepagevideo');
-                                                },
-                                                child: Image.network(
-                                                  lecs[index]['imageSrc'],
-                                                  width: 280,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Divider(
-                                            color: Color.fromRGBO(
-                                                202, 196, 208, 1),
-                                          ),
-                                        ],
-                                      );
-                                    }),
-                                    separatorBuilder:
-                                        (BuildContext context, int index) {
-                                      return const SizedBox(
-                                        height: 60,
-                                      );
-                                    },
+                            child: _loading
+                                ? const Center(
+                                    child: SpinKitRing(
+                                      color: Colors.black,
+                                      size: 36,
+                                      lineWidth: 6,
+                                    ),
                                   )
-                                : ListView.separated(
-                                    shrinkWrap: true,
-                                    itemCount: lecs.length,
-                                    itemBuilder: ((context, index) {
-                                      return Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              SizedBox(
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                : !removeDescription
+                                    ? ListView.separated(
+                                        shrinkWrap: true,
+                                        itemCount: lecs.length,
+                                        itemBuilder: ((context, index) {
+                                          return InkWell(
+                                            key: const Key("lectureVideo_key"),
+                                            onTap: () async {
+                                              await patchLectureData(
+                                                  lecs[index]['name']);
+                                              final prefs =
+                                                  await SharedPreferences
+                                                      .getInstance();
+
+                                              await prefs.setString(
+                                                  'title', lecs[index]['name']);
+                                              await prefs.setInt(
+                                                  'index', index);
+                                              await prefs.setString(
+                                                  'description',
+                                                  lecs[index]['description']);
+                                              if (lecs[index]['contentLink'] !=
+                                                  null) {
+                                                await prefs.setString(
+                                                    'ytLink',
+                                                    YoutubePlayer
+                                                        .convertUrlToId(lecs[
+                                                                index]
+                                                            ['contentLink'])!);
+                                                youtubeProvider.setLink(
+                                                    YoutubePlayer
+                                                        .convertUrlToId(lecs[
+                                                                index]
+                                                            ['contentLink'])!);
+                                              }
+
+                                              Navigator.pushNamed(
+                                                  context, '/homepagevideo');
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.30,
-                                                      child: Text(
-                                                        "${index + 1}. ${lecs[index]['name']}",
-                                                        style:
-                                                            GoogleFonts.outfit(
-                                                                fontSize: 32),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          SizedBox(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.30,
+                                                            child: Text(
+                                                              "${index + 1}. ${lecs[index]['name']}",
+                                                              style: GoogleFonts
+                                                                  .outfit(
+                                                                      fontSize:
+                                                                          32),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 27,
+                                                          ),
+                                                          SizedBox(
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.32,
+                                                            child: Text(
+                                                              lecs[index][
+                                                                  'description'],
+                                                              style: GoogleFonts
+                                                                  .notoSans(
+                                                                      fontSize:
+                                                                          16),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 100,
+                                                          ),
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  Text(
+                                                                    "Total time: ",
+                                                                    style: GoogleFonts.notoSans(
+                                                                        fontSize:
+                                                                            16),
+                                                                  ),
+                                                                  Text(
+                                                                    "23:17",
+                                                                    style: GoogleFonts.notoSans(
+                                                                        fontSize:
+                                                                            16,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  Text(
+                                                                    "Remaining time: ",
+                                                                    style: GoogleFonts.notoSans(
+                                                                        fontSize:
+                                                                            16),
+                                                                  ),
+                                                                  Text(
+                                                                    "12:14",
+                                                                    style: GoogleFonts.notoSans(
+                                                                        fontSize:
+                                                                            16,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  Text(
+                                                                    "Status: ",
+                                                                    style: GoogleFonts.notoSans(
+                                                                        fontSize:
+                                                                            16),
+                                                                  ),
+                                                                  Text(
+                                                                    "Ongoing",
+                                                                    style: GoogleFonts.notoSans(
+                                                                        fontSize:
+                                                                            16,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                ],
+                                                              )
+                                                            ],
+                                                          )
+                                                        ],
                                                       ),
                                                     ),
-                                                    const SizedBox(
-                                                      height: 27,
+                                                    Image.network(
+                                                      lecs[index]['imageSrc'],
+                                                      width: 280,
                                                     ),
-                                                    InkWell(
-                                                      key: const Key(
-                                                          "lectureVideo_key2"),
-                                                      onTap: () async {
-                                                        await patchLectureData(
-                                                            lecs[index]
-                                                                ['name']);
-                                                        final prefs =
-                                                            await SharedPreferences
-                                                                .getInstance();
-
-                                                        await prefs.setString(
-                                                            'title',
-                                                            lecs[index]
-                                                                ['name']);
-                                                        await prefs.setInt(
-                                                            'index', index);
-                                                        await prefs.setString(
-                                                            'description',
-                                                            lecs[index][
-                                                                'description']);
-                                                        if (lecs[index][
-                                                                'contentLink'] !=
-                                                            null) {
-                                                          await prefs.setString(
-                                                              'ytLink',
-                                                              YoutubePlayer
-                                                                  .convertUrlToId(
-                                                                      lecs[index]
-                                                                          [
-                                                                          'contentLink'])!);
-                                                          youtubeProvider.setLink(
-                                                              YoutubePlayer
-                                                                  .convertUrlToId(
-                                                                      lecs[index]
-                                                                          [
-                                                                          'contentLink'])!);
-                                                        }
-
-                                                        Navigator.pushNamed(
-                                                            context,
-                                                            '/homepagevideo');
-                                                      },
-                                                      child: Image.network(
-                                                        lecs[index]['imageSrc'],
-                                                        width: 280,
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 100,
-                                                    ),
-                                                    Column(
+                                                  ],
+                                                ),
+                                                const Divider(
+                                                  color: Color.fromRGBO(
+                                                      202, 196, 208, 1),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }),
+                                        separatorBuilder:
+                                            (BuildContext context, int index) {
+                                          return const SizedBox(
+                                            height: 60,
+                                          );
+                                        },
+                                      )
+                                    : ListView.separated(
+                                        shrinkWrap: true,
+                                        itemCount: lecs.length,
+                                        itemBuilder: ((context, index) {
+                                          return Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  SizedBox(
+                                                    child: Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Row(
-                                                          children: [
-                                                            Text(
-                                                              "Total time: ",
-                                                              style: GoogleFonts
-                                                                  .notoSans(
-                                                                      fontSize:
-                                                                          16),
-                                                            ),
-                                                            Text(
-                                                              "23:17",
-                                                              style: GoogleFonts
-                                                                  .notoSans(
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                            ),
-                                                          ],
+                                                        SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.30,
+                                                          child: Text(
+                                                            "${index + 1}. ${lecs[index]['name']}",
+                                                            style: GoogleFonts
+                                                                .outfit(
+                                                                    fontSize:
+                                                                        32),
+                                                          ),
                                                         ),
-                                                        Row(
-                                                          children: [
-                                                            Text(
-                                                              "Remaining time: ",
-                                                              style: GoogleFonts
-                                                                  .notoSans(
-                                                                      fontSize:
-                                                                          16),
-                                                            ),
-                                                            Text(
-                                                              "12:14",
-                                                              style: GoogleFonts
-                                                                  .notoSans(
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                            ),
-                                                          ],
+                                                        const SizedBox(
+                                                          height: 27,
                                                         ),
-                                                        Row(
+                                                        InkWell(
+                                                          key: const Key(
+                                                              "lectureVideo_key2"),
+                                                          onTap: () async {
+                                                            await patchLectureData(
+                                                                lecs[index]
+                                                                    ['name']);
+                                                            final prefs =
+                                                                await SharedPreferences
+                                                                    .getInstance();
+
+                                                            await prefs
+                                                                .setString(
+                                                                    'title',
+                                                                    lecs[index][
+                                                                        'name']);
+                                                            await prefs.setInt(
+                                                                'index', index);
+                                                            await prefs.setString(
+                                                                'description',
+                                                                lecs[index][
+                                                                    'description']);
+                                                            if (lecs[index][
+                                                                    'contentLink'] !=
+                                                                null) {
+                                                              await prefs.setString(
+                                                                  'ytLink',
+                                                                  YoutubePlayer
+                                                                      .convertUrlToId(
+                                                                          lecs[index]
+                                                                              [
+                                                                              'contentLink'])!);
+                                                              youtubeProvider.setLink(
+                                                                  YoutubePlayer
+                                                                      .convertUrlToId(
+                                                                          lecs[index]
+                                                                              [
+                                                                              'contentLink'])!);
+                                                            }
+
+                                                            Navigator.pushNamed(
+                                                                context,
+                                                                '/homepagevideo');
+                                                          },
+                                                          child: Image.network(
+                                                            lecs[index]
+                                                                ['imageSrc'],
+                                                            width: 280,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 100,
+                                                        ),
+                                                        Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
                                                           children: [
-                                                            Text(
-                                                              "Status: ",
-                                                              style: GoogleFonts
-                                                                  .notoSans(
-                                                                      fontSize:
-                                                                          16),
-                                                            ),
-                                                            Text(
-                                                              "Ongoing",
-                                                              style: GoogleFonts
-                                                                  .notoSans(
+                                                            Row(
+                                                              children: [
+                                                                Text(
+                                                                  "Total time: ",
+                                                                  style: GoogleFonts
+                                                                      .notoSans(
+                                                                          fontSize:
+                                                                              16),
+                                                                ),
+                                                                Text(
+                                                                  "23:17",
+                                                                  style: GoogleFonts.notoSans(
                                                                       fontSize:
                                                                           16,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .bold),
+                                                                ),
+                                                              ],
                                                             ),
+                                                            Row(
+                                                              children: [
+                                                                Text(
+                                                                  "Remaining time: ",
+                                                                  style: GoogleFonts
+                                                                      .notoSans(
+                                                                          fontSize:
+                                                                              16),
+                                                                ),
+                                                                Text(
+                                                                  "12:14",
+                                                                  style: GoogleFonts.notoSans(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                Text(
+                                                                  "Status: ",
+                                                                  style: GoogleFonts
+                                                                      .notoSans(
+                                                                          fontSize:
+                                                                              16),
+                                                                ),
+                                                                Text(
+                                                                  "Ongoing",
+                                                                  style: GoogleFonts.notoSans(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                              ],
+                                                            )
                                                           ],
                                                         )
                                                       ],
-                                                    )
-                                                  ],
-                                                ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const Divider(
+                                                color: Color.fromRGBO(
+                                                    202, 196, 208, 1),
                                               ),
                                             ],
-                                          ),
-                                          const Divider(
-                                            color: Color.fromRGBO(
-                                                202, 196, 208, 1),
-                                          ),
-                                        ],
-                                      );
-                                    }),
-                                    separatorBuilder:
-                                        (BuildContext context, int index) {
-                                      return const SizedBox(
-                                        height: 60,
-                                      );
-                                    },
-                                  ),
+                                          );
+                                        }),
+                                        separatorBuilder:
+                                            (BuildContext context, int index) {
+                                          return const SizedBox(
+                                            height: 60,
+                                          );
+                                        },
+                                      ),
                           ),
                         ),
                       ],
