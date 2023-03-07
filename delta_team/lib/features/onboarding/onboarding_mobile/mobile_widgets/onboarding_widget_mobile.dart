@@ -415,6 +415,7 @@ class VideoPageForm extends StatelessWidget {
 }
 
 class PositionPageForm extends StatefulWidget {
+  final PageController pageController;
   final Role role;
   final String questionText;
   final VoidCallback submitButton;
@@ -424,6 +425,7 @@ class PositionPageForm extends StatefulWidget {
     required this.questionText,
     required this.role,
     required this.submitButton,
+    required this.pageController,
   });
 
   @override
@@ -438,7 +440,6 @@ class _PositionPageFormState extends State<PositionPageForm> {
       alignment: Alignment.center,
       width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             alignment: Alignment.topLeft,
@@ -463,10 +464,14 @@ class _PositionPageFormState extends State<PositionPageForm> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 15,
+          ),
           SizedBox(
             width: double.infinity,
-            height: 400,
+            height: 300,
             child: ListView(
+              scrollDirection: Axis.vertical,
               children: List.generate(
                 listaRole.length,
                 (index) => RoleWidget(
@@ -476,29 +481,33 @@ class _PositionPageFormState extends State<PositionPageForm> {
               ),
             ),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              FormButton(
+                  key: const Key('RolePageBackButtonKey'),
+                  backgroundColor: AppColors.backgroundColor,
+                  textColor: AppColors.primaryColor,
+                  text: 'Back',
+                  borderColor: AppColors.backgroundColor,
+                  onPressed: () {
+                    widget.pageController.previousPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInBack);
+                  },
+                  buttonWidth: 100,
+                  buttonHeight: 42),
+            ],
+          ),
+          const SizedBox(
+            height: 60,
+          ),
           SubmitButton(
               key: const Key('SubmitButtonKey'),
               backgroundColor: AppColors.primaryColor,
               textColor: AppColors.secondaryColor3,
               text: 'Submit',
               onPressed: widget.submitButton,
-              //     () {
-              //   if (provider.hasRole(widget.role) ||
-              //       provider.length <= 2 && provider.length >= 1) {
-              //     if (provider.myItems.first == null) {
-              //       provider.add(widget.role);
-              //     }
-
-              //     Navigator.pushNamed(context, CongratsCard.routeName);
-              //     print('Onboarding submitted');
-              //   } else if (provider.myItems.first != null) {
-              //     provider.remove(widget.role);
-              //     // ignore: unnecessary_null_comparison
-              //   } else {
-              //     provider.add(widget.role);
-              //     print(provider.length);
-              //   }
-              // },
               buttonWidth: double.infinity,
               buttonHeight: 42),
           const SizedBox(height: 10)

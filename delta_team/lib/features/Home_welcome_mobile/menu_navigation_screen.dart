@@ -351,7 +351,7 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                   ],
                 )
-              : Center(
+              : const Center(
                   child: CircularProgressIndicator(
                     color: Color.fromRGBO(34, 233, 116, 1),
                   ),

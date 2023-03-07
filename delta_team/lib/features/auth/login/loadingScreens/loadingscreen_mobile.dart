@@ -81,10 +81,10 @@ class _LoadingScreenMobileState extends State<LoadingScreenMobile> {
                   ),
                 ),
               ),
-              SizedBox(
-                width: (150 / 360) * width,
+              const SizedBox(
+                width: 150,
                 height: 150,
-                child: const CircularProgressIndicator(
+                child: CircularProgressIndicator(
                   backgroundColor: Color(0xffffffff),
                   valueColor: AlwaysStoppedAnimation<Color>(
                       Color.fromARGB(255, 44, 250, 51)),

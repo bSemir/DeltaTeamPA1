@@ -198,6 +198,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
       PositionPageForm(
         questionText: questions[7],
+        pageController: _pageController,
         role: widget.role,
         submitButton: () {
           final provider = Provider.of<MyItem>(context, listen: false);
@@ -233,7 +234,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         title: SvgPicture.asset("assets/images/navbar_logo.svg",
             semanticsLabel: 'Confirmation SVG'),
       ),
-      backgroundColor: AppColors.secondaryColor3,
+      backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(
@@ -262,7 +263,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     padding:
                         const EdgeInsets.only(left: 31, right: 31, top: 20),
                     child: SizedBox(
-                      height: 600,
+                      height: 550,
                       child: PageView.builder(
                         controller: _pageController,
                         onPageChanged: (index) {
@@ -280,13 +281,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     ),
                   ),
-                  const CustomFooter()
                 ],
               ),
             ),
           ),
         ),
       ),
+      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

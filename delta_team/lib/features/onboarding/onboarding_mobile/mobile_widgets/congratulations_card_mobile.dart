@@ -31,6 +31,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../common/footer/footer.dart';
 import '../../../auth/login/loadingScreens/loadingscreen_mobile.dart';
+import 'custom_footer_mobile.dart';
 
 class CongratsCard extends StatelessWidget {
   static const routeName = 'congrats-card';
@@ -101,75 +102,10 @@ class CongratsCard extends StatelessWidget {
             const SizedBox(
               height: 251,
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: 55,
-                color: Colors.white,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      left: (30 / 360) * width,
-                      right: (30 / 360) * width,
-                      bottom: 8),
-                  child: Row(
-                    children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: InkWell(
-                          key: const Key('routed_to_loadingScreen'),
-                          onTap: () async {
-                            Navigator.pushNamed(
-                                context, LoadingScreenMobile.routeName);
-                            // Navigate to privacy page
-                          },
-                          child: Text(
-                            "Privacy",
-                            style: GoogleFonts.notoSans(
-                              fontWeight: FontWeight.w400,
-                              color: const Color.fromARGB(255, 142, 142, 142),
-                              fontSize: 13.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Text(
-                            "© Credits, 2023, Product Arena",
-                            style: GoogleFonts.notoSans(
-                                fontWeight: FontWeight.w400,
-                                color: const Color.fromARGB(255, 142, 142, 142),
-                                fontSize: 12.0),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: InkWell(
-                          key: const Key('routed_to_LoadingScreen'),
-                          onTap: () async {
-                            Navigator.pushNamed(
-                                context, LoadingScreenMobile.routeName);
-                            // Navigate to privacy page
-                          },
-                          child: Text(
-                            "Terms",
-                            style: GoogleFonts.notoSans(
-                                fontWeight: FontWeight.w400,
-                                color: const Color.fromARGB(255, 142, 142, 142),
-                                fontSize: 13.0),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            )
           ],
         ),
       ),
+      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

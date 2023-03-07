@@ -4,6 +4,7 @@ import 'package:delta_team/features/auth/signup/signup_mobile/widgets/title_sign
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../../onboarding/onboarding_mobile/mobile_widgets/custom_footer_mobile.dart';
 import '../widgets/footer.dart';
 
 class SignupScreenMobile extends StatelessWidget {
@@ -63,11 +64,12 @@ class SignupScreenMobile extends StatelessWidget {
               const SizedBox(
                 height: 23.1,
               ),
-              const Footer(),
+              // const Footer(),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

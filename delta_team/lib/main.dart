@@ -25,6 +25,9 @@ import 'package:flutter_session/flutter_session.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'features/Home_welcome_mobile/contact us/contact-us_mobile.dart';
+import 'features/Home_welcome_mobile/lectures/lectures_screen.dart';
+import 'features/Home_welcome_mobile/lectures/single_lecture_screen.dart';
 import 'features/Home_welcome_mobile/welcoming_message_screen.dart';
 import 'features/auth/login/loadingScreens/loadingscreen_mobile.dart';
 import 'features/auth/login/loadingScreens/loadingscreen_web.dart';
@@ -39,6 +42,7 @@ import 'features/auth/signup/signup_mobile/screens/confirmation_message_mobile.d
 import 'features/auth/signup/signup_mobile/screens/confirmation_screen_mobile.dart';
 import 'features/auth/signup/signup_mobile/screens/redirecting_screen_mobile.dart';
 import 'features/auth/signup/signup_mobile/screens/signupScreen_mobile.dart';
+import 'features/auth/signup/signup_mobile/widgets/confirmationContainers.dart';
 import 'features/auth/signup/signup_web/Web_emailVerified_screen.dart';
 import 'features/auth/signup/signup_web/Web_loadingPage.dart';
 import 'features/auth/signup/signup_web/Web_signupScreen.dart';
