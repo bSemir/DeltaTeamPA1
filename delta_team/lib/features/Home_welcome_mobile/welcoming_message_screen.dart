@@ -97,11 +97,11 @@ class _WelcomingScreenState extends State<WelcomingScreen> {
                       ),
                     ),
                   ),
-                  const CustomFooter(),
                 ],
               ),
             )
           : const MyDrawer(),
+      bottomNavigationBar: _isBurgerIcon ? CustomFooter() : null,
     );
   }
 }

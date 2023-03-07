@@ -16,13 +16,13 @@ class _RedirectingScreenState extends State<RedirectingScreen> {
   @override
   void initState() {
     super.initState();
-    startTimeout();
+    // startTimeout();
   }
 
-  startTimeout() {
-    var duration = const Duration(seconds: 5);
-    return Timer(duration, navigateToWelcomePage);
-  }
+  // startTimeout() {
+  //   var duration = const Duration(seconds: 5);
+  //   return Timer(duration, navigateToWelcomePage);
+  // }
 
   navigateToWelcomePage() {
     Navigator.push(

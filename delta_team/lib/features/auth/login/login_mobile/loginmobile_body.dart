@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:delta_team/features/Home_welcome_mobile/welcoming_message_screen.dart';
 import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_mobile.dart';
 import 'package:delta_team/features/auth/login/amplify_auth.dart';
 import 'package:delta_team/features/auth/login/login_web/loginform_web.dart';
@@ -51,7 +52,7 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
         final result =
             await Amplify.Auth.signIn(username: email, password: password);
         if (result.isSignedIn) {
-          // Navigator.pushNamed(context, LoadingScreenMobile.routeName);
+          Navigator.pushNamed(context, WelcomingScreen.routeName2);
         }
       } on AuthException catch (error) {
         setState(() {

@@ -89,3 +89,37 @@ class _RoleWidgetState extends State<RoleWidget> {
     );
   }
 }
+
+class ClearSelectionRole extends StatefulWidget {
+  final Role role;
+  const ClearSelectionRole({
+    super.key,
+    required this.role,
+  });
+
+  @override
+  State<ClearSelectionRole> createState() => _ClearSelectionRoleState();
+}
+
+class _ClearSelectionRoleState extends State<ClearSelectionRole> {
+  @override
+  Widget build(BuildContext context) {
+    final nizRola = Provider.of<MyItem>(context).myItems;
+
+    void clearRole() {
+      nizRola.clear();
+    }
+
+    return GestureDetector(
+      onTap: clearRole,
+      child: Text(
+        "Clear selection",
+        style: GoogleFonts.notoSans(
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+          color: AppColors.primaryColor2,
+        ),
+      ),
+    );
+  }
+}

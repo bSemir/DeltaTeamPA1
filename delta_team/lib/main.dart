@@ -184,10 +184,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
         ),
-        home: defaultTargetPlatform == TargetPlatform.iOS ||
-                defaultTargetPlatform == TargetPlatform.android
-            ? const SignupScreenMobile()
-            : const LoginScreenWeb(),
+        home: SignupScreenMobile(),
 
         // LoginScreenWeb(),
         routes: {

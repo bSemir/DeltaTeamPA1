@@ -497,6 +497,7 @@ class _PositionPageFormState extends State<PositionPageForm> {
                   },
                   buttonWidth: 100,
                   buttonHeight: 42),
+              ClearSelectionRole(role: widget.role)
             ],
           ),
           const SizedBox(

@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../onboarding/onboarding_mobile/mobile_widgets/custom_footer_mobile.dart';
+import '../../../../onboarding/onboarding_mobile/welcome_page_mobile.dart';
 import '../../../login/loadingScreens/loadingscreen_mobile.dart';
 
 class ConfirmationMessage extends StatelessWidget {
@@ -14,8 +15,11 @@ class ConfirmationMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    Timer(const Duration(seconds: 5),
-        () => Navigator.pushNamed(context, "/redirectingScreen"));
+    // Timer(
+    //     const Duration(seconds: 0),
+    //     () => Navigator.push(context,
+    //         MaterialPageRoute(builder: (context) => const WelcomePage())));
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
