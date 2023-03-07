@@ -26,10 +26,10 @@ class ColumnFooter extends StatelessWidget {
               width: 11.25,
             ),
             spaceText
-                ? const Text(
+                ? const SelectableText(
                     "Put Mladih Muslimana 2,\nCity Gardens Residence,\n71 000 Sarajevo, Bosnia and Herzegovina 14425 Falconhead Blvd, Bee Cave,\nTX 78738, United States",
                     style: TextStyle(fontSize: 10))
-                : const Text(
+                : const SelectableText(
                     "Put Mladih Muslimana 2, City Gardens Residence, 71 000 Sarajevo, Bosnia and Herzegovina 14425 Falconhead Blvd, Bee Cave, TX 78738, United States",
                     style: TextStyle(fontSize: 10),
                   ),
@@ -48,7 +48,7 @@ class ColumnFooter extends StatelessWidget {
             SizedBox(
               width: 11.25,
             ),
-            Text(
+            SelectableText(
               "hello@tech387.com                                      ",
               style: TextStyle(fontSize: 10),
             )

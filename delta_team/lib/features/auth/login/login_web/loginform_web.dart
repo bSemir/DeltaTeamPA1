@@ -1,14 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 
-import 'package:amplify_api/amplify_api.dart';
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:delta_team/features/auth/login/loadingScreens/loadingscreen_web.dart';
 import 'package:delta_team/features/auth/login/providers/userAttributesProvider.dart';
 import 'package:delta_team/features/auth/login/providers/userLecturesProvider.dart';
-import 'package:delta_team/features/homepage/provider/loginProviderAuth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
@@ -17,7 +12,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../amplifyconfiguration.dart';
 import '../../../homepage/homepage_sidebar.dart';
 
 class LoginField extends StatefulWidget {
@@ -37,6 +31,7 @@ class _LoginFieldState extends State<LoginField> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  bool _loadingLogin = false;
   bool _showPasswordSuffixIcon = false;
   bool viewPassword = false;
   bool showErrorIcon = false;
@@ -67,6 +62,7 @@ class _LoginFieldState extends State<LoginField> {
 
   @override
   void initState() {
+    _loadingLogin = false;
     varijablaRola.clear();
     _loadPrefs();
     // Add a listener to the focus node to update the _isFocused variable
@@ -86,6 +82,13 @@ class _LoginFieldState extends State<LoginField> {
 
   Future<void> _loadPrefs() async {
     dynamic tokenStr = await FlutterSession().get("token");
+    final prefs = await SharedPreferences.getInstance();
+
+    final emailExist = prefs.getString("email");
+    final getRoute = prefs.getString("route");
+    if (emailExist!.contains("@")) {
+      Navigator.pushReplacementNamed(context, getRoute!);
+    }
 
     setState(() {
       token = tokenStr;
@@ -93,7 +96,6 @@ class _LoginFieldState extends State<LoginField> {
   }
 
   Map<String, dynamic> lectures = {};
-  bool _loading = false;
 
   Future<Map<String, dynamic>> getUserLectures() async {
     // signInUser();
@@ -120,14 +122,13 @@ class _LoginFieldState extends State<LoginField> {
   Future<bool> logUserIn(String email, String password) async {
     try {
       setState(() {
-        _loading = true;
+        _loadingLogin = true;
       });
       final user =
           await Amplify.Auth.signIn(username: email, password: password);
 
       setState(() {
         canLogIn = user.isSignedIn;
-        _loading = false;
       });
     } catch (error) {
       if (!error.toString().contains("UserNotFoundException") &&
@@ -141,7 +142,7 @@ class _LoginFieldState extends State<LoginField> {
         });
       }
       setState(() {
-        _loading = false;
+        _loadingLogin = false;
       });
     }
     return false;
@@ -402,7 +403,7 @@ class _LoginFieldState extends State<LoginField> {
             SizedBox(
               height: 56,
               width: (452 / 1440) * width,
-              child: _loading
+              child: _loadingLogin
                   ? const Center(
                       child: SpinKitRing(
                         color: Colors.black,
@@ -419,6 +420,15 @@ class _LoginFieldState extends State<LoginField> {
                           if (canLogIn) {
                             await getUserLectures();
                             await fetchCurrentUserAttributes();
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+
+                            prefs.setBool('isSelectedHome', true);
+                            prefs.setBool('isSelectedContact', false);
+                            prefs.setBool('isSelectedRecent', false);
+                            prefs.setBool('isSelectedFirstRole', false);
+                            prefs.setBool('isSelectedSecondRole', false);
+                            prefs.setInt("selectedIndex", -1);
                             setState(() {
                               isSelectedHome = true;
                               isSelectedRecent = false;
@@ -427,8 +437,7 @@ class _LoginFieldState extends State<LoginField> {
                               isSelectedSecondRole = false;
                               selectedIndex = -1;
                             });
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
+
                             String jsonLectures = json.encode(lectures);
                             await prefs.setString(
                                 'lecturesPrefs', jsonLectures);
@@ -442,8 +451,9 @@ class _LoginFieldState extends State<LoginField> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              _loading ? Colors.grey : const Color(0xFF000000)),
+                          backgroundColor: _loadingLogin
+                              ? Colors.grey
+                              : const Color(0xFF000000)),
                       child: Text(
                         "Login",
                         style: GoogleFonts.notoSans(

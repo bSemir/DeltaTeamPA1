@@ -4,6 +4,7 @@ import 'package:delta_team/common/custom_button.dart';
 
 import 'package:delta_team/features/auth/login/login_web/loginweb_body.dart';
 import 'package:delta_team/features/onboarding_web/provider/emailPasswProvider.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 // ignore: unused_import
@@ -304,7 +305,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                         return "Please enter a valid month (1-12).";
                                       }
                                       if (year != null &&
-                                          (year < 1900 || year > 2022)) {
+                                          (year < 1900 || year > 2012)) {
                                         return "Please enter a valid year.";
                                       }
                                       return null;
@@ -408,7 +409,8 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                     validator: (value) {
                                       if (value!.isEmpty) {
                                         return 'Please fill the required field.';
-                                      } else if (!isEmail(value)) {
+                                      } else if (!EmailValidator.validate(
+                                          value)) {
                                         return "Email not valid";
                                       }
                                       if (isEmailTaken) {
