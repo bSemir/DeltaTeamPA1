@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'features/auth/login/loadingScreens/loadingscreen_mobile.dart';
 import 'features/auth/login/loadingScreens/loadingscreen_web.dart';
@@ -85,16 +86,21 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    _loadPrefs();
     _configureAmplify();
   }
 
   dynamic token = '';
+  bool isLoggedIn = false;
 
   Future<void> _loadPrefs() async {
     dynamic tokenStr = await FlutterSession().get("token");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool log = prefs.getBool("isLoggedIn")!;
 
     setState(() {
       token = tokenStr;
+      isLoggedIn = log;
     });
   }
 
