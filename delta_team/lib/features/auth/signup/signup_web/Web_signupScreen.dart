@@ -596,6 +596,10 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                                   _loading = false;
                                                 });
                                               }
+                                            } else {
+                                              setState(() {
+                                                _loading = false;
+                                              });
                                             }
                                           },
                                           style: ElevatedButton.styleFrom(
