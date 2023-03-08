@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "delta_team" "\0"
+            VALUE "FileDescription", "Delta_PA_v1" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "delta_team" "\0"
+            VALUE "InternalName", "Delta_PA_v1" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "delta_team.exe" "\0"
-            VALUE "ProductName", "delta_team" "\0"
+            VALUE "ProductName", "Delta_PA_v1" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

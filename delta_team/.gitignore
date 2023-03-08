@@ -85,3 +85,5 @@ amplifytools.xcconfig
 >>>>>>> 100265adbe5e56e89a36caaf7aabe7c47b0fcb96
 =======
 >>>>>>> b251eee011e22980675c33fdb8caaf27e0612827
+key.properties
+app/upload-keystore.jks
