@@ -27,6 +27,12 @@ class SignupVerificationScreen extends StatefulWidget {
 }
 
 class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _loading = false;
+  }
+
   final _code1 = TextEditingController();
   final _code2 = TextEditingController();
   final _code3 = TextEditingController();
@@ -106,7 +112,6 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
   Widget build(BuildContext context) {
     screenWidth ??= MediaQuery.of(context).size.width;
     screenHeight ??= MediaQuery.of(context).size.height;
-    final emailProvider = Provider.of<MyEmailWeb>(context, listen: false);
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -115,8 +120,10 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
           action: RoundedButton(
             key: const Key('LoginPage'),
             text: 'Login',
-            press: () async {
-              Navigator.pushNamed(context, LoginScreenWeb.routeName);
+            press: () {
+              _loading
+                  ? null
+                  : Navigator.pushNamed(context, LoginScreenWeb.routeName);
             },
             color: const Color(0xFF000000),
             textColor: Colors.white,
@@ -720,7 +727,6 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                                 setState(() {
                                                   codeError =
                                                       !result.isSignUpComplete;
-                                                  _loading = false;
                                                 });
 
                                                 if (!codeError) {
@@ -735,27 +741,12 @@ class _SignupVerificationScreenState extends State<SignupVerificationScreen> {
                                                       context,
                                                       '/confirmationMessageWeb');
                                                 }
-                                              } on AuthException catch (e) {
+                                              } catch (e) {
                                                 setState(() {
                                                   codeError = true;
                                                   _loading = false;
                                                 });
-                                                // if (e.message.toString().contains(
-                                                //         "Confirmation code entered is not correct.") ||
-                                                //     e.message.toString().contains(
-                                                //         "One or more parameters are incorrect.")) {
-                                                //   setState(() {
-                                                //     codeError = true;
-                                                //   });
-                                                // } else {
-                                                //   setState(() {
-                                                //     codeError = false;
-                                                //   });
-                                                // }
                                               }
-                                              setState(() {
-                                                _loading = false;
-                                              });
                                             }
                                           },
                                           style: ElevatedButton.styleFrom(

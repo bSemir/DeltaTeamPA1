@@ -24,10 +24,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'features/Home_welcome_mobile/contact us/contact-us_mobile.dart';
-import 'features/Home_welcome_mobile/lectures/lectures_screen.dart';
-import 'features/Home_welcome_mobile/lectures/single_lecture_screen.dart';
+import 'features/Home_welcome_mobile/contact us/auth_provider.dart';
 import 'features/Home_welcome_mobile/welcoming_message_screen.dart';
 import 'features/auth/login/loadingScreens/loadingscreen_mobile.dart';
 import 'features/auth/login/loadingScreens/loadingscreen_web.dart';
@@ -57,6 +56,7 @@ import 'features/onboarding/onboarding_mobile/mobile_providers/emailpasswordprov
 import 'features/onboarding/onboarding_mobile/mobile_providers/error_provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/provider_mobile.dart';
 import 'features/onboarding/onboarding_mobile/mobile_providers/role_provider_mobile.dart';
+
 import 'features/onboarding/onboarding_mobile/onboarding_screen_mobile.dart';
 import 'features/onboarding/onboarding_mobile/welcome_page_mobile.dart';
 import 'features/onboarding/onboarding_web/congratulation_web.dart';
@@ -94,16 +94,21 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    _loadPrefs();
     _configureAmplify();
   }
 
   dynamic token = '';
+  bool isLoggedIn = false;
 
   Future<void> _loadPrefs() async {
     dynamic tokenStr = await FlutterSession().get("token");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool log = prefs.getBool("isLoggedIn")!;
 
     setState(() {
       token = tokenStr;
+      isLoggedIn = log;
     });
   }
 
@@ -166,6 +171,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (_) => EmailPasswordProviderMobile(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => AuthProviderContact(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -184,7 +192,10 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
         ),
-        home: SignupScreenMobile(),
+        home: defaultTargetPlatform == TargetPlatform.iOS ||
+                defaultTargetPlatform == TargetPlatform.android
+            ? const LoginScreenMobile()
+            : const LoginScreenWeb(),
 
         // LoginScreenWeb(),
         routes: {

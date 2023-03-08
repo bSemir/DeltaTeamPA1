@@ -65,11 +65,11 @@ class SignupScreenMobile extends StatelessWidget {
                 height: 23.1,
               ),
               // const Footer(),
-              const CustomFooter(),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

@@ -13,12 +13,16 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
+import '../auth/login/login_web/loginweb_body.dart';
+
 class HomePageVideoScreen extends StatefulWidget {
   const HomePageVideoScreen({super.key});
 
   @override
   State<HomePageVideoScreen> createState() => _HomePageVideoScreenState();
 }
+
+YoutubePlayerController? controller;
 
 class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
   String videoURL = "";
@@ -55,8 +59,6 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
     }
   }
 
-  late YoutubePlayerController controller;
-
   @override
   void initState() {
     super.initState();
@@ -72,6 +74,14 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
 
   Future<void> _loadData() async {
     final prefs = await SharedPreferences.getInstance();
+    // prefs.setString("route", '/homescreen');
+
+    final emailExist = prefs.getString("email");
+    prefs.setString("route", '/homepagevideo');
+    if (emailExist!.isEmpty || emailExist == "logged_out") {
+      Navigator.pushReplacementNamed(context, LoginScreenWeb.routeName);
+    }
+
     setState(() {
       title = prefs.getString('title') ?? "";
       numeration = prefs.getInt('index') ?? -1;
@@ -120,7 +130,11 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
               ? Container(
                   color: Colors.black,
                   width: sizebarWidthBlack,
-                  child: const Sidebar())
+                  child: GestureDetector(
+                      onTap: () {
+                        // controller!.pauseVideo();
+                      },
+                      child: const Sidebar()))
               : Container(),
           SingleChildScrollView(
             child: SizedBox(
@@ -145,6 +159,7 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
                                       GestureDetector(
                                         key: const Key("user_menu_key"),
                                         onTap: () {
+                                          controller!.stopVideo();
                                           Navigator.pushNamed(
                                               context, '/homepage_sidebar');
                                         },
@@ -199,7 +214,7 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
                                       const SizedBox(
                                         height: 10,
                                       ),
-                                      Text(
+                                      SelectableText(
                                         "${numeration + 1}. $title",
                                         style: GoogleFonts.notoSans(
                                             fontSize: titleFont,
@@ -245,7 +260,7 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
                                                 child: YoutubePlayer(
                                                   key: const Key(
                                                       'ytPlayerManji'),
-                                                  controller: controller,
+                                                  controller: controller!,
                                                   aspectRatio: 16 / 9,
                                                 ),
                                               ),
@@ -326,7 +341,7 @@ class _HomePageVideoScreenState extends State<HomePageVideoScreen> {
                                               ),
                                               Visibility(
                                                 visible: showMore,
-                                                child: Text(
+                                                child: SelectableText(
                                                   description,
                                                   style: GoogleFonts.notoSans(
                                                     fontSize: 16,

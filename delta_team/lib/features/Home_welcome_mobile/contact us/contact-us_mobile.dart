@@ -324,11 +324,11 @@ class _ContactMobileState extends State<ContactMobile> {
                     const SizedBox(
                       height: 98,
                     ),
-                    const CustomFooter(),
                   ],
                 ),
               )
             : const MyDrawer(),
+        bottomNavigationBar: const CustomFooter(),
       ),
     );
   }

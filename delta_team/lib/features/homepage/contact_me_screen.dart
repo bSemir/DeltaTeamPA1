@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../amplifyconfiguration.dart';
+import '../auth/login/login_web/loginweb_body.dart';
 import 'account_modal.dart';
 // ignore: unused_import
 
@@ -51,6 +52,14 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
 
   Future<void> _loadPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("route", '/contactUs');
+
+    final emailExist = prefs.getString("email");
+    prefs.setString("route", '/contactUs');
+    if (emailExist!.isEmpty || emailExist == "logged_out") {
+      Navigator.pushReplacementNamed(context, LoginScreenWeb.routeName);
+    }
+
     final nameUser = prefs.getString('nameUser');
     final emailUser = prefs.getString('email');
     final surnameUser = prefs.getString('surname');
@@ -513,7 +522,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                             ElevatedButton(
                                               key: const Key("submit_key1"),
                                               onPressed: () async {
-                                                if (_contactFormKey
+                                                if (_contactFormKey1
                                                     .currentState!
                                                     .validate()) {
                                                   try {
@@ -769,7 +778,7 @@ class _ContactMeScreenState extends State<ContactMeScreen> {
                                 ElevatedButton(
                                   key: const Key("submit_key2"),
                                   onPressed: () async {
-                                    if (_contactFormKey.currentState!
+                                    if (_contactFormKey2.currentState!
                                         .validate()) {
                                       try {
                                         final restOperation = Amplify.API.post(

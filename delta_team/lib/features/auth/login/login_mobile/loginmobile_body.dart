@@ -52,7 +52,7 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
         final result =
             await Amplify.Auth.signIn(username: email, password: password);
         if (result.isSignedIn) {
-          Navigator.pushNamed(context, WelcomingScreen.routeName2);
+          // Navigator.pushNamed(context, LoadingScreenMobile.routeName);
         }
       } on AuthException catch (error) {
         setState(() {
@@ -181,11 +181,11 @@ class _LoginScreenMobileState extends State<LoginScreenMobile> {
                   ),
                 ],
               ),
-              const CustomFooter(),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

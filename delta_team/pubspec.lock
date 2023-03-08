@@ -792,6 +792,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  hive:
+    dependency: transitive
+    description:
+      name: hive
+      sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.3"
+  hive_flutter:
+    dependency: "direct main"
+    description:
+      name: hive_flutter
+      sha256: dca1da446b1d808a51689fb5d0c6c9510c0a2ba01e22805d492c73b68e33eecc
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   hooks_riverpod:
     dependency: transitive
     description:
@@ -847,7 +863,19 @@ packages:
       sha256: "483a389d6ccb292b570c31b3a193779b1b0178e7eb571986d9a49904b6861227"
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
     version: "4.0.15"
+=======
+    version: "3.3.0"
+  indexed:
+    dependency: "direct main"
+    description:
+      name: indexed
+      sha256: "3509a2a7ad1dbd7280da377661129e0b0a2f5e8d6d75f10400f07397f95324df"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.8"
+>>>>>>> aab92e8dcee1896ab4cd01e145be9997d7401358
   integration_test:
     dependency: "direct dev"
     description: flutter

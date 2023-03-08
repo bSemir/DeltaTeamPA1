@@ -6,10 +6,12 @@ import 'package:delta_team/features/homepage/homescreen.dart';
 import 'package:delta_team/features/homepage/provider/selectedRoleProvider.dart';
 import 'package:delta_team/features/onboarding/onboarding_mobile/mobile_models/role_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../auth/login/providers/userLecturesProvider.dart';
+import 'homepage_video_screen.dart';
 
 class Sidebar extends StatefulWidget {
   const Sidebar({super.key});
@@ -38,8 +40,20 @@ class _SidebarState extends State<Sidebar> {
   Future<void> _loadPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final lecturesString = prefs.getString('lecturesPrefs');
+    final selectedHomePref = prefs.getBool('isSelectedHome');
+    final selectedContactPref = prefs.getBool('isSelectedContact');
+    final selectedRecentPref = prefs.getBool('isSelectedRecent');
+    final selectedFirstRole = prefs.getBool('isSelectedFirstRole');
+    final selectedSecondRole = prefs.getBool('isSelectedSecondRole');
+    final indexSelectedPref = prefs.getInt("selectedIndex");
     setState(() {
       lectures = json.decode(lecturesString!);
+      isSelectedHome = selectedHomePref ?? true;
+      isSelectedContact = selectedContactPref ?? false;
+      isSelectedRecent = selectedRecentPref ?? false;
+      isSelectedFirstRole = selectedFirstRole ?? false;
+      isSelectedSecondRole = selectedSecondRole ?? false;
+      selectedIndex = indexSelectedPref ?? -1;
     });
   }
 
@@ -99,16 +113,25 @@ class _SidebarState extends State<Sidebar> {
                     ),
                     GestureDetector(
                       key: const Key("homescreen_key"),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/homescreen');
-                        setState(() {
-                          isSelectedHome = true;
-                          isSelectedContact = false;
-                          isSelectedRecent = false;
-                          isSelectedFirstRole = false;
-                          isSelectedSecondRole = false;
-                          selectedIndex = -1;
-                        });
+                      onTap: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+
+                        prefs.setBool('isSelectedHome', true);
+                        prefs.setBool('isSelectedContact', false);
+                        prefs.setBool('isSelectedRecent', false);
+                        prefs.setBool('isSelectedFirstRole', false);
+                        prefs.setBool('isSelectedSecondRole', false);
+                        prefs.setInt("selectedIndex", -1);
+                        Navigator.pushReplacementNamed(context, '/homescreen');
+                        // setState(() {
+                        //   isSelectedHome = true;
+                        //   isSelectedContact = false;
+                        //   isSelectedRecent = false;
+                        //   isSelectedFirstRole = false;
+                        //   isSelectedSecondRole = false;
+                        //   selectedIndex = -1;
+                        // });
                       },
                       child: Row(
                         children: [
@@ -167,31 +190,44 @@ class _SidebarState extends State<Sidebar> {
                               final prefs =
                                   await SharedPreferences.getInstance();
                               if (lectures.isNotEmpty) {
-                                setState(() {
-                                  selectedIndex = index;
-                                });
+                                //
+
                                 if (index == 0) {
-                                  setState(() {
-                                    isSelectedRecent = false;
-                                    isSelectedHome = false;
-                                    isSelectedContact = false;
-                                    isSelectedFirstRole = true;
-                                    isSelectedSecondRole = false;
-                                  });
+                                  prefs.setBool('isSelectedHome', false);
+                                  prefs.setBool('isSelectedContact', false);
+                                  prefs.setBool('isSelectedRecent', false);
+                                  prefs.setBool('isSelectedFirstRole', true);
+                                  prefs.setBool('isSelectedSecondRole', false);
+                                  prefs.setInt("selectedIndex", index);
+
+                                  // setState(() {
+                                  //   isSelectedRecent = false;
+                                  //   isSelectedHome = false;
+                                  //   isSelectedContact = false;
+                                  //   isSelectedFirstRole = true;
+                                  //   isSelectedSecondRole = false;
+                                  // });
                                 } else if (index == 1) {
-                                  setState(() {
-                                    isSelectedRecent = false;
-                                    isSelectedHome = false;
-                                    isSelectedContact = false;
-                                    isSelectedFirstRole = false;
-                                    isSelectedSecondRole = true;
-                                  });
+                                  prefs.setBool('isSelectedHome', false);
+                                  prefs.setBool('isSelectedContact', false);
+                                  prefs.setBool('isSelectedRecent', false);
+                                  prefs.setBool('isSelectedFirstRole', false);
+                                  prefs.setBool('isSelectedSecondRole', true);
+                                  prefs.setInt("selectedIndex", index);
+
+                                  // setState(() {
+                                  //   isSelectedRecent = false;
+                                  //   isSelectedHome = false;
+                                  //   isSelectedContact = false;
+                                  //   isSelectedFirstRole = false;
+                                  //   isSelectedSecondRole = true;
+                                  // });
                                 }
 
                                 await prefs.setString("role", res);
                               }
-
-                              Navigator.pushNamed(context, '/lecturesPage');
+                              Navigator.pushReplacementNamed(
+                                  context, '/lecturesPage');
                             },
                             child: Row(
                               children: [
@@ -221,16 +257,26 @@ class _SidebarState extends State<Sidebar> {
                     ),
                     GestureDetector(
                       key: const Key("recentlectures_key"),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/recentLectures');
-                        setState(() {
-                          isSelectedRecent = true;
-                          isSelectedHome = false;
-                          isSelectedContact = false;
-                          isSelectedFirstRole = false;
-                          isSelectedSecondRole = false;
-                          selectedIndex = -1;
-                        });
+                      onTap: () async {
+                        Navigator.pushReplacementNamed(
+                            context, '/recentLectures');
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setBool('isSelectedHome', false);
+                        prefs.setBool('isSelectedContact', false);
+                        prefs.setBool('isSelectedRecent', true);
+                        prefs.setBool('isSelectedFirstRole', false);
+                        prefs.setBool('isSelectedSecondRole', false);
+                        prefs.setInt("selectedIndex", -1);
+
+                        // setState(() {
+                        //   isSelectedRecent = true;
+                        //   isSelectedHome = false;
+                        //   isSelectedContact = false;
+                        //   isSelectedFirstRole = false;
+                        //   isSelectedSecondRole = false;
+                        //   selectedIndex = -1;
+                        // });
                       },
                       child: Row(
                         children: [
@@ -253,16 +299,25 @@ class _SidebarState extends State<Sidebar> {
                     ),
                     GestureDetector(
                       key: const Key("contact_key"),
-                      onTap: () {
-                        // Navigator.pushNamed(context, '/contactUs');
-                        setState(() {
-                          isSelectedRecent = false;
-                          isSelectedHome = false;
-                          isSelectedContact = true;
-                          isSelectedFirstRole = false;
-                          isSelectedSecondRole = false;
-                          selectedIndex = -1;
-                        });
+                      onTap: () async {
+                        Navigator.pushReplacementNamed(context, '/contactUs');
+
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setBool('isSelectedHome', false);
+                        prefs.setBool('isSelectedContact', true);
+                        prefs.setBool('isSelectedRecent', false);
+                        prefs.setBool('isSelectedFirstRole', false);
+                        prefs.setBool('isSelectedSecondRole', false);
+                        prefs.setInt("selectedIndex", -1);
+                        // setState(() {
+                        //   isSelectedRecent = false;
+                        //   isSelectedHome = false;
+                        //   isSelectedContact = true;
+                        //   isSelectedFirstRole = false;
+                        //   isSelectedSecondRole = false;
+                        //   selectedIndex = -1;
+                        // });
                       },
                       child: Row(
                         children: [
@@ -300,16 +355,26 @@ class _SidebarState extends State<Sidebar> {
                     ),
                     GestureDetector(
                       key: const Key("homescreen_key2"),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/homescreen');
-                        setState(() {
-                          isSelectedHome = true;
-                          isSelectedContact = false;
-                          isSelectedRecent = false;
-                          isSelectedFirstRole = false;
-                          isSelectedSecondRole = false;
-                          selectedIndex = -1;
-                        });
+                      onTap: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+
+                        prefs.setBool('isSelectedHome', true);
+                        prefs.setBool('isSelectedContact', false);
+                        prefs.setBool('isSelectedRecent', false);
+                        prefs.setBool('isSelectedFirstRole', false);
+                        prefs.setBool('isSelectedSecondRole', false);
+                        prefs.setInt("selectedIndex", -1);
+                        Navigator.pushReplacementNamed(context, '/homescreen');
+
+                        // setState(() {
+                        //   isSelectedHome = true;
+                        //   isSelectedContact = false;
+                        //   isSelectedRecent = false;
+                        //   isSelectedFirstRole = false;
+                        //   isSelectedSecondRole = false;
+                        //   selectedIndex = -1;
+                        // });
                       },
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -382,30 +447,45 @@ class _SidebarState extends State<Sidebar> {
                                   await SharedPreferences.getInstance();
 
                               if (lectures.isNotEmpty) {
-                                setState(() {
-                                  selectedIndex = index;
-                                });
+                                // setState(() {
+                                //   selectedIndex = index;
+                                // });
                                 if (index == 0) {
-                                  setState(() {
-                                    isSelectedRecent = false;
-                                    isSelectedHome = false;
-                                    isSelectedContact = false;
-                                    isSelectedFirstRole = true;
-                                    isSelectedSecondRole = false;
-                                  });
+                                  prefs.setBool('isSelectedHome', false);
+                                  prefs.setBool('isSelectedContact', false);
+                                  prefs.setBool('isSelectedRecent', false);
+                                  prefs.setBool('isSelectedFirstRole', true);
+                                  prefs.setBool('isSelectedSecondRole', false);
+                                  prefs.setInt("selectedIndex", index);
+
+                                  // setState(() {
+                                  //   isSelectedRecent = false;
+                                  //   isSelectedHome = false;
+                                  //   isSelectedContact = false;
+                                  //   isSelectedFirstRole = true;
+                                  //   isSelectedSecondRole = false;
+                                  // });
                                 } else if (index == 1) {
-                                  setState(() {
-                                    isSelectedRecent = false;
-                                    isSelectedHome = false;
-                                    isSelectedContact = false;
-                                    isSelectedFirstRole = false;
-                                    isSelectedSecondRole = true;
-                                  });
+                                  prefs.setBool('isSelectedHome', false);
+                                  prefs.setBool('isSelectedContact', false);
+                                  prefs.setBool('isSelectedRecent', false);
+                                  prefs.setBool('isSelectedFirstRole', false);
+                                  prefs.setBool('isSelectedSecondRole', true);
+                                  prefs.setInt("selectedIndex", index);
+
+                                  // setState(() {
+                                  //   isSelectedRecent = false;
+                                  //   isSelectedHome = false;
+                                  //   isSelectedContact = false;
+                                  //   isSelectedFirstRole = false;
+                                  //   isSelectedSecondRole = true;
+                                  // });
                                 }
 
                                 await prefs.setString("role", res);
                               }
-                              Navigator.pushNamed(context, '/lecturesPage');
+                              Navigator.pushReplacementNamed(
+                                  context, '/lecturesPage');
                             },
                             child: Row(
                               mainAxisAlignment: removeText
@@ -450,16 +530,26 @@ class _SidebarState extends State<Sidebar> {
                     ),
                     GestureDetector(
                       key: const Key("recentlectures_key2"),
-                      onTap: () {
-                        Navigator.pushNamed(context, '/recentLectures');
-                        setState(() {
-                          isSelectedRecent = true;
-                          isSelectedHome = false;
-                          isSelectedContact = false;
-                          isSelectedFirstRole = false;
-                          isSelectedSecondRole = false;
-                          selectedIndex = -1;
-                        });
+                      onTap: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        Navigator.pushReplacementNamed(
+                            context, '/recentLectures');
+                        prefs.setBool('isSelectedHome', false);
+                        prefs.setBool('isSelectedContact', false);
+                        prefs.setBool('isSelectedRecent', true);
+                        prefs.setBool('isSelectedFirstRole', false);
+                        prefs.setBool('isSelectedSecondRole', false);
+                        prefs.setInt("selectedIndex", -1);
+
+                        // setState(() {
+                        //   isSelectedRecent = true;
+                        //   isSelectedHome = false;
+                        //   isSelectedContact = false;
+                        //   isSelectedFirstRole = false;
+                        //   isSelectedSecondRole = false;
+                        //   selectedIndex = -1;
+                        // });
                       },
                       child: Row(
                         mainAxisAlignment: removeText
@@ -495,16 +585,25 @@ class _SidebarState extends State<Sidebar> {
                     ),
                     GestureDetector(
                       key: const Key("contact_key2"),
-                      onTap: () {
-                        setState(() {
-                          isSelectedRecent = false;
-                          isSelectedHome = false;
-                          isSelectedContact = true;
-                          isSelectedFirstRole = false;
-                          isSelectedSecondRole = false;
-                          selectedIndex = -1;
-                        });
-                        Navigator.pushNamed(context, '/contactUs');
+                      onTap: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setBool('isSelectedHome', false);
+                        prefs.setBool('isSelectedContact', true);
+                        prefs.setBool('isSelectedRecent', false);
+                        prefs.setBool('isSelectedFirstRole', false);
+                        prefs.setBool('isSelectedSecondRole', false);
+                        prefs.setInt("selectedIndex", -1);
+
+                        // setState(() {
+                        //   isSelectedRecent = false;
+                        //   isSelectedHome = false;
+                        //   isSelectedContact = true;
+                        //   isSelectedFirstRole = false;
+                        //   isSelectedSecondRole = false;
+                        //   selectedIndex = -1;
+                        // });
+                        Navigator.pushReplacementNamed(context, '/contactUs');
                       },
                       child: Row(
                         mainAxisAlignment: removeText

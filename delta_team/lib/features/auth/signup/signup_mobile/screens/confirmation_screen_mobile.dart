@@ -99,11 +99,11 @@ class _ConfirmationScreenState extends State<ConfirmationScreen> {
               const SizedBox(
                 height: 38,
               ),
-              const CustomFooter(),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: const CustomFooter(),
     );
   }
 }
