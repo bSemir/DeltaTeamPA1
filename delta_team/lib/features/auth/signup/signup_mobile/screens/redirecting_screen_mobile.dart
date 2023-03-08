@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,21 +17,27 @@ class _RedirectingScreenState extends State<RedirectingScreen> {
   @override
   void initState() {
     super.initState();
-    // startTimeout();
+    navigateToWelcomePage();
   }
 
-  // startTimeout() {
-  //   var duration = const Duration(seconds: 5);
-  //   return Timer(duration, navigateToWelcomePage);
-  // }
-
-  navigateToWelcomePage() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const WelcomePage()));
+  navigateToWelcomePage() async {
+    await Future.delayed(const Duration(milliseconds: 5000), () {
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (BuildContext context) {
+        return const WelcomePage();
+      }), ((route) {
+        return false;
+      }));
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const WelcomePage()),
+      // );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -80,16 +87,15 @@ class _RedirectingScreenState extends State<RedirectingScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 150,
                   height: 150,
-                  child: CircularProgressIndicator(
-                    backgroundColor: Color(0xffffffff),
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        Color.fromARGB(255, 44, 250, 51)),
-                    strokeWidth: 13.0,
+                  child: SpinKitRing(
+                    color: const Color(0xFF22E974),
+                    size: (150.0 / 360) * width,
+                    lineWidth: (12.0 / 360) * width,
                   ),
-                ),
+                )
               ]),
             ])),
       ),

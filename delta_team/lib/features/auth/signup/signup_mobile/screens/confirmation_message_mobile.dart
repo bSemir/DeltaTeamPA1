@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:delta_team/features/auth/signup/signup_mobile/screens/redirecting_screen_mobile.dart';
 import 'package:delta_team/features/auth/signup/signup_mobile/widgets/footer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,10 +16,23 @@ class ConfirmationMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+<<<<<<< HEAD
     // Timer(
     //     const Duration(seconds: 0),
     //     () => Navigator.push(context,
     //         MaterialPageRoute(builder: (context) => const WelcomePage())));
+=======
+    Timer(
+        const Duration(seconds: 5),
+        () => Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (BuildContext context) {
+              return const WelcomePage();
+            }), ((route) {
+              return false;
+            })));
+
+    // Navigator.pushNamed(context, "/redirectingScreen")
+>>>>>>> b03afbe33ddf7a48a256644fd9569c34e8a3b461
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -69,12 +83,16 @@ class ConfirmationMessage extends StatelessWidget {
                 const SizedBox(
                   height: 36,
                 ),
+<<<<<<< HEAD
                 const CustomFooter(),
+=======
+>>>>>>> b03afbe33ddf7a48a256644fd9569c34e8a3b461
               ],
             ),
           ),
         ),
       ),
+      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

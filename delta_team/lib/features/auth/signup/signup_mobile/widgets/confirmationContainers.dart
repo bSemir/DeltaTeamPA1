@@ -5,6 +5,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/signup/provider/auth_provider_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -18,6 +19,13 @@ class ConfirmationContainers extends StatefulWidget {
 }
 
 class _ConfirmationContainersState extends State<ConfirmationContainers> {
+  @override
+  void initState() {
+    super.initState();
+    _loading = false;
+  }
+
+  bool _loading = false;
   final _num1 = TextEditingController();
   final _num2 = TextEditingController();
   final _num3 = TextEditingController();
@@ -496,60 +504,80 @@ class _ConfirmationContainersState extends State<ConfirmationContainers> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 32, right: 32),
-            child: CustomButton(
-              key: const Key("verifyConfirmationKey"),
-              content: Text(
-                "Verify",
-                style: GoogleFonts.notoSans(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              buttonFunction: () async {
-                if (clickCounter == 0) {
-                  _startTimer();
-                }
-                setState(() {
-                  notSendCodeAgainPressed = true;
-                });
-                setState(() {
-                  clickCounter++;
-                  isPressed = true;
-                  code = "";
-                  code +=
-                      num1Str + num2Str + num3Str + num4Str + num5Str + num6Str;
-                });
+            child: _loading
+                ? const Center(
+                    child: SpinKitRing(
+                      color: Colors.black,
+                      size: 36,
+                      lineWidth: 6,
+                    ),
+                  )
+                : CustomButton(
+                    key: const Key("verifyConfirmationKey1"),
+                    content: Text(
+                      "Verify",
+                      style: GoogleFonts.notoSans(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    buttonFunction: () async {
+                      if (clickCounter == 0) {
+                        _startTimer();
+                      }
+                      setState(() {
+                        notSendCodeAgainPressed = true;
+                      });
+                      setState(() {
+                        clickCounter++;
+                        isPressed = true;
+                        code = "";
+                        code += num1Str +
+                            num2Str +
+                            num3Str +
+                            num4Str +
+                            num5Str +
+                            num6Str;
+                      });
 
-                if (_confirmationKey.currentState!.validate()) {
-                  try {
-                    final result = await Amplify.Auth.confirmSignUp(
-                        username: emailProvider.email, confirmationCode: code);
-                    setState(() {
-                      codeErrored = !result.isSignUpComplete;
-                    });
-                    if (!codeErrored) {
-                      FocusManager.instance.primaryFocus?.unfocus();
-                      Navigator.pushNamed(context, "/confirmationMessage");
-                    }
-                  } on AuthException catch (e) {
-                    if (e.message.toString().contains(
-                            "Confirmation code entered is not correct.") ||
-                        e.message.toString().contains(
-                            "One or more parameters are incorrect.")) {
-                      setState(() {
-                        codeErrored = true;
-                      });
-                    } else {
-                      setState(() {
-                        codeErrored = false;
-                      });
-                    }
-                    safePrint(e.message);
-                  }
-                }
-              },
-              color: Colors.black,
-            ),
+                      if (_confirmationKey.currentState!.validate()) {
+                        try {
+                          setState(() {
+                            _loading = true;
+                          });
+                          final result = await Amplify.Auth.confirmSignUp(
+                              username: emailProvider.email,
+                              confirmationCode: code);
+                          setState(() {
+                            codeErrored = !result.isSignUpComplete;
+                          });
+                          if (!codeErrored) {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                            Navigator.pushNamed(
+                                context, "/confirmationMessage");
+                          }
+                        } on AuthException catch (e) {
+                          setState(() {
+                            _loading = false;
+                          });
+                          if (e.message.toString().contains(
+                                  "Confirmation code entered is not correct.") ||
+                              e.message.toString().contains(
+                                  "One or more parameters are incorrect.")) {
+                            setState(() {
+                              codeErrored = true;
+                            });
+                          } else {
+                            setState(() {
+                              codeErrored = false;
+                            });
+                          }
+                          safePrint(e.message);
+                        }
+                      }
+                    },
+                    color: Colors.black,
+                  ),
           ),
         ],
       ),

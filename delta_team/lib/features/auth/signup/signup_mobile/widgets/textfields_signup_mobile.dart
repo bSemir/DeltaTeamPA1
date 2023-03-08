@@ -3,6 +3,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/auth/signup/provider/auth_provider_mobile.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
   @override
   void initState() {
     super.initState();
+    _loading = false;
     _configureAmplify();
   }
 
@@ -95,6 +97,8 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
   bool phoneErrored = false;
   bool emailErrored = false;
   bool passwordErrored = false;
+
+  bool _loading = false;
 
   bool isSignUpCompleted = false;
   bool isEmailTaken = false;
@@ -764,54 +768,73 @@ class _TextFieldSignUpState extends State<TextFieldSignUp> {
           const SizedBox(
             height: 33,
           ),
-          CustomButton(
-            key: const Key("createAccountKey"),
-            content: Text(
-              "Create Your account",
-              style: GoogleFonts.notoSans(
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            buttonFunction: () async {
-              setState(() {
-                isButtonPressed = true;
-              });
+          _loading
+              ? const Center(
+                  child: SpinKitRing(
+                    color: Colors.black,
+                    size: 36,
+                    lineWidth: 6,
+                  ),
+                )
+              : CustomButton(
+                  key: const Key("createAccountKey"),
+                  content: Text(
+                    "Create Your account",
+                    style: GoogleFonts.notoSans(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  buttonFunction: () async {
+                    setState(() {
+                      isButtonPressed = true;
+                    });
 
-              // await userExist(emailController.text);
-              if (_signUpKey.currentState!.validate()) {
-                try {
-                  final userAttributes = <CognitoUserAttributeKey, String>{
-                    CognitoUserAttributeKey.email: emailController.text,
-                    CognitoUserAttributeKey.phoneNumber:
-                        phoneNumberController.text,
-                    CognitoUserAttributeKey.givenName: nameController.text,
-                    CognitoUserAttributeKey.address: cityController.text,
-                    CognitoUserAttributeKey.familyName: surnameController.text,
-                    CognitoUserAttributeKey.birthdate: birthDateController.text,
-                    // const CognitoUserAttributeKey.custom("Status"):
-                    //     _statusValue!,
-                  };
-                  final result = await Amplify.Auth.signUp(
-                    username: emailController.text,
-                    password: passwordController.text,
-                    options:
-                        CognitoSignUpOptions(userAttributes: userAttributes),
-                  );
-                  emailProvider.email = emailController.text;
-                  emailPasswordProvider.setEmail(emailController.text);
-                  emailPasswordProvider.setPassword(passwordController.text);
-                  isSignUpCompleted = true;
-                } catch (e) {
-                  safePrint(e.toString());
-                }
-              }
-              if (isSignUpCompleted) {
-                changeScreen();
-              }
-            },
-            color: Colors.black,
-          ),
+                    // await userExist(emailController.text);
+                    if (_signUpKey.currentState!.validate()) {
+                      try {
+                        setState(() {
+                          _loading = true;
+                        });
+                        final userAttributes =
+                            <CognitoUserAttributeKey, String>{
+                          CognitoUserAttributeKey.email: emailController.text,
+                          CognitoUserAttributeKey.phoneNumber:
+                              phoneNumberController.text,
+                          CognitoUserAttributeKey.givenName:
+                              nameController.text,
+                          CognitoUserAttributeKey.address: cityController.text,
+                          CognitoUserAttributeKey.familyName:
+                              surnameController.text,
+                          CognitoUserAttributeKey.birthdate:
+                              birthDateController.text,
+                          // const CognitoUserAttributeKey.custom("Status"):
+                          //     _statusValue!,
+                        };
+                        final result = await Amplify.Auth.signUp(
+                          username: emailController.text,
+                          password: passwordController.text,
+                          options: CognitoSignUpOptions(
+                              userAttributes: userAttributes),
+                        );
+                        emailProvider.email = emailController.text;
+                        emailPasswordProvider.setEmail(emailController.text);
+                        emailPasswordProvider
+                            .setPassword(passwordController.text);
+                        isSignUpCompleted = true;
+                      } catch (e) {
+                        setState(() {
+                          _loading = false;
+                        });
+                        safePrint(e.toString());
+                      }
+                    }
+                    if (isSignUpCompleted) {
+                      changeScreen();
+                    }
+                  },
+                  color: Colors.black,
+                ),
           const SizedBox(
             height: 10,
           ),
