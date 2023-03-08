@@ -1,8 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:delta_team/features/auth/login/login_mobile/providers/userAttributesProviderMobile.dart';
+import 'package:delta_team/features/auth/login/login_mobile/providers/userLecturesProviderMobile.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../loadingScreens/loadingscreen_mobile.dart';
 
@@ -64,11 +69,46 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
     super.initState();
   }
 
+  Map<String, dynamic> lectures = {};
+  bool _loading = false;
+
+  Future<Map<String, dynamic>> getUserLectures() async {
+    try {
+      final restOperation = Amplify.API.get('/api/user/lectures',
+          apiName: 'getUserLectures',
+          queryParameters: {
+            'paDate': 'Jan2023'
+            // , 'name': 'Flutter widgets'
+          });
+      final response = await restOperation.response;
+
+      Map<String, dynamic> responseMap = jsonDecode(response.decodeBody());
+      setState(() {
+        lectures = responseMap;
+      });
+      return responseMap;
+    } on ApiException catch (e) {
+      print(e.message);
+      throw Exception('Failed to load lectures: $e');
+    }
+  }
+
+  String nameUser = '';
+  String email = '';
+
+  String surname = '';
+
   Future<bool> logUserIn(String email, String password) async {
     try {
+      setState(() {
+        _loading = true;
+      });
       final user =
           await Amplify.Auth.signIn(username: email, password: password);
       safePrint('successful');
+      setState(() {
+        _loading = false;
+      });
       setState(() {
         canLogIn = user.isSignedIn;
       });
@@ -83,12 +123,45 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
           emailNotExist = false;
         });
       }
+      setState(() {
+        _loading = false;
+      });
     }
     return false;
   }
 
+  Future<void> fetchCurrentUserAttributes() async {
+    try {
+      final result = await Amplify.Auth.fetchUserAttributes();
+      for (final element in result) {
+        // print('key: ${element.userAttributeKey}; value: ${element.value}');
+        if (element.userAttributeKey.key == "email") {
+          setState(() {
+            email = element.value;
+          });
+        }
+        if (element.userAttributeKey.key == "given_name") {
+          setState(() {
+            nameUser = element.value;
+          });
+        }
+        if (element.userAttributeKey.key == "family_name") {
+          setState(() {
+            surname = element.value;
+          });
+        }
+      }
+    } on AuthException catch (e) {
+      print(e.message);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final userAttributesProvider =
+        Provider.of<UserAttributesProviderMobile>(context, listen: false);
+    final userLecturesProvider =
+        Provider.of<LecturesProviderMobile>(context, listen: false);
     bool emailErrored = false;
     bool passwordErrored = false;
 
@@ -302,28 +375,52 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
           SizedBox(
             height: 40,
             width: (296 / 360) * width,
-            child: ElevatedButton(
-              key: const Key('Login_Button'),
-              onPressed: () async {
-                await logUserIn(emailController.text, passwordController.text);
-                if (_signInKey.currentState!.validate()) {
-                  if (canLogIn) {
-                    safePrint('successful');
-                    Navigator.pushNamed(context, LoadingScreenMobile.routeName);
-                  }
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF000000)),
-              child: Text(
-                "Login",
-                style: GoogleFonts.notoSans(
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                  fontSize: (14 / 360) * width,
-                ),
-              ),
-            ),
+            child: _loading
+                ? Center(
+                    child: SpinKitRing(
+                      color: Colors.black,
+                      size: (36.0 / 360) * width,
+                      lineWidth: (6.0 / 360) * width,
+                    ),
+                  )
+                : ElevatedButton(
+                    key: const Key('Login_Button'),
+                    onPressed: () async {
+                      await logUserIn(
+                          emailController.text, passwordController.text);
+                      if (_signInKey.currentState!.validate()) {
+                        if (canLogIn) {
+                          await getUserLectures();
+                          await fetchCurrentUserAttributes();
+                          userLecturesProvider.setLectures(lectures);
+                          userAttributesProvider.setEmail(email);
+                          userAttributesProvider.setName(nameUser);
+                          userAttributesProvider.setSurname(surname);
+                          safePrint('successful');
+                          Navigator.pushAndRemoveUntil(context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                            return const LoadingScreenMobile();
+                          }), ((route) {
+                            return false;
+                          }));
+
+                          // Navigator.pushNamed(
+                          //     context, LoadingScreenMobile.routeName);
+                        }
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF000000)),
+                    child: Text(
+                      "Login",
+                      style: GoogleFonts.notoSans(
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                        fontSize: (14 / 360) * width,
+                      ),
+                    ),
+                  ),
           ),
         ],
       ),

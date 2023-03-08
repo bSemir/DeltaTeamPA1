@@ -6,7 +6,10 @@ import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../common/footer/footer.dart';
+import '../../../auth/login/loadingScreens/loadingscreen_mobile.dart';
+import '../../../auth/login/login_mobile/loginmobile_body.dart';
 import '../../../onboarding/onboarding_mobile/welcome_page_mobile.dart';
+import 'custom_footer_mobile.dart';
 
 class Onboardingredirecting extends StatefulWidget {
   const Onboardingredirecting({super.key});
@@ -19,41 +22,39 @@ class _OnboardingredirectingState extends State<Onboardingredirecting> {
   @override
   void initState() {
     super.initState();
-    startTimeout();
+    navigateToWelcomePage(context);
   }
 
-  startTimeout() async {
-    var duration = const Duration(seconds: 10);
-    return Timer(duration, navigateToHomeScreen);
-  }
-
-  navigateToHomeScreen() {
-    Navigator.pushReplacementNamed(context, HomeScreenMobile.routeName);
+  navigateToWelcomePage(BuildContext context) async {
+    await Future.delayed(const Duration(milliseconds: 5000), () {
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (BuildContext context) {
+        return const LoginScreenMobile();
+      }), ((route) {
+        return false;
+      }));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: SvgPicture.asset("assets/images/navbar_logo.svg",
-            semanticsLabel: 'Confirmation SVG'),
-      ),
-      backgroundColor: const Color(0xFFF3F3F9),
       body: SingleChildScrollView(
         child: Center(
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
               const SizedBox(
-                height: 245,
+                height: 74.9,
               ),
+              SizedBox(
+                height: 61.26,
+                width: 80,
+                child: SvgPicture.asset('assets/images/footer_logo.svg'),
+              ),
+              const SizedBox(height: 138.74),
               Stack(alignment: Alignment.center, children: [
                 Positioned.fill(
                   child: Align(
@@ -88,22 +89,21 @@ class _OnboardingredirectingState extends State<Onboardingredirecting> {
                   ),
                 ),
                 SizedBox(
-                  width: (150 / 360) * width,
+                  width: 150,
                   height: 150,
-                  child: const CircularProgressIndicator(
-                    backgroundColor: Color(0xffffffff),
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                        Color.fromARGB(255, 44, 250, 51)),
-                    strokeWidth: 13.0,
+                  child: SpinKitRing(
+                    color: const Color(0xFF22E974),
+                    size: (150.0 / 360) * width,
+                    lineWidth: (12.0 / 360) * width,
                   ),
-                ),
+                )
               ]),
               const SizedBox(
                 height: 245,
               ),
-              const Footer(),
             ])),
       ),
+      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

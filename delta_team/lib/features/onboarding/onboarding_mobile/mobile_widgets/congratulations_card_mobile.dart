@@ -30,6 +30,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../common/footer/footer.dart';
+import '../../../auth/login/loadingScreens/loadingscreen_mobile.dart';
+import 'custom_footer_mobile.dart';
+import 'loading_Oboading mobile.dart';
 
 class CongratsCard extends StatelessWidget {
   static const routeName = 'congrats-card';
@@ -37,8 +40,17 @@ class CongratsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 10),
-        () => Navigator.pushNamed(context, "/OnboardingredirectingScreen"));
+    double width = MediaQuery.of(context).size.width;
+    Timer(
+        const Duration(seconds: 5),
+        () => Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (BuildContext context) {
+              return const Onboardingredirecting();
+            }), ((route) {
+              return false;
+            })));
+    // Navigator.pushNamed(context, "/OnboardingredirectingScreen")
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -99,10 +111,10 @@ class CongratsCard extends StatelessWidget {
             const SizedBox(
               height: 251,
             ),
-            const Footer(),
           ],
         ),
       ),
+      bottomNavigationBar: const CustomFooter(),
     );
   }
 }

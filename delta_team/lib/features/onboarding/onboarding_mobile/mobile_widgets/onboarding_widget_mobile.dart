@@ -13,6 +13,7 @@ import '../mobile_models/role_mobile.dart';
 import '../mobile_models/role_white_items_mobile.dart';
 import '../mobile_providers/answer_mobile.dart';
 import '../mobile_providers/error_provider_mobile.dart';
+import '../mobile_providers/role_provider_mobile.dart';
 import 'form_buttons_mobile.dart';
 import 'video_player_mobile.dart';
 
@@ -414,13 +415,17 @@ class VideoPageForm extends StatelessWidget {
 }
 
 class PositionPageForm extends StatefulWidget {
+  final PageController pageController;
+  final Role role;
   final String questionText;
   final VoidCallback submitButton;
 
   const PositionPageForm({
     super.key,
     required this.questionText,
+    required this.role,
     required this.submitButton,
+    required this.pageController,
   });
 
   @override
@@ -430,11 +435,11 @@ class PositionPageForm extends StatefulWidget {
 class _PositionPageFormState extends State<PositionPageForm> {
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MyItem>(context, listen: false);
     return Container(
       alignment: Alignment.center,
       width: double.infinity,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             alignment: Alignment.topLeft,
@@ -459,28 +464,50 @@ class _PositionPageFormState extends State<PositionPageForm> {
               ),
             ),
           ),
+          const SizedBox(
+            height: 15,
+          ),
           SizedBox(
             width: double.infinity,
-            height: 400,
+            height: 300,
             child: ListView(
+              scrollDirection: Axis.vertical,
               children: List.generate(
-                listaRola.length,
+                listaRole.length,
                 (index) => RoleWidget(
-                  role: listaRola[index],
-                  roleWhite: listaRolaWhite[index],
+                  role: listaRole[index],
+                  roleWhite: listaRoleWhite[index],
                 ),
               ),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              FormButton(
+                  key: const Key('RolePageBackButtonKey'),
+                  backgroundColor: AppColors.backgroundColor,
+                  textColor: AppColors.primaryColor,
+                  text: 'Back',
+                  borderColor: AppColors.backgroundColor,
+                  onPressed: () {
+                    widget.pageController.previousPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInBack);
+                  },
+                  buttonWidth: 100,
+                  buttonHeight: 42),
+            ],
+          ),
+          const SizedBox(
+            height: 60,
           ),
           SubmitButton(
               key: const Key('SubmitButtonKey'),
               backgroundColor: AppColors.primaryColor,
               textColor: AppColors.secondaryColor3,
               text: 'Submit',
-              onPressed: () {
-                Navigator.pushNamed(context, CongratsCard.routeName);
-                print('Onboarding submitted');
-              },
+              onPressed: widget.submitButton,
               buttonWidth: double.infinity,
               buttonHeight: 42),
           const SizedBox(height: 10)
