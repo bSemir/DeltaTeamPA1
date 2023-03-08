@@ -67,6 +67,7 @@ class LoginScreenWebState extends State<LoginScreenWeb> {
   void initState() {
     _loadingLogin = false;
     varijablaRola.clear();
+    print(varijablaRola);
     _loadPrefs();
     // Add a listener to the focus node to update the _isFocused variable
     _passwordFocusNode.addListener(() {
