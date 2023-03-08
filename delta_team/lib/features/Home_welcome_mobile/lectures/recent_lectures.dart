@@ -4,6 +4,7 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:delta_team/features/Home_welcome_mobile/lectures/providers/lectures_provider_mobile.dart';
 import 'package:delta_team/features/Home_welcome_mobile/lectures/single_lecture_screen.dart';
 import 'package:delta_team/features/Home_welcome_mobile/lectures/widgets/detailed_lecture.dart';
+import 'package:delta_team/features/Home_welcome_mobile/lectures/widgets/lecture_card.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -110,111 +111,150 @@ class _RecentLecturesMobileState extends State<RecentLecturesMobile> {
         iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: _isBurgerIcon
-          ? SingleChildScrollView(
-              child: SafeArea(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 32.0, right: 32.0, top: 12.0),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Recent Lessons',
-                        style: GoogleFonts.notoSans(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: const Color(0xFF000000),
-                        ),
+          ? SafeArea(
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(left: 32.0, right: 32.0, top: 12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Recent Lectures',
+                      style: GoogleFonts.notoSans(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: const Color(0xFF000000),
                       ),
-                      const SizedBox(
-                        height: 15,
+                    ),
+                    // const SizedBox(
+                    //   height: 200,
+                    // ),
+                    Center(
+                      child: Text(
+                        "RECENT LECTURES COMING SOON",
+                        style: TextStyle(fontSize: 22),
                       ),
-                      lectures.isEmpty
-                          ? const Center(child: CircularProgressIndicator())
-                          : SizedBox(
-                              height: mediaQuery.height * 0.90,
-                              child: ListView.separated(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemCount: lecs.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  // final lectures = lecs[index];
-                                  // final name = lectures['name'];
-                                  // final image = lectures['imageSrc'];
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              SingleLectureScreen(
-                                                  lectures: lecs, index: index),
-                                        ),
-                                      );
-                                    },
-                                    child: Card(
-                                      elevation: 3,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(4.0),
-                                            border: Border.all(width: 0.5)),
-                                        child: Column(
-                                          children: [
-                                            //Video Player
+                    ),
+                    Container(),
+                    // lectures.isEmpty
+                    //     ? const Center(child: CircularProgressIndicator())
+                    //     : SizedBox(
+                    //         height: mediaQuery.height * 0.90,
+                    //         child: ListView.builder(
+                    //           scrollDirection: Axis.vertical,
+                    //           shrinkWrap: true,
+                    //           itemCount: lecs.length,
+                    //           itemBuilder: (BuildContext context, int index) {
+                    //             return Padding(
+                    //               padding: const EdgeInsets.only(
+                    //                   top: 12.0, left: 32.0, right: 32.0),
+                    //               child: GestureDetector(
+                    //                 key: const Key('onLectureClickKey'),
+                    //                 onTap: () {
+                    //                   // ScaffoldMessenger.of(context).showSnackBar(
+                    //                   //   const SnackBar(
+                    //                   //     content: Text('Lesson clicked!'),
+                    //                   //   ),
+                    //                   // );
+                    //                   Navigator.of(context).push(
+                    //                     MaterialPageRoute(
+                    //                       builder: (context) =>
+                    //                           SingleLectureScreen(
+                    //                               lectures: lecs,
+                    //                               index: index),
+                    //                     ),
+                    //                   );
+                    //                 },
+                    //                 child: LectureCard(
+                    //                   imageSrc: lecs[index]['imageSrc'],
+                    //                   name: lecs[index]['name'],
+                    //                 ),
+                    //               ),
+                    //             );
+                    //           },
+                    //         )
+                    // child: ListView.separated(
+                    //   physics: const AlwaysScrollableScrollPhysics(),
+                    //   scrollDirection: Axis.vertical,
+                    //   shrinkWrap: true,
+                    //   itemCount: lecs.length,
+                    //   itemBuilder: (BuildContext context, int index) {
+                    //     // final lectures = lecs[index];
+                    //     // final name = lectures['name'];
+                    //     // final image = lectures['imageSrc'];
+                    //     return GestureDetector(
+                    //       onTap: () {
+                    //         Navigator.of(context).push(
+                    //           MaterialPageRoute(
+                    //             builder: (context) =>
+                    //                 SingleLectureScreen(
+                    //                     lectures: lecs, index: index),
+                    //           ),
+                    //         );
+                    //       },
+                    //       child: Card(
+                    //         elevation: 3,
+                    //         child: Container(
+                    //           decoration: BoxDecoration(
+                    //               borderRadius:
+                    //                   BorderRadius.circular(4.0),
+                    //               border: Border.all(width: 0.5)),
+                    //           child: Column(
+                    //             children: [
+                    //               //Video Player
 
-                                            SizedBox(
-                                              width: mediaQuery.width * 0.8,
-                                              height: mediaQuery.height * 0.2,
-                                              child: Image.network(
-                                                lecs[index]['imageSrc'],
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            Container(
-                                              width: mediaQuery.width * 0.4,
-                                              alignment: Alignment.topLeft,
-                                              padding: const EdgeInsets.only(
-                                                left: 7,
-                                                top: 5,
-                                              ),
-                                              child: Text(
-                                                lecs[index]['name'],
-                                                maxLines: 2,
-                                                overflow: TextOverflow.clip,
-                                                style: GoogleFonts.notoSans(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700,
-                                                  color:
-                                                      const Color(0xFF000000),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              width: mediaQuery.width * 0.1,
-                                              alignment: Alignment.topRight,
-                                              padding: const EdgeInsets.only(
-                                                left: 7,
-                                                top: 5,
-                                              ),
-                                              child: SvgPicture.asset(
-                                                  'assets/images/arrow_lecture.svg'),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return Container(
-                                    height: 15,
-                                  );
-                                },
-                              ),
-                            ),
-                    ],
-                  ),
+                    //               SizedBox(
+                    //                 width: mediaQuery.width * 0.8,
+                    //                 height: mediaQuery.height * 0.2,
+                    //                 child: Image.network(
+                    //                   lecs[index]['imageSrc'],
+                    //                   fit: BoxFit.cover,
+                    //                 ),
+                    //               ),
+                    //               Container(
+                    //                 width: mediaQuery.width * 0.4,
+                    //                 alignment: Alignment.topLeft,
+                    //                 padding: const EdgeInsets.only(
+                    //                   left: 7,
+                    //                   top: 5,
+                    //                 ),
+                    //                 child: Text(
+                    //                   lecs[index]['name'],
+                    //                   maxLines: 2,
+                    //                   overflow: TextOverflow.clip,
+                    //                   style: GoogleFonts.notoSans(
+                    //                     fontSize: 14,
+                    //                     fontWeight: FontWeight.w700,
+                    //                     color:
+                    //                         const Color(0xFF000000),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //               Container(
+                    //                 width: mediaQuery.width * 0.1,
+                    //                 alignment: Alignment.topRight,
+                    //                 padding: const EdgeInsets.only(
+                    //                   left: 7,
+                    //                   top: 5,
+                    //                 ),
+                    //                 child: SvgPicture.asset(
+                    //                     'assets/images/arrow_lecture.svg'),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    //   separatorBuilder:
+                    //       (BuildContext context, int index) {
+                    //     return Container(
+                    //       height: 15,
+                    //     );
+                    //   },
+                    // ),
+                    // ),
+                  ],
                 ),
               ),
             )

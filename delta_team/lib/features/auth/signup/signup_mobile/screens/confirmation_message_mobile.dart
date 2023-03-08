@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../onboarding/onboarding_mobile/mobile_widgets/custom_footer_mobile.dart';
+import '../../../../onboarding/onboarding_mobile/welcome_page_mobile.dart';
 import '../../../login/loadingScreens/loadingscreen_mobile.dart';
 
 class ConfirmationMessage extends StatelessWidget {
@@ -19,10 +20,11 @@ class ConfirmationMessage extends StatelessWidget {
         const Duration(seconds: 5),
         () => Navigator.pushAndRemoveUntil(context,
                 MaterialPageRoute(builder: (BuildContext context) {
-              return const RedirectingScreen();
+              return const WelcomePage();
             }), ((route) {
               return false;
             })));
+
     // Navigator.pushNamed(context, "/redirectingScreen")
 
     return Scaffold(

@@ -9,7 +9,7 @@ class RecentLessonsScreen extends StatelessWidget {
       appBar: AppBar(),
       body: Container(
         child: Center(
-          child: Text("Recent Lessons"),
+          child: Text("Recent Lectures"),
         ),
       ),
     );

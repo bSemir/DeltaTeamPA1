@@ -9,6 +9,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../../../Home_welcome_mobile/welcoming_message_screen.dart';
 import '../loadingScreens/loadingscreen_mobile.dart';
 
 class LoginFieldMobile extends StatefulWidget {
@@ -54,6 +55,7 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
 
   @override
   void initState() {
+    _loading = false;
     // Add a listener to the focus node to update the _isFocused variable
     _passwordFocusNode.addListener(() {
       setState(() {
@@ -106,9 +108,6 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
       final user =
           await Amplify.Auth.signIn(username: email, password: password);
       safePrint('successful');
-      setState(() {
-        _loading = false;
-      });
       setState(() {
         canLogIn = user.isSignedIn;
       });
@@ -400,7 +399,7 @@ class _LoginFieldMobileState extends State<LoginFieldMobile> {
                           Navigator.pushAndRemoveUntil(context,
                               MaterialPageRoute(
                                   builder: (BuildContext context) {
-                            return const LoadingScreenMobile();
+                            return const WelcomingScreen();
                           }), ((route) {
                             return false;
                           }));
