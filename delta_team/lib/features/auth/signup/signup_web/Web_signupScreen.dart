@@ -527,6 +527,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                                 });
                                               }
                                             }
+
                                             if (_signupFormKey.currentState!
                                                 .validate()) {
                                               try {
@@ -596,6 +597,10 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                                   _loading = false;
                                                 });
                                               }
+                                            } else {
+                                              setState(() {
+                                                _loading = false;
+                                              });
                                             }
                                           },
                                           style: ElevatedButton.styleFrom(
