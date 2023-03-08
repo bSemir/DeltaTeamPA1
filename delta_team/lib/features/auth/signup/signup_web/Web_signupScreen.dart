@@ -518,6 +518,7 @@ class _SignUpScreenWebState extends State<SignUpScreenWeb> {
                                               if (error.toString().contains(
                                                   "NotAuthorizedException")) {
                                                 setState(() {
+                                                  _loading = false;
                                                   isEmailTaken = true;
                                                 });
                                               } else {
